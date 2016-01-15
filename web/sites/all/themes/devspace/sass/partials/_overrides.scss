@@ -1,0 +1,88 @@
+h1 {
+  color:$palette-grey;
+}
+h2 {
+  color:$palette-red;
+    font-size: 3em;
+}
+h3 {
+  color:$palette-grey;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+
+span.input-group-addon {
+	border-radius:0px;
+}
+
+input.form-control {
+  border-radius:0px;
+}
+
+.panel, .well, .container .jumbotron, .btn {
+  border-radius:0px;
+}
+
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+  margin-left:0px;
+}
+
+.btn-primary {
+  background-color:$palette-red;
+  color:$palette-white;
+  &:hover, &:focus, &:active, &.active {
+    background-color:darken($palette-red,5%);
+    border:darken($palette-red,5%);
+  }
+}
+
+a {
+  color:$palette-red;
+	&:hover, &:focus, &:active, &:visited {
+		color: darken($palette-red,5%);
+	}
+}
+
+body.admin-menu, .body-toolbar-drawer {
+	padding-top:0px !important;
+}
+
+.form-control {
+  width:auto; 
+}
+
+.sr-only  {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.main-container {
+  margin-top:2em;
+}
+
+iframe.flc-iframe {
+  width: 100%;
+}
+
+/**
+ * Add font overrides from Fluid UI Options
+ */
+
+.fl-font-prefsEditor-comic-sans *:not(.fa) {
+    font-family: "Comic Sans MS", sans-serif !important;
+}
+
+.fl-font-prefsEditor-times *:not(.fa) {
+    font-family: Georgia,Times,"Times New Roman",serif !important;
+}
+.fl-font-prefsEditor-arial *:not(.fa) {
+    font-family: "Arial" !important; 
+}
+.fl-font-prefsEditor-verdana *:not(.fa) {
+    font-family: "Verdana" !important;
+}

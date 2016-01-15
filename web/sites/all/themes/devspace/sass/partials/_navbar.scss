@@ -1,0 +1,229 @@
+//
+// XS MEDIA QUERY
+//
+
+.navbar-static-top {
+  z-index: 999 !important; 
+} 
+
+@media (max-width: $break-xs) {
+
+  header#navbar { 
+    height:$navbar-height-xs;
+  }
+  .navbar.navbar-inverse {
+    & .navbar-header {
+      & .navbar-toggle {
+        margin:16px 15px;
+      }
+      & .navbar-brand {
+        color:#fff;
+        line-height:$navbar-height-xs;
+        float:left;
+        margin:0px;
+        padding:0em 1em;
+      }
+    }
+  }
+  .navbar-collapse {
+    & .navbar-nav.secondary {
+      float:right; 
+    }
+    & .navbar-nav li {
+      text-align:center;
+      & span.nolink {
+        padding:10px 0px;
+        line-height:20px;
+        display:block;
+        color:#777;
+      }
+      & .dropdown-menu {
+        background-color:$palette-navbar-dark;
+        border:none;
+      }
+    }
+    & .navbar-form > .search-form {
+      display:block;
+      margin:1em 1em;
+      width:auto;
+      text-align:center;
+      border-bottom:none;
+      & .form-group {
+        margin-bottom:0px;
+      }
+    }
+  }
+
+}
+
+//
+// SM+ MEDIA QUERY
+//
+
+@media (min-width:$break-xs) {
+
+  .nav > li > a, .nav > li > span.nolink {
+    padding:10px 10px;
+  }
+
+  .navbar-collapse {
+    & .navbar-nav  {
+      display:inline-block;
+      float:left;
+      margin:0 auto;
+      
+      &.secondary {
+        float:right;
+      } 
+
+      & .dropdown-menu {
+        background-color:$palette-red;
+        border:none;
+        & > li > a {
+          padding:3px 10px;
+          color:$palette-white;
+          &:hover, &.active {
+            background-color:$palette-red-dark;
+          }
+        }
+      }
+
+
+      & > li {
+        & > a, & > span.nolink {
+          color:#fff;
+          height:$navbar-height;
+          display:table-cell;
+          vertical-align:middle;
+          &:hover {
+            cursor:pointer;
+          }
+        }
+      }
+      & .dropdown.open:after {
+        content:"";
+        display:block;
+        position:absolute;
+        width: 0;
+        height: 0;
+        left:50%;
+        margin-left: -15px;
+        bottom:0px;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 8px solid $palette-red;
+        z-index:1000;
+      }
+      & > .active > a, & > .active-trail > a, & > .active-trail > span {
+        background: $navbar-gradient-dark;
+        position: relative;
+        &:hover {
+          background-color:#000;
+        }
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          width:100%;
+          height: $red-line-height;
+          top: 0px;
+          left:0px;
+          background: $palette-red;
+        }
+      }
+    }
+  }
+  .navbar.navbar-inverse {
+
+    & > nav {
+        height:$navbar-height;
+    }
+
+    .navbar-header {
+      display:none;
+    }
+
+    & .navbar-form {
+      margin:0px;
+      height:$navbar-height;
+      line-height:$navbar-height;
+
+      & .dropdown-menu {
+        & > li > a {
+          &:hover, &.active {
+            color:$palette-white;
+            background-color:$palette-red;
+          }
+        }
+      }
+
+      & .input-group > input {
+        font-size:12px;
+      }
+      & button.form-submit {
+        padding-bottom:8px;
+        position:relative;
+        top:1px;
+        & span.fa {
+          position:relative;
+          top:1px;
+        }
+      }
+    }
+  }
+
+}
+
+//
+// MISC STYLES
+//
+
+
+header#navbar {
+  background: $navbar-gradient;
+  height:$navbar-height;
+}
+
+.nav-search {
+  margin:0 auto;
+}
+
+.dropdown-menu {
+  border-radius:0px;
+}
+
+.navbar-form {
+  padding:0px;
+}
+
+.navbar.navbar-inverse {
+  background: $navbar-gradient;
+  border-radius:0px;
+  border:0px;
+  margin:0 auto;
+
+  & .navbar-header {
+
+    & .navbar-toggle {
+      margin:32px 15px;
+    }
+
+    & .navbar-brand {
+      color:#fff;
+      line-height:$navbar-height;
+      float:left;
+      margin:0px;
+      padding:0em 1em;
+    }
+  }
+
+  & .navbar-collapse {
+    text-align:center;
+    background: $navbar-gradient;
+    @media (min-width: $break-xs) and (max-width: $break-sm) {
+      & .navbar-form .search-form.navbar-form {
+        display:none;
+      }
+    }
+  }
+}

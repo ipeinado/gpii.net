@@ -1,0 +1,223 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function book_explorer_block_info() {
+  $blocks = array();  
+  $blocks['book_explorer'] = array(
+    'info' => t('Book explorer navigation'),
+    'cache' => DRUPAL_CACHE_PER_ROLE | DRUPAL_CACHE_PER_PAGE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function book_explorer_block_configure($delta = '') {
+  $block = array();
+  $options = array(
+    'all pages' => t('Show block on all pages'),
+    'book pages' => t('Show block only on book pages'),
+  );
+  $form['book_explorer_block_mode'] = array(
+    '#type' => 'radios',
+    '#title' => t('Book navigation block display'),
+    '#options' => $options,
+    '#default_value' => variable_get('book_explorer_block_mode', 'all pages'),
+    '#description' => t("If <em>Show block on all pages</em> is selected, the block will contain the automatically generated menus for all of the site's books. If <em>Show block only on book pages</em> is selected, the block will contain only the one menu corresponding to the current page's book. In this case, if the current page is not in a book, no block will be displayed. The <em>Page specific visibility settings</em> or other visibility settings can be used in addition to selectively display this block."),
+    );
+
+  return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function book_explorer_block_save($delta = '', $edit = array()) {
+  $block = array();
+  variable_set('book_explorer_block_mode', $edit['book_explorer_block_mode']);
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function book_explorer_block_view($delta = '') {
+  // Only one block
+  return book_explorer_block_book_explorer_view();
+}
+
+function book_explorer_block_book_explorer_view() {
+  $block = array();
+  $current_bid = 0;
+  if ($node = menu_get_object()) {
+    $current_bid = empty($node->book['bid']) ? 0 : $node->book['bid'];
+  }
+
+  if (variable_get('book_explorer_block_mode', 'all pages') == 'all pages') {
+    $block['subject'] = t('Book navigation');
+    $book_menus = array();
+    $pseudo_tree = array(0 => array('below' => FALSE));
+    foreach (book_get_books() as $book_id => $book) {
+      if ($book['bid'] == $current_bid) {
+        // If the current page is a node associated with a book, the menu
+        // needs to be retrieved.
+        //$book_menus[$book_id] = _book_explorer_menu_tree_output(menu_tree_all_data($node->book['menu_name'] /*, $node->book*/));
+        $book_menus[$book_id] = _book_explorer_menu_tree_output(book_menu_subtree_data($node->book /*, $node->book*/));
+      }
+      else {
+        // Since we know we will only display a link to the top node, there
+        // is no reason to run an additional menu tree query for each book.
+        $book['in_active_trail'] = FALSE;
+        // Check whether user can access the book link.
+        $book_node = node_load($book['nid']);
+        $book['access'] = node_access('view', $book_node);
+        //$book_menus[$book_id] = _book_explorer_menu_tree_output(menu_tree_all_data($book_node->book['menu_name']));
+        $book_menus[$book_id] = _book_explorer_menu_tree_output(book_menu_subtree_data($book_node->book));
+      }
+    }
+    $book_menus['#theme'] = 'book_all_books_block';
+    $block['content'] = $book_menus;
+  }
+  elseif ($current_bid) {
+    
+    // Only display this block when the user is browsing a book.
+    $select = db_select('node', 'n')
+    ->fields('n', array('title'))
+    ->condition('n.nid', $node->book['bid'])
+    ->addTag('node_access');
+    $title = $select->execute()->fetchField(0);
+    
+    // Only show the block if the user has view access for the top-level node.
+    if ($title) {
+      
+      $tree = menu_tree_all_data($node->book['menu_name'] /*, $node->book */);
+      // There should only be one element at the top level.
+      $tree = book_menu_subtree_data($node->book);
+      $data = array_shift($tree);
+      
+      $block['subject'] = theme('book_title_link', array('link' => $data['link']));
+      //$block['content'] = ($data['below']) ? menu_tree_output($data['below']) : '';
+      $block['content'] = ($data['below']) ? _book_explorer_menu_tree_output($data['below']) : '';      
+    }
+  }  
+
+  if (!empty($block['content'])) {
+    // Move block content down one level so we can wrap a div around it
+    $block['content'] = array(
+      'prefix' => array('#markup' => '<div class="book-explorer">'),
+      'build' => $block['content'],
+      'suffix' => array('#markup' => '</div>'),
+    );
+
+    // Attach css and js which implements the 'explorer' behaviour
+    $dir = drupal_get_path('module', 'book_explorer');
+    $block['content']['build']['#attached']['css'] = array($dir . '/book_explorer.css');      
+    $block['content']['build']['#attached']['js'] = array($dir . '/book_explorer.js');
+  }
+  return $block;
+}
+
+// This is copied from Drupal core.
+
+function _book_explorer_menu_tree_output($tree) {
+  $build = array();
+  $items = array();
+
+  // Pull out just the menu links we are going to render so that we
+  // get an accurate count for the first/last classes.
+  foreach ($tree as $data) {
+    if ($data['link']['access'] && !$data['link']['hidden']) {
+      
+      // Get the node body so we can render it.
+      
+      $node = node_load($data['link']['nid']);
+      $body = field_get_items('node', $node,'body');
+      
+      if (!empty($body)) {
+        $data['markup'] = $body[0]['safe_value'];
+      } else {
+        $data['markup'] = false; 
+      }
+      
+      $items[] = $data;
+    }
+    
+  }
+
+  $router_item = menu_get_item();
+  $num_items = count($items);
+  foreach ($items as $i => $data) {
+    $class = array();
+    if ($i == 0) {
+      $class[] = 'first';
+    }
+    if ($i == $num_items - 1) {
+      $class[] = 'last';
+    }
+    // Set a class for the <li>-tag. Since $data['below'] may contain local
+    // tasks, only set 'expanded' class if the link also has children within
+    // the current menu.
+    if ($data['link']['has_children'] && $data['below']) {
+      $class[] = 'expanded';
+    } elseif ($data['markup']) {
+      $class[] = 'expanded';
+    } elseif ($data['link']['has_children']) {
+      $class[] = 'collapsed';
+    } else {
+      $class[] = 'leaf';
+    }
+    
+    // Set a class if the link is in the active trail.
+    if ($data['link']['in_active_trail']) {
+      $class[] = 'active-trail';
+      $data['link']['localized_options']['attributes']['class'][] = 'active-trail';
+    }
+    
+    // Normally, l() compares the href of every link with $_GET['q'] and sets
+    // the active class accordingly. But local tasks do not appear in menu
+    // trees, so if the current path is a local task, and this link is its
+    // tab root, then we have to set the class manually.
+    if ($data['link']['href'] == $router_item['tab_root_href'] && $data['link']['href'] != $_GET['q']) {
+      $data['link']['localized_options']['attributes']['class'][] = 'active';
+    }
+
+    // Allow menu-specific theme overrides.
+    $element['#theme'] = 'menu_link__' . strtr($data['link']['menu_name'], '-', '_');
+    $element['#attributes']['class'] = $class;
+    $element['#title'] = $data['link']['title'];
+    $element['#href'] = $data['link']['href'];
+    $element['#localized_options'] = !empty($data['link']['localized_options']) ? $data['link']['localized_options'] : array();
+    //$element['#below'] = $data['below'] ? _book_explorer_menu_tree_output($data['below']) : $data['below'];
+    $element['#original_link'] = $data['link'];
+    
+    // Index using the link's unique mlid.
+    
+    // Create the markup element to stuff body text in.
+    
+    if ($data['markup']) {
+      $markup = array(
+        '#markup' => '<div class="book-explorer-markup">' . $data['markup'] . '</div>'
+      );
+      
+      $element['#below'] = $data['below'] ? array($markup, _book_explorer_menu_tree_output($data['below'])) : array($markup, $data['below']);
+    } else {
+      $element['#below'] = $data['below'] ? _book_explorer_menu_tree_output($data['below']) : $data['below'];
+    }
+    
+    
+    //$elementArray = $data['markup'] ? array($element, array('#markup' => $data['markup'])) : $data['below'];
+    
+    $build[$data['link']['mlid']] = $element;
+  }
+  if ($build) {
+    // Make sure drupal_render() does not re-order the links.
+    $build['#sorted'] = TRUE;
+    // Add the theme wrapper for outer markup.
+    // Allow menu-specific theme overrides.
+    $build['#theme_wrappers'][] = 'menu_tree__' . strtr($data['link']['menu_name'], '-', '_');
+  }
+
+  return $build;
+}
