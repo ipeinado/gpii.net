@@ -139,8 +139,8 @@ EOT;
                             case 'zhTW': $lang = 'zh-TW'; break;
                             default: break;
                         }
-
-                        $block_content .= '<option value="'.variable_get('gtranslate_main_lang', 'en').'|'.$lang.'" style="'.($lang == variable_get('gtranslate_main_lang', 'en') ? 'font-weight:bold;' : '').'background:url(\''.base_path().drupal_get_path('module', 'gtranslate').'/gtranslate-files/16l.png\') no-repeat scroll 0 -'.$flag_y.'px;padding-left:18px;">'.$lang_name.'</option>';
+                        $block_content .= '<option value="'.variable_get('gtranslate_main_lang', 'en').'|'.$lang.'" style="'.($lang == variable_get('gtranslate_main_lang', 'en') ? 'font-weight:bold;' : '').'background:url(\''.base_path().
+                        drupal_get_path('module', 'gtranslate').'/gtranslate-files/16l.png\') no-repeat scroll 0 -'.$flag_y.'px;padding-left:18px;">'.$lang_name.'</option>';
                     }
 
                     $i++;
@@ -181,7 +181,8 @@ EOT;
 
             }; break;
             case 'dropdown': {
-                $block_content .= '<select onchange="doGTranslate(this);">';
+                // BBC: Added notranslate class here to keep the dropdown from translating itself and making it hard to get back to the original language. 
+                $block_content .= '<select class="notranslate" onchange="doGTranslate(this);">';
                 $block_content .= '<option value="">Select Language</option>';
 
                 $i = 0;
@@ -194,8 +195,8 @@ EOT;
                             case 'zhTW': $lang = 'zh-TW'; break;
                             default: break;
                         }
-
-                        $block_content .= '<option value="'.variable_get('gtranslate_main_lang', 'en').'|'.$lang.'" style="'.($lang == variable_get('gtranslate_main_lang', 'en') ? 'font-weight:bold;' : '').'background:url(\''.base_path().drupal_get_path('module', 'gtranslate').'/gtranslate-files/16l.png\') no-repeat scroll 0 -'.$flag_y.'px;padding-left:18px;">'.$lang_name.'</option>';
+                        //$block_content .= '<option value="'.variable_get('gtranslate_main_lang', 'en').'|'.$lang.'" style="'.($lang == variable_get('gtranslate_main_lang', 'en') ? 'font-weight:bold;' : '').'background:url(\''.base_path().
+                        $block_content .= '<option value="'.variable_get('gtranslate_main_lang', 'en').'|'.$lang.'" style="'.($lang == variable_get('gtranslate_main_lang', 'en') ? 'font-weight:bold;' : '').drupal_get_path('module', 'gtranslate').'/gtranslate-files/16l.png\') no-repeat scroll 0 -'.$flag_y.'px;padding-left:18px;">'.$lang_name.'</option>';
                     }
 
                     $i++;

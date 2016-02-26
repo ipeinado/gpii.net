@@ -40,7 +40,8 @@ var fluid_1_5 = fluid_1_5 || {};
         cookie: {
             name: "fluid-ui-settings",
             path: "/",
-            expires: ""
+            expires: "",
+            domain: ".gpii.net" // BBC: Added this to get preferences to carry through domains.
         }
     });
 
@@ -92,6 +93,10 @@ var fluid_1_5 = fluid_1_5 || {};
 
         if (cookieOptions.path) {
             cookieStr += "; path=" + cookieOptions.path;
+        }
+
+        if (cookieOptions.domain) {  // BBC: Taken from above (allows prefs to work across .gpii.net domains)
+            cookieStr += "; domain=" + cookieOptions.domain;
         }
 
         return cookieStr;

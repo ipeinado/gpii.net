@@ -29,7 +29,7 @@
  *
  * @see template_preprocess_book_navigation()
  *
- * @ingroup themeable
+ * @ingroup themeable test
  */
 ?>
 <?php if ($has_links): ?>
