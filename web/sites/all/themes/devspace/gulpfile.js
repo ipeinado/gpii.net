@@ -6,27 +6,29 @@ var gulp = require('gulp'),
 
     gulp.task('default', ['watch']);
 
-gulp.task('sass', function () {
- gulp.src('./sass/**/*.scss')
-   .pipe(sass({outputStyle: 'compressed'}))
-   .pipe(gulp.dest('./css'));
-});
-     
-    gulp.task('sass:watch', function () {
-      gulp.watch('./sass/**/*.scss', ['sass']);
+    var input = './sass/**/*.scss';
+    var output = './css';
+
+    gulp.task('sass', function () {
+      return gulp
+        // Find all `.scss` files from the `stylesheets/` folder
+        .src(input)
+        // Run Sass on those files
+        .pipe(sass())
+        // Write the resulting CSS in the output folder
+        .pipe(gulp.dest(output));
     });
 
-
-
- //    gulp.task('sass', function() {
-	// gulp.src('sass/**/*.scss')
- //        .pipe(sass().on('error', sass.logError))
- //        .pipe(sass({outputStyle: 'compressed'}))
- //        .pipe(gulp.dest('css'))
- //    });
-
-    gulp.task('watch', function () {
-      gulp.watch('./sass/**/*.scss', ['sass']);  // Watch all the .scss files, then run the sass task
+    gulp.task('watch', function() {
+      return gulp
+        // Watch the input folder for change,
+        // and run `sass` task when something happens
+        .watch(input, ['sass'])
+        // When there is a change,
+        // log a message in the console
+        .on('change', function(event) {
+          console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+        });
     });
 
     // if working on a remote server, use by ssh port forwarding -L 35729:localhost:35729 p7sbcadocsweb@qual-msn-stg06

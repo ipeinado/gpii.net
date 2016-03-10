@@ -1,3 +1,8 @@
+// for sticky footer
+html, body {
+  height: 100%;
+}
+
 h1 {
   color:$palette-grey;
 }
@@ -49,7 +54,7 @@ body.admin-menu, .body-toolbar-drawer {
 }
 
 .form-control {
-  width:auto; 
+  width:auto;
 }
 
 .sr-only  {
@@ -73,16 +78,16 @@ iframe.flc-iframe {
  * Add font overrides from Fluid UI Options
  */
 
-.fl-font-prefsEditor-comic-sans *:not(.fa) {
+.fl-font-prefsEditor-comic-sans *:not(.fa):not(.fl-icon-undo) {
     font-family: "Comic Sans MS", sans-serif !important;
 }
 
-.fl-font-prefsEditor-times *:not(.fa) {
+.fl-font-prefsEditor-times *:not(.fa):not(.fl-icon-undo) {
     font-family: Georgia,Times,"Times New Roman",serif !important;
 }
-.fl-font-prefsEditor-arial *:not(.fa) {
-    font-family: "Arial" !important; 
+.fl-font-prefsEditor-arial *:not(.fa):not(.fl-icon-undo) {
+    font-family: "Arial" !important;
 }
-.fl-font-prefsEditor-verdana *:not(.fa) {
+.fl-font-prefsEditor-verdana *:not(.fa):not(.fl-icon-undo) {
     font-family: "Verdana" !important;
 }

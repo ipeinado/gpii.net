@@ -1,8 +1,8 @@
 $palette-navbar-light: #363636;
-$palette-navbar-dark: darken($palette-navbar-light, 15%);
+$palette-navbar-dark: #2d394a;
 
 $palette-white: #fff;
-$palette-red: #34509c;
+$palette-red: #e64d28;
 
 $palette-red-dark: darken($palette-red,10%);
 $palette-black: #000;
@@ -12,9 +12,9 @@ $palette-grey-dark: #474747;
 $palette-grey: #545c5d;
 $palette-grey-light: #a6afb0;
 
-$red-line-height: 8px;
-$navbar-height: 98px;
-$navbar-height-xs: 72px;
+$red-line-height: 4px;
+$navbar-height: 48px;
+$navbar-height-xs: 20px;
 
 $break-xs: 768px;
 $break-sm: 992px;
@@ -866,7 +866,7 @@ $kbd-color:                   #fff !default;
 $kbd-bg:                      #333 !default;
 
 $pre-bg:                      #f5f5f5 !default;
-$pre-color:                   $gray-dark !default; 
+$pre-color:                   $gray-dark !default;
 $pre-border-color:            #ccc !default;
 $pre-scrollable-max-height:   340px !default;
 

@@ -73,7 +73,7 @@
  * @ingroup themeable
  */
 ?>
-<div class="wrapper">
+<div id="wrap" class="wrapper">
   <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
     <div class="container">
       <div class="navbar-header">
@@ -104,7 +104,7 @@
                 <?php print render($primary_nav); ?>
               <?php endif; ?>
               <?php if (!empty($secondary_nav)): ?>
-                <?php print render($secondary_nav); ?>
+                <?php // print render($secondary_nav); ?>
               <?php endif; ?>
               <?php if (!empty($page['navigation'])): ?>
                 <?php print render($page['navigation']); ?>
@@ -161,32 +161,34 @@
       <?php endif; ?>
     </div>
   </div>
-  <div class="push"></div>
+  <div id="push"></div>
 </div>
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4 col-xs-12 footer-left">
-        <span class="fa-stack fa-lg">
-          <i style="color: #23a6df" class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-        </span>
-        <span class="fa-stack fa-lg">
-          <i style="color: #4c67a6" class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-        </span>
-        <span class="fa-stack fa-lg">
-          <i style="color: #0c78b7" class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-        </span>
-        <span class="fa-stack fa-lg">
-          <i style="color: #da4b36" class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
-        </span>
-      </div>
-      <div class="col-sm-8 col-xs-12 footer-right">
-        <?php print render($page['footer']); ?>
+<div id="footer-wrap">
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-xs-12 footer-left">
+          <span class="fa-stack fa-lg">
+            <i style="color: #23a6df" class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+          </span>
+          <span class="fa-stack fa-lg">
+            <i style="color: #4c67a6" class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+          </span>
+          <span class="fa-stack fa-lg">
+            <i style="color: #0c78b7" class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+          </span>
+          <span class="fa-stack fa-lg">
+            <i style="color: #da4b36" class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+          </span>
+        </div>
+        <div class="col-sm-8 col-xs-12 footer-right">
+          <?php print render($page['footer']); ?>
+        </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
+</div>

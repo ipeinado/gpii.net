@@ -3,12 +3,12 @@
 //
 
 .navbar-static-top {
-  z-index: 999 !important; 
-} 
+  z-index: 999 !important;
+}
 
 @media (max-width: $break-xs) {
 
-  header#navbar { 
+  header#navbar {
     height:$navbar-height-xs;
   }
   .navbar.navbar-inverse {
@@ -27,7 +27,7 @@
   }
   .navbar-collapse {
     & .navbar-nav.secondary {
-      float:right; 
+      float:right;
     }
     & .navbar-nav li {
       text-align:center;
@@ -71,17 +71,17 @@
       display:inline-block;
       float:left;
       margin:0 auto;
-      
+
       &.secondary {
         float:right;
-      } 
+      }
 
       & .dropdown-menu {
         background-color:$palette-red;
         border:none;
         & > li > a {
           padding:3px 10px;
-          color:$palette-white;
+          color:#000;
           &:hover, &.active {
             background-color:$palette-red-dark;
           }
@@ -179,13 +179,16 @@
 //
 
 
+
+
 header#navbar {
-  background: $navbar-gradient;
-  height:$navbar-height;
+  background: #fff;
+  height:auto;
 }
 
 .nav-search {
-  margin:0 auto;
+  margin:4em auto 0;
+
 }
 
 .dropdown-menu {
@@ -196,34 +199,51 @@ header#navbar {
   padding:0px;
 }
 
-.navbar.navbar-inverse {
-  background: $navbar-gradient;
-  border-radius:0px;
-  border:0px;
-  margin:0 auto;
+.navbar-toggle {
+  background-color: $palette-navbar-dark;
+}
 
-  & .navbar-header {
-
-    & .navbar-toggle {
-      margin:32px 15px;
-    }
-
-    & .navbar-brand {
-      color:#fff;
-      line-height:$navbar-height;
-      float:left;
-      margin:0px;
-      padding:0em 1em;
-    }
-  }
-
-  & .navbar-collapse {
-    text-align:center;
-    background: $navbar-gradient;
-    @media (min-width: $break-xs) and (max-width: $break-sm) {
-      & .navbar-form .search-form.navbar-form {
-        display:none;
+.navbar-collapse {
+  .navbar-nav, .navbar-collapse {
+    a.active, a.active-trail {
+      color: #000;
+      background: $palette-white;
+      &:hover, &:active {
+        background-color: $gray-lighter;
+        color: #000;
       }
     }
   }
+  .navbar-nav {
+    & > li {
+      & > a {
+        color: #000;
+        &:hover, &:active {
+          background-color: $gray-lighter;
+          color: #000;
+        }
+      }
+    }
+  }
+}
+
+.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
+    box-shadow: 2px 2px 3px 0px #6f6f6f;
+    border-bottom: 1px solid $palette-navbar-dark;
+    border-left: 1px solid $palette-navbar-dark;
+}
+
+.fl-prefsEditor-separatedPanel .fl-panelBar {
+  border-bottom: none;
+}
+
+// change the background color of the FluidUI navigation bar
+.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
+  background-color: $palette-navbar-dark;
+  color: #fff;
+}
+
+.fl-prefsEditor-separatedPanel .fl-prefsEditor-showHide, .fl-prefsEditor-separatedPanel .fl-prefsEditor-reset {
+  background-color: $palette-navbar-dark;
+  color: #fff;
 }

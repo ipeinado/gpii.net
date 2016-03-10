@@ -1,16 +1,11 @@
 // Bootstrap library.
 @import "partials/_variables.scss";
 @import "partials/_bootstrap-em.scss";
-@import "../bootstrap/assets/stylesheets/_bootstrap.scss";
+@import "../bootstrap/assets/stylesheets/_bootstrap.scss"; // required for fluid overrides
 @import "partials/_overrides.scss";
 @import "partials/_navbar.scss";
 @import "partials/_footer.scss";
 @import "partials/_breadcrumbs.scss";
 @import "partials/_drupal.scss";
 
-// html,body {
-//   font-family:$font-family-sans-serif;
-//   height:100%;
-// 	padding:0px;
-// 	margin:0px;
-// }
+
