@@ -1,0 +1,14 @@
+name = Staging Server Settings and Config
+description = Stores features specific to the staging server.
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = fe_block
+dependencies[] = features
+dependencies[] = menu
+features[fe_block_settings][] = menu-menu-gpii-sites-staging-
+features[features_api][] = api:2
+features[menu_custom][] = menu-gpii-sites-staging-
+features[menu_links][] = menu-gpii-sites-staging-_developerspace:http://staging.developerspace.gpii.net
+features[menu_links][] = menu-gpii-sites-staging-_gpii:http://staging.gpii.net
+features[menu_links][] = menu-gpii-sites-staging-_unified-listing:http://staging.saa.gpii.net
