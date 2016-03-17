@@ -1,0 +1,14 @@
+name = Development Server Settings and Config
+description = Stores features specific to the development server.
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = fe_block
+dependencies[] = features
+dependencies[] = menu
+features[fe_block_settings][] = menu-menu-gpii-sites-dev-
+features[features_api][] = api:2
+features[menu_custom][] = menu-gpii-sites-dev-
+features[menu_links][] = menu-gpii-sites-dev-_developerspace:http://dev.developerspace.gpii.net
+features[menu_links][] = menu-gpii-sites-dev-_gpii:http://dev.gpii.net
+features[menu_links][] = menu-gpii-sites-dev-_unified-listing:http://dev.saa.gpii.net
