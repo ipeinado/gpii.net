@@ -33,13 +33,13 @@ function go_local_dev() {
   drush_log(' ', 'ok');
 
   // Enable dev friendly modules. Be sure that they exist, else script can fail silently
-  $enable = array('devel', 'reroute_email', 'environment_indicator', 'dblog', 'update');
+  $enable = array('devel', 'reroute_email', 'environment_indicator', 'dblog', 'update', 'dev_server_settings_and_config');
   module_enable($enable, TRUE);
   drush_log(dt('Developer modules enabled: @modules', array('@modules' => implode(', ', $enable))), 'ok');
 
   // Disable any production modules that you don't want to run locally, like
   // CDN.
-  $disable = array('varnish');
+  $disable = array('staging_server_settings_and_config');
   module_disable($disable);
   drush_log(dt('Production modules disabled: @modules', array('@modules' => implode(', ', $disable))), 'ok');
 
@@ -97,13 +97,13 @@ function go_local_staging() {
   drush_log(' ', 'ok');
 
   // Enable dev friendly modules.
-  $enable = array('devel', 'reroute_email', 'environment_indicator', 'dblog', 'update');
+  $enable = array('devel', 'reroute_email', 'environment_indicator', 'dblog', 'update', 'staging_server_settings_and_config');
   module_enable($enable, TRUE);
   drush_log(dt('Developer modules enabled: @modules', array('@modules' => implode(', ', $enable))), 'ok');
 
   // Disable any production modules that you don't want to run locally, like
   // CDN.
-  $disable = array('apachesolr_exclude');
+  $disable = array('apachesolr_exclude', 'dev_server_settings_and_config');
   module_disable($disable);
   drush_log(dt('Production modules disabled: @modules', array('@modules' => implode(', ', $disable))), 'ok');
 
