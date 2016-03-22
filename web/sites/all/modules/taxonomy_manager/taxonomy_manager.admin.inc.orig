@@ -1879,46 +1879,26 @@ function taxonomy_manager_term_data_form_submit_parents_add($form, &$form_state)
   $parent_names = $term_data['parents']['op']['add'];
 
   $typed_terms = taxonomy_manager_autocomplete_tags_get_tids($parent_names, $term->vid, TRUE); //insert terms
-  foreach ($typed_terms as $parent_info) {
-    $new_tid = $parent_info['tid'];
-  }
 
   if (!isset($term->parent)) {
     $term->parent = array();
   }
 
-  // get the current parents first
-  $flag = FALSE;
-  $current_parents = taxonomy_get_parents($term->tid);
-  foreach ($current_parents as $key => $value) {
-    $term->parent[] = $key;
-    if ($key == $new_tid) {
-      $flag = TRUE;
-    }
+  foreach ($typed_terms as $parent_info) {
+    $term->parent[] = $parent_info['tid'];
   }
 
-  // Add on the new parent if it did not already exist.
-  if (!$flag) {
-    // If the current term's parent is only root, delete it.
-    $i = 0;
-    foreach ($term->parent as $p) {
-      if (is_array($p)) {
-        if ($p[0] == 0) {
-          unset($term->parent[$i]);
-        }
-      }
-      $i++;
-    }
-    $term->parent[] = $new_tid;
-    taxonomy_term_save($term); //executes hooks and clears caches
-    taxonomy_manager_update_voc($term->vid, taxonomy_get_parents($term->tid)); // update hierarchy settings, if necessary
-    drupal_set_message(t('Updated hierarchy'));
-    $form_state['rebuild'] = TRUE;
-    form_set_value(array('#parents' => array('tree-update')), array('update' => TRUE), $form_state);
-  }
-  else {
-    form_set_error('parents][op][add', t("Parent already exists."));
-  }
+  //remove root level entry
+  db_delete('taxonomy_term_hierarchy')
+    ->condition('tid', $term->tid)
+    ->condition('parent', 0)
+    ->execute();
+
+  taxonomy_term_save($term); //executes hooks and clears caches
+  taxonomy_manager_update_voc($term->vid, taxonomy_get_parents($term->tid)); // update hierarchy settings, if necessary
+  drupal_set_message(t('Updated hierarchy'));
+  $form_state['rebuild'] = TRUE;
+  form_set_value(array('#parents' => array('tree-update')), array('update' => TRUE), $form_state);
 }
 
 
