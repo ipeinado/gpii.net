@@ -1,0 +1,11 @@
+name = PatchInfo
+description = Track patch information via module info file
+package = Administration
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2016-03-09
+version = "7.x-1.0"
+core = "7.x"
+project = "patchinfo"
+datestamp = "1457548173"
+
