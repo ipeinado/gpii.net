@@ -6048,7 +6048,8 @@ iframe.flc-iframe {
 
 header#navbar {
   background: #fff;
-  height: auto; }
+  height: auto;
+  padding: 0; }
 
 .nav-search {
   margin: 4em auto 0; }
@@ -6091,6 +6092,9 @@ header#navbar {
   background-color: #2d394a;
   color: #fff; }
 
+#footer-wrap {
+  clear: both; }
+
 .wrapper {
   min-height: 100%;
   height: auto !important;
@@ -6098,11 +6102,12 @@ header#navbar {
   margin: 0 auto -8em; }
 
 .push {
-  height: 8em; }
+  height: 10em; }
 
 footer.footer {
-  height: 8em;
+  height: 10em;
   margin-top: 0;
+  padding-top: 2em;
   background-color: #2d394a;
   color: #fff; }
   footer.footer .footer-left {
