@@ -569,3 +569,20 @@ span.taxonomy-manager-message-close {
   display: inline;
 }
 
+/**
+ Customization for GPII
+*/
+
+#edit-toolbar {
+  position: fixed;
+  background-color: white;
+  z-index: 500;
+  bottom: 0px;
+  width: 92%;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#taxonomy-manager-tree-outer-div, #taxonomy2-manager-tree-outer-div {
+  padding-bottom: 5em;
+}
