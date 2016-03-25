@@ -559,7 +559,7 @@ function taxonomy_manager_add_form(&$form, $voc, $hide_form = TRUE) {
   $form['add']['add'] = array(
     '#type' => 'submit',
     '#attributes' => array('class' => array('taxonomy-manager-buttons', 'add')),
-    '#value' => t('Add'),
+    '#value' => t('Add to Taxonomy'),
     '#submit' => array('taxonomy_manager_form_add_submit'),
   );
   $form['add']['cancel'] = array(
