@@ -12,4 +12,4 @@ core = "7.x"
 project = "taxonomy_manager"
 datestamp = "1409647131"
 
-patch[] = https://www.drupal.org/node/2021649 Issue 2021649, Patch #5
+patch[] = https://www.drupal.org/node/2021649 Issue 2021649, Patch #5 + Customizations to CSS and +Add labels per requests from Denis
