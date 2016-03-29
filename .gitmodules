@@ -1,0 +1,3 @@
+[submodule "web/sites/all/modules/gpii-app"]
+	path = web/sites/all/modules/gpii-app
+	url = git@git.qualtim.com:GPII/gpii-app.git
