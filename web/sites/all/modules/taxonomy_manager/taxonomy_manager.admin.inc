@@ -228,7 +228,7 @@ function taxonomy_manager_double_tree_form($form, &$form_state, $voc1, $voc2, $t
   $form = taxonomy_manager_form($form, $form_state, $voc1, $tid, $filter);
 
   $form['disable'] = array(
-    '#markup' => l(t('Disable Double Tree'), 'admin/structure/taxonomy_manager/voc/ ' . $voc1->machine_name),
+    '#markup' => l(t('Disable Double Tree'), 'admin/structure/taxonomy_manager/voc/' . $voc1->machine_name),
     '#weight' => -100,
   );
 
