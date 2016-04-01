@@ -586,3 +586,7 @@ span.taxonomy-manager-message-close {
 #taxonomy-manager-tree-outer-div, #taxonomy2-manager-tree-outer-div {
   padding-bottom: 5em;
 }
+
+#taxonomy-term-data {
+  margin-bottom: 20em;
+}
