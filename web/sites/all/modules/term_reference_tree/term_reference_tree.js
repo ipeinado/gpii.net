@@ -86,7 +86,7 @@ Drupal.behaviors.termReferenceTree = {
           removeNothingSelectedMessage(track_list_container);
           var event_target = $(event.target);
           var control_id = event_target.attr('id');
-          if ( event_target.attr('checked') ) {
+          if ( event_target.is(':checked') ) {
             //Control checked - add item to the track list.
             label_element = event_target.next();
             addItemToTrackList(
@@ -114,7 +114,7 @@ Drupal.behaviors.termReferenceTree = {
           var event_target = $(event.target);
           var control_id = event_target.attr('id');
           var children = event_target.parent().next().children().children('div.form-type-checkbox').children('input[id^="' + control_id + '-children"]');
-          if(event_target.attr('checked')) {
+          if(event_target.is(':checked')) {
             //Checkbox checked - check children if none were checked.
             if(!$(children).filter(':checked').length) {
               $(children).click().trigger('change');
@@ -270,9 +270,9 @@ function checkMaxChoices(item, checkbox) {
       var input_type =
           ( item.has('input[type=checkbox]').size() > 0 ) ? 'checkbox' : 'radio';
 
-      if(checkbox.attr('checked')) {
+      if(checkbox.is(':checked')) {
         checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[type=checkbox]').each(function() {
-          $(this).attr('checked', checkbox.attr('checked'));
+          $(this).attr('checked', checkbox.is(':checked'));
 
           if(track_list_container) {
             label_element = $(this).next();

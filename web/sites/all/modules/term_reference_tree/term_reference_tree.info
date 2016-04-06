@@ -4,9 +4,12 @@ package = Fields
 core = 7.x
 dependencies[] = taxonomy
 
-; Information added by drupal.org packaging script on 2013-05-29
-version = "7.x-1.10"
+patch[] = https://www.drupal.org/node/2271719 Issue 2271719, Patch #3
+
+; Information added by drupal.org packaging script on 2013-10-19
+version = "7.x-1.10+0-dev"
 core = "7.x"
 project = "term_reference_tree"
-datestamp = "1369842362"
+datestamp = "1382146740"
+
 
