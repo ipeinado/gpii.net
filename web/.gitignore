@@ -5,6 +5,7 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 
-#misc 
+#misc
 stats/*
 php_errors.log
+xhprof_html

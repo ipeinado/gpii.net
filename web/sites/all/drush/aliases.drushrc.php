@@ -43,7 +43,7 @@ $aliases['gpiidev'] = array(
   'path-aliases' => array(
     '%dump' => '/tmp/dump.sql',
     '%dump-dir' => '/tmp',
-    '%files' => 'sites/gpii.net/files',
+    '%files' => 'sites/gpii.net/files'
   ),
 );
 

@@ -97,25 +97,25 @@ function go_local_staging() {
   drush_log(' ', 'ok');
 
   // Enable dev friendly modules.
-  $enable = array('devel', 'reroute_email', 'environment_indicator', 'dblog', 'update', 'staging_server_settings_and_config');
+  $enable = array('devel', 'environment_indicator', 'dblog', 'update', 'staging_server_settings_and_config');
   module_enable($enable, TRUE);
   drush_log(dt('Developer modules enabled: @modules', array('@modules' => implode(', ', $enable))), 'ok');
 
   // Disable any production modules that you don't want to run locally, like
   // CDN.
-  $disable = array('apachesolr_exclude', 'dev_server_settings_and_config');
+  $disable = array('apachesolr_exclude', 'dev_server_settings_and_config', 'reroute_email');
   module_disable($disable);
   drush_log(dt('Production modules disabled: @modules', array('@modules' => implode(', ', $disable))), 'ok');
 
   // Make sure the rerouting of email is turned on so we don't send emails to
   // actual users from our local installations.
-  if(module_exists('reroute_email')) {
-    variable_set('reroute_email_enable', 1);
-    variable_set('reroute_email_address', 'bcaldwell@pushing7.com');
-    drush_log("Email is being rerouted to bcaldwell@pushing7.com by the reroute_email module.", 'ok');
-  } else {
-    drush_log('Reroute_email module not present. Emails will be sent to users!', 'warning');
-  }
+  // if(module_exists('reroute_email')) {
+  //   variable_set('reroute_email_enable', 1);
+  //   variable_set('reroute_email_address', 'bcaldwell@pushing7.com');
+  //   drush_log("Email is being rerouted to bcaldwell@pushing7.com by the reroute_email module.", 'ok');
+  // } else {
+  //   drush_log('Reroute_email module not present. Emails will be sent to users!', 'warning');
+  // }
 
   // Allow everyone to see devel messages like dpm().
   if(module_exists('devel')) {
