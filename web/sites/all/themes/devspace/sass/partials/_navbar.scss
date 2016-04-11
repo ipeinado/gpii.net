@@ -93,7 +93,6 @@
         & > a, & > span.nolink {
           color:#fff;
           height:$navbar-height;
-          display:table-cell;
           vertical-align:middle;
           &:hover {
             cursor:pointer;
@@ -109,9 +108,9 @@
         left:50%;
         margin-left: -15px;
         bottom:0px;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-bottom: 8px solid $palette-red;
+        // border-left: 15px solid transparent;
+        // border-right: 15px solid transparent;
+        // border-bottom: 8px solid $palette-red;
         z-index:1000;
       }
       & > .active > a, & > .active-trail > a, & > .active-trail > span {
@@ -152,7 +151,6 @@
         & > li > a {
           &:hover, &.active {
             color:$palette-white;
-            background-color:$palette-red;
           }
         }
       }
@@ -178,6 +176,33 @@
 // MISC STYLES
 //
 
+#navbar {
+  ul.menu {
+    ul.dropdown-menu {
+      background: rgba(255, 255, 255, .95);
+      li {
+        padding: 3px;
+        a, a.active  {
+          &:hover, &:active, &:focus {
+            text-decoration: underline;
+            background: $gray-lighter;
+          }
+        }
+      }
+    }
+    .dropdown-menu {
+      .highlighted {
+        background: $gray-lighter;
+      }
+      .active-trail, .active {
+        // set active background color here
+        color: black;
+        background: $gray-lighter;
+        font-weight: bold;
+      }
+    }
+  }
+}
 
 
 
@@ -209,11 +234,17 @@ header#navbar {
     a.active, a.active-trail {
       color: #000;
       background: $palette-white;
+      background-color: $palette-white;
       &:hover, &:active {
         background-color: $gray-lighter;
         color: #000;
       }
     }
+  }
+
+  .navbar-collapse .navbar-nav .dropdown-menu {
+    background-color: $gray-lighter;
+    border: none;
   }
   .navbar-nav {
     & > li {

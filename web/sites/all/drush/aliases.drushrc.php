@@ -118,7 +118,7 @@ $aliases['saaprod'] = array(
 );
 
 $aliases['saastaging'] = array(
-  'uri' => 'staging.saa.gpii.net',
+  'uri' => 'saa.gpii.net',
   'root' => '/var/www/clients/client3/web18/web',
   'remote-host' => '192.168.123.74',
   'remote-user' => 'p7rtfweb',
@@ -130,13 +130,22 @@ $aliases['saastaging'] = array(
 );
 
 $aliases['saadev'] = array(
-  'uri' => 'dev.saa.gpii.net',
-  'root' => '/var/www/developerspace.gpii.net',
+  'uri' => 'saa.gpii.net',
+  'root' => '/var/www/dev.gpii.net',
   'remote-host' => '127.0.0.1',
   'remote-user' => 'caldwell',
   'path-aliases' => array(
     '%dump' => '/tmp/dump.sql',
     '%dump-dir' => '/tmp',
     '%files' => 'sites/saa.gpii.net/files',
+  ),
+   // Read only - force the sql-sync & rsync to simulate transfer to this server
+  'command-specific' => array (
+    'sql-sync' => array (
+      'simulate' => '0',
+    ),
+    'rsync' => array (
+      'simulate' => '0',
+    ),
   ),
 );

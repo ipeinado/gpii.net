@@ -23,3 +23,11 @@ regions[page_bottom]    = 'Page bottom'
 ;;;;;;;;;;;;;;;;;;;;;
 
 stylesheets[all][] = css/style.css
+stylesheets[all][] = js/jquery.smartmenus.bootstrap.css
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Scripts
+;;;;;;;;;;;;;;;;;;;;;
+
+scripts[] = 'js/jquery.smartmenus.js'
+scripts[] = 'js/jquery.smartmenus.bootstrap.js'

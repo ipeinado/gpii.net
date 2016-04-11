@@ -27,18 +27,35 @@
 
   function devspace_menu_tree($variables) {
     if (preg_match("/^menu_tree__book_toc/",$variables['theme_hook_original']) === 1) {
-      return theme_menu_tree($variables); 
+      return theme_menu_tree($variables);
     } else {
-      return bootstrap_menu_tree($variables); 
+      return bootstrap_menu_tree($variables);
     }
   }
 
-  function devspace_menu_link($variables) {
-    if (preg_match("/^menu_link__book_toc/",$variables['theme_hook_original']) === 1) {
-      return theme_menu_link($variables); 
-    } else {
-      return bootstrap_menu_link($variables); 
-    }
-  }
+  // function devspace_menu_link($variables) {
+  //   if (preg_match("/^menu_link__book_toc/",$variables['theme_hook_original']) === 1) {
+  //     return theme_menu_link($variables);
+  //   } else {
+  //     return bootstrap_menu_link($variables);
+  //   }
+  // }
+
+/**
+ * Override or insert variables into various bean templates.
+ * dpm() calls below will work if you temporary switch the function call to devspace_process_entity
+ */
+// function devspace_preprocess_entity(&$variables) {
+//   //dpm($variables);
+//   $frontpagebeans = array(3, 4, 5, 6); // ids for the front page jumbotron
+//   if ($variables['entity_type'] == 'bean') {
+//     if ($variables['bean']->type == 'basic_block') {
+//       //dpm($variables['bean']->bid);
+//       if (in_array($variables['bean']->bid, $frontpagebeans)) {
+//         $variables['classes_array'][] = 'col-md-3';
+//       }
+//     }
+//   }
+// }
 
 ?>

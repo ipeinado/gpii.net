@@ -6,15 +6,15 @@
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -8em;
+  margin: 0 auto -30rem;
 }
 
-.push {
-  height:10em;
+#push {
+  height:40rem;
 }
 
 footer.footer {
-  height: 10em;
+  clear:both;
   margin-top:0;
   padding-top: 2em;
   background-color:$palette-navbar-dark;

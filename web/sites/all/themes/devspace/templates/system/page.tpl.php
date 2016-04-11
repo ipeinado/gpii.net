@@ -118,6 +118,13 @@
       <?php endif; ?>
     </div>
   </header>
+  <div class="row">
+    <section<?php print $content_column_class; ?>>
+      <?php if (!empty($page['highlighted'])): ?>
+        <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?></div></div>
+      <?php endif; ?>
+    </section>
+  </div>
   <div class="main-container container">
     <header role="banner" id="page-header">
       <?php if (!empty($site_slogan)): ?>
@@ -125,6 +132,7 @@
       <?php endif; ?>
       <?php print render($page['header']); ?>
     </header> <!-- /#page-header -->
+
     <div class="row">
       <?php if (!empty($page['sidebar_first'])): ?>
         <aside class="col-sm-3" role="complementary">
@@ -132,9 +140,6 @@
         </aside>  <!-- /#sidebar-first -->
       <?php endif; ?>
       <section<?php print $content_column_class; ?>>
-        <?php if (!empty($page['highlighted'])): ?>
-          <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
-        <?php endif; ?>
         <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
         <a id="main-content"></a>
         <?php print render($title_prefix); ?>
@@ -167,24 +172,7 @@
   <footer class="footer">
     <div class="container">
       <div class="row">
-        <div class="col-sm-4 col-xs-12 footer-left">
-          <span class="fa-stack fa-lg">
-            <i style="color: #23a6df" class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-          </span>
-          <span class="fa-stack fa-lg">
-            <i style="color: #4c67a6" class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-          </span>
-          <span class="fa-stack fa-lg">
-            <i style="color: #0c78b7" class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-          </span>
-          <span class="fa-stack fa-lg">
-            <i style="color: #da4b36" class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
-          </span>
-        </div>
+
         <div class="col-sm-8 col-xs-12 footer-right">
           <?php print render($page['footer']); ?>
         </div>

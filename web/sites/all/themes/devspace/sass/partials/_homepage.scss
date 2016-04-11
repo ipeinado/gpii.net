@@ -1,0 +1,38 @@
+/**
+ * Home Page Specific Styles
+ */
+
+body.front {
+  .region-highlighted {
+    #block-bean-shopping-options {
+      h2 {
+        text-align: center;
+        margin-top: 0;
+      }
+
+      margin-bottom: 1em;
+    }
+    #block-bean-browse-virtual-stores, #block-bean-question-and-answer-search, #block-bean-simple-search, #block-bean-advanced-search {
+      .entity-bean {
+        border: 1px solid #ddd;
+        border: 1px solid rgba(86,61,124,.2);
+        padding: 1.5em 1.5em;
+        margin-bottom: 1.5em;
+      }
+
+
+
+      p {
+        text-align: center;
+      }
+      h2 {
+        text-align: center;
+      }
+    }
+  }
+  /*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+
+}

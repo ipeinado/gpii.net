@@ -28,7 +28,7 @@ function dev_server_settings_and_config_default_fe_block_settings() {
         'weight' => 0,
       ),
       'devspace' => array(
-        'region' => 'sidebar_second',
+        'region' => '',
         'status' => 1,
         'theme' => 'devspace',
         'weight' => -14,
