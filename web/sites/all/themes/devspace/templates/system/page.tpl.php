@@ -173,7 +173,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-sm-8 col-xs-12 footer-right">
+        <div class="col-sm-6 col-md-12 footer-right">
           <?php print render($page['footer']); ?>
         </div>
       </div>
