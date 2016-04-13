@@ -5940,6 +5940,54 @@ iframe.flc-iframe {
 .fl-font-prefsEditor-verdana *:not(.fa):not(.fl-icon-undo) {
   font-family: "Verdana" !important; }
 
+.field-name-body .container {
+  padding-left: 0;
+  padding-right: 15px; }
+
+#block-system-main #search-api-page-search-form .form-item-keys-1 {
+  float: left; }
+
+#block-system-main #edit-submit-1 {
+  margin-top: 1.68em; }
+
+#qademo {
+  /* Button 4 */
+  /* Button 4a */ }
+  #qademo a {
+    color: #000; }
+    #qademo a:visited {
+      color: #000; }
+  #qademo .icon-arrow-right:before {
+    content: "\e00d"; }
+  #qademo .btn-4 {
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 10px;
+    border: 2px solid #777777;
+    width: 45%;
+    text-align: left;
+    background: #f4f4f4; }
+  #qademo .btn-4:active {
+    border-color: #17954c; }
+  #qademo .btn-4:hover {
+    background: #85d0e7; }
+  #qademo .btn-4:before {
+    position: absolute;
+    height: 100%;
+    font-size: 125%;
+    line-height: 3.5;
+    color: #fff;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s; }
+  #qademo .btn-4:active:before {
+    color: #17954c; }
+  #qademo .btn-4a:before {
+    left: 130%;
+    top: 0; }
+  #qademo .btn-4a:hover:before {
+    left: 80%; }
+
 .navbar-static-top {
   z-index: 999 !important; }
 
@@ -6146,6 +6194,8 @@ footer.footer {
     color: #a6afb0; }
     footer.footer a:hover {
       color: #fff; }
+  footer.footer h2.block-title {
+    margin-top: 0.5em; }
 
 ol.breadcrumb {
   background-color: transparent;
@@ -6198,10 +6248,13 @@ body.front {
       text-align: center;
       margin-top: 0; }
   body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean, body.front .region-highlighted #block-bean-simple-search .entity-bean, body.front .region-highlighted #block-bean-advanced-search .entity-bean {
-    border: 1px solid #ddd;
-    border: 1px solid rgba(86, 61, 124, 0.2);
+    border: 2px solid #ddd;
+    border: 2px solid rgba(86, 61, 124, 0.2);
     padding: 1.5em 1.5em;
-    margin-bottom: 1.5em; }
+    margin-bottom: 1.5em;
+    border-radius: 20px; }
+    body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean:hover, body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean:focus, body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean:active, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean:hover, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean:focus, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean:active, body.front .region-highlighted #block-bean-simple-search .entity-bean:hover, body.front .region-highlighted #block-bean-simple-search .entity-bean:focus, body.front .region-highlighted #block-bean-simple-search .entity-bean:active, body.front .region-highlighted #block-bean-advanced-search .entity-bean:hover, body.front .region-highlighted #block-bean-advanced-search .entity-bean:focus, body.front .region-highlighted #block-bean-advanced-search .entity-bean:active {
+      background-color: #f4f4f4; }
   body.front .region-highlighted #block-bean-browse-virtual-stores p, body.front .region-highlighted #block-bean-question-and-answer-search p, body.front .region-highlighted #block-bean-simple-search p, body.front .region-highlighted #block-bean-advanced-search p {
     text-align: center; }
   body.front .region-highlighted #block-bean-browse-virtual-stores h2, body.front .region-highlighted #block-bean-question-and-answer-search h2, body.front .region-highlighted #block-bean-simple-search h2, body.front .region-highlighted #block-bean-advanced-search h2 {

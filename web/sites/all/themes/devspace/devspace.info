@@ -31,3 +31,5 @@ stylesheets[all][] = js/jquery.smartmenus.bootstrap.css
 
 scripts[] = 'js/jquery.smartmenus.js'
 scripts[] = 'js/jquery.smartmenus.bootstrap.js'
+scripts[] = 'js/classie.js'
+scripts[] = 'js/modernizr.custom.js'

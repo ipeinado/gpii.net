@@ -92,3 +92,79 @@ iframe.flc-iframe {
 .fl-font-prefsEditor-verdana *:not(.fa):not(.fl-icon-undo) {
     font-family: "Verdana" !important;
 }
+
+.field-name-body {
+  .container {
+    padding-left:0;
+    padding-right: 15px;;
+  }
+}
+
+#block-system-main {
+  #search-api-page-search-form {
+    .form-item-keys-1 {
+      float:left;
+
+ } }
+  #edit-submit-1 {
+    margin-top: 1.68em;
+  }
+}
+
+#qademo {
+  a {
+    color: #000;
+    &:visited {
+      color: #000;
+    }
+  }
+  .icon-arrow-right:before {
+    content: "\e00d";
+  }
+
+  /* Button 4 */
+  .btn-4 {
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 10px;
+    border: 2px solid $gray-light;
+    width: 45%;
+    text-align: left;
+    background: lighten($gray-lighter, 2%);
+
+  }
+
+  .btn-4:active {
+    border-color: #17954c;
+  }
+
+  .btn-4:hover {
+    background: lighten($brand-info, 10%);
+  }
+
+  .btn-4:before {
+    position: absolute;
+    height: 100%;
+    font-size: 125%;
+    line-height: 3.5;
+    color: #fff;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  .btn-4:active:before {
+    color: #17954c;
+  }
+
+  /* Button 4a */
+  .btn-4a:before {
+    left: 130%;
+    top: 0;
+  }
+
+  .btn-4a:hover:before {
+    left: 80%;
+  }
+}
+
