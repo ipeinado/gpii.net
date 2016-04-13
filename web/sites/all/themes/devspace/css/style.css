@@ -5950,6 +5950,9 @@ iframe.flc-iframe {
 #block-system-main #edit-submit-1 {
   margin-top: 1.68em; }
 
+#block-system-main .search-performance {
+  clear: both; }
+
 #qademo {
   /* Button 4 */
   /* Button 4a */ }
