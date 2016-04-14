@@ -44,8 +44,8 @@ footer.footer {
       color:#fff;
     }
   }
-  h2.block-title {
-    margin-top: 0.5em;
+  .block:first-child h2.block-title, h2.block-title {
+    margin-top: 0;
   }
 }
 

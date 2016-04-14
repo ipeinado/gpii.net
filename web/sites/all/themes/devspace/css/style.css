@@ -6197,8 +6197,8 @@ footer.footer {
     color: #a6afb0; }
     footer.footer a:hover {
       color: #fff; }
-  footer.footer h2.block-title {
-    margin-top: 0.5em; }
+  footer.footer .block:first-child h2.block-title, footer.footer h2.block-title {
+    margin-top: 0; }
 
 ol.breadcrumb {
   background-color: transparent;
@@ -6272,11 +6272,11 @@ body.front {
 .page-header {
   margin: 1rem 0 1rem; }
 
-body.page-search-advanced h2 {
+body.page-search-advanced #block-system-main h2 {
   color: #222222;
   font-size: 1.7em; }
 
-body.page-search-advanced a {
+body.page-search-advanced #block-system-main a {
   color: #555555; }
 
 body.page-search-advanced .col-xs-6 .form-group {

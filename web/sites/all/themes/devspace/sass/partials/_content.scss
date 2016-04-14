@@ -11,14 +11,17 @@
 }
 
 body.page-search-advanced {
-  h2 {
-    color: $gray-darker;
-    font-size: 1.7em;
-  }
-  a {
-    color: $gray;
+  #block-system-main {
+    h2 {
+      color: $gray-darker;
+      font-size: 1.7em;
+    }
+    a {
+      color: $gray;
+    }
   }
   .col-xs-6 {
+
     .form-group {
       margin-bottom: 0;
     }
