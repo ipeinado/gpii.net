@@ -6262,3 +6262,33 @@ body.front {
     text-align: center; }
   body.front .region-highlighted #block-bean-browse-virtual-stores h2, body.front .region-highlighted #block-bean-question-and-answer-search h2, body.front .region-highlighted #block-bean-simple-search h2, body.front .region-highlighted #block-bean-advanced-search h2 {
     text-align: center; }
+
+/**
+ * Advanced Search
+ */
+.main-container {
+  margin-top: 0; }
+
+.page-header {
+  margin: 1rem 0 1rem; }
+
+body.page-search-advanced h2 {
+  color: #222222;
+  font-size: 1.7em; }
+
+body.page-search-advanced a {
+  color: #555555; }
+
+body.page-search-advanced .col-xs-6 .form-group {
+  margin-bottom: 0; }
+
+body.page-search-advanced .col-xs-6 .form-group + div {
+  display: none; }
+
+body.page-search-advanced .col-xs-6 .ng-scope h2 {
+  margin-top: 0; }
+
+body.page-search-advanced .list-group-item-heading {
+  font-size: 1.2em; }
+  body.page-search-advanced .list-group-item-heading a {
+    text-decoration: underline; }

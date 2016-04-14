@@ -1,0 +1,40 @@
+/**
+ * Advanced Search
+ */
+
+.main-container {
+  margin-top: 0;
+}
+
+.page-header {
+  margin: 1rem 0 1rem;
+}
+
+body.page-search-advanced {
+  h2 {
+    color: $gray-darker;
+    font-size: 1.7em;
+  }
+  a {
+    color: $gray;
+  }
+  .col-xs-6 {
+    .form-group {
+      margin-bottom: 0;
+    }
+    .form-group + div {
+      display: none;
+    }
+    .ng-scope {
+      h2 {
+        margin-top: 0;
+      }
+    }
+  }
+  .list-group-item-heading {
+    font-size: 1.2em;
+    a {
+      text-decoration: underline;
+    }
+  }
+}
