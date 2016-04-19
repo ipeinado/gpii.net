@@ -38,5 +38,19 @@ body.front {
  * Row with equal height columns
  * --------------------------------------------------
  */
+ h1.page-header {
+  display: none;
+ }
+}
 
+#jumbotron-wrap {
+  background-color: $gray-lighter;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 2em;
+  margin-top: 0;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }

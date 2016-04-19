@@ -118,12 +118,14 @@
       <?php endif; ?>
     </div>
   </header>
-  <div class="row">
-    <section<?php print $content_column_class; ?>>
-      <?php if (!empty($page['highlighted'])): ?>
-        <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?></div></div>
-      <?php endif; ?>
-    </section>
+  <div id="jumbotron-wrap">
+    <div class="row">
+      <section<?php print $content_column_class; ?>>
+        <?php if (!empty($page['highlighted'])): ?>
+          <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?></div></div>
+        <?php endif; ?>
+      </section>
+    </div>
   </div>
   <div class="main-container container">
     <header role="banner" id="page-header">

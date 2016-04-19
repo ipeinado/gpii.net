@@ -6,11 +6,11 @@
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -30rem;
+  margin: 0 auto -26rem;
 }
 
 #push {
-  height:40rem;
+  height:38rem;
 }
 
 footer.footer {
@@ -46,6 +46,10 @@ footer.footer {
   }
   .block:first-child h2.block-title, h2.block-title {
     margin-top: 0;
+  }
+  #block-bean-footer-social-media-links {
+    text-align: left;
+    margin-top: 1em;
   }
 }
 

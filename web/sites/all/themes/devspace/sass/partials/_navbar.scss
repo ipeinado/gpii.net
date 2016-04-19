@@ -1,3 +1,7 @@
+header#navbar {
+  margin-bottom:0;
+}
+
 //
 // XS MEDIA QUERY
 //
@@ -60,7 +64,7 @@
 // SM+ MEDIA QUERY
 //
 
-@media (min-width:$break-xs) {
+@media (min-width:$break-sm) {
 
   .nav > li > a, .nav > li > span.nolink {
     padding:10px 10px;
@@ -132,7 +136,7 @@
       }
     }
   }
-  .navbar.navbar-inverse {
+  .navbar {
 
     & > nav {
         height:$navbar-height;
@@ -190,7 +194,7 @@
         }
       }
     }
-    .dropdown-menu {
+    .dropdown {
       .highlighted {
         background: $gray-lighter;
       }
@@ -198,7 +202,6 @@
         // set active background color here
         color: black;
         background: $gray-lighter;
-        font-weight: bold;
       }
     }
   }

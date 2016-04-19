@@ -9,3 +9,4 @@ sites/*/private
 stats/*
 php_errors.log
 xhprof_html
+sites/all/themes/devspace/node_modules/*
