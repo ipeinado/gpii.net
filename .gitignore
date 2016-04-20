@@ -4,3 +4,4 @@ web/sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 web/sites/*/files
 web/sites/*/private
+web/sites/all/themes/devspace/node_modules/*
