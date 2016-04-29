@@ -19,7 +19,16 @@ footer.footer {
   padding-top: 2em;
   background-color:$palette-navbar-dark;
   color:$palette-white;
-
+  .block {
+    margin-bottom: 1.5em;
+    h2 {
+      color: $palette-red;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0.25rem;
+    }
+  }
   & .footer-left {
     text-align:left;
     @media (max-width: $break-xs) {
@@ -51,6 +60,13 @@ footer.footer {
     text-align: left;
     margin-top: 1em;
   }
+  .nav > li > a, .nav > li > span.nolink {
+    padding: 0;
+  }
+  .nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: underline;
+    background-color: transparent;
+}
 }
 
 

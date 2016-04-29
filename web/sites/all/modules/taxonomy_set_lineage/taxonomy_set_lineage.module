@@ -1,0 +1,135 @@
+<?php
+
+
+/**
+ * @file
+ * Taxonomy set Lineage makes sure that for chosen vocabularies, parent terms 
+ * are also selected.  
+ * 
+ * If any vocabularies are have lineage set, we check entities when they are
+ * saved to see if they have fields referring to these vocabularies.  If so,
+ * we automatically select all parent terms of manually selected terms.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function taxonomy_set_lineage_menu() {
+  $items['admin/structure/taxonomy/taxonomy_set_lineage'] = array(
+    'title' => 'Taxonomy Set Lineage',
+    'description' => 'Configuration for the Taxonomy Set Lineage module.',
+    'file' => 'taxonomy_set_lineage.admin.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('taxonomy_set_lineage_config_form'),
+    'access arguments' => array('administer taxonomy'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_entity_presave().
+ * 
+ * Sets parent terms when entity is saved.
+ */
+function taxonomy_set_lineage_entity_presave($entity, $type) {
+
+  $wanted_vocabs = variable_get('taxonomy_set_lineage_affected_taxonomies', array());
+  if (!empty($wanted_vocabs)) {
+    foreach ($wanted_vocabs as $wanted_vocab) {
+      if ($wanted_vocab !== 0) {
+        $field_name = _taxonomy_set_lineage_vocab_to_instance_field_name($entity, $type, $wanted_vocab);
+        if (!empty($field_name)) {
+          _taxonomy_set_lineage_activate_parents($entity, $field_name);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Finds out which entity field name contains reference to sought taxonomy.
+ * 
+ * @param object $entity
+ *   The entity being saved.
+ * @param string $entity_type
+ *   The type of the entity being saved.
+ * @param string $taxonomy_machine_name
+ *   The machine name of the taxonomy for which we want to set parentage
+ * 
+ * @return string
+ *   The machine name of the field which we want to manipulate
+ */
+function _taxonomy_set_lineage_vocab_to_instance_field_name($entity, $entity_type, $taxonomy_machine_name) {
+  list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+  foreach (field_info_instances($entity_type, $bundle) as $instance) {
+    $field = field_info_field_by_id($instance['field_id']);
+    if ($field['type'] === 'taxonomy_term_reference') {
+      $found_vocab_machine_name = $field['settings']['allowed_values'][0]['vocabulary'];
+      // If the vocab we are looking for is found in field, return field name.
+      if ($found_vocab_machine_name === $taxonomy_machine_name) {
+        return $field['field_name'];
+      }
+    }
+  }
+}
+
+/**
+ * Activates all parent terms of any changed terms.
+ * 
+ * For all languages that are set on this vocabulary we check to see if they 
+ * are changed from original entity i.e. were they just edited?
+ * If so, we pull down their terms and save lineage (all parent terms) on them. 
+ * Only changing the language which was just edited follows the principle of 
+ * least surprise, and prevents us from having to do heuristics about the 
+ * drupal translation context.
+ * 
+ * Because this module works on one field at a time, and only fields+languages
+ * that have changed at save time, if you change the taxonomy heirarchy and save
+ * a node, without changing which terms are selected this module will do nothing
+ * 
+ * @param object $entity
+ *   The entity being saved.
+ * @param string $tax_field_name
+ *   The machine name of the field which we want to manipulate
+ */
+function _taxonomy_set_lineage_activate_parents($entity, $tax_field_name) {
+  // Is there something to do?
+  if (isset($entity->{$tax_field_name}) && is_array($entity->{$tax_field_name})) {
+    foreach ($entity->{$tax_field_name} as $lang_code => $language) {
+      // Two loops to check for changes. First the new state.
+      $tidsnew = array();
+      foreach ($language as $term) {
+        $tidsnew[] = isset($term['tid']) ? $term['tid'] : NULL;
+      }
+      // Now the old version of the entity.
+      $tidsold = array();
+      if (isset($entity->original->{$tax_field_name}[$lang_code])) {
+        foreach ($entity->original->{$tax_field_name}[$lang_code] as $term) {
+          $tidsold[] = isset($term['tid']) ? $term['tid'] : NULL;
+        }
+      }
+      // Are there changes?
+      asort($tidsnew);
+      asort($tidsold);
+      if (count(array_diff($tidsnew, $tidsold)) > 0 || count(array_diff($tidsold, $tidsnew)) > 0) {
+        // This field and language have changed tids, we need to select parents.
+        foreach ($language as $term) {
+          // Get full ancestry of term... carefull, it includes our term also.
+          $parent_term_objects = taxonomy_get_parents_all($term['tid']);
+          if (count($parent_term_objects) > 1) {
+            foreach ($parent_term_objects as $parent) {
+              // Filter out ourselves, terms added as parents of other terms and
+              // terms already selected during save ($tidsnew).
+              if ($term['tid'] !== $parent->tid && !in_array($parent->tid, $tidsnew)) {
+                $entity->{$tax_field_name}[$lang_code][] = array('tid' => $parent->tid);
+                $tidsnew[] = $parent->tid;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

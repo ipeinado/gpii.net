@@ -1,0 +1,12 @@
+name = Taxonomy Set Lineage
+description = Automatically selects parent terms in chosen vocabularies
+core = 7.x
+dependencies[] = taxonomy
+package = Taxonomy
+
+; Information added by Drupal.org packaging script on 2014-06-18
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "taxonomy_set_lineage"
+datestamp = "1403087631"
+

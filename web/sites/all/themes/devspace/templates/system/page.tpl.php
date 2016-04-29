@@ -118,15 +118,62 @@
       <?php endif; ?>
     </div>
   </header>
+  <?php if (!empty($page['highlighted'])): ?>
   <div id="jumbotron-wrap">
     <div class="row">
       <section<?php print $content_column_class; ?>>
         <?php if (!empty($page['highlighted'])): ?>
-          <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?></div></div>
+          <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?>
+            <div class="row row-flex row-flex-wrap">
+              <div class="col-sm-6 col-md-3">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'browse-virtual-stores');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                 </div>
+              </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'question-and-answer-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'simple-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'advanced-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+
+            </div><!--/row-->
+          </div>
+        </div>
         <?php endif; ?>
       </section>
     </div>
   </div>
+  <?php endif; ?>
   <div class="main-container container">
     <header role="banner" id="page-header">
       <?php if (!empty($site_slogan)): ?>

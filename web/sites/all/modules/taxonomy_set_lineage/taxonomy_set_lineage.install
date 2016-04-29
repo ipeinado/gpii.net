@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Installation file for Taxonomy Set Lineage module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function taxonomy_set_lineage_uninstall() {
+  variable_del('taxonomy_set_lineage_affected_taxonomies');
+}

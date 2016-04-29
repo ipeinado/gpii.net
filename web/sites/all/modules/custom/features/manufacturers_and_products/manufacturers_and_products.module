@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Manufacturers and Products feature.
+ */
+
+include_once 'manufacturers_and_products.features.inc';

@@ -5873,7 +5873,7 @@ h1 {
   font-size: 2.5em; }
 
 h2 {
-  color: #e64d28;
+  color: #2d394a;
   font-size: 1.9em; }
 
 h3 {
@@ -5898,10 +5898,10 @@ input.form-control {
   color: #fff; }
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
     background-color: #db3f19;
-    border: #db3f19; }
+    border: #ad3214; }
 
 a {
-  color: #e64d28; }
+  color: #2d394a; }
   a:hover, a:focus, a:active, a:visited {
     color: #db3f19; }
 
@@ -6180,6 +6180,13 @@ footer.footer {
   padding-top: 2em;
   background-color: #2d394a;
   color: #fff; }
+  footer.footer .block {
+    margin-bottom: 1.5em; }
+    footer.footer .block h2 {
+      color: #e64d28; }
+    footer.footer .block ul {
+      list-style: none;
+      padding-left: 0.25rem; }
   footer.footer .footer-left {
     text-align: left; }
     @media (max-width: 768px) {
@@ -6204,6 +6211,11 @@ footer.footer {
   footer.footer #block-bean-footer-social-media-links {
     text-align: left;
     margin-top: 1em; }
+  footer.footer .nav > li > a, footer.footer .nav > li > span.nolink {
+    padding: 0; }
+  footer.footer .nav > li > a:hover, footer.footer .nav > li > a:focus {
+    text-decoration: underline;
+    background-color: transparent; }
 
 ol.breadcrumb {
   background-color: transparent;
@@ -6250,35 +6262,63 @@ body.front {
  * Row with equal height columns
  * --------------------------------------------------
  */ }
-  body.front .region-highlighted #block-bean-shopping-options {
-    margin-bottom: 1em; }
-    body.front .region-highlighted #block-bean-shopping-options h2 {
-      text-align: center;
-      margin-top: 0; }
-  body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean, body.front .region-highlighted #block-bean-simple-search .entity-bean, body.front .region-highlighted #block-bean-advanced-search .entity-bean {
-    border: 2px solid #ddd;
-    border: 2px solid rgba(86, 61, 124, 0.2);
-    padding: 1.5em 1.5em;
-    margin-bottom: 1.5em;
-    border-radius: 20px; }
-    body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean:hover, body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean:focus, body.front .region-highlighted #block-bean-browse-virtual-stores .entity-bean:active, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean:hover, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean:focus, body.front .region-highlighted #block-bean-question-and-answer-search .entity-bean:active, body.front .region-highlighted #block-bean-simple-search .entity-bean:hover, body.front .region-highlighted #block-bean-simple-search .entity-bean:focus, body.front .region-highlighted #block-bean-simple-search .entity-bean:active, body.front .region-highlighted #block-bean-advanced-search .entity-bean:hover, body.front .region-highlighted #block-bean-advanced-search .entity-bean:focus, body.front .region-highlighted #block-bean-advanced-search .entity-bean:active {
-      background-color: #f4f4f4; }
-  body.front .region-highlighted #block-bean-browse-virtual-stores p, body.front .region-highlighted #block-bean-question-and-answer-search p, body.front .region-highlighted #block-bean-simple-search p, body.front .region-highlighted #block-bean-advanced-search p {
-    text-align: center; }
-  body.front .region-highlighted #block-bean-browse-virtual-stores h2, body.front .region-highlighted #block-bean-question-and-answer-search h2, body.front .region-highlighted #block-bean-simple-search h2, body.front .region-highlighted #block-bean-advanced-search h2 {
-    text-align: center; }
+  body.front #jumbotron-wrap {
+    background-color: #eeeeee;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 2em;
+    margin-top: 0;
+    /**
+   * Equal Height for search blocks in the home jumbotron
+   */ }
+    body.front #jumbotron-wrap .row {
+      margin-left: 0;
+      margin-right: 0; }
+    body.front #jumbotron-wrap #block-bean-shopping-options {
+      margin-bottom: 1em; }
+      body.front #jumbotron-wrap #block-bean-shopping-options h2 {
+        text-align: center;
+        margin-top: 0; }
+    body.front #jumbotron-wrap .searchtype {
+      border: 2px solid #ddd;
+      border: 2px solid rgba(86, 61, 124, 0.2);
+      padding: 1.5em 1.5em;
+      margin-bottom: 1.5em;
+      border-radius: 20px; }
+      body.front #jumbotron-wrap .searchtype:hover, body.front #jumbotron-wrap .searchtype:focus, body.front #jumbotron-wrap .searchtype:active {
+        background-color: #f4f4f4; }
+      body.front #jumbotron-wrap .searchtype p {
+        text-align: center; }
+      body.front #jumbotron-wrap .searchtype h2 {
+        text-align: center; }
+    @media (min-width: 992px) {
+      body.front #jumbotron-wrap .row-flex, body.front #jumbotron-wrap .row-flex > div[class*='col-'] {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex: 1 1 auto; }
+      body.front #jumbotron-wrap .row-flex-wrap {
+        -webkit-flex-flow: row wrap;
+        align-content: flex-start;
+        flex: 0; }
+      body.front #jumbotron-wrap .row-flex > div[class*='col-'], body.front #jumbotron-wrap .container-flex > div[class*='col-'] {
+        margin: -.2px;
+        /* hack adjust for wrapping */ }
+      body.front #jumbotron-wrap .container-flex > div[class*='col-'] div, body.front #jumbotron-wrap .row-flex > div[class*='col-'] div:not(.contextual-links-wrapper) {
+        width: 100%; }
+      body.front #jumbotron-wrap .flex-col {
+        display: flex;
+        display: -webkit-flex;
+        flex: 1 100%;
+        flex-flow: column nowrap; }
+      body.front #jumbotron-wrap .flex-grow {
+        display: flex;
+        -webkit-flex: 2;
+        flex: 2; } }
   body.front h1.page-header {
     display: none; }
-
-#jumbotron-wrap {
-  background-color: #eeeeee;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 2em;
-  margin-top: 0; }
-  #jumbotron-wrap .row {
-    margin-left: 0;
-    margin-right: 0; }
 
 /**
  * Advanced Search
