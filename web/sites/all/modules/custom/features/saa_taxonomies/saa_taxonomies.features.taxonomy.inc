@@ -10,9 +10,9 @@
 function saa_taxonomies_taxonomy_default_vocabularies() {
   return array(
     'difficulties' => array(
-      'name' => 'Difficulties',
+      'name' => 'Nodes (Imported)',
       'machine_name' => 'difficulties',
-      'description' => 'GPII Difficulties Taxonomy',
+      'description' => 'Terms imported from Nodes.csv for use in migrating to Needs and Wants taxonomy. ',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,
@@ -56,10 +56,10 @@ function saa_taxonomies_taxonomy_default_vocabularies() {
       ),
     ),
     'iso_9241' => array(
-      'name' => 'ISO 9241',
+      'name' => 'ISO 9999',
       'machine_name' => 'iso_9241',
-      'description' => 'ISO 9241 Category',
-      'hierarchy' => 0,
+      'description' => 'ISO 9999 Category',
+      'hierarchy' => 1,
       'module' => 'taxonomy',
       'weight' => 0,
       'rdf_mapping' => array(
