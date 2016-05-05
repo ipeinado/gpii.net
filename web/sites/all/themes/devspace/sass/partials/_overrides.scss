@@ -45,7 +45,7 @@ input.form-control {
 a {
   color:$palette-navbar-dark;
 	&:hover, &:focus, &:active, &:visited {
-		color: darken($palette-red,5%);
+		color: lighten($palette-navbar-dark,20%);
 	}
 }
 

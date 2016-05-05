@@ -5903,7 +5903,7 @@ input.form-control {
 a {
   color: #2d394a; }
   a:hover, a:focus, a:active, a:visited {
-    color: #db3f19; }
+    color: #546a89; }
 
 body.admin-menu, .body-toolbar-drawer {
   padding-top: 0px !important; }
@@ -6355,3 +6355,9 @@ body.page-search-advanced treeitem {
   display: block;
   margin-left: 1.5em;
   MARGIN-BOTTOM: 1em; }
+
+/**
+ * Term Tree List Styles
+ */
+.term-tree-list .selected {
+  font-weight: normal; }
