@@ -165,6 +165,47 @@ function saa_taxonomies_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'taxonomy_term-needs_and_wants-field_features'.
+  $field_instances['taxonomy_term-needs_and_wants-field_features'] = array(
+    'bundle' => 'needs_and_wants',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Include references to features that relate to this need here. ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_features',
+    'label' => 'Related Features',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'term_reference_tree',
+      'settings' => array(
+        'cascading_selection' => 0,
+        'filter_view' => '',
+        'leaves_only' => 0,
+        'max_depth' => '',
+        'parent_term_id' => '',
+        'select_parents' => 1,
+        'start_minimized' => 1,
+        'token_display' => '',
+        'track_list' => 0,
+      ),
+      'type' => 'term_reference_tree',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'taxonomy_term-product_category-field_origin_id'.
   $field_instances['taxonomy_term-product_category-field_origin_id'] = array(
     'bundle' => 'product_category',
@@ -207,8 +248,10 @@ function saa_taxonomies_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Include references to features that relate to this need here. ');
   t('Origin ID');
   t('Question');
+  t('Related Features');
   t('Unique ID from Misericordia demo site. ');
 
   return $field_instances;

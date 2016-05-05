@@ -78,6 +78,52 @@ function saa_taxonomies_taxonomy_default_vocabularies() {
         ),
       ),
     ),
+    'license_type' => array(
+      'name' => 'License Type',
+      'machine_name' => 'license_type',
+      'description' => 'Describes the type of licensing or purchasing models that are applicable to a given product. ',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+      'rdf_mapping' => array(
+        'rdftype' => array(
+          0 => 'skos:ConceptScheme',
+        ),
+        'name' => array(
+          'predicates' => array(
+            0 => 'dc:title',
+          ),
+        ),
+        'description' => array(
+          'predicates' => array(
+            0 => 'rdfs:comment',
+          ),
+        ),
+      ),
+    ),
+    'needs_and_wants' => array(
+      'name' => 'Needs and Wants',
+      'machine_name' => 'needs_and_wants',
+      'description' => 'Taxonomy of application of features',
+      'hierarchy' => 1,
+      'module' => 'taxonomy',
+      'weight' => 0,
+      'rdf_mapping' => array(
+        'rdftype' => array(
+          0 => 'skos:ConceptScheme',
+        ),
+        'name' => array(
+          'predicates' => array(
+            0 => 'dc:title',
+          ),
+        ),
+        'description' => array(
+          'predicates' => array(
+            0 => 'rdfs:comment',
+          ),
+        ),
+      ),
+    ),
     'product_category' => array(
       'name' => 'Product Category',
       'machine_name' => 'product_category',
