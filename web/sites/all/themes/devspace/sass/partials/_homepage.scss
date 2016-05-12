@@ -88,10 +88,79 @@ body.front {
  }
 }
 
-#jumbotron-wrap {
+/**
+ * Experimental custom button with pure CSS transition/animation
+ */
 
-
-
+.gpii-button:hover {
+    background-color: $palette-red-dark;
+    color: #fff;
+    transition: .25s;
+    transition-delay: .25s;
+}
+.gpii-button {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    transition: .25s;
+    border: 0;
+    margin: 1rem;
+    font-weight:bold;
 }
 
+.gpii-button a {
+    color: $palette-red;
+    display: block;
+    padding: 16px 35px;
+    font-size: 1em;
+    font-family: 'Montserrat-Bold', sans-serif;
+    line-height: 1em;
+    text-transform: uppercase;
+    transition: .25s;
+    text-decoration: none;
+}
 
+.gpii-button:hover a {
+    color: #fff;
+    transition: .25s;
+    transition-delay: .25s;
+    text-decoration: none;
+}
+
+.gpii-button:hover::before {
+    left: 0;
+    transition: .25s;
+}
+.gpii-button::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    left: -12px;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid $palette-red;
+    border-top: 1px solid $palette-red;
+    border-bottom: 1px solid $palette-red;
+    transition: .25s;
+    transition-delay: .25s;
+}
+
+.gpii-button:hover::after {
+    right: 0;
+    transition: .25s;
+}
+
+.gpii-button::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    right: -12px;
+    top: 0;
+    bottom: 0;
+    border-right: 1px solid $palette-red;
+    border-top: 1px solid $palette-red;
+    border-bottom: 1px solid $palette-red;
+    transition: .25s;
+    transition-delay: .25s;
+}
