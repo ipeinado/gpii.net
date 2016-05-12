@@ -3,9 +3,9 @@
 
 /**
  * @file
- * Taxonomy set Lineage makes sure that for chosen vocabularies, parent terms 
- * are also selected.  
- * 
+ * Taxonomy set Lineage makes sure that for chosen vocabularies, parent terms
+ * are also selected.
+ *
  * If any vocabularies are have lineage set, we check entities when they are
  * saved to see if they have fields referring to these vocabularies.  If so,
  * we automatically select all parent terms of manually selected terms.
@@ -30,7 +30,7 @@ function taxonomy_set_lineage_menu() {
 
 /**
  * Implements hook_entity_presave().
- * 
+ *
  * Sets parent terms when entity is saved.
  */
 function taxonomy_set_lineage_entity_presave($entity, $type) {
@@ -50,14 +50,14 @@ function taxonomy_set_lineage_entity_presave($entity, $type) {
 
 /**
  * Finds out which entity field name contains reference to sought taxonomy.
- * 
+ *
  * @param object $entity
  *   The entity being saved.
  * @param string $entity_type
  *   The type of the entity being saved.
  * @param string $taxonomy_machine_name
  *   The machine name of the taxonomy for which we want to set parentage
- * 
+ *
  * @return string
  *   The machine name of the field which we want to manipulate
  */
@@ -77,18 +77,18 @@ function _taxonomy_set_lineage_vocab_to_instance_field_name($entity, $entity_typ
 
 /**
  * Activates all parent terms of any changed terms.
- * 
- * For all languages that are set on this vocabulary we check to see if they 
+ *
+ * For all languages that are set on this vocabulary we check to see if they
  * are changed from original entity i.e. were they just edited?
- * If so, we pull down their terms and save lineage (all parent terms) on them. 
- * Only changing the language which was just edited follows the principle of 
- * least surprise, and prevents us from having to do heuristics about the 
+ * If so, we pull down their terms and save lineage (all parent terms) on them.
+ * Only changing the language which was just edited follows the principle of
+ * least surprise, and prevents us from having to do heuristics about the
  * drupal translation context.
- * 
+ *
  * Because this module works on one field at a time, and only fields+languages
  * that have changed at save time, if you change the taxonomy heirarchy and save
  * a node, without changing which terms are selected this module will do nothing
- * 
+ *
  * @param object $entity
  *   The entity being saved.
  * @param string $tax_field_name
@@ -99,35 +99,83 @@ function _taxonomy_set_lineage_activate_parents($entity, $tax_field_name) {
   if (isset($entity->{$tax_field_name}) && is_array($entity->{$tax_field_name})) {
     foreach ($entity->{$tax_field_name} as $lang_code => $language) {
       // Two loops to check for changes. First the new state.
-      $tidsnew = array();
+      $user_input_tids = array();
       foreach ($language as $term) {
-        $tidsnew[] = isset($term['tid']) ? $term['tid'] : NULL;
+        // $term['tid'] is set and != 0.
+        if (!empty($term['tid'])) {
+          $user_input_tids[] = $term['tid'];
+        }
       }
       // Now the old version of the entity.
       $tidsold = array();
       if (isset($entity->original->{$tax_field_name}[$lang_code])) {
         foreach ($entity->original->{$tax_field_name}[$lang_code] as $term) {
-          $tidsold[] = isset($term['tid']) ? $term['tid'] : NULL;
+          if (!empty($term['tid'])) {
+            $tidsold[] = $term['tid'];
+          }
         }
       }
+
+      // If user want, we will update values each time.
+      $force_rewrite = variable_get('taxonomy_set_lineage_force_rewrite', FALSE);
+      $generated_tids = array();
+
       // Are there changes?
-      asort($tidsnew);
-      asort($tidsold);
-      if (count(array_diff($tidsnew, $tidsold)) > 0 || count(array_diff($tidsold, $tidsnew)) > 0) {
+      $is_diff = count(array_diff($user_input_tids, $tidsold)) > 0 || count(array_diff($tidsold, $user_input_tids)) > 0;
+
+      if ($is_diff || $force_rewrite) {
         // This field and language have changed tids, we need to select parents.
         foreach ($language as $term) {
           // Get full ancestry of term... carefull, it includes our term also.
+          if (empty($term['tid'])) {
+            continue;
+          }
+          // Get full ancestry of term.
           $parent_term_objects = taxonomy_get_parents_all($term['tid']);
           if (count($parent_term_objects) > 1) {
             foreach ($parent_term_objects as $parent) {
-              // Filter out ourselves, terms added as parents of other terms and
-              // terms already selected during save ($tidsnew).
-              if ($term['tid'] !== $parent->tid && !in_array($parent->tid, $tidsnew)) {
-                $entity->{$tax_field_name}[$lang_code][] = array('tid' => $parent->tid);
-                $tidsnew[] = $parent->tid;
+              if ($term['tid'] != $parent->tid && !in_array($parent->tid, $generated_tids)) {
+                // Save all term parents, filter them later.
+                $generated_tids[] = $parent->tid;
               }
             }
           }
+        }
+
+        if (!empty($generated_tids)) {
+          // Remove empty values.
+          $user_input_tids = array_filter($user_input_tids);
+          // Remove parents, which already was set by user.
+          $generated_tids = array_diff($generated_tids, $user_input_tids);
+          // Remove duplicates and empty values.
+          $generated_tids = array_unique(array_filter($generated_tids));
+          $save_array = array_merge($user_input_tids, $generated_tids);
+
+          foreach ($save_array as $i => $tid) {
+            // Convert list for easy save.
+            $save_array[$i] = array('tid' => $tid);
+          }
+
+          // Save as much values as possible.
+          $field_info = field_info_field($tax_field_name);
+          if (!empty($field_info['cardinality'])) {
+            $max_values = $field_info['cardinality'];
+            if ($max_values != FIELD_CARDINALITY_UNLIMITED) {
+              // If we have limitation on input items.
+              if (count($save_array) > $max_values) {
+                // We want save more values, then field can fit.
+                // @todo: warning message.
+                drupal_set_message(t('Only @max_values out of @num_generated values saved in field %field_name. Increase number of values for field to prevent this error.', array('@max_values' => $max_values, '@num_generated' => count($save_array), '%field_name' => $tax_field_name)), 'error');
+                $save_array = array_slice($save_array, 0, $max_values);
+              }
+            }
+          }
+
+          if (!empty($save_array)) {
+            // Reset all values.
+            $entity->{$tax_field_name}[$lang_code] = $save_array;
+          }
+
         }
       }
     }

@@ -2,12 +2,12 @@
 
 /**
  * @file
- * Settings forms for Taxonomy Set Lineage 
+ * Settings forms for Taxonomy Set Lineage
  */
 
 /**
  * Our configuration form.
- * 
+ *
  * @param array $form
  *   The configuration form
  * @param array $form_state
@@ -20,6 +20,12 @@ function taxonomy_set_lineage_config_form($form, &$form_state) {
     '#options' => array(),
     '#description' => t('Checked vocabularies will have parent terms of all selected terms automatically checked.  For instance, in a hypothetical vocabulary "Geography", if "Berlin" is checked, parent terms "Germany" and "Europe" would be automatically checked.  This behavior is true for any field referencing this vocabulary. Note that this does not change rules about the total number of terms that can be selected in a given field or field instance.'),
     '#default_value' => variable_get('taxonomy_set_lineage_affected_taxonomies', array()),
+  );
+  $form['taxonomy_set_lineage_force_rewrite'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Force rewrite'),
+    '#description' => t('Completly rewrite fields values. By default we just add new parent taxonomy terms if there are changes in field values. If option is enabled it will update all field curent values, on each entity update.'),
+    '#default_value' => variable_get('taxonomy_set_lineage_force_rewrite', 0),
   );
   foreach (taxonomy_vocabulary_get_names() as $vocab) {
     $form['taxonomy_set_lineage_affected_taxonomies']['#options'][$vocab->machine_name] = check_plain($vocab->name);

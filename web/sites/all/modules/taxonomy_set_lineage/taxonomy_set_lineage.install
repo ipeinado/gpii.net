@@ -10,4 +10,5 @@
  */
 function taxonomy_set_lineage_uninstall() {
   variable_del('taxonomy_set_lineage_affected_taxonomies');
+  variable_del('taxonomy_set_lineage_force_rewrite');
 }
