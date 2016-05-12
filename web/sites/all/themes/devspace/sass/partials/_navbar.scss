@@ -282,3 +282,12 @@ header#navbar {
   background-color: $palette-navbar-dark;
   color: #fff;
 }
+
+
+/**
+ * Login Toboggan and User Login blocks
+ */
+
+ #block-logintoboggan-logintoboggan-logged-in, #block-user-login {
+  float: right;
+ }
