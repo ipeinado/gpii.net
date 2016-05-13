@@ -3,7 +3,6 @@ description = "Defines a field type for telephone numbers."
 package = Fields
 core = 7.x
 dependencies[] = field
-files[] = telephone.feeds.inc
 files[] = telephone.migrate.inc
 
 ; Information added by Drupal.org packaging script on 2014-01-14
@@ -12,5 +11,3 @@ core = "7.x"
 project = "telephone"
 datestamp = "1389736105"
 
-
-patch[] = https://www.drupal.org/node/2109227 Issue 2109227, Patch #42 + Feeds Import Integration Patch
