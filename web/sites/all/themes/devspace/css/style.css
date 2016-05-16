@@ -6397,6 +6397,14 @@ body.front {
   transition-delay: .25s; }
 
 /**
+ * Basic Search
+ */
+.view-search .node-teaser .field-name-field-product-image {
+  float: right;
+  margin-left: 3em;
+  margin-bottom: 2em; }
+
+/**
  * Advanced Search
  */
 .main-container {
