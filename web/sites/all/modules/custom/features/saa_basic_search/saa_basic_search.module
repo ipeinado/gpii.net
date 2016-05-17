@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the saa_basic_search feature.
+ */
+
+include_once 'saa_basic_search.features.inc';
