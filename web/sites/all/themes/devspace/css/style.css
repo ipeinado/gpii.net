@@ -6396,13 +6396,48 @@ body.front {
   transition: .25s;
   transition-delay: .25s; }
 
+#block-current-search-standard {
+  background: #eeeeee;
+  padding: 0 1em 1em;
+  margin-bottom: 1em; }
+  #block-current-search-standard p {
+    margin-bottom: 0.5em; }
+
+.field-name-accessible-read-more a.read-more {
+  margin: 1em 1em 1em 0; }
+
+.view-mode-search_results {
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.75em; }
+
 /**
  * Basic Search
  */
-.view-search .node-teaser .field-name-field-product-image {
+.node-product.view-mode-search_results .field-name-field-product-image {
   float: right;
   margin-left: 3em;
   margin-bottom: 2em; }
+
+.node-product.view-mode-search_results .fa {
+  margin-top: 0.25rem;
+  margin-left: 0.5rem;
+  display: inline-block; }
+
+.node-product.view-mode-search_results h3 {
+  font-size: 1.6em; }
+
+.view-search.view-display-id-page_1 .view-mode-search_results {
+  border: 1px solid #eeeeee;
+  padding: 0 1em 1em; }
+  .view-search.view-display-id-page_1 .view-mode-search_results .field-name-field-product-image {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1em; }
+    .view-search.view-display-id-page_1 .view-mode-search_results .field-name-field-product-image img {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2rem 0 1rem; }
 
 /**
  * Advanced Search
