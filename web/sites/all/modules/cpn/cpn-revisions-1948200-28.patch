@@ -1,0 +1,164 @@
+diff --git a/cpn.install b/cpn.install
+index e776c92..63696f7 100644
+--- a/cpn.install
++++ b/cpn.install
+@@ -147,6 +147,13 @@ function cpn_schema() {
+         'not null' => TRUE,
+         'default' => 0,
+       ),
++      'vid' => array(
++        'type' => 'int',
++        'unsigned' => TRUE,
++        'not null' => TRUE,
++        'default' => 0,
++        'description' => "version",
++      ),
+       'css' => array(
+         'type' => 'text',
+         'not null' => FALSE,
+@@ -163,7 +170,7 @@ function cpn_schema() {
+         'size' => 'big',
+       ),
+     ),
+-    'primary key' => array('nid'),
++    'primary key' => array('vid'),
+   );
+   return $schema;
+ }
+@@ -437,3 +444,50 @@ function cpn_update_7106() {
+     return t('The "noscript" field already exists in the {block} table.');
+   }
+ }
++
++/**
++ * Add vid column to cpn table, delete nid files and replace with vid files.
++ */
++function cpn_update_7107() {
++  $spec = array(
++    'type' => 'int',
++    'unsigned' => TRUE,
++    'not null' => TRUE,
++    'default' => 0,
++    'description' => "version",
++    'length' => 20,
++  );
++  db_add_field('cpn', 'vid', $spec);
++  db_drop_primary_key('cpn');
++  db_drop_index('cpn', 'PRIMARY');
++  db_drop_unique_key('cpn', 'nid');
++
++  // Fetch vid from node table and use it to update the row in the cpn table.
++  $result = db_query("SELECT nid FROM {cpn}");
++  foreach ($result as $node) {
++    $nid = $node->nid;
++    $vid = db_query("SELECT vid FROM {node} WHERE nid = :nid", array(':nid' => $nid))->fetchField();
++    db_update('cpn')
++      ->fields(array('vid' => $vid))
++      ->condition('nid', $nid, '=')
++      ->execute();
++  }
++
++  // Now set vid as primary key.
++  db_add_primary_key('cpn', array('vid'));
++
++  // Replace all nid.type files with vid.type files.
++  $types = array('css', 'js');
++  $path = variable_get('cpn_path', 'public://cpn');
++  $rows = db_query("SELECT * FROM {cpn}");
++
++  foreach ($rows as $row) {
++    foreach ($types as $type) {
++      $file = $path . '/' . $row->nid . '.' . $type;
++      if (is_file($file)) {
++        $new_file = $path . '/' . $row->vid . '.' . $type;
++        rename($file, $new_file);
++      }
++    }
++  }
++}
+diff --git a/cpn.module b/cpn.module
+index c188dfe..a368b33 100644
+--- a/cpn.module
++++ b/cpn.module
+@@ -270,8 +270,8 @@ function cpn_node_validate($node, $form) {
+  */
+ function cpn_node_update($node) {
+   if (isset($node->cpn)) {
+-    cpn_delete_file($node->nid . '.css');
+-    cpn_delete_file($node->nid . '.js');
++    cpn_delete_file($node->old_vid . '.css');
++    cpn_delete_file($node->old_vid . '.js');
+   }
+   cpn_node_insert($node);
+ }
+@@ -285,6 +285,7 @@ function cpn_node_insert($node) {
+   $cpn = array();
+   if (isset($node->cpn)) {
+     $cpn['nid'] = $node->nid;
++    $cpn['vid'] = $node->vid;
+     $cpn['css'] = isset($node->cpn['css']) ? $node->cpn['css'] : '';
+     $cpn['js'] = isset($node->cpn['js']) ? $node->cpn['js'] : '';
+     $cpn['noscript'] = isset($node->cpn['noscript']) ? $node->cpn['noscript'] : '';
+@@ -316,7 +317,7 @@ function cpn_node_insert($node) {
+     if (drupal_strlen(trim($cpn['css'] . $cpn['js'] . $cpn['noscript']))) {
+       db_merge('cpn')
+         ->fields($cpn)
+-        ->key(array('nid' => $node->nid))
++        ->key(array('vid' => $node->vid))
+         ->execute();
+       foreach (array('css', 'js') as $type) {
+         // Add the global wrapper code.
+@@ -325,7 +326,7 @@ function cpn_node_insert($node) {
+         $output = token_replace($output, array('node' => $node));
+         // Output the file.
+         if (!empty($output)) {
+-          cpn_save_file($output, $node->nid  . '.' . $type);
++          cpn_save_file($output, $node->vid  . '.' . $type);
+         }
+       }
+     }
+@@ -341,8 +342,8 @@ function cpn_node_delete($node) {
+   db_delete('cpn')
+     ->condition('nid', $node->nid)
+     ->execute();
+-  cpn_delete_file($node->nid . '.css');
+-  cpn_delete_file($node->nid . '.js');
++  cpn_delete_file($node->vid . '.css');
++  cpn_delete_file($node->vid . '.js');
+ }
+ 
+ /**
+@@ -360,8 +361,11 @@ function cpn_node_load($nodes, $types) {
+   }
+ 
+   if ($supported) {
++    foreach($nodes as $node) {
++      $vids[] = $node->vid;
++    }
+     try {
+-      $result = db_query('SELECT nid, css, js, noscript FROM {cpn} WHERE nid IN (:nids)', array(':nids' => array_keys($nodes)));
++      $result = db_query('SELECT nid, css, js, vid, noscript FROM {cpn} WHERE vid IN (:vids)', array(':vids' => $vids));
+       foreach ($result as $record) {
+         $nodes[$record->nid]->cpn = array(
+           'css' => $record->css,
+@@ -500,7 +504,7 @@ function cpn_node_view($node, $view_mode, $langcode) {
+ 
+           // Output the code.
+           if (!empty($output)) {
+-            $node->content['#attached'][$type]['cpn_node_' . $node->nid] = array(
++            $node->content['#attached'][$type]['cpn_node_' . $node->vid] = array(
+               'type' => 'inline',
+               'group' => $type == 'css' ? CSS_THEME : JS_THEME,
+               'weight' => $weight[$type],
+@@ -517,9 +521,9 @@ function cpn_node_view($node, $view_mode, $langcode) {
+   // the file(s) exist.
+   else {
+     foreach (array('css', 'js') as $type) {
+-      $file = variable_get('cpn_path', 'public://cpn') . '/' . $node->nid . '.' . $type;
++      $file = variable_get('cpn_path', 'public://cpn') . '/' . $node->vid . '.' . $type;
+       if (is_file($file)) {
+-        $node->content['#attached'][$type]['cpn_node_' . $node->nid] = array(
++        $node->content['#attached'][$type]['cpn_node_' . $node->vid] = array(
+           'type' => 'file',
+           'group' => $type == 'css' ? CSS_THEME : JS_THEME,
+           'weight' => $weight[$type],

@@ -147,6 +147,13 @@ function cpn_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
+      'vid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "version",
+      ),
       'css' => array(
         'type' => 'text',
         'not null' => FALSE,
@@ -163,7 +170,7 @@ function cpn_schema() {
         'size' => 'big',
       ),
     ),
-    'primary key' => array('nid'),
+    'primary key' => array('vid'),
   );
   return $schema;
 }
@@ -435,5 +442,52 @@ function cpn_update_7106() {
   }
   else {
     return t('The "noscript" field already exists in the {block} table.');
+  }
+}
+
+/**
+ * Add vid column to cpn table, delete nid files and replace with vid files.
+ */
+function cpn_update_7107() {
+  $spec = array(
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => TRUE,
+    'default' => 0,
+    'description' => "version",
+    'length' => 20,
+  );
+  db_add_field('cpn', 'vid', $spec);
+  db_drop_primary_key('cpn');
+  db_drop_index('cpn', 'PRIMARY');
+  db_drop_unique_key('cpn', 'nid');
+
+  // Fetch vid from node table and use it to update the row in the cpn table.
+  $result = db_query("SELECT nid FROM {cpn}");
+  foreach ($result as $node) {
+    $nid = $node->nid;
+    $vid = db_query("SELECT vid FROM {node} WHERE nid = :nid", array(':nid' => $nid))->fetchField();
+    db_update('cpn')
+      ->fields(array('vid' => $vid))
+      ->condition('nid', $nid, '=')
+      ->execute();
+  }
+
+  // Now set vid as primary key.
+  db_add_primary_key('cpn', array('vid'));
+
+  // Replace all nid.type files with vid.type files.
+  $types = array('css', 'js');
+  $path = variable_get('cpn_path', 'public://cpn');
+  $rows = db_query("SELECT * FROM {cpn}");
+
+  foreach ($rows as $row) {
+    foreach ($types as $type) {
+      $file = $path . '/' . $row->nid . '.' . $type;
+      if (is_file($file)) {
+        $new_file = $path . '/' . $row->vid . '.' . $type;
+        rename($file, $new_file);
+      }
+    }
   }
 }

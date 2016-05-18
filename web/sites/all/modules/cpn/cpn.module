@@ -270,8 +270,8 @@ function cpn_node_validate($node, $form) {
  */
 function cpn_node_update($node) {
   if (isset($node->cpn)) {
-    cpn_delete_file($node->nid . '.css');
-    cpn_delete_file($node->nid . '.js');
+    cpn_delete_file($node->old_vid . '.css');
+    cpn_delete_file($node->old_vid . '.js');
   }
   cpn_node_insert($node);
 }
@@ -285,6 +285,7 @@ function cpn_node_insert($node) {
   $cpn = array();
   if (isset($node->cpn)) {
     $cpn['nid'] = $node->nid;
+    $cpn['vid'] = $node->vid;
     $cpn['css'] = isset($node->cpn['css']) ? $node->cpn['css'] : '';
     $cpn['js'] = isset($node->cpn['js']) ? $node->cpn['js'] : '';
     $cpn['noscript'] = isset($node->cpn['noscript']) ? $node->cpn['noscript'] : '';
@@ -316,7 +317,7 @@ function cpn_node_insert($node) {
     if (drupal_strlen(trim($cpn['css'] . $cpn['js'] . $cpn['noscript']))) {
       db_merge('cpn')
         ->fields($cpn)
-        ->key(array('nid' => $node->nid))
+        ->key(array('vid' => $node->vid))
         ->execute();
       foreach (array('css', 'js') as $type) {
         // Add the global wrapper code.
@@ -325,7 +326,7 @@ function cpn_node_insert($node) {
         $output = token_replace($output, array('node' => $node));
         // Output the file.
         if (!empty($output)) {
-          cpn_save_file($output, $node->nid  . '.' . $type);
+          cpn_save_file($output, $node->vid  . '.' . $type);
         }
       }
     }
@@ -341,8 +342,8 @@ function cpn_node_delete($node) {
   db_delete('cpn')
     ->condition('nid', $node->nid)
     ->execute();
-  cpn_delete_file($node->nid . '.css');
-  cpn_delete_file($node->nid . '.js');
+  cpn_delete_file($node->vid . '.css');
+  cpn_delete_file($node->vid . '.js');
 }
 
 /**
@@ -360,8 +361,11 @@ function cpn_node_load($nodes, $types) {
   }
 
   if ($supported) {
+    foreach($nodes as $node) {
+      $vids[] = $node->vid;
+    }
     try {
-      $result = db_query('SELECT nid, css, js, noscript FROM {cpn} WHERE nid IN (:nids)', array(':nids' => array_keys($nodes)));
+      $result = db_query('SELECT nid, css, js, vid, noscript FROM {cpn} WHERE vid IN (:vids)', array(':vids' => $vids));
       foreach ($result as $record) {
         $nodes[$record->nid]->cpn = array(
           'css' => $record->css,
@@ -500,7 +504,7 @@ function cpn_node_view($node, $view_mode, $langcode) {
 
           // Output the code.
           if (!empty($output)) {
-            $node->content['#attached'][$type]['cpn_node_' . $node->nid] = array(
+            $node->content['#attached'][$type]['cpn_node_' . $node->vid] = array(
               'type' => 'inline',
               'group' => $type == 'css' ? CSS_THEME : JS_THEME,
               'weight' => $weight[$type],
@@ -517,9 +521,9 @@ function cpn_node_view($node, $view_mode, $langcode) {
   // the file(s) exist.
   else {
     foreach (array('css', 'js') as $type) {
-      $file = variable_get('cpn_path', 'public://cpn') . '/' . $node->nid . '.' . $type;
+      $file = variable_get('cpn_path', 'public://cpn') . '/' . $node->vid . '.' . $type;
       if (is_file($file)) {
-        $node->content['#attached'][$type]['cpn_node_' . $node->nid] = array(
+        $node->content['#attached'][$type]['cpn_node_' . $node->vid] = array(
           'type' => 'file',
           'group' => $type == 'css' ? CSS_THEME : JS_THEME,
           'weight' => $weight[$type],
