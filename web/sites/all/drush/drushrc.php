@@ -50,8 +50,6 @@ $options['structure-tables']['common'] = array(
   'watchdog',
   // Devel query log
   'devel*',
-  // Search tables
-  'search*',
 );
 
 // Springboard 4 and Commerce
@@ -72,7 +70,10 @@ $options['structure-tables']['springboard+common'] = $options['structure-tables'
  * Skip tables array - these are tables which need to be skipped entirely. This
  * is especially useful for mysql views
  */
-$options['skip-tables']['common'] = array();
+$options['skip-tables']['common'] = array(
+    // Search tables
+    'search*',
+);
 
 // Set up a different backup directory
 $options['backup-dir'] = '/var/www/clients/client0/web14/tmp';
