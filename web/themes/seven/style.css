@@ -988,3 +988,8 @@ div.add-or-remove-shortcuts {
   -webkit-border-radius: 8px;
   border-radius: 8px;
 }
+
+/* BBC: Force CKedito to wrap code in source view */
+.cke_source {
+    white-space: pre-wrap !important;
+}
