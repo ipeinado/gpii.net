@@ -72,7 +72,7 @@ $options['structure-tables']['springboard+common'] = $options['structure-tables'
  */
 $options['skip-tables']['common'] = array(
     // Search tables
-    'search*',
+    //'search*',
 );
 
 // Set up a different backup directory
