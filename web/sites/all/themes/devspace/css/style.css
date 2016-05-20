@@ -6429,7 +6429,8 @@ body.front {
 
 .view-search.view-display-id-page_1 .view-mode-search_results {
   border: 1px solid #eeeeee;
-  padding: 0 1em 1em; }
+  padding: 0 1em 1em;
+  background: #fff; }
   .view-search.view-display-id-page_1 .view-mode-search_results .field-name-field-product-image {
     width: 100%;
     text-align: center;
