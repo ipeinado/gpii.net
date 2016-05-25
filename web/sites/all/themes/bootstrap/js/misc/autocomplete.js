@@ -30,13 +30,29 @@ Drupal.behaviors.autocomplete = {
  * Prevents the form from submitting if the suggestions popup is open
  * and closes the suggestions popup when doing so.
  */
-// BBC: Commented this out as it is unintuitive keyboard behavior for users who don't want to interact with the autocomplete dropdown
-// Ideal scenario would be that this code only worked if the user has interacted with the dropdown
+
+// BBC: Override autocompleteSubmit function to allow for typical keyboard-only use case.
+// Default bootstrap behavior is to return focus to the text input box, requiring the user to hit enter twice.
+// This change only modifies the behavior if a user has interacted with the autocomplete dropdown by selecging an option from the list
+
+
 Drupal.autocompleteSubmit = function () {
-  return $('.form-autocomplete > .dropdown').each(function () {
+  var dropdownSelector = '.form-autocomplete > .dropdown';
+  var childrenSelector = dropdownSelector + ' li.active';
+  var $dropdown = $(dropdownSelector);
+  var $children = $(childrenSelector);
+  var noDropdown = $dropdown.length === 0;
+  var noChildren = $children.length === 0;
+
+  $dropdown.each(function () {
     this.owner.hidePopup();
-  }).length == 0;
+  });
+
+  //console.log('logging autocomplete info', noChildren, noDropdown);
+
+  return noChildren ? true : noDropdown ? true : false;
 };
+
 
 /**
  * Highlights a suggestion.

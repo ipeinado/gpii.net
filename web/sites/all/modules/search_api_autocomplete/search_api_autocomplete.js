@@ -32,7 +32,6 @@ console.log($input.data);
     oldJsAC.call(this, $input, db);
   };
   Drupal.jsAC.prototype = oldJsAC.prototype;
-    console.log(Drupal);
   /**
    * Handler for the "keyup" event.
    *
