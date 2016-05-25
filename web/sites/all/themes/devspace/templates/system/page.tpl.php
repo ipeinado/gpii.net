@@ -110,7 +110,7 @@
                 <?php print render($page['navigation']); ?>
               <?php endif; ?>
               <div class="navbar-form navbar-right">
-                <?php print $search_box; ?>
+                <?php // print $search_box; ?>
               </div>
             </div>
           </nav>

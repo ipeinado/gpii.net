@@ -8,13 +8,13 @@
     drupal_add_css('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700', array('type' => 'external'));
   }
 
-  function devspace_preprocess_page(&$variables){
-    $block = module_invoke('search_api_page', 'block_view', 'sbca_search');
-    $variables['search_box'] = render($block['content']);
-  }
+  // function devspace_preprocess_page(&$variables){
+  //   $block = module_invoke('search_api_page', 'block_view', 'sbca_search');
+  //   $variables['search_box'] = render($block['content']);
+  // }
 
   function devspace_form_alter(&$form, &$form_state, $form_id) {
-    if ($form_id == 'search_api_page_search_form_sbca_search') {
+    if ($form_id == 'views-exposed-form-search-page-1') {
       $form['submit_1']['#value'] = '<span class=\'fa fa-search\' aria-hidden=\'true\'></span><span class=\'sr-only\'>Search</span>'; // Change the text on the submit button
       //$form['search_block_form']['#title'] = t('Nate'); // Change the text on the label element -- Issues...
       //$form['search_block_form']['#title_display'] = 'invisible'; // Toggle label visibilty -- Issues...

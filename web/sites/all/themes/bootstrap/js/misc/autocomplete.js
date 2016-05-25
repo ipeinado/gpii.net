@@ -17,7 +17,7 @@ Drupal.behaviors.autocomplete = {
         .attr('aria-autocomplete', 'list');
       $context.find($input[0].form).submit(Drupal.autocompleteSubmit);
       $input.parents('.form-item')
-        .attr('role', 'application')
+        .attr('role', 'search')
         .append($('<span class="element-invisible" aria-live="assertive"></span>')
           .attr('id', $input.attr('id') + '-autocomplete-aria-live')
       );
@@ -30,6 +30,8 @@ Drupal.behaviors.autocomplete = {
  * Prevents the form from submitting if the suggestions popup is open
  * and closes the suggestions popup when doing so.
  */
+// BBC: Commented this out as it is unintuitive keyboard behavior for users who don't want to interact with the autocomplete dropdown
+// Ideal scenario would be that this code only worked if the user has interacted with the dropdown
 Drupal.autocompleteSubmit = function () {
   return $('.form-autocomplete > .dropdown').each(function () {
     this.owner.hidePopup();
