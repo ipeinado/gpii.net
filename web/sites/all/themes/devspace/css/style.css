@@ -6441,6 +6441,27 @@ body.front {
       padding: 2rem 0 1rem; }
 
 /**
+ * Faceted Search
+ */
+.search-api-page-results {
+  clear: both; }
+
+.search-performance {
+  font-size: 95%;
+  padding-bottom: 0.5em; }
+
+#block-current-search-standard h2 {
+  font-size: 1.4em; }
+
+ul.facetapi-facetapi-checkbox-links {
+  padding-left: 0.25em; }
+  ul.facetapi-facetapi-checkbox-links ul {
+    padding-left: 0.65em;
+    padding-bottom: 0.75em; }
+  ul.facetapi-facetapi-checkbox-links input[type="checkbox"] {
+    margin: 4px 3px 0 0; }
+
+/**
  * Advanced Search
  */
 .main-container {
