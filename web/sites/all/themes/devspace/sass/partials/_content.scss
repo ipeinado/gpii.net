@@ -149,9 +149,10 @@ body.page-search-advanced {
     }
   }
   treeitem {
-    margin-bottom: 1em;
-    &.ng-hide {
-      margin-bottom: 0;
+    ul {
+      li:last-child {
+        margin-bottom: 1em;
+      }
     }
   }
 }
