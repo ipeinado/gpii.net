@@ -6495,8 +6495,6 @@ body.page-search-advanced .list-group-item-heading {
 body.page-search-advanced treeitem {
   display: block;
   margin-left: 0; }
-  body.page-search-advanced treeitem ul {
-    margin-bottom: 1em; }
 
 body.page-search-advanced treecontrol > ul {
   margin-left: 0; }
@@ -6505,8 +6503,8 @@ body.page-search-advanced treecontrol > ul {
     body.page-search-advanced treecontrol > ul li ul li {
       padding: 0 0 0 1.2em; }
 
-body.page-search-advanced treeitem[aria-hidden="true"] {
-  display: none !important; }
+body.page-search-advanced treeitem:not(.ng-hide) {
+  margin-bottom: 1em; }
 
 /**
  * Term Tree List Styles

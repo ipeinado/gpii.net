@@ -135,12 +135,9 @@ body.page-search-advanced {
       text-decoration: underline;
     }
   }
- treeitem {
+  treeitem {
     display: block;
     margin-left: 0;
-    ul {
-      margin-bottom: 1em;
-    }
   }
   treecontrol > ul {
     margin-left: 0;
@@ -151,8 +148,8 @@ body.page-search-advanced {
       }
     }
   }
-  treeitem[aria-hidden="true"] {
-    display: none !important;
+  treeitem:not(.ng-hide) {
+    margin-bottom: 1em;
   }
 }
 
