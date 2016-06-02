@@ -6494,8 +6494,9 @@ body.page-search-advanced .list-group-item-heading {
 
 body.page-search-advanced treeitem {
   display: block;
-  margin-left: 0;
-  margin-bottom: 1em; }
+  margin-left: 0; }
+  body.page-search-advanced treeitem ul {
+    margin-bottom: 1em; }
 
 body.page-search-advanced treecontrol > ul {
   margin-left: 0; }
