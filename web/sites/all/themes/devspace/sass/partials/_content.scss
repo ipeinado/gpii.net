@@ -109,7 +109,7 @@ body.page-search-advanced {
     h2 {
       clear: both;
       color: $gray-darker;
-      font-size: 1.7em;
+      font-size: 1.6em;
     }
     a {
       color: $gray;
@@ -137,8 +137,17 @@ body.page-search-advanced {
   }
  treeitem {
     display: block;
-    margin-left: 1.5em;
-    MARGIN-BOTTOM: 1em;
+    margin-left: 0;
+    margin-bottom: 1em;
+  }
+  treecontrol > ul {
+    margin-left: 0;
+    li {
+      padding: 0 0 0 0.5em;
+      ul li {
+        padding: 0 0 0 1.2em;
+      }
+    }
   }
 }
 

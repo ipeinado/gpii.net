@@ -6473,7 +6473,7 @@ ul.facetapi-facetapi-checkbox-links {
 body.page-search-advanced #block-system-main h2 {
   clear: both;
   color: #222222;
-  font-size: 1.7em; }
+  font-size: 1.6em; }
 
 body.page-search-advanced #block-system-main a {
   color: #555555; }
@@ -6494,8 +6494,15 @@ body.page-search-advanced .list-group-item-heading {
 
 body.page-search-advanced treeitem {
   display: block;
-  margin-left: 1.5em;
-  MARGIN-BOTTOM: 1em; }
+  margin-left: 0;
+  margin-bottom: 1em; }
+
+body.page-search-advanced treecontrol > ul {
+  margin-left: 0; }
+  body.page-search-advanced treecontrol > ul li {
+    padding: 0 0 0 0.5em; }
+    body.page-search-advanced treecontrol > ul li ul li {
+      padding: 0 0 0 1.2em; }
 
 /**
  * Term Tree List Styles
