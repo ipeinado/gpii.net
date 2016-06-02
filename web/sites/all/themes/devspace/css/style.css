@@ -6505,6 +6505,9 @@ body.page-search-advanced treecontrol > ul {
     body.page-search-advanced treecontrol > ul li ul li {
       padding: 0 0 0 1.2em; }
 
+body.page-search-advanced treeitem[aria-hidden="true"] {
+  display: none !important; }
+
 /**
  * Term Tree List Styles
  */

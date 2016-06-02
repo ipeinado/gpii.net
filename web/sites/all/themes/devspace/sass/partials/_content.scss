@@ -151,6 +151,9 @@ body.page-search-advanced {
       }
     }
   }
+  treeitem[aria-hidden="true"] {
+    display: none !important;
+  }
 }
 
 /**
