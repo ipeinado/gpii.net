@@ -148,8 +148,11 @@ body.page-search-advanced {
       }
     }
   }
-  treeitem:not(.ng-hide) {
+  treeitem {
     margin-bottom: 1em;
+    &.ng-hide {
+      margin-bottom: 0;
+    }
   }
 }
 
