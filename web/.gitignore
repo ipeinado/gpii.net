@@ -4,9 +4,3 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
-
-#misc
-stats/*
-php_errors.log
-xhprof_html
-sites/all/themes/devspace/node_modules/*
