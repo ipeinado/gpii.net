@@ -1,6 +1,6 @@
 /* Theme Overrides*/
 .flc-prefsEditor-separatedPanel {
-  z-index: 9999;
+  z-index: 1000; /* BBC: Set to 1400 to allow admin menu to be on top */
   position: absolute;
   right: 0;
   width: 100%;

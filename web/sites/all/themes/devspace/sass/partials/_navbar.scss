@@ -1,5 +1,17 @@
 header#navbar {
   margin-bottom:0;
+  .navbar-nav {
+    font-size: 140%;
+    & > li {
+      margin-right: 1rem;
+      &.open a {
+        color: #000;
+      }
+      & > a {
+        padding: 1.5rem 1rem 1rem;
+      }
+    }
+  }
 }
 
 //
