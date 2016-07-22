@@ -1,0 +1,91 @@
+<?php
+/**
+ * @file
+ *  *
+ * Custom Blocks and functions related to the SAA site.
+ */
+
+/**
+ * Implements hook_block_info().
+ */
+function gpii_saa_custom_block_info() {
+  $blocks = array();
+  $blocks['product_tree'] = array(
+    'info' => t('Product Tree'),
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function gpii_saa_custom_block_view($delta='') {
+  $block = array();
+
+  switch($delta) {
+    case 'product_tree' :
+      $block['content'] = product_tree_view();
+      break;
+  }
+
+  return $block;
+}
+
+/**
+ * Implements hook_block_view(). This blocks lists the items from the Product Categories taxonomy as an unordered list.
+ */
+
+
+function product_tree_view() {
+  $block = array();
+$markup = <<<EOD
+<!-- taxonomy term links -->
+EOD;
+
+$primaryCategory = taxonomy_get_tree(2, 0, 1);
+//dpm($primaryCategory);
+
+foreach ($primaryCategory as $termid) {
+  $link = taxonomy_term_uri($termid);
+     $count = count(views_get_view_result('taxonomy_by_tid', 'default', $termid->tid));
+     //dpm(count($count));
+     if ($count > 0) {
+      $markup .= '<h2>' . l(t($termid->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')</h2>';
+     }
+     else {
+      $markup .= '<h2>' . t($termid->name) . '</h2>';
+     }
+  $children = taxonomy_get_tree(2, $termid->tid, 1);
+  if ($children) {
+    $markup .= '<ul>';
+    foreach ($children as $key => $value) {
+     $link = taxonomy_term_uri($value);
+     $count = count(views_get_view_result('taxonomy_by_tid', 'default', $value->tid));
+     //dpm(count($count));
+     if ($count > 0) {
+      $markup .= '<li>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')</li>';
+     }
+     else {
+      $markup .= '<li>' . t($value->name) . '</li>';
+     }
+
+    }
+     $markup .= '</ul>';
+  }
+}
+
+$markup .= <<<EOD
+</ul>
+EOD;
+
+  // Block output in HTML with div wrapper
+  $block = array(
+      '#prefix' => '<div class="gpii-product-tree">',
+      '#type' => 'markup',
+      '#markup' => $markup,
+      '#suffix' => '</div>',
+  );
+
+  return $block;
+}
