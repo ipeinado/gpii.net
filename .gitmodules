@@ -1,0 +1,3 @@
+[submodule "web/sites/developerspace.gpii.net/modules/devspace-content-feature"]
+	path = web/sites/developerspace.gpii.net/modules/devspace-content-feature
+	url = https://github.com/Pushing7/devspace-content-feature.git
