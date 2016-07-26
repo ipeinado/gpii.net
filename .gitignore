@@ -1,6 +1,10 @@
 # Ignore configuration files that may contain sensitive information.
 web/sites/*/settings*.php
 
+# Ignore ISPConfig related paths
+web/stats
+php_errors.log
+
 # Ignore paths that contain user-generated content.
 web/sites/*/files
 web/sites/*/private
