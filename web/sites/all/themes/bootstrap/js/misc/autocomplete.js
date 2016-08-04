@@ -17,7 +17,7 @@ Drupal.behaviors.autocomplete = {
         .attr('aria-autocomplete', 'list');
       $context.find($input[0].form).submit(Drupal.autocompleteSubmit);
       $input.parents('.form-item')
-        .attr('role', 'search')
+        .attr('role', 'application')
         .append($('<span class="element-invisible" aria-live="assertive"></span>')
           .attr('id', $input.attr('id') + '-autocomplete-aria-live')
       );
@@ -30,29 +30,11 @@ Drupal.behaviors.autocomplete = {
  * Prevents the form from submitting if the suggestions popup is open
  * and closes the suggestions popup when doing so.
  */
-
-// BBC: Override autocompleteSubmit function to allow for typical keyboard-only use case.
-// Default bootstrap behavior is to return focus to the text input box, requiring the user to hit enter twice.
-// This change only modifies the behavior if a user has interacted with the autocomplete dropdown by selecging an option from the list
-
-
 Drupal.autocompleteSubmit = function () {
-  var dropdownSelector = '.form-autocomplete > .dropdown';
-  var childrenSelector = dropdownSelector + ' li.active';
-  var $dropdown = $(dropdownSelector);
-  var $children = $(childrenSelector);
-  var noDropdown = $dropdown.length === 0;
-  var noChildren = $children.length === 0;
-
-  $dropdown.each(function () {
+  return $('.form-autocomplete > .dropdown').each(function () {
     this.owner.hidePopup();
-  });
-
-  //console.log('logging autocomplete info', noChildren, noDropdown);
-
-  return noChildren ? true : noDropdown ? true : false;
+  }).length == 0;
 };
-
 
 /**
  * Highlights a suggestion.
@@ -112,10 +94,10 @@ Drupal.jsAC.prototype.found = function (matches) {
   });
   for (var key in matches) {
     $('<li></li>')
-      .html($('<a href="#"></a>').html(matches[key]).click(function (e) { e.preventDefault(); }))
-      .mousedown(function () { ac.select(this); })
-      .mouseover(function () { ac.highlight(this); })
-      .mouseout(function () { ac.unhighlight(this); })
+      .html($('<a href="#"></a>').html(matches[key]).on('click', function (e) { e.preventDefault(); }))
+      .on('mousedown', function () { ac.hidePopup(this); })
+      .on('mouseover', function () { ac.highlight(this); })
+      .on('mouseout', function () { ac.unhighlight(this); })
       .data('autocompleteValue', key)
       .appendTo(ul);
   }
@@ -155,11 +137,18 @@ var oldPrototype = Drupal.jsAC.prototype;
 /**
  * Override the autocomplete constructor.
  */
-Drupal.jsAC = function ($input, db, $context) {
+Drupal.jsAC = function ($input, db, context) {
   var ac = this;
-  this.$context = $context;
+
+  // Context is normally passed by Drupal.behaviors.autocomplete above. However,
+  // if a module has manually invoked this method they will likely not know
+  // about this feature and a global fallback context to document must be used.
+  // @see https://www.drupal.org/node/2594243
+  // @see https://www.drupal.org/node/2315295
+  this.$context = context && $(context) || $(document);
+
   this.input = $input[0];
-  this.ariaLive = $context.find('#' + this.input.id + '-autocomplete-aria-live');
+  this.ariaLive = this.$context.find('#' + this.input.id + '-autocomplete-aria-live');
   this.db = db;
   $input
     .keydown(function (event) { return ac.onkeydown(this, event); })
