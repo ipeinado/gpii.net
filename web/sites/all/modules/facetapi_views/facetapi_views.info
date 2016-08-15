@@ -1,0 +1,19 @@
+name = Facet API Views
+description = "Views integration for Fact API."
+package = Search Toolkit
+core = "7.x"
+
+dependencies[] = facetapi
+dependencies[] = views
+
+configure = admin/config/search/facetapi/views
+
+files[] = plugins/facetapi/url_processor_exposed_facets.inc
+files[] = views/facetapi_views_handler_filter_keep_facet_values.inc
+
+; Information added by Drupal.org packaging script on 2016-04-05
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "facetapi_views"
+datestamp = "1459885740"
+

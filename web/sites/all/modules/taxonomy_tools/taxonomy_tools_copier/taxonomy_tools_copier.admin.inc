@@ -797,10 +797,22 @@ function taxonomy_tools_copier_node_handler($nid, $term, $action) {
   elseif ($action == 'link') {
     foreach ($fields as $field) {
       $field_name = $field->field_name;
-      $field_values = $node->$field_name;
+      $field_values = array(
+        LANGUAGE_NONE => array(
+          0 => array(
+            'tid' => $term->tid,
+          ),
+        ),
+      );
+      // BBC: This condition wasn't being handled correctly, commented out line below
+      // Looks like as long as terms are handled one at a time, we can make this work using copy. Problem comes in when the logic
       array_push($field_values[LANGUAGE_NONE], array('tid' => $term->tid));
-      $node->$field_name = $field_values;
+
+
+
     }
+
+    $node->$field_name = $field_values; // this line was inside the foreach, so wasn't working!!!! -- needs additional testing
   }
   // Save the node.
   node_save($node);

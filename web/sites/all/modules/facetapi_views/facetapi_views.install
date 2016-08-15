@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Facet API views integration.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function facetapi_views_uninstall() {
+  variable_del('facetapi_views_url_processor_searchers');
+  variable_del('facetapi_views_url_processor_for_all_searchers');
+}
