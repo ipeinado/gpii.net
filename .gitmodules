@@ -1,3 +1,9 @@
 [submodule "web/sites/developerspace.gpii.net/modules/devspace-content-feature"]
 	path = web/sites/developerspace.gpii.net/modules/devspace-content-feature
 	url = https://github.com/Pushing7/devspace-content-feature.git
+[submodule "web/sites/all/modules/bootstrap_accessibility"]
+	path = web/sites/all/modules/bootstrap_accessibility
+	url = https://git.drupal.org/sandbox/jonasbaertsch/2329711.git
+[submodule "web/sites/all/libraries/bootstrap-accessibility-plugin"]
+	path = web/sites/all/libraries/bootstrap-accessibility-plugin
+	url = https://github.com/paypal/bootstrap-accessibility-plugin.git
