@@ -179,3 +179,21 @@ function gpii_saa_custom_list_child_terms($vid, $tid, $vdisplay) {
 
 
 }
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_state) {
+  // grab a more modern version of jQuery UI
+  $path = libraries_get_path('jquery.ui');
+  $form['#attached']['js'][] = $path . '/jquery-ui.min.js';
+
+  // Add the JavaScript and CSS for the library itself.
+  $path = libraries_get_path('jquery.multiselect');
+  $form['#attached']['js'][] = $path . '/jquery.multiselect.min.js';
+  $form['#attached']['css'][] = $path . '/jquery.multiselect.css';
+
+  // Add a custom JavaScript file which will trigger the jQuery MultiSelect
+  // widget on the correct form elements.
+  $form['#attached']['js'][] = drupal_get_path('module', 'gpii_saa_custom') . '/js/gpii_saa_custom.facetapi.multiselect.js';
+}
