@@ -141,13 +141,13 @@ function facetapi_views_exposed_form_pre_render($element) {
  */
 function facetapi_views_block_info() {
   $blocks = array();
-  foreach (facetapi_get_searcher_info() as $searcher => $searcher_info) {
-    // @todo Care for searcher names >30 chars.
-    $blocks["s:$searcher"] = array(
-      'info' => t('Facet search preparation block (experimental!) for index @index - place before exposed form', array('@index' => $searcher)),
-      'cache' => DRUPAL_NO_CACHE,
-    );
-  }
+  // foreach (facetapi_get_searcher_info() as $searcher => $searcher_info) {
+  //   // @todo Care for searcher names >30 chars.
+  //   $blocks["s:$searcher"] = array(
+  //     'info' => t('Facet search preparation block (experimental!) for index @index - place before exposed form', array('@index' => $searcher)),
+  //     'cache' => DRUPAL_NO_CACHE,
+  //   );
+  // }
   return $blocks;
 }
 
