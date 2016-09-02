@@ -101,10 +101,10 @@
           <nav role="navigation">
             <div class="nav-search clearfix">
               <?php if (!empty($primary_nav)): ?>
-                <?php print render($primary_nav); ?>
+                <div class="col-sm-9"><?php print render($primary_nav); ?></div>
               <?php endif; ?>
               <?php if (!empty($secondary_nav)): ?>
-                <?php // print render($secondary_nav); ?>
+                <?php print render($secondary_nav); ?>
               <?php endif; ?>
               <?php if (!empty($page['navigation'])): ?>
                 <?php print render($page['navigation']); ?>

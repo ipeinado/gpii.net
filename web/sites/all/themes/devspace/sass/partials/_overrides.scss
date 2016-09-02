@@ -175,6 +175,10 @@ iframe.flc-iframe {
   z-index: 1600;
 }
 
-body.toolbar {
-    padding-top: 44px !important;
+body.navbar-is-fixed-top {
+  padding-top: $navbar-height * 2 !important;
+}
+
+#page-header {
+  margin-top: 2rem;
 }

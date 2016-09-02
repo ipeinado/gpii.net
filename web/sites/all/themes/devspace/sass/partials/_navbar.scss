@@ -278,6 +278,8 @@ header#navbar {
     box-shadow: 2px 2px 3px 0px #6f6f6f;
     border-bottom: 1px solid $palette-navbar-dark;
     border-left: 1px solid $palette-navbar-dark;
+    margin-right: 2rem;
+    max-width: 1100px;
 }
 
 .fl-prefsEditor-separatedPanel .fl-panelBar {
