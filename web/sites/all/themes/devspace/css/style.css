@@ -6041,13 +6041,14 @@ body.navbar-is-fixed-top {
 header#navbar {
   margin-bottom: 0; }
   header#navbar .navbar-nav {
-    font-size: 140%; }
+    font-size: 1.1em;
+    display: table; }
     header#navbar .navbar-nav > li {
       margin-right: 1rem; }
       header#navbar .navbar-nav > li.open a {
         color: #000; }
       header#navbar .navbar-nav > li > a {
-        padding: 1.5rem 1rem 1rem; }
+        padding: 1.5rem 1rem 3rem; }
 
 .navbar-static-top {
   z-index: 999 !important; }
