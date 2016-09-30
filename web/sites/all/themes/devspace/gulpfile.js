@@ -4,7 +4,9 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
-    livereload = require('livereload');
+    livereload = require('livereload'),
+    sourcemaps = require('gulp-sourcemaps'),
+    scsslint = require('gulp-scss-lint');
 
 
     gulp.task('default', ['watch']);
@@ -16,8 +18,10 @@ var gulp = require('gulp'),
       return gulp
         // Find all `.scss` files from the `stylesheets/` folder
         .src(input)
+        // Lint scss
+        .pipe(scsslint())
         // Run Sass on those files
-        .pipe(sass({precision: '8'}))
+        .pipe(sass({precision: '8'}).on('error', sass.logError))
         // Write the resulting CSS in the output folder
         .pipe(gulp.dest(output));
     });
@@ -48,7 +52,9 @@ var gulp = require('gulp'),
         ]}),
       ];
       return gulp.src('./tmpcss/*.css')
+        .pipe(sourcemaps.init())
         .pipe(postcss(processors))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./css'));
     });
 
