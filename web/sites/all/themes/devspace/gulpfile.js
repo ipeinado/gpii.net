@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     sass = require('gulp-sass'),
     postcss = require('gulp-postcss'),
-    autoprefixer = require('autoprefixer');
+    autoprefixer = require('autoprefixer'),
     livereload = require('livereload');
 
 
