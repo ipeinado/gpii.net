@@ -16,10 +16,9 @@
         ],
         "dependencies": [
             "jQuery",
-            "jQueryUICore",
-            "jQueryUIWidgets",
-            "framework",
-            "json"
+            "jQueryUI",
+            "normalize",
+            "framework"
         ]
     }
 }

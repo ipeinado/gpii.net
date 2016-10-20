@@ -7,8 +7,8 @@
         ],
         "dependencies": [
             "jQuery",
-            "jQueryUICore",
-            "jQueryUIWidgets",
+            "jQueryUI",
+            "normalize",
             "framework"
         ]
     }
