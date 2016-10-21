@@ -6319,9 +6319,6 @@ ol.breadcrumb {
   .page-admin .main-container {
     padding-top: 2em; }
 
-/**
- * Home Page Specific Styles
- */
 body.front {
   /*
  * Row with equal height columns
@@ -6329,9 +6326,9 @@ body.front {
  */ }
   body.front #jumbotron-wrap {
     background-color: #eeeeee;
+    margin-bottom: 2em;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 2em;
     margin-top: 0;
     /**
    * Equal Height for search blocks in the home jumbotron
