@@ -15,9 +15,8 @@
             "./js/UIEnhancer.js",
             "./js/PrefsEditor.js",
             "./js/Panels.js",
-            "./js/SelfVoicingPanel.js",
+            "./js/ModelRelay.js",
             "./js/Enactors.js",
-            "./js/SelfVoicingEnactor.js",
             "./js/StarterGrades.js",
             "./js/SeparatedPanelPrefsEditor.js",
             "./js/FullNoPreviewPrefsEditor.js",
@@ -25,21 +24,20 @@
             "./js/PrimaryBuilder.js",
             "./js/AuxBuilder.js",
             "./js/StarterSchemas.js",
-            "./js/SelfVoicingSchemas.js",
             "./js/Builder.js"
         ],
         "dependencies": [
+            "fss",
             "fonts",
             "jQuery",
-            "jQueryUI",
-            "normalize",
+            "jQueryUICore",
             "framework",
             "enhancement",
             "renderer",
             "slidingPanel",
             "textfieldSlider",
             "tableOfContents",
-            "textToSpeech"
+            "json"
         ]
     }
 }

@@ -10,7 +10,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
@@ -20,20 +20,18 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      **************************************/
 
     fluid.defaults("fluid.prefs.fullNoPreview", {
-        gradeNames: ["fluid.prefs.prefsEditorLoader"],
+        gradeNames: ["fluid.prefs.prefsEditorLoader", "autoInit"],
         components: {
             prefsEditor: {
                 container: "{that}.container",
                 options: {
                     listeners: {
-                        "afterReset.applyChanges": {
+                        onReset: [{
                             listener: "{that}.applyChanges"
-                        },
-                        "afterReset.save": {
-                            listener: "{that}.save",
-                            priority: "after:applyChanges"
-                        },
-                        "onReady.boilOnReady": {
+                        }, {
+                            listener: "{that}.save"
+                        }],
+                        onReady: {
                             listener: "{fullNoPreview}.events.onReady",
                             args: "{fullNoPreview}"
                         }
@@ -46,4 +44,4 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }
     });
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);

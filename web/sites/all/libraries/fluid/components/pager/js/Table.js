@@ -12,7 +12,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
@@ -147,7 +147,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                     return false;
                 }
                 newModel.pageIndex = 0;
-                tableThat.applier.change("", newModel);
+                tableThat.applier.requestChange("", newModel);
                 // fluid.table.setModelSortHeaderClass(newModel, options); - done during rerender, surely
             }
             return false;
@@ -296,7 +296,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     /** A body renderer implementation which uses the Fluid renderer to render a table section **/
 
     fluid.defaults("fluid.table.selfRender", {
-        gradeNames: ["fluid.rendererComponent"],
+        gradeNames: ["fluid.rendererRelayComponent", "autoInit"],
         listeners: {
             onCreate: [{
                 "this": "{that}.root",
@@ -384,7 +384,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.defaults("fluid.table", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         mergePolicy: {
             dataModel: "preserve",
             columnDefs: "noexpand"
@@ -436,4 +436,4 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         columnDefs: [] // [{key: "columnName", valuebinding: "*.valuePath", sortable: true/false}]
     });
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);

@@ -10,7 +10,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
@@ -20,9 +20,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      ***********************************/
 
     fluid.defaults("fluid.prefs.fullPreview", {
-        gradeNames: ["fluid.prefs.prefsEditorLoader"],
-        outerUiEnhancerOptions: "{originalEnhancerOptions}.options.originalUserOptions",
-        outerUiEnhancerGrades: "{originalEnhancerOptions}.uiEnhancer.options.userGrades",
+        gradeNames: ["fluid.prefs.prefsEditorLoader", "autoInit"],
+        outerPreviewEnhancerOptions: "{originalEnhancerOptions}.options.originalUserOptions",
         components: {
             prefsEditor: {
                 container: "{that}.container",
@@ -34,13 +33,13 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                             container: "{prefsEditor}.dom.previewFrame",
                             options: {
                                 listeners: {
-                                    "onReady.boilOnPreviewReady": "{fullPreview}.events.onPreviewReady"
+                                    onReady: "{fullPreview}.events.onPreviewReady"
                                 }
                             }
                         }
                     },
                     listeners: {
-                        "onReady.boilOnPrefsEditorReady": "{fullPreview}.events.onPrefsEditorReady"
+                        onReady: "{fullPreview}.events.onPrefsEditorReady"
                     },
                     distributeOptions: {
                         source: "{that}.options.preview",
@@ -62,18 +61,17 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             }
         },
         distributeOptions: [{
-            source: "{that}.options.outerUiEnhancerOptions",
+            source: "{that}.options.outerPreviewEnhancerOptions",
+            removeSource: true,
             target: "{that enhancer}.options"
         }, {
             source: "{that}.options.preview",
             target: "{that preview}.options"
         }, {
             source: "{that}.options.previewEnhancer",
+            removeSource: true,
             target: "{that enhancer}.options"
-        }, {
-            source: "{that}.options.outerUiEnhancerGrades",
-            target: "{that enhancer}.options.gradeNames"
         }]
     });
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);

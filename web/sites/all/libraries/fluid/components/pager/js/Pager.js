@@ -12,7 +12,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
@@ -33,8 +33,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.pager.bindLinkClick = function (link, initiatePageChange, eventArg) {
-        link.off("click.fluid.pager");
-        link.on("click.fluid.pager", function () {
+        link.unbind("click.fluid.pager");
+        link.bind("click.fluid.pager", function () {
             initiatePageChange.fire(eventArg);
             return false;
         });
@@ -57,11 +57,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
     // Abstract grade representing all pageLists
     fluid.defaults("fluid.pager.pageList", {
-        gradeNames: ["fluid.viewComponent"]
+        gradeNames: ["fluid.viewRelayComponent"]
     });
 
     fluid.defaults("fluid.pager.directPageList", {
-        gradeNames: ["fluid.pager.pageList"],
+        gradeNames: ["fluid.pager.pageList", "autoInit"],
         listeners: {
             onCreate: {
                 funcName: "fluid.pager.bindLinkClicks",
@@ -155,19 +155,17 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             localID: page + 1,
             value: page + 1,
             pageIndex: page,
-            decorators: [
-                {
-                    identify: "pageLink:" + page
-                },
-                {
-                    type: "jQuery",
-                    func: "click",
-                    args: function (event) {
-                        initiatePageChange.fire({pageIndex: page});
-                        event.preventDefault();
-                    }
+            decorators: [{
+                identify: "pageLink:" + page
+            },
+            {
+                type: "jQuery",
+                func: "click",
+                args: function (event) {
+                    initiatePageChange.fire({pageIndex: page});
+                    event.preventDefault();
                 }
-            ]
+            }]
         };
 
         if (isCurrent) {
@@ -217,7 +215,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.defaults("fluid.pager.renderedPageList", {
-        gradeNames: ["fluid.pager.pageList", "fluid.rendererComponent"],
+        gradeNames: ["fluid.rendererRelayComponent", "fluid.pager.pageList", "autoInit"],
         rendererOptions: {
             idMap: {},
             cutpoints: [
@@ -251,7 +249,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         invokers: {
             produceTree: {
                 funcName: "fluid.identity",
-                args: "{that}.pageTree"
+                args: "{that}.pageTree",
+                dynamic: true
             },
             assembleComponent: {
                 funcName: "fluid.pager.renderedPageList.assembleComponent",
@@ -272,7 +271,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
 
     fluid.defaults("fluid.pager.previousNext", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         members: {
             previous: "{that}.dom.previous",
             next: "{that}.dom.next"
@@ -302,7 +301,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.defaults("fluid.pager.pagerBar", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         components: {
             pageList: {
                 type: "fluid.pager.pageList",
@@ -359,7 +358,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
 
     fluid.defaults("fluid.pager.summary", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         listeners: {
             onCreate: {
                 funcName: "fluid.pager.summaryAria",
@@ -385,7 +384,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.defaults("fluid.pager.directPageSize", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         listeners: {
             onCreate: {
                 "this": "{that}.container",
@@ -421,11 +420,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         if (arg.relativePage !== undefined) {
             newPageIndex = that.model.pageIndex + arg.relativePage;
         }
-        that.applier.change("pageIndex", newPageIndex);
+        that.applier.requestChange("pageIndex", newPageIndex);
     };
 
     fluid.pager.initiatePageSizeChangeListener = function (that, arg) {
-        that.applier.change("pageSize", arg);
+        that.applier.requestChange("pageSize", arg);
     };
 
     /*******************
@@ -433,7 +432,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      *******************/
 
     fluid.defaults("fluid.pager", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         events: {
             initiatePageChange: null,
             initiatePageSizeChange: null,
@@ -515,8 +514,6 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         },
         invokers: {
             acquireDefaultRange: {
-                // TODO: problem here - pagerBar, etc. are dynamic components and so cannot be constructed gingerly
-                // This is why current (pre-FLUID-4925) framework must construct components before invokers
                 funcName: "fluid.identity",
                 args: "{that}.pagerBar.pageList.defaultModel.totalRange"
             }
@@ -555,4 +552,4 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }
     });
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);
