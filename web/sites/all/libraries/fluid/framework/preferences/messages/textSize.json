@@ -1,5 +1,6 @@
 {
     "textSizeLabel": "Text Size",
-    "multiplier": "times",
-    "textSizeDescr": "Adjust text size"
+    "textSizeSmallIcon": "icon of a small capital letter 'A'",
+    "textSizeLargeIcon": "icon of a large capital letter 'A'",
+    "multiplier": "times"
 }

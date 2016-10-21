@@ -1,5 +1,5 @@
 /*
-Copyright 2010-2015 OCAD University
+Copyright 2010 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -9,7 +9,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
@@ -27,6 +27,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }
     };
 
+    fluid.tooltip.updateContent = function (that, content) {
+        if (that.model.content !== content) { // TODO: Remove with FLUID-3674 branch
+            that.applier.requestChange("content", content);
+        }
+    };
+
     fluid.tooltip.idSearchFunc = function (idToContentFunc) {
         return function (/* callback*/) {
             var target = this;
@@ -39,7 +45,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             } else {
                 return null;
             }
-
+            
         };
     };
 
@@ -56,14 +62,6 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }
     };
 
-    // Resolve FLUID-5673 by resolving the event target upwards to the nearest match for "items" - this will
-    // reproduce the natural effect operated by event bubbling in conjunction with the widget
-    fluid.tooltip.resolveTooltipTarget = function (items, event) {
-        var originalTarget = fluid.resolveEventTarget(event);
-        var tooltipTarget = $(originalTarget).closest(items);
-        return tooltipTarget[0];
-    };
-
     // Note that fluid.resolveEventTarget is required
     // because of strange dispatching within tooltip widget's "_open" method
     // ->   this._trigger( "open", event, { tooltip: tooltip };
@@ -73,7 +71,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     fluid.tooltip.makeOpenHandler = function (that) {
         return function (event, tooltip) {
             fluid.tooltip.closeAll(that);
-            var originalTarget = fluid.tooltip.resolveTooltipTarget(that.options.items, event);
+            var originalTarget = fluid.resolveEventTarget(event);
             var key = fluid.allocateSimpleId(originalTarget);
             that.openIdMap[key] = true;
             if (that.initialised) {
@@ -85,7 +83,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     fluid.tooltip.makeCloseHandler = function (that) {
         return function (event, tooltip) {
             if (that.initialised) { // underlying jQuery UI component will fire various spurious close events after it has been destroyed
-                var originalTarget = fluid.tooltip.resolveTooltipTarget(that.options.items, event);
+                var originalTarget = fluid.resolveEventTarget(event);
                 delete that.openIdMap[originalTarget.id];
                 that.events.afterClose.fire(that, originalTarget, tooltip.tooltip, event);
             }
@@ -93,9 +91,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.tooltip.closeAll = function (that) {
-        var dokkument = fluid.getDocument(that.container);
         fluid.each(that.openIdMap, function (value, key) {
-            var target = fluid.byId(key, dokkument);
+            var target = fluid.byId(key);
             // "white-box" behaviour - fabricating this fake event shell triggers the standard "close" sequence including notifying
             // our own handler. This will be very fragile to changes in jQuery UI and the underlying widget code
             that.container.tooltip("close", {
@@ -122,12 +119,10 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
     fluid.tooltip.doDestroy = function (that) {
         if (that.initialised) {
-            fluid.tooltip.closeAll(that, true);
-            var dokkument = fluid.getDocument(that.container),
-                container = that.container[0];
+            fluid.tooltip.closeAll(that);
             // jQuery UI framework will throw a fit if we have instantiated a widget on a DOM element and then
             // removed it from the DOM. This apparently can't be detected via the jQuery UI API itself.
-            if ($.contains(dokkument, container) || dokkument === container) {
+            if ($.contains(document, that.container[0])) {
                 that.container.tooltip("destroy");
             }
             that.initialised = false; // TODO: proper framework facility for this coming with FLUID-4890
@@ -135,7 +130,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.defaults("fluid.tooltip", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         widgetOptions: {
             tooltipClass: "{that}.options.styles.tooltip",
             position: "{that}.options.position",
@@ -165,9 +160,14 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 funcName: "fluid.tooltip.closeAll",
                 args: "{that}"
             },
+          /**
+           * Updates the contents displayed in the tooltip. Deprecated - use the
+           * ChangeApplier API for this component instead.
+           * @param {Object} content, the content to be displayed in the tooltip
+           */
             updateContent: {
-                changePath: "content",
-                value: "{arguments}.0"
+                funcName: "fluid.tooltip.updateContent",
+                args: ["{that}", "{arguments}.0"]
             },
             computeContentFunc: {
                 funcName: "fluid.tooltip.computeContentFunc",
@@ -195,15 +195,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             afterClose: null  // arguments: that, event.target, tooltip, event
         },
         listeners: {
-            "onCreate.setup": "fluid.tooltip.setup",
-            "onDestroy.doDestroy": "fluid.tooltip.doDestroy"
+            onCreate: "fluid.tooltip.setup",
+            onDestroy: "fluid.tooltip.doDestroy"
         },
         modelListeners: {
-            // TODO: We could consider a more fine-grained scheme for this,
-            // listening to content and idToContent separately
             "": {
-                funcName: "fluid.tooltip.updateContentImpl",
-                excludeSource: "init",
+                funcName: "fluid.tooltip.updateContentImpl", // TODO: better scheme when FLUID-3674 is merged
                 args: "{that}"
             }
         },
@@ -216,4 +213,4 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         delay: 300
     });
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);

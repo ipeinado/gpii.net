@@ -1,6 +1,6 @@
 /*
 Copyright 2009 University of Toronto
-Copyright 2010-2015 OCAD University
+Copyright 2010-2011 OCAD University
 Copyright 2011 Lucendo Development Ltd.
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
@@ -11,7 +11,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
@@ -27,32 +27,15 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * @param {Object} options
      */
     fluid.defaults("fluid.prefs.prefsEditorLoader", {
-        gradeNames: ["fluid.prefs.settingsGetter", "fluid.prefs.initialModel", "fluid.viewComponent"],
-        defaultLocale: "en",
-        members: {
-            settings: {
-                expander: {
-                    funcName: "fluid.prefs.prefsEditorLoader.getCompleteSettings",
-                    args: ["{that}.initialModel", "{that}.getSettings"]
-                }
-            }
-        },
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         components: {
             prefsEditor: {
                 priority: "last",
                 type: "fluid.prefs.prefsEditor",
-                createOnEvent: "onCreatePrefsEditorReady",
-                options: {
-                    members: {
-                        initialModel: "{prefsEditorLoader}.initialModel"
-                    },
-                    invokers: {
-                        getSettings: "{prefsEditorLoader}.getSettings"
-                    }
-                }
+                createOnEvent: "onCreatePrefsEditorReady"
             },
             templateLoader: {
-                type: "fluid.resourceLoader",
+                type: "fluid.prefs.resourceLoader",
                 options: {
                     events: {
                         onResourcesLoaded: "{prefsEditorLoader}.events.onPrefsEditorTemplatesLoaded"
@@ -60,13 +43,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 }
             },
             messageLoader: {
-                type: "fluid.resourceLoader",
+                type: "fluid.prefs.resourceLoader",
                 options: {
-                    defaultLocale: "{prefsEditorLoader}.options.defaultLocale",
-                    locale: "{prefsEditorLoader}.settings.locale",
-                    resourceOptions: {
-                        dataType: "json"
-                    },
                     events: {
                         onResourcesLoaded: "{prefsEditorLoader}.events.onPrefsEditorMessagesLoaded"
                     }
@@ -76,11 +54,18 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         events: {
             onPrefsEditorTemplatesLoaded: null,
             onPrefsEditorMessagesLoaded: null,
+            onMsgResolverReady: null,
             onCreatePrefsEditorReady: {
                 events: {
                     templateLoaded: "onPrefsEditorTemplatesLoaded",
-                    prefsEditorMessagesLoaded: "onPrefsEditorMessagesLoaded"
+                    msgResolverReady: "onMsgResolverReady"
                 }
+            }
+        },
+        listeners: {
+            onPrefsEditorMessagesLoaded: {
+                funcName: "fluid.prefs.prefsEditorLoader.createMsgResolver",
+                args: ["{arguments}.0", "{that}"]
             }
         },
         distributeOptions: [{
@@ -92,11 +77,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             removeSource: true,
             target: "{that > messageLoader}.options"
         }, {
-            source: "{that}.options.terms",
-            target: "{that > templateLoader}.options.terms"
+            source: "{that}.options.templatePrefix",
+            target: "{that > templateLoader > resourcePath}.options.value"
         }, {
-            source: "{that}.options.terms",
-            target: "{that > messageLoader}.options.terms"
+            source: "{that}.options.messagePrefix",
+            target: "{that > messageLoader > resourcePath}.options.value"
         }, {
             source: "{that}.options.prefsEditor",
             removeSource: true,
@@ -104,9 +89,15 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }]
     });
 
-    fluid.prefs.prefsEditorLoader.getCompleteSettings = function (initialModel, getSettingsFunc) {
-        var savedSettings = getSettingsFunc();
-        return $.extend(true, {}, initialModel, savedSettings);
+    fluid.prefs.prefsEditorLoader.createMsgResolver = function (messageResources, that) {
+        var completeMessage;
+        fluid.each(messageResources, function (oneResource) {
+            var message = JSON.parse(oneResource.resourceText);
+            completeMessage = $.extend({}, completeMessage, message);
+        });
+        var parentResolver = fluid.messageResolver({messageBase: completeMessage});
+        that.msgResolver = fluid.messageResolver({messageBase: {}, parents: [parentResolver]});
+        that.events.onMsgResolverReady.fire();
     };
 
     // TODO: This mixin grade appears to be supplied manually by various test cases but no longer appears in
@@ -115,7 +106,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     fluid.defaults("fluid.prefs.transformDefaultPanelsOptions", {
         // Do not supply "fluid.prefs.inline" here, since when this is used as a mixin for separatedPanel, it ends up displacing the
         // more refined type of the prefsEditorLoader
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         distributeOptions: [{
             source: "{that}.options.textSize",
             removeSource: true,
@@ -143,23 +134,97 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }]
     });
 
+    /**************************************
+     * Preferences Editor Template Loader *
+     **************************************/
+
+    /**
+     * A configurable component that works in conjunction with or without the Preferences Editor template
+     * path component (fluid.prefsResourcePath) to allow users to set either the location of their own
+     * templates or the templates that are relative to the path defined in the Preferences Editor template
+     * path component.
+     *
+     * @param {Object} options
+     */
+
+    fluid.defaults("fluid.prefs.resourceLoader", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        listeners: {
+            "onCreate": {
+                listener: "fluid.prefs.resourceLoader.loadTemplates",
+                args: ["{that}", {expander: {func: "{that}.resolveTemplates"}}]
+            }
+        },
+        templates: {},
+        // Unsupported, non-API option
+        components: {
+            resourcePath: {
+                type: "fluid.prefs.resourcePath"
+            }
+        },
+        invokers: {
+            transformURL: {
+                funcName: "fluid.stringTemplate",
+                args: [ "{arguments}.0", {"prefix/" : "{that}.resourcePath.options.value"} ]
+            },
+            resolveTemplates: {
+                funcName: "fluid.prefs.resourceLoader.resolveTemplates",
+                args: "{that}"
+            }
+        },
+        events: {
+            onResourcesLoaded: null
+        }
+    });
+
+    fluid.prefs.resourceLoader.resolveTemplates = function (that) {
+        var mapped = fluid.transform(that.options.templates, that.transformURL);
+
+        return fluid.transform(mapped, function (url) {
+            return {url: url, forceCache: true};
+        });
+    };
+
+    fluid.prefs.resourceLoader.loadTemplates = function (that, resources) {
+        delete resources.expander;   // A work-around for FLUID-5117
+        fluid.fetchResources(resources, function () {
+            that.resources = resources;
+            that.events.onResourcesLoaded.fire(resources);
+        });
+    };
+
+    /**********************************************
+     * Preferences Editor Template Path Specifier *
+     **********************************************/
+
+    /**
+     * A configurable component that defines the relative path from the html to Preferences Editor templates.
+     *
+     * @param {Object} options
+     */
+
+    fluid.defaults("fluid.prefs.resourcePath", {
+        gradeNames: ["fluid.littleComponent", "autoInit"],
+        value: "../html/"
+    });
+
     /**********************
      * Preferences Editor *
      **********************/
 
     fluid.defaults("fluid.prefs.settingsGetter", {
-        gradeNames: ["fluid.component"],
+        gradeNames: ["fluid.littleComponent", "autoInit"],
         members: {
-            getSettings: "{fluid.prefs.store}.get"
+            getSettings: "{settingsStore}.get"
         }
     });
 
     fluid.defaults("fluid.prefs.settingsSetter", {
-        gradeNames: ["fluid.component"],
+        gradeNames: ["fluid.littleComponent", "autoInit"],
         invokers: {
             setSettings: {
                 funcName: "fluid.prefs.settingsSetter.setSettings",
-                args: ["{arguments}.0", "{fluid.prefs.store}.set"]
+                args: ["{arguments}.0", "{settingsStore}.set"]
             }
         }
     });
@@ -170,10 +235,10 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.defaults("fluid.prefs.uiEnhancerRelay", {
-        gradeNames: ["fluid.modelComponent"],
+        gradeNames: ["autoInit", "fluid.eventedComponent"],
         listeners: {
-            "onCreate.addListener": "{that}.addListener",
-            "onDestroy.removeListener": "{that}.removeListener"
+            onCreate: "{that}.addListener",
+            onDestroy: "{that}.removeListener"
         },
         events: {
             updateEnhancerModel: "{fluid.prefs.prefsEditor}.events.onUpdateEnhancerModel"
@@ -189,7 +254,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             },
             updateEnhancerModel: {
                 funcName: "fluid.prefs.uiEnhancerRelay.updateEnhancerModel",
-                args: ["{uiEnhancer}", "{fluid.prefs.prefsEditor}.model.preferences"]
+                args: ["{uiEnhancer}", "{fluid.prefs.prefsEditor}.model"]
             }
         }
     });
@@ -207,7 +272,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     /**
-     * A component that works in conjunction with the UI Enhancer component
+     * A component that works in conjunction with the UI Enhancer component and the Fluid Skinning System (FSS)
      * to allow users to set personal user interface preferences. The Preferences Editor component provides a user
      * interface for setting and saving personal preferences, and the UI Enhancer component carries out the
      * work of applying those preferences to the user interface.
@@ -216,7 +281,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * @param {Object} options
      */
     fluid.defaults("fluid.prefs.prefsEditor", {
-        gradeNames: ["fluid.prefs.settingsGetter", "fluid.prefs.settingsSetter", "fluid.prefs.initialModel", "fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.settingsGetter", "fluid.prefs.settingsSetter", "fluid.prefs.rootModel", "autoInit"],
         invokers: {
             /**
              * Updates the change applier and fires modelChanged on subcomponent fluid.prefs.controls
@@ -224,9 +289,13 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
              * @param {Object} newModel
              * @param {Object} source
              */
+            updateModel: {
+                funcName: "fluid.fireSourcedChange",
+                args: ["{that}.applier", "", "{arguments}.0", "{arguments}.1"]
+            },
             fetch: {
                 funcName: "fluid.prefs.prefsEditor.fetch",
-                args: ["{that}", "{arguments}.0"]
+                args: ["{that}"]
             },
             applyChanges: {
                 funcName: "fluid.prefs.prefsEditor.applyChanges",
@@ -258,8 +327,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         events: {
             onSave: null,
             onCancel: null,
-            beforeReset: null,
-            afterReset: null,
+            onReset: null,
             onAutoSave: null,
             modelChanged: null,
             onPrefsEditorRefresh: null,
@@ -268,17 +336,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             onReady: null
         },
         listeners: {
-            "onCreate.init": "fluid.prefs.prefsEditor.init",
-            "onAutoSave.save": "{that}.save"
-        },
-        modelListeners: {
-            "": [{
-                listener: "fluid.prefs.prefsEditor.handleAutoSave",
-                args: ["{that}"]
-            }, {
-                listener: "{that}.events.modelChanged.fire",
-                args: ["{change}.value"]
-            }]
+            onCreate: "fluid.prefs.prefsEditor.init",
+            onAutoSave: "{that}.save"
         },
         resources: {
             template: "{templateLoader}.resources.prefsEditor"
@@ -293,78 +352,42 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         that.events.onUpdateEnhancerModel.fire();
     };
 
-    fluid.prefs.prefsEditor.fetch = function (that, eventName) {
+    fluid.prefs.prefsEditor.fetch = function (that) {
         var completeModel = that.getSettings();
-        completeModel = $.extend(true, {}, that.initialModel, completeModel);
-        // TODO: This may not be completely effective if the root model is smaller than
-        // the current one. Given our previous discoveries re "model shrinkage"
-        // (http://issues.fluidproject.org/browse/FLUID-5585 ), the proper thing to do here
-        // is to apply a DELETE to the root before putting in the new model. And this should
-        // be done within a transaction in order to avoid notifying the tree more than necessary.
-        // However, the transactional model of the changeApplier is going to change radically
-        // soon (http://wiki.fluidproject.org/display/fluid/New+New+Notes+on+the+ChangeApplier)
-        // and this implementation doesn't seem to be causing a problem at present so we had
-        // just better leave it the way it is for now.
-        that.applier.change("", completeModel);
-        if (eventName) {
-            that.events[eventName].fire(that);
-        }
+        completeModel = $.extend(true, {}, that.rootModel, completeModel);
+        that.updateModel(completeModel, "settingsStore");
         that.events.onPrefsEditorRefresh.fire();
         that.applyChanges();
     };
 
     /**
-     * Sends the prefsEditor.model to the store and fires onSave
-     * @param that: A fluid.prefs.prefsEditor instance
-     * @return the saved model
+     * Saves the current model and fires onSave
      */
     fluid.prefs.prefsEditor.save = function (that) {
-        if (!that.model) {  // Don't save a reset model
-            return;
-        }
+        var savedSelections = fluid.copy(that.model);
 
-        var modelToSave = fluid.copy(that.model),
-            initialModel = that.initialModel,
-            stats = {changes: 0, unchanged: 0, changeMap: {}},
-            changedPrefs = {};
-
-        // To address https://issues.fluidproject.org/browse/FLUID-4686
-        fluid.model.diff(modelToSave.preferences, fluid.get(initialModel, ["preferences"]), stats);
-
-        if (stats.changes === 0) {
-            delete modelToSave.preferences;
-        } else {
-            fluid.each(stats.changeMap, function (state, pref) {
-                fluid.set(changedPrefs, pref, modelToSave.preferences[pref]);
-            });
-            modelToSave.preferences = changedPrefs;
-        }
-
-        that.events.onSave.fire(modelToSave);
-        that.setSettings(modelToSave);
-        return modelToSave;
+        fluid.each(savedSelections, function (value, key) {
+            if (fluid.get(that.rootModel, key) === value) {
+                delete savedSelections[key];
+            }
+        });
+        that.events.onSave.fire(savedSelections);
+        that.setSettings(savedSelections);
     };
 
     fluid.prefs.prefsEditor.saveAndApply = function (that) {
-        var prevSettings = that.getSettings(),
-            changedSelections = that.save();
-
-        // Only when preferences are changed, re-render panels and trigger enactors to apply changes
-        if (!fluid.model.diff(fluid.get(changedSelections, "preferences"), fluid.get(prevSettings, "preferences"))) {
-            that.events.onPrefsEditorRefresh.fire();
-            that.applyChanges();
-        }
+        that.save();
+        that.events.onPrefsEditorRefresh.fire();
+        that.applyChanges();
     };
 
     /**
-     * Resets the selections to the integrator's defaults and fires afterReset
+     * Resets the selections to the integrator's defaults and fires onReset
      */
     fluid.prefs.prefsEditor.reset = function (that) {
-        that.events.beforeReset.fire(that);
-        that.applier.fireChangeRequest({path: "", type: "DELETE"});
-        that.applier.change("", fluid.copy(that.initialModel));
+        that.updateModel(fluid.copy(that.rootModel));
         that.events.onPrefsEditorRefresh.fire();
-        that.events.afterReset.fire(that);
+        that.events.onReset.fire(that);
     };
 
     /**
@@ -392,18 +415,21 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
         that.container.append(that.options.resources.template.resourceText);
         bindHandlers(that);
+        // This creates subcomponents - we can find default model afterwards
+        that.events.onPrefsEditorMarkupReady.fire(that);
 
-        that.fetch("onPrefsEditorMarkupReady");
+        that.fetch();
         that.events.onReady.fire(that);
     };
 
-    fluid.prefs.prefsEditor.handleAutoSave = function (that) {
-        if (that.options.autoSave) {
-            that.events.onAutoSave.fire();
-        }
-    };
-
     fluid.prefs.prefsEditor.init = function (that) {
+        that.applier.modelChanged.addListener("", function (newModel, oldModel, changeRequest) {
+            that.events.modelChanged.fire(newModel, oldModel, changeRequest[0].source);
+            if (that.options.autoSave) {
+                that.events.onAutoSave.fire();
+            }
+        });
+
         // This setTimeout is to ensure that fetching of resources is asynchronous,
         // and so that component construction does not run ahead of subcomponents for SeparatedPanel
         // (FLUID-4453 - this may be a replacement for a branch removed for a FLUID-2248 fix)
@@ -419,13 +445,15 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      ******************************/
 
     fluid.defaults("fluid.prefs.preview", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         components: {
             enhancer: {
                 type: "fluid.uiEnhancer",
                 container: "{preview}.enhancerContainer",
                 createOnEvent: "onReady"
             },
+            // TODO: This is a violation of containment, but we can't use up our allowance of demands
+            // blocks as a result of FLUID-4392
             templateLoader: "{templateLoader}"
         },
         invokers: {
@@ -433,39 +461,39 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 funcName: "fluid.prefs.preview.updateModel",
                 args: [
                     "{preview}",
-                    "{prefsEditor}.model.preferences"
+                    "{prefsEditor}.model"
                 ]
             }
         },
+        finalInitFunction: "fluid.prefs.preview.finalInit",
         events: {
             onReady: null
         },
         listeners: {
-            "onCreate.startLoadingContainer": "fluid.prefs.preview.startLoadingContainer",
             "{prefsEditor}.events.modelChanged": "{that}.updateModel",
-            "onReady.updateModel": "{that}.updateModel"
+            onReady: "{that}.updateModel"
         },
         templateUrl: "%prefix/PrefsEditorPreview.html"
     });
 
-    fluid.prefs.preview.updateModel = function (that, preferences) {
+    fluid.prefs.preview.updateModel = function (that, model) {
         /**
          * SetTimeout is temp fix for http://issues.fluidproject.org/browse/FLUID-2248
          */
         setTimeout(function () {
             if (that.enhancer) {
-                that.enhancer.updateModel(preferences);
+                that.enhancer.updateModel(model);
             }
         }, 0);
     };
 
-    fluid.prefs.preview.startLoadingContainer = function (that) {
+    fluid.prefs.preview.finalInit = function (that) {
         var templateUrl = that.templateLoader.transformURL(that.options.templateUrl);
-        that.container.on("load", function () {
+        that.container.load(function () {
             that.enhancerContainer = $("body", that.container.contents());
             that.events.onReady.fire();
         });
         that.container.attr("src", templateUrl);
     };
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);

@@ -10,7 +10,7 @@
         ],
         "dependencies": [
             "jQuery",
-            "normalize",
+            "jQueryUIWidgets",
             "framework",
             "renderer",
             "tooltip"
