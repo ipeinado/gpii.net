@@ -9,11 +9,12 @@
         ],
         "dependencies": [
             "jQuery",
-            "jQueryUI",
-            "normalize",
+            "jQueryUICore",
+            "jQueryUIWidgets",
             "framework",
             "undo",
-            "tooltip"
+            "tooltip",
+            "fss"
         ]
     }
 }

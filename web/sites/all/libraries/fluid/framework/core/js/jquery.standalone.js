@@ -17,11 +17,11 @@
  * Date: Thu May 12 15:04:36 2011 -0400
  */
 
-/* global jQuery:true, global */
+/* global jQuery:true */
 /* exported jQuery */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
-var fluid = fluid || fluid_2_0_0;
+var fluid_1_5 = fluid_1_5 || {};
+var fluid = fluid || fluid_1_5;
 
 (function (fluid) {
     "use strict";
@@ -29,12 +29,15 @@ var fluid = fluid || fluid_2_0_0;
     // Save a reference to some core methods
     var toString = Object.prototype.toString;
     var hasOwn = Object.prototype.hasOwnProperty;
-    var globalScope = typeof window !== "undefined" ? window :
-        typeof self !== "undefined" ? self : global;
+    var indexOf = Array.prototype.indexOf;
     // Map over jQuery in case of overwrite
-    var _jQuery = globalScope.jQuery;
+    var _jQuery = window.jQuery;
     // Map over the $ in case of overwrite
-    var _$ = globalScope.$;
+    var _$ = window.$;
+    // Used for trimming whitespace
+    var trimLeft = /^\s+/,
+        trimRight = /\s+$/,
+        trim = String.prototype.trim;
 
     var jQuery = fluid.jQueryStandalone = {
 
@@ -42,17 +45,26 @@ var fluid = fluid || fluid_2_0_0;
         jquery: "1.6.1-fluidStandalone",
 
         noConflict: function (deep) {
-            if (globalScope.$ === jQuery) {
-                globalScope.$ = _$;
+            if (window.$ === jQuery) {
+                window.$ = _$;
             }
-            if (deep && globalScope.jQuery === jQuery) {
-                globalScope.jQuery = _jQuery;
+            if (deep && window.jQuery === jQuery) {
+                window.jQuery = _jQuery;
             }
             return jQuery;
         },
 
         isArray: Array.isArray || function (obj) {
             return toString.call(obj) === "[object Array]";
+        },
+
+        // Use native String.trim function wherever possible
+        trim: trim ? function( text ) {
+            return text === null ? "" : trim.call( text );
+        } :
+        // Otherwise use our own trimming functionality
+        function( text ) {
+            return text === null ? "" : text.toString().replace( trimLeft, "" ).replace( trimRight, "" );
         },
 
         // A crude way of determining if an object is a window
@@ -78,19 +90,28 @@ var fluid = fluid || fluid_2_0_0;
             // if last one is own, then all properties are own.
             // TODO: Isn't this enormously expensive?
             var key;
-            for (key in obj) {} // eslint-disable-line no-empty
+            for (key in obj) {}
             return key === undefined || hasOwn.call( obj, key );
         },
 
-        trim: function (str) {
-            return str.trim();
-        },
-
         isEmptyObject: function (obj) {
-            for ( var name in obj ) { // eslint-disable-line no-unused-vars
+            var name;
+            for ( name in obj ) {
                 return false;
             }
             return true;
+        },
+
+        inArray: function (elem, array) {
+            if (indexOf) {
+                return indexOf.call( array, elem );
+            }
+            for (var i = 0, length = array.length; i < length; i++) {
+                if (array[i] === elem) {
+                    return i;
+                }
+            }
+            return -1;
         },
 
         extend: function () {
@@ -147,6 +168,6 @@ var fluid = fluid || fluid_2_0_0;
         }
     };
 
-})(fluid_2_0_0);
+})(fluid_1_5);
 
 var jQuery = fluid.jQueryStandalone;

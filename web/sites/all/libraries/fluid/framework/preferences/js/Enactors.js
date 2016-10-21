@@ -9,13 +9,25 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
 
     fluid.defaults("fluid.prefs.enactor", {
-        gradeNames: ["fluid.modelComponent"]
+        gradeNames: ["fluid.modelComponent", "fluid.eventedComponent", "fluid.prefs.modelRelay", "autoInit"]
+    });
+
+    /********************************************************************************
+     * The grade that contains the connections between an enactor and uiEnhancer
+     ********************************************************************************/
+
+    fluid.defaults("fluid.prefs.uiEnhancerConnections", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        mergePolicy: {
+            sourceApplier: "nomerge"
+        },
+        sourceApplier: "{uiEnhancer}.applier"
     });
 
     /**********************************************************************************
@@ -25,9 +37,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * This component is used as a grade by emphasizeLinks & inputsLarger
      **********************************************************************************/
     fluid.defaults("fluid.prefs.enactor.styleElements", {
-        gradeNames: ["fluid.prefs.enactor"],
+        gradeNames: ["fluid.prefs.enactor", "autoInit"],
         cssClass: null,  // Must be supplied by implementors
-        elementsToStyle: null,  // Must be supplied by implementors
         invokers: {
             applyStyle: {
                 funcName: "fluid.prefs.enactor.styleElements.applyStyle",
@@ -39,13 +50,17 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             },
             handleStyle: {
                 funcName: "fluid.prefs.enactor.styleElements.handleStyle",
-                args: ["{arguments}.0", "{that}.options.elementsToStyle", "{that}.options.cssClass", "{that}.applyStyle", "{that}.resetStyle"]
-            }
+                args: ["{arguments}.0", {expander: {func: "{that}.getElements"}}, "{that}"],
+                dynamic: true
+            },
+
+            // Must be supplied by implementors
+            getElements: "fluid.prefs.enactor.getElements"
         },
-        modelListeners: {
-            value: {
+        listeners: {
+            onCreate: {
                 listener: "{that}.handleStyle",
-                args: ["{change}.value"]
+                args: ["{that}.model.value"]
             }
         }
     });
@@ -55,12 +70,21 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.prefs.enactor.styleElements.resetStyle = function (elements, cssClass) {
-        $(elements, "." + cssClass).addBack().removeClass(cssClass);
+        $(elements, "." + cssClass).andSelf().removeClass(cssClass);
     };
 
-    fluid.prefs.enactor.styleElements.handleStyle = function (value, elements, cssClass, applyStyleFunc, resetStyleFunc) {
-        var func = value ? applyStyleFunc : resetStyleFunc;
-        func(elements, cssClass);
+    fluid.prefs.enactor.styleElements.handleStyle = function (value, elements, that) {
+        if (value) {
+            that.applyStyle(elements, that.options.cssClass);
+        } else {
+            that.resetStyle(elements, that.options.cssClass);
+        }
+    };
+
+    fluid.prefs.enactor.styleElements.finalInit = function (that) {
+        that.applier.modelChanged.addListener("value", function (newModel) {
+            that.handleStyle(newModel.value);
+        });
     };
 
     /*******************************************************************************
@@ -72,7 +96,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      *******************************************************************************/
 
     fluid.defaults("fluid.prefs.enactor.classSwapper", {
-        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
         classes: {},  // Must be supplied by implementors
         invokers: {
             clearClasses: {
@@ -81,13 +105,13 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             },
             swap: {
                 funcName: "fluid.prefs.enactor.classSwapper.swap",
-                args: ["{arguments}.0", "{that}", "{that}.clearClasses"]
+                args: ["{arguments}.0", "{that}"]
             }
         },
-        modelListeners: {
-            value: {
+        listeners: {
+            onCreate: {
                 listener: "{that}.swap",
-                args: ["{change}.value"]
+                args: ["{that}.model.value"]
             }
         },
         members: {
@@ -104,8 +128,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         container.removeClass(classStr);
     };
 
-    fluid.prefs.enactor.classSwapper.swap = function (value, that, clearClassesFunc) {
-        clearClassesFunc();
+    fluid.prefs.enactor.classSwapper.swap = function (value, that) {
+        that.clearClasses();
         that.container.addClass(that.options.classes[value]);
     };
 
@@ -120,6 +144,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         return classStr;
     };
 
+    fluid.prefs.enactor.classSwapper.finalInit = function (that) {
+        that.applier.modelChanged.addListener("value", function (newModel) {
+            that.swap(newModel.value);
+        });
+    };
+
     /*******************************************************************************
      * emphasizeLinks
      *
@@ -128,15 +158,24 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.emphasizeLinks", {
-        gradeNames: ["fluid.prefs.enactor.styleElements", "fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor.styleElements", "autoInit"],
         preferenceMap: {
             "fluid.prefs.emphasizeLinks": {
                 "model.value": "default"
             }
         },
         cssClass: null,  // Must be supplied by implementors
-        elementsToStyle: "{that}.container"
+        invokers: {
+            getElements: {
+                funcName: "fluid.prefs.enactor.emphasizeLinks.getLinks",
+                args: "{that}.container"
+            }
+        }
     });
+
+    fluid.prefs.enactor.emphasizeLinks.getLinks = function (container) {
+        return $("a", container);
+    };
 
     /*******************************************************************************
      * inputsLarger
@@ -146,15 +185,24 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.inputsLarger", {
-        gradeNames: ["fluid.prefs.enactor.styleElements", "fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor.styleElements", "autoInit"],
         preferenceMap: {
             "fluid.prefs.inputsLarger": {
                 "model.value": "default"
             }
         },
         cssClass: null,  // Must be supplied by implementors
-        elementsToStyle: "{that}.container"
+        invokers: {
+            getElements: {
+                funcName: "fluid.prefs.enactor.inputsLarger.getInputs",
+                args: "{that}.container"
+            }
+        }
     });
+
+    fluid.prefs.enactor.inputsLarger.getInputs = function (container) {
+        return $("input, button", container);
+    };
 
     /*******************************************************************************
      * textFont
@@ -163,7 +211,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      *******************************************************************************/
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.textFont", {
-        gradeNames: ["fluid.prefs.enactor.classSwapper"],
+        gradeNames: ["fluid.prefs.enactor.classSwapper", "autoInit"],
         preferenceMap: {
             "fluid.prefs.textFont": {
                 "model.value": "default"
@@ -178,7 +226,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      *******************************************************************************/
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.contrast", {
-        gradeNames: ["fluid.prefs.enactor.classSwapper"],
+        gradeNames: ["fluid.prefs.enactor.classSwapper", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
                 "model.value": "default"
@@ -216,7 +264,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.textSize", {
-        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
             "fluid.prefs.textSize": {
                 "model.value": "default"
@@ -235,33 +283,39 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         invokers: {
             set: {
                 funcName: "fluid.prefs.enactor.textSize.set",
-                args: ["{arguments}.0", "{that}", "{that}.getTextSizeInPx"]
+                args: ["{arguments}.0", "{that}"]
             },
             getTextSizeInPx: {
                 funcName: "fluid.prefs.enactor.getTextSizeInPx",
                 args: ["{that}.root", "{that}.options.fontSizeMap"]
             }
         },
-        modelListeners: {
-            value: {
+        listeners: {
+            onCreate: {
                 listener: "{that}.set",
-                args: ["{change}.value"]
+                args: "{that}.model.value"
             }
         }
     });
 
-    fluid.prefs.enactor.textSize.set = function (times, that, getTextSizeInPxFunc) {
+    fluid.prefs.enactor.textSize.set = function (times, that) {
         times = times || 1;
         // Calculating the initial size here rather than using a members expand because the "font-size"
         // cannot be detected on hidden containers such as separated paenl iframe.
         if (!that.initialSize) {
-            that.initialSize = getTextSizeInPxFunc();
+            that.initialSize = that.getTextSizeInPx();
         }
 
         if (that.initialSize) {
             var targetSize = times * that.initialSize;
             that.root.css("font-size", targetSize + "px");
         }
+    };
+
+    fluid.prefs.enactor.textSize.finalInit = function (that) {
+        that.applier.modelChanged.addListener("value", function (newModel) {
+            that.set(newModel.value);
+        });
     };
 
     /*******************************************************************************
@@ -272,7 +326,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.lineSpace", {
-        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
             "fluid.prefs.lineSpace": {
                 "model.value": "default"
@@ -282,7 +336,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         invokers: {
             set: {
                 funcName: "fluid.prefs.enactor.lineSpace.set",
-                args: ["{arguments}.0", "{that}", "{that}.getLineHeightMultiplier"]
+                args: ["{arguments}.0", "{that}"]
             },
             getTextSizeInPx: {
                 funcName: "fluid.prefs.enactor.getTextSizeInPx",
@@ -294,13 +348,14 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             },
             getLineHeightMultiplier: {
                 funcName: "fluid.prefs.enactor.lineSpace.getLineHeightMultiplier",
-                args: [{expander: {func: "{that}.getLineHeight"}}, {expander: {func: "{that}.getTextSizeInPx"}}]
+                args: [{expander: {func: "{that}.getLineHeight"}}, {expander: {func: "{that}.getTextSizeInPx"}}],
+                dynamic: true
             }
         },
-        modelListeners: {
-            value: {
+        listeners: {
+            onCreate: {
                 listener: "{that}.set",
-                args: ["{change}.value"]
+                args: "{that}.model.value"
             }
         }
     });
@@ -330,17 +385,17 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
         // Continuing the work-around of jQuery + IE bug - http://bugs.jquery.com/ticket/2671
         if (lineHeight.match(/[0-9]$/)) {
-            return Number(lineHeight);
+            return lineHeight;
         }
 
         return Math.round(parseFloat(lineHeight) / fontSize * 100) / 100;
     };
 
-    fluid.prefs.enactor.lineSpace.set = function (times, that, getLineHeightMultiplierFunc) {
+    fluid.prefs.enactor.lineSpace.set = function (times, that) {
         // Calculating the initial size here rather than using a members expand because the "line-height"
         // cannot be detected on hidden containers such as separated paenl iframe.
         if (!that.initialSize) {
-            that.initialSize = getLineHeightMultiplierFunc();
+            that.initialSize = that.getLineHeightMultiplier();
         }
 
         // that.initialSize === 0 when the browser returned "lineHeight" css value is undefined,
@@ -352,6 +407,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }
     };
 
+    fluid.prefs.enactor.lineSpace.finalInit = function (that) {
+        that.applier.modelChanged.addListener("value", function (newModel) {
+            that.set(newModel.value);
+        });
+    };
+
     /*******************************************************************************
      * tableOfContents
      *
@@ -360,10 +421,10 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.tableOfContents", {
-        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
             "fluid.prefs.tableOfContents": {
-                "model.toc": "default"
+                "model.value": "default"
             }
         },
         tocTemplate: null,  // must be supplied by implementors
@@ -387,7 +448,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                         }
                     },
                     listeners: {
-                        "afterRender.boilAfterTocRender": "{fluid.prefs.enactor.tableOfContents}.events.afterTocRender"
+                        afterRender: "{fluid.prefs.enactor.tableOfContents}.events.afterTocRender"
                     }
                 }
             }
@@ -403,28 +464,82 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             afterTocRender: null,
             onLateRefreshRelay: null
         },
-        modelListeners: {
-            toc: {
+        listeners: {
+            onCreate: {
                 listener: "{that}.applyToc",
-                args: ["{change}.value"]
+                args: "{that}.model.value"
             }
-        },
-        distributeOptions: {
-            source: "{that}.options.ignoreForToC",
-            target: "{that tableOfContents}.options.ignoreForToC"
         }
     });
 
     fluid.prefs.enactor.tableOfContents.applyToc = function (value, that) {
+        var async = false;
         if (value) {
             if (that.tableOfContents) {
                 that.tableOfContents.show();
             } else {
                 that.events.onCreateTOCReady.fire();
+                async = true;
             }
-        } else if (that.tableOfContents) {
-            that.tableOfContents.hide();
+        } else {
+            if (that.tableOfContents) {
+                that.tableOfContents.hide();
+            }
+        }
+        if (!async) {
+            that.events.onLateRefreshRelay.fire(that);
         }
     };
 
-})(jQuery, fluid_2_0_0);
+    fluid.prefs.enactor.tableOfContents.finalInit = function (that) {
+        that.applier.modelChanged.addListener("value", function (newModel) {
+            that.applyToc(newModel.value);
+        });
+    };
+
+    /*******************************************************************************
+     * The demands blocks that hook up tableOfContents enactor with other enactors
+     * which need to re-apply their actions on the links inside table of contents
+     *******************************************************************************/
+
+    fluid.defaults("fluid.prefs.tocWithEmphasizeLinks", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        listeners: {
+            afterTocRender: {
+                listener: "{uiEnhancer}.emphasizeLinks.handleStyle",
+                args: "{uiEnhancer}.model.links"
+            },
+            onLateRefreshRelay: {
+                listener: "{uiEnhancer}.emphasizeLinks.handleStyle",
+                args: "{uiEnhancer}.model.links"
+            }
+        }
+    });
+
+    fluid.defaults("fluid.prefs.tocWithInputsLarger", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        listeners: {
+            afterTocRender: {
+                listener: "{uiEnhancer}.inputsLarger.handleStyle",
+                args: "{uiEnhancer}.model.inputsLarger"
+            },
+            onLateRefreshRelay: {
+                listener: "{uiEnhancer}.inputsLarger.handleStyle",
+                args: "{uiEnhancer}.model.inputsLarger"
+            }
+        }
+    });
+
+    fluid.demands("fluid.prefs.enactor.tableOfContents", "fluid.prefs.enactor.emphasizeLinks", {
+        options: {
+            gradeNames: "fluid.prefs.tocWithEmphasizeLinks"
+        }
+    });
+
+    fluid.demands("fluid.prefs.enactor.tableOfContents", "fluid.prefs.enactor.inputsLarger", {
+        options: {
+            gradeNames: "fluid.prefs.tocWithInputsLarger"
+        }
+    });
+
+})(jQuery, fluid_1_5);

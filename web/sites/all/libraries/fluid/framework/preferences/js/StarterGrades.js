@@ -1,5 +1,5 @@
 /*
-Copyright 2013-2015 OCAD University
+Copyright 2013 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -9,33 +9,31 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
 
     /*******************************************************************************
-     * Starter prefsEditor Model
+     * Starter Root Model
      *
-     * Provides the default values for the starter prefsEditor model
+     * Provides the default values for the starter enhancer/panels models
      *******************************************************************************/
 
-    fluid.defaults("fluid.prefs.initialModel.starter", {
-        gradeNames: ["fluid.prefs.initialModel"],
+    fluid.defaults("fluid.prefs.rootModel.starter", {
+        gradeNames: ["fluid.prefs.rootModel", "autoInit"],
         members: {
             // TODO: This information is supposed to be generated from the JSON
             // schema describing various preferences. For now it's kept in top
             // level prefsEditor to avoid further duplication.
-            initialModel: {
-                preferences: {
-                    textFont: "default",          // key from classname map
-                    theme: "default",             // key from classname map
-                    textSize: 1,                  // in points
-                    lineSpace: 1,                 // in ems
-                    toc: false,                   // boolean
-                    links: false,                 // boolean
-                    inputsLarger: false           // boolean
-                }
+            rootModel: {
+                textFont: "default",          // key from classname map
+                theme: "default",             // key from classname map
+                textSize: 1,                  // in points
+                lineSpace: 1,                 // in ems
+                toc: false,                  // boolean
+                links: false,                // boolean
+                inputsLarger: false          // boolean
             }
         }
     });
@@ -48,22 +46,22 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      *******************************************************************************/
 
     fluid.defaults("fluid.uiEnhancer.cssClassEnhancerBase", {
-        gradeNames: ["fluid.component"],
+        gradeNames: ["fluid.littleComponent", "autoInit"],
         classnameMap: {
             "textFont": {
                 "default": "",
-                "times": "fl-font-times",
-                "comic": "fl-font-comic-sans",
-                "arial": "fl-font-arial",
-                "verdana": "fl-font-verdana"
+                "times": "fl-font-prefsEditor-times",
+                "comic": "fl-font-prefsEditor-comic-sans",
+                "arial": "fl-font-prefsEditor-arial",
+                "verdana": "fl-font-prefsEditor-verdana"
             },
             "theme": {
                 "default": "fl-theme-prefsEditor-default",
-                "bw": "fl-theme-bw",
-                "wb": "fl-theme-wb",
-                "by": "fl-theme-by",
-                "yb": "fl-theme-yb",
-                "lgdg": "fl-theme-lgdg"
+                "bw": "fl-theme-prefsEditor-bw fl-theme-bw",
+                "wb": "fl-theme-prefsEditor-wb fl-theme-wb",
+                "by": "fl-theme-prefsEditor-by fl-theme-by",
+                "yb": "fl-theme-prefsEditor-yb fl-theme-yb",
+                "lgdg": "fl-theme-prefsEditor-lgdg fl-theme-lgdg"
             },
             "links": "fl-link-enhanced",
             "inputsLarger": "fl-text-larger"
@@ -78,7 +76,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      *******************************************************************************/
 
     fluid.defaults("fluid.uiEnhancer.browserTextEnhancerBase", {
-        gradeNames: ["fluid.component"],
+        gradeNames: ["fluid.littleComponent", "autoInit"],
         fontSizeMap: {
             "xx-small": "9px",
             "x-small":  "11px",
@@ -98,16 +96,24 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      *******************************************************************************/
 
     fluid.defaults("fluid.uiEnhancer.starterEnactors", {
-        gradeNames: ["fluid.uiEnhancer", "fluid.uiEnhancer.cssClassEnhancerBase", "fluid.uiEnhancer.browserTextEnhancerBase"],
-        model: "{fluid.prefs.initialModel}.initialModel.preferences",
+        gradeNames: ["fluid.uiEnhancer", "fluid.uiEnhancer.cssClassEnhancerBase", "fluid.uiEnhancer.browserTextEnhancerBase", "autoInit"],
+        connectionsGrade: "fluid.prefs.uiEnhancerConnections",
+        distributeOptions: {
+            source: "{that}.options.connectionsGrade",
+            removeSource: true,
+            target: "{that > fluid.prefs.enactor}.options.gradeNames"
+        },
         components: {
             textSize: {
                 type: "fluid.prefs.enactor.textSize",
                 container: "{uiEnhancer}.container",
                 options: {
                     fontSizeMap: "{uiEnhancer}.options.fontSizeMap",
+                    rules: {
+                        "textSize": "value"
+                    },
                     model: {
-                        value: "{uiEnhancer}.model.textSize"
+                        value: "{fluid.prefs.rootModel}.rootModel.textSize"
                     }
                 }
             },
@@ -116,8 +122,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     classes: "{uiEnhancer}.options.classnameMap.textFont",
+                    rules: {
+                        "textFont": "value"
+                    },
                     model: {
-                        value: "{uiEnhancer}.model.textFont"
+                        value: "{fluid.prefs.rootModel}.rootModel.textFont"
                     }
                 }
             },
@@ -126,8 +135,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     fontSizeMap: "{uiEnhancer}.options.fontSizeMap",
+                    rules: {
+                        "lineSpace": "value"
+                    },
                     model: {
-                        value: "{uiEnhancer}.model.lineSpace"
+                        value: "{fluid.prefs.rootModel}.rootModel.lineSpace"
                     }
                 }
             },
@@ -136,8 +148,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     classes: "{uiEnhancer}.options.classnameMap.theme",
+                    rules: {
+                        "theme": "value"
+                    },
                     model: {
-                        value: "{uiEnhancer}.model.theme"
+                        value: "{fluid.prefs.rootModel}.rootModel.theme"
                     }
                 }
             },
@@ -146,8 +161,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     cssClass: "{uiEnhancer}.options.classnameMap.links",
+                    rules: {
+                        "links": "value"
+                    },
                     model: {
-                        value: "{uiEnhancer}.model.links"
+                        links: "{fluid.prefs.rootModel}.rootModel.links"
                     }
                 }
             },
@@ -156,8 +174,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     cssClass: "{uiEnhancer}.options.classnameMap.inputsLarger",
+                    rules: {
+                        "inputsLarger": "value"
+                    },
                     model: {
-                        value: "{uiEnhancer}.model.inputsLarger"
+                        inputsLarger: "{fluid.prefs.rootModel}.rootModel.inputsLarger"
                     }
                 }
             },
@@ -166,8 +187,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     tocTemplate: "{uiEnhancer}.options.tocTemplate",
+                    rules: {
+                        "toc": "value"
+                    },
                     model: {
-                        toc: "{uiEnhancer}.model.toc"
+                        toc: "{fluid.prefs.rootModel}.rootModel.toc"
                     }
                 }
             }
@@ -180,7 +204,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A collection of all the default Preferences Editorsetting panels.
      *********************************************************************************************************/
     fluid.defaults("fluid.prefs.starterPanels", {
-        gradeNames: ["fluid.prefs.prefsEditor"],
+        gradeNames: ["fluid.prefs.prefsEditor", "autoInit"],
         selectors: {
             textSize: ".flc-prefsEditor-text-size",
             textFont: ".flc-prefsEditor-text-font",
@@ -197,10 +221,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
-                    model: {
-                        textSize: "{prefsEditor}.model.preferences.textSize"
+                    rules: {
+                        "textSize": "textSize"
                     },
-                    messageBase: "{messageLoader}.resources.textSize.resourceText",
+                    model: {
+                        value: "{fluid.prefs.rootModel}.rootModel.textSize"
+                    },
                     resources: {
                         template: "{templateLoader}.resources.textSize"
                     }
@@ -212,10 +238,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
-                    model: {
-                        lineSpace: "{prefsEditor}.model.preferences.lineSpace"
+                    rules: {
+                        "lineSpace": "lineSpace"
                     },
-                    messageBase: "{messageLoader}.resources.lineSpace.resourceText",
+                    model: {
+                        value: "{fluid.prefs.rootModel}.rootModel.lineSpace"
+                    },
                     resources: {
                         template: "{templateLoader}.resources.lineSpace"
                     }
@@ -228,10 +256,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     classnameMap: "{uiEnhancer}.options.classnameMap",
-                    model: {
-                        value: "{prefsEditor}.model.preferences.textFont"
+                    rules: {
+                        "textFont": "value"
                     },
-                    messageBase: "{messageLoader}.resources.textFont.resourceText",
+                    model: {
+                        value: "{fluid.prefs.rootModel}.rootModel.textFont"
+                    },
                     resources: {
                         template: "{templateLoader}.resources.textFont"
                     }
@@ -244,10 +274,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     classnameMap: "{uiEnhancer}.options.classnameMap",
-                    model: {
-                        value: "{prefsEditor}.model.preferences.theme"
+                    rules: {
+                        "theme": "value"
                     },
-                    messageBase: "{messageLoader}.resources.contrast.resourceText",
+                    model: {
+                        value: "{fluid.prefs.rootModel}.rootModel.theme"
+                    },
                     resources: {
                         template: "{templateLoader}.resources.contrast"
                     }
@@ -259,10 +291,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
-                    model: {
-                        toc: "{prefsEditor}.model.preferences.toc"
+                    rules: {
+                        "toc": "toc"
                     },
-                    messageBase: "{messageLoader}.resources.layoutControls.resourceText",
+                    model: {
+                        toc: "{fluid.prefs.rootModel}.rootModel.toc"
+                    },
                     resources: {
                         template: "{templateLoader}.resources.layoutControls"
                     }
@@ -274,34 +308,31 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
+                    rules: {
+                        "links": "fluid_prefs_emphasizeLinks",
+                        "inputsLarger": "fluid_prefs_inputsLarger"
+                    },
                     selectors: {
                         emphasizeLinks: ".flc-prefsEditor-emphasizeLinks",
                         inputsLarger: ".flc-prefsEditor-inputsLarger"
                     },
                     selectorsToIgnore: ["emphasizeLinks", "inputsLarger"],
                     model: {
-                        fluid_prefs_emphasizeLinks: "{prefsEditor}.model.preferences.links",
-                        fluid_prefs_inputsLarger: "{prefsEditor}.model.preferences.inputsLarger"
+                        fluid_prefs_emphasizeLinks: "{fluid.prefs.rootModel}.rootModel.links",
+                        fluid_prefs_inputsLarger: "{fluid.prefs.rootModel}.rootModel.inputsLarger"
                     },
                     components: {
                         emphasizeLinks: {
                             type: "fluid.prefs.panel.emphasizeLinks",
                             container: "{that}.dom.emphasizeLinks",
-                            createOnEvent: "initSubPanels",
-                            options: {
-                                messageBase: "{messageLoader}.resources.emphasizeLinks.resourceText"
-                            }
+                            createOnEvent: "initSubPanels"
                         },
                         inputsLarger: {
                             type: "fluid.prefs.panel.inputsLarger",
                             container: "{that}.dom.inputsLarger",
-                            createOnEvent: "initSubPanels",
-                            options: {
-                                messageBase: "{messageLoader}.resources.inputsLarger.resourceText"
-                            }
+                            createOnEvent: "initSubPanels"
                         }
                     },
-                    messageBase: "{messageLoader}.resources.linksControls.resourceText",
                     resources: {
                         template: "{templateLoader}.resources.linksControls",
                         emphasizeLinks: "{templateLoader}.resources.emphasizeLinks",
@@ -317,67 +348,43 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      ******************************/
 
     /**
-     * A template loader component that expands the resources blocks for loading resources used by starterPanels
+     * A template loader component that expands the resources blocks for loading templates used by starterPanels
      *
      * @param {Object} options
      */
 
     fluid.defaults("fluid.prefs.starterTemplateLoader", {
-        gradeNames: ["fluid.resourceLoader", "fluid.contextAware"],
-        resources: {
-            textFont: "%templatePrefix/PrefsEditorTemplate-textFont.html",
-            contrast: "%templatePrefix/PrefsEditorTemplate-contrast.html",
-            layoutControls: "%templatePrefix/PrefsEditorTemplate-layout.html",
-            linksControls: "%templatePrefix/PrefsEditorTemplate-linksControls.html",
-            emphasizeLinks: "%templatePrefix/PrefsEditorTemplate-emphasizeLinks.html",
-            inputsLarger: "%templatePrefix/PrefsEditorTemplate-inputsLarger.html"
-        },
-        contextAwareness: {
-            startTemplateLoaderPrefsWidgetType: {
-                checks: {
-                    jQueryUI: {
-                        contextValue: "{fluid.prefsWidgetType}",
-                        equals: "jQueryUI",
-                        gradeNames: "fluid.prefs.starterTemplateLoader.jQuery"
-                    }
-                },
-                defaultGradeNames: "fluid.prefs.starterTemplateLoader.native"
-            }
-        }
-    });
-
-    fluid.defaults("fluid.prefs.starterTemplateLoader.native", {
-        resources: {
-            textSize: "%templatePrefix/PrefsEditorTemplate-textSize-nativeHTML.html",
-            lineSpace: "%templatePrefix/PrefsEditorTemplate-lineSpace-nativeHTML.html"
-        }
-    });
-
-    fluid.defaults("fluid.prefs.starterTemplateLoader.jQuery", {
-        resources: {
-            textSize: "%templatePrefix/PrefsEditorTemplate-textSize-jQueryUI.html",
-            lineSpace: "%templatePrefix/PrefsEditorTemplate-lineSpace-jQueryUI.html"
+        gradeNames: ["fluid.prefs.resourceLoader", "autoInit"],
+        templates: {
+            textSize: "%prefix/PrefsEditorTemplate-textSize.html",
+            textFont: "%prefix/PrefsEditorTemplate-textFont.html",
+            lineSpace: "%prefix/PrefsEditorTemplate-lineSpace.html",
+            contrast: "%prefix/PrefsEditorTemplate-contrast.html",
+            layoutControls: "%prefix/PrefsEditorTemplate-layout.html",
+            linksControls: "%prefix/PrefsEditorTemplate-linksControls.html",
+            emphasizeLinks: "%prefix/PrefsEditorTemplate-emphasizeLinks.html",
+            inputsLarger: "%prefix/PrefsEditorTemplate-inputsLarger.html"
         }
     });
 
     fluid.defaults("fluid.prefs.starterSeparatedPanelTemplateLoader", {
-        gradeNames: ["fluid.prefs.starterTemplateLoader"],
-        resources: {
-            prefsEditor: "%templatePrefix/SeparatedPanelPrefsEditor.html"
+        gradeNames: ["fluid.prefs.starterTemplateLoader", "autoInit"],
+        templates: {
+            prefsEditor: "%prefix/SeparatedPanelPrefsEditor.html"
         }
     });
 
     fluid.defaults("fluid.prefs.starterFullPreviewTemplateLoader", {
-        gradeNames: ["fluid.prefs.starterTemplateLoader"],
-        resources: {
-            prefsEditor: "%templatePrefix/FullPreviewPrefsEditor.html"
+        gradeNames: ["fluid.prefs.starterTemplateLoader", "autoInit"],
+        templates: {
+            prefsEditor: "%prefix/FullPreviewPrefsEditor.html"
         }
     });
 
     fluid.defaults("fluid.prefs.starterFullNoPreviewTemplateLoader", {
-        gradeNames: ["fluid.prefs.starterTemplateLoader"],
-        resources: {
-            prefsEditor: "%templatePrefix/FullNoPreviewPrefsEditor.html"
+        gradeNames: ["fluid.prefs.starterTemplateLoader", "autoInit"],
+        templates: {
+            prefsEditor: "%prefix/FullNoPreviewPrefsEditor.html"
         }
     });
 
@@ -392,18 +399,18 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      */
 
     fluid.defaults("fluid.prefs.starterMessageLoader", {
-        gradeNames: ["fluid.resourceLoader"],
-        resources: {
-            prefsEditor: "%messagePrefix/prefsEditor.json",
-            textSize: "%messagePrefix/textSize.json",
-            textFont: "%messagePrefix/textFont.json",
-            lineSpace: "%messagePrefix/lineSpace.json",
-            contrast: "%messagePrefix/contrast.json",
-            layoutControls: "%messagePrefix/tableOfContents.json",
-            linksControls: "%messagePrefix/linksControls.json",
-            emphasizeLinks: "%messagePrefix/emphasizeLinks.json",
-            inputsLarger: "%messagePrefix/inputsLarger.json"
+        gradeNames: ["fluid.prefs.resourceLoader", "autoInit"],
+        templates: {
+            prefsEditor: "%prefix/prefsEditor.json",
+            textSize: "%prefix/textSize.json",
+            textFont: "%prefix/textFont.json",
+            lineSpace: "%prefix/lineSpace.json",
+            contrast: "%prefix/contrast.json",
+            layoutControls: "%prefix/tableOfContents.json",
+            linksControls: "%prefix/linksControls.json",
+            emphasizeLinks: "%prefix/emphasizeLinks.json",
+            inputsLarger: "%prefix/inputsLarger.json"
         }
     });
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);

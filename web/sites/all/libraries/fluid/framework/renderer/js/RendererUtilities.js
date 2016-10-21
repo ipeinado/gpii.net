@@ -11,7 +11,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-fluid_2_0_0 = fluid_2_0_0 || {};
+fluid_1_5 = fluid_1_5 || {};
 
 (function ($, fluid) {
     "use strict";
@@ -22,24 +22,24 @@ fluid_2_0_0 = fluid_2_0_0 || {};
 
     // TODO: API status of these 3 functions is uncertain. So far, they have never
     // appeared in documentation.
-    fluid.renderer.visitDecorators = function (that, visitor) {
-        fluid.visitComponentChildren(that, function (component, name) {
+    fluid.renderer.visitDecorators = function(that, visitor) {
+        fluid.visitComponentChildren(that, function(component, name) {
             if (name.indexOf(fluid.renderer.decoratorComponentPrefix) === 0) {
                 visitor(component, name);
             }
-        }, {flat: true}, []);
+        }, {flat: true});
     };
 
-    fluid.renderer.clearDecorators = function (that) {
+    fluid.renderer.clearDecorators = function(that) {
         var instantiator = fluid.getInstantiator(that);
-        fluid.renderer.visitDecorators(that, function (component, name) {
+        fluid.renderer.visitDecorators(that, function(component, name) {
             instantiator.clearComponent(that, name);
         });
     };
 
-    fluid.renderer.getDecoratorComponents = function (that) {
+    fluid.renderer.getDecoratorComponents = function(that) {
         var togo = {};
-        fluid.renderer.visitDecorators(that, function (component, name) {
+        fluid.renderer.visitDecorators(that, function(component, name) {
             togo[name] = component;
         });
         return togo;
@@ -66,7 +66,6 @@ fluid_2_0_0 = fluid_2_0_0 || {};
     fluid.renderer.createRendererSubcomponent = function (container, selectors, options, parentThat, fossils) {
         options = options || {};
         var source = options.templateSource ? options.templateSource : {node: $(container)};
-        var nativeModel = options.rendererOptions.model === undefined;
         var rendererOptions = fluid.renderer.modeliseOptions(options.rendererOptions, null, parentThat);
         rendererOptions.fossils = fossils || {};
         rendererOptions.parentComponent = parentThat;
@@ -84,10 +83,6 @@ fluid_2_0_0 = fluid_2_0_0 || {};
         that.render = function (tree) {
             var cutpointFn = options.cutpointGenerator || "fluid.renderer.selectorsToCutpoints";
             rendererOptions.cutpoints = rendererOptions.cutpoints || fluid.invokeGlobalFunction(cutpointFn, [selectors, options]);
-            if (nativeModel) { // check necessary since the component insanely supports the possibility the model is not the component's model!
-                               // and the pagedTable uses this.
-                rendererOptions.model = parentThat.model; // fix FLUID-5664
-            }
             var renderTarget = $(options.renderTarget ? options.renderTarget : container);
 
             if (templates) {
@@ -104,11 +99,12 @@ fluid_2_0_0 = fluid_2_0_0 || {};
         return that;
     };
 
-    fluid.defaults("fluid.rendererComponent", {
-        gradeNames: ["fluid.viewComponent"],
+    fluid.defaults("fluid.commonRendererComponent", {
+        gradeNames: [],
         initFunction: "fluid.initRendererComponent",
         mergePolicy: {
             "rendererOptions.idMap": "nomerge",
+            "rendererOptions.model": "preserve",
             protoTree: "noexpand, replace",
             parentBundle: "nomerge",
             "changeApplierOptions.resolverSetConfig": "resolverSetConfig"
@@ -127,7 +123,6 @@ fluid_2_0_0 = fluid_2_0_0 || {};
             autoBind: true
         },
         events: {
-            onResourcesFetched: null,
             prepareModelForRender: null,
             onRenderTree: null,
             afterRender: null
@@ -139,6 +134,14 @@ fluid_2_0_0 = fluid_2_0_0 || {};
                 priority: "last"
             }
         }
+    });
+
+    fluid.defaults("fluid.rendererComponent", {
+        gradeNames: ["fluid.commonRendererComponent", "fluid.viewComponent", "autoInit"]
+    });
+
+    fluid.defaults("fluid.rendererRelayComponent", {
+        gradeNames: ["fluid.commonRendererComponent", "fluid.viewRelayComponent", "autoInit"]
     });
 
     fluid.rendererComponent.renderOnInit = function (renderOnInit, that) {
@@ -190,7 +193,7 @@ fluid_2_0_0 = fluid_2_0_0 || {};
         fluid.getForComponent(that, "applier");
         fluid.diagnoseFailedView(componentName, that, fluid.defaults(componentName), arguments);
 
-        fluid.fetchResources(that.options.resources, that.events.onResourcesFetched.fire); // TODO: deal with asynchrony
+        fluid.fetchResources(that.options.resources); // TODO: deal with asynchrony
 
         var rendererOptions = fluid.renderer.modeliseOptions(that.options.rendererOptions, null, that);
 
@@ -302,7 +305,7 @@ fluid_2_0_0 = fluid_2_0_0 || {};
     /** Definition of expanders - firstly, "heavy" expanders **/
 
     fluid.renderer.selection.inputs = function (options, container, key, config) {
-        fluid.expect("Selection to inputs expander", options, ["selectID", "inputID", "labelID", "rowID"]);
+        fluid.expect("Selection to inputs expander", ["selectID", "inputID", "labelID", "rowID"], options);
         var selection = config.expander(options.tree);
         var rows = fluid.transform(selection.optionlist.value, function (option, index) {
             var togo = {};
@@ -319,7 +322,7 @@ fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.renderer.repeat = function (options, container, key, config) {
-        fluid.expect("Repetition expander", options, ["controlledBy", "tree"]);
+        fluid.expect("Repetition expander", ["controlledBy", "tree"], options);
         var env = config.threadLocal();
         var path = fluid.extractContextualPath(options.controlledBy, {ELstyle: "ALL"}, env);
         var list = fluid.get(config.model, path, config.resolverGetConfig);
@@ -338,7 +341,7 @@ fluid_2_0_0 = fluid_2_0_0 || {};
             if (options.valueAs) {
                 envAdd[options.valueAs] = fluid.get(config.model, EL, config.resolverGetConfig);
             }
-            var expandrow = fluid.withEnvironment(envAdd, function () {
+            var expandrow = fluid.withEnvironment(envAdd, function() {
                 return config.expander(options.tree);
             }, env);
             if (fluid.isArrayable(expandrow)) {
@@ -359,11 +362,11 @@ fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.renderer.condition = function (options, container, key, config) {
-        fluid.expect("Selection to condition expander", options, ["condition"]);
+        fluid.expect("Selection to condition expander", ["condition"], options);
         var condition;
         if (options.condition.funcName) {
             var args = config.expandLight(options.condition.args);
-            condition = fluid.invokeGlobalFunction(options.condition.funcName, args);
+            condition = fluid.invoke(options.condition.funcName, args);
         } else if (options.condition.expander) {
             condition = config.expander(options.condition);
         } else {
@@ -567,11 +570,11 @@ fluid_2_0_0 = fluid_2_0_0 || {};
                 var comp = { children: target};
 
                 var child = children[i];
-                // This use of function creation within a loop is acceptable since
+                // This use of function creation within a loop is acceptable since 
                 // the function does not attempt to close directly over the loop counter
-                var childPusher = function (comp) { // eslint-disable-line no-loop-func
+                var childPusher = function (comp) {
                     target[target.length] = comp;
-                };
+                };  /* function in loop */ /* jshint ignore:line */
 
                 expandLeafOrCond(child, target, childPusher);
                 // Rescue the case of an expanded leaf into single component - TODO: check what sense this makes of the grammar
@@ -612,7 +615,6 @@ fluid_2_0_0 = fluid_2_0_0 || {};
         // give rise to one or many elements with the SAME key - if "expandSingle" discovers
         // "thing with children" they will all share the same key found in proto.
         expandCond = function (proto, target) {
-            var key;
             var expandToTarget = function (expander) {
                 var expanded = fluid.invokeGlobalFunction(expander.type, [expander, proto, key, expandConfig]);
                 if (expanded !== fluid.renderer.NO_COMPONENT) {
@@ -623,7 +625,7 @@ fluid_2_0_0 = fluid_2_0_0 || {};
                 comp.ID = key;
                 target[target.length] = comp;
             };
-            for (key in proto) {
+            for (var key in proto) {
                 var entry = proto[key];
                 if (key.charAt(0) === IDescape) {
                     key = key.substring(1);
@@ -647,8 +649,8 @@ fluid_2_0_0 = fluid_2_0_0 || {};
 
         };
 
-        return function (entry) {
-            threadLocal = fluid.threadLocal(function () {
+        return function(entry) {
+            threadLocal = fluid.threadLocal(function() {
                 return $.extend({}, options.envAdd);
             });
             options.fetcher = fluid.makeEnvironmentFetcher(options.model, fluid.transformContextPath, threadLocal, options.externalFetcher);
@@ -657,4 +659,4 @@ fluid_2_0_0 = fluid_2_0_0 || {};
         };
     };
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);

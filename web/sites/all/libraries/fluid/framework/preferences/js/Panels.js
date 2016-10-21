@@ -1,5 +1,5 @@
 /*
-Copyright 2013-2015 OCAD University
+Copyright 2013 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -9,7 +9,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-var fluid_2_0_0 = fluid_2_0_0 || {};
+var fluid_1_5 = fluid_1_5 || {};
 
 
 (function ($, fluid) {
@@ -20,12 +20,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      **********************/
 
     fluid.defaults("fluid.prefs.msgLookup", {
-        gradeNames: ["fluid.component"],
+        gradeNames: ["fluid.littleComponent", "autoInit"],
         members: {
             msgLookup: {
                 expander: {
                     funcName: "fluid.prefs.stringLookup",
-                    args: ["{msgResolver}", "{that}.options.stringArrayIndex"]
+                    args: ["{that}.messageResolver", "{that}.options.stringArrayIndex"]
                 }
             }
         },
@@ -57,7 +57,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      ***********************************************/
 
     fluid.defaults("fluid.prefs.panel", {
-        gradeNames: ["fluid.prefs.msgLookup", "fluid.rendererComponent"],
+        gradeNames: ["fluid.rendererComponent", "fluid.prefs.msgLookup", "fluid.prefs.modelRelay", "autoInit"],
         events: {
             onDomBind: null
         },
@@ -66,18 +66,6 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         // when used as a subpanel, it will be triggered by the resetDomBinder invoker.
         listeners: {
             "onCreate.onDomBind": "{that}.events.onDomBind"
-        },
-        components: {
-            msgResolver: {
-                type: "fluid.messageResolver"
-            }
-        },
-        rendererOptions: {
-            messageLocator: "{msgResolver}.resolve"
-        },
-        distributeOptions: {
-            source: "{that}.options.messageBase",
-            target: "{that > msgResolver}.options.messageBase"
         }
     });
 
@@ -86,7 +74,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      ***************************/
 
     fluid.defaults("fluid.prefs.subPanel", {
-        gradeNames: ["fluid.prefs.panel", "{that}.getDomBindGrade"],
+        gradeNames: ["fluid.prefs.panel", "{that}.getDomBindGrade", "autoInit"],
+        mergePolicy: {
+            sourceApplier: "nomerge"
+        },
+        sourceApplier: "{compositePanel}.applier",
         listeners: {
             "{compositePanel}.events.afterRender": {
                 listener: "{that}.events.afterRender",
@@ -102,6 +94,12 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             expander: {
                 func: "fluid.prefs.subPanel.generateRules",
                 args: ["{that}.options.preferenceMap"]
+            }
+        },
+        model: {
+            expander: {
+                func: "fluid.prefs.subPanel.getInitialModel",
+                args: ["{compositePanel}.model", "{that}.options.preferenceMap"]
             }
         },
         invokers: {
@@ -122,7 +120,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     });
 
     fluid.defaults("fluid.prefs.subPanel.domBind", {
-        gradeNames: ["fluid.component"],
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
         listeners: {
             "onDomBind.domChange": {
                 listener: "{prefsEditor}.events.onSignificantDOMChange"
@@ -145,26 +143,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * this is all done, the onDomBind event is fired.
      */
     fluid.prefs.subPanel.resetDomBinder = function (that) {
-        // TODO: The line below to find the container jQuery instance was copied from the framework code -
-        // https://github.com/fluid-project/infusion/blob/master/src/framework/core/js/FluidView.js#L145
-        // in order to reset the dom binder when panels are in an iframe.
-        // It can be be eliminated once we have the new renderer.
-        var userJQuery = that.container.constructor;
-        var context = that.container[0].ownerDocument;
-        var selector = that.container.selector;
-        that.container = userJQuery(selector, context);
-        // To address FLUID-5966, manually adding back the selector and context properties that were removed from jQuery v3.0.
-        // ( see: https://jquery.com/upgrade-guide/3.0/#breaking-change-deprecated-context-and-selector-properties-removed )
-        // In most cases the "selector" property will already be restored through the DOM binder or fluid.container.
-        // However, in this case we are manually recreating the container to ensure that it is referencing an element currently added
-        // to the correct Document ( e.g. iframe ) (also see: FLUID-4536). This manual recreation of the container requires us to
-        // manually add back the selector and context from the original container. This code and fix parallels that in
-        // FluidView.js fluid.container line 129
-        that.container.selector = selector;
-        that.container.context = context;
-        if (that.container.length === 0) {
-            fluid.fail("resetDomBinder got no elements in DOM for container searching for selector " + that.container.selector);
-        }
+        that.container = $(that.container.selector);
         fluid.initDomBinder(that, that.options.selectors);
         that.events.onDomBind.fire(that);
     };
@@ -182,13 +161,25 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     fluid.prefs.subPanel.generateRules = function (preferenceMap) {
         var rules = {};
         fluid.each(preferenceMap, function (prefObj, prefKey) {
-            fluid.each(prefObj, function (value, prefRule) {
+            $.each(prefObj, function (prefRule) {
                 if (prefRule.indexOf("model.") === 0) {
-                    rules[fluid.prefs.subPanel.safePrefKey(prefKey)] = prefRule.slice("model.".length);
+                    rules[fluid.prefs.subPanel.safePrefKey(prefKey)] = prefRule.slice(6);
                 }
             });
         });
         return rules;
+    };
+
+    fluid.prefs.subPanel.getInitialModel = function (parentModel, preferenceMap) {
+        var initialModel = {};
+        fluid.each(preferenceMap, function (prefObj, prefKey) {
+            $.each(prefObj, function (prefRule) {
+                if (prefRule.indexOf("model.") === 0) {
+                    fluid.set(initialModel, prefRule.slice(6), fluid.get(parentModel, fluid.prefs.subPanel.safePrefKey(prefKey)));
+                }
+            });
+        });
+        return initialModel;
     };
 
     /**********************************
@@ -201,7 +192,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         target = fluid.makeArray(target);
         source = fluid.makeArray(source);
         fluid.each(source, function (selector) {
-            if (target.indexOf(selector) < 0) {
+            if ($.inArray(selector, target) < 0) {
                 target.push(selector);
             }
         });
@@ -209,7 +200,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
     fluid.defaults("fluid.prefs.compositePanel", {
-        gradeNames: ["fluid.prefs.panel", "{that}.getDistributeOptionsGrade", "{that}.getSubPanelLifecycleBindings"],
+        gradeNames: ["fluid.prefs.panel", "autoInit", "{that}.getDistributeOptionsGrade", "{that}.getSubPanelLifecycleBindings"],
         mergePolicy: {
             subPanelOverrides: "noexpand",
             selectorsToIgnore: fluid.prefs.compositePanel.arrayMergePolicy
@@ -218,6 +209,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         selectorsToIgnore: [], // should match the selectors that are used to identify the containers for the subpanels
         repeatingSelectors: [],
         events: {
+            onRefreshView: null,
             initSubPanels: null
         },
         listeners: {
@@ -267,7 +259,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             },
             handleRenderOnPreference: {
                 funcName: "fluid.prefs.compositePanel.handleRenderOnPreference",
-                args: ["{that}", "{that}.refreshView", "{that}.conditionalCreateEvent", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+                args: ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
             },
             conditionalCreateEvent: {
                 funcName: "fluid.prefs.compositePanel.conditionalCreateEvent"
@@ -295,9 +287,8 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * Only use in cases where the instatiated component cannot be used.
      */
     fluid.prefs.compositePanel.prefetchComponentOptions = function (type, options) {
-        var baseOptions = fluid.getMergedDefaults(type, fluid.get(options, "gradeNames"));
-        // TODO: awkwardly, fluid.merge is destructive on each argument!
-        return fluid.merge(baseOptions.mergePolicy, fluid.copy(baseOptions), options);
+        var baseOptions = fluid.getGradedDefaults(type, fluid.get(options, "gradeNames"));
+        return fluid.merge(baseOptions.mergePolicy, baseOptions, options);
     };
     /*
      * Should only be used when fluid.prefs.compositePanel.isActivatePanel cannot.
@@ -318,38 +309,21 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      */
     fluid.prefs.compositePanel.assembleDistributeOptions = function (components) {
         var gradeName = "fluid.prefs.compositePanel.distributeOptions_" + fluid.allocateGuid();
-        var distributeOptions = [];
-        var relayOption = {};
-        fluid.each(components, function (componentOptions, componentName) {
+        var distributeRules = [];
+        $.each(components, function (componentName, componentOptions) {
             if (fluid.prefs.compositePanel.isPanel(componentOptions.type, componentOptions.options)) {
-                distributeOptions.push({
+                distributeRules.push({
                     source: "{that}.options.subPanelOverrides",
                     target: "{that > " + componentName + "}.options"
                 });
             }
+        });
 
-            // Construct the model relay btw the composite panel and its subpanels
-            var componentRelayRules = {};
-            var definedOptions = fluid.prefs.compositePanel.prefetchComponentOptions(componentOptions.type, componentOptions.options);
-            var preferenceMap = fluid.get(definedOptions, ["preferenceMap"]);
-            fluid.each(preferenceMap, function (prefObj, prefKey) {
-                fluid.each(prefObj, function (value, prefRule) {
-                    if (prefRule.indexOf("model.") === 0) {
-                        fluid.set(componentRelayRules, prefRule.slice("model.".length), "{compositePanel}.model." + fluid.prefs.subPanel.safePrefKey(prefKey));
-                    }
-                });
-            });
-            relayOption[componentName] = componentRelayRules;
-            distributeOptions.push({
-                source: "{that}.options.relayOption." + componentName,
-                target: "{that > " + componentName + "}.options.model"
-            });
-        });
         fluid.defaults(gradeName, {
-            gradeNames: ["fluid.component"],
-            relayOption: relayOption,
-            distributeOptions: distributeOptions
+            gradeNames: ["fluid.littleComponent", "autoInit"],
+            distributeOptions: distributeRules
         });
+
         return gradeName;
     };
 
@@ -360,16 +334,16 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
     };
 
 
-    fluid.prefs.compositePanel.handleRenderOnPreference = function (that, refreshViewFunc, conditionalCreateEventFunc, value, createEvent, componentNames) {
+    fluid.prefs.compositePanel.handleRenderOnPreference = function (that, value, createEvent, componentNames) {
         componentNames = fluid.makeArray(componentNames);
-        conditionalCreateEventFunc(value, createEvent);
+        that.conditionalCreateEvent(value, createEvent);
         fluid.each(componentNames, function (componentName) {
             var comp = that[componentName];
             if (!value && comp) {
                 comp.destroy();
             }
         });
-        refreshViewFunc();
+        that.refreshView();
     };
 
     fluid.prefs.compositePanel.creationEventName = function (pref) {
@@ -403,7 +377,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         var conditionals = {};
         var listeners = {};
         var events = {};
-        fluid.each(components, function (componentOptions, componentName) {
+        $.each(components, function (componentName, componentOptions) {
             if (fluid.prefs.compositePanel.isPanel(componentOptions.type, componentOptions.options)) {
                 var creationEventOpt = "default";
                 // would have had renderOnPreference directly sourced from the componentOptions
@@ -430,7 +404,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         });
 
         fluid.defaults(gradeName, {
-            gradeNames: ["fluid.component"],
+            gradeNames: ["fluid.eventedComponent", "autoInit"],
             events: events,
             listeners: listeners,
             modelListeners: fluid.prefs.compositePanel.generateModelListeners(conditionals),
@@ -450,7 +424,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      */
     fluid.prefs.compositePanel.hideInactive = function (that) {
         fluid.each(that.options.components, function (componentOpts, componentName) {
-            if (fluid.prefs.compositePanel.isPanel(componentOpts.type, componentOpts.options) && !fluid.prefs.compositePanel.isActivePanel(that[componentName])) {
+            if(fluid.prefs.compositePanel.isPanel(componentOpts.type, componentOpts.options) && !fluid.prefs.compositePanel.isActivePanel(that[componentName])) {
                 that.locate(componentName).hide();
             }
         });
@@ -506,7 +480,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             if (fluid.prefs.compositePanel.isPanel(compOpts.type, compOpts.options)) {
                 var opts = fluid.prefs.compositePanel.prefetchComponentOptions(compOpts.type, compOpts.options);
                 fluid.each(opts.selectors, function (selector, selName) {
-                    if (!opts.selectorsToIgnore || opts.selectorsToIgnore.indexOf(selName) < 0) {
+                    if (!opts.selectorsToIgnore || $.inArray(selName, opts.selectorsToIgnore) < 0) {
                         fluid.set(selectors,  fluid.prefs.compositePanel.rebaseSelectorName(compName, selName), selectors[compName] + " " + selector);
                     }
                 });
@@ -555,47 +529,28 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         }) || value;
     };
 
-    fluid.prefs.compositePanel.rebaseTreeComp = function (msgResolver, model, treeComp, memberName, modelRelayRules) {
-        var rebased = fluid.copy(treeComp);
-
-        if (rebased.ID) {
-            rebased.ID = fluid.prefs.compositePanel.rebaseID(rebased.ID, memberName);
-        }
-
-        if (rebased.children) {
-            rebased.children = fluid.prefs.compositePanel.rebaseTree(msgResolver, model, rebased.children, memberName, modelRelayRules);
-        } else if (rebased.selection) {
-            rebased.selection = fluid.prefs.compositePanel.rebaseTreeComp(msgResolver, model, rebased.selection, memberName, modelRelayRules);
-        } else if (rebased.messagekey) {
-            // converts the "UIMessage" renderer component into a "UIBound"
-            // and passes in the resolved message as the value.
-            rebased.componentType = "UIBound";
-            rebased.value = msgResolver.resolve(rebased.messagekey.value, rebased.messagekey.args);
-            delete rebased.messagekey;
-        } else if (rebased.parentRelativeID) {
-            rebased.parentRelativeID = fluid.prefs.compositePanel.rebaseParentRelativeID(rebased.parentRelativeID, memberName);
-        } else if (rebased.valuebinding) {
-            rebased.valuebinding = fluid.prefs.compositePanel.rebaseValueBinding(rebased.valuebinding, modelRelayRules);
-
-            if (rebased.value) {
-                var modelValue = fluid.get(model, rebased.valuebinding);
-                rebased.value = modelValue !== undefined ? modelValue : rebased.value;
+    fluid.prefs.compositePanel.rebaseTree = function (model, tree, memberName, modelRelayRules) {
+        var rebased = fluid.transform(tree, function (val, key) {
+            if (key === "children") {
+                return fluid.transform(val, function (v) {
+                    return fluid.prefs.compositePanel.rebaseTree(model, v, memberName, modelRelayRules);
+                });
+            } else if (key === "selection") {
+                return fluid.prefs.compositePanel.rebaseTree(model, val, memberName, modelRelayRules);
+            } else if (key === "ID") {
+                return fluid.prefs.compositePanel.rebaseID(val, memberName);
+            } else if (key === "parentRelativeID") {
+                return fluid.prefs.compositePanel.rebaseParentRelativeID(val, memberName);
+            } else if (key === "valuebinding") {
+                return fluid.prefs.compositePanel.rebaseValueBinding(val, modelRelayRules);
+            } else if (key === "value" && tree.valuebinding) {
+                var valuebinding = tree.valuebinding;
+                var modelValue = fluid.get(model, fluid.prefs.compositePanel.rebaseValueBinding(valuebinding, modelRelayRules));
+                return modelValue !== undefined ? modelValue : val;
+            } else {
+                return val;
             }
-        }
-
-        return rebased;
-    };
-
-    fluid.prefs.compositePanel.rebaseTree = function (msgResolver, model, tree, memberName, modelRelayRules) {
-        var rebased;
-
-        if (fluid.isArrayable(tree)) {
-            rebased = fluid.transform(tree, function (treeComp) {
-                return fluid.prefs.compositePanel.rebaseTreeComp(msgResolver, model, treeComp, memberName, modelRelayRules);
-            });
-        } else {
-            rebased = fluid.prefs.compositePanel.rebaseTreeComp(msgResolver, model, tree, memberName, modelRelayRules);
-        }
+        });
 
         return rebased;
     };
@@ -627,7 +582,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
                 var expander = fluid.renderer.makeProtoExpander(expanderOptions, subPanel);
                 var subTree = subPanel.produceTree();
                 subTree = fluid.get(subPanel.options, "rendererFnOptions.noexpand") ? subTree : expander(subTree);
-                var rebasedTree = fluid.prefs.compositePanel.rebaseTree(subPanel.msgResolver, that.model, subTree, componentName, subPanel.options.rules);
+                var rebasedTree = fluid.prefs.compositePanel.rebaseTree(that.model, subTree, componentName, subPanel.options.rules);
                 tree.children = tree.children.concat(rebasedTree.children);
             }
         });
@@ -639,7 +594,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      ********************************************************************************/
 
     fluid.defaults("fluid.prefs.prefsEditorConnections", {
-        gradeNames: ["fluid.component"],
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        mergePolicy: {
+            sourceApplier: "nomerge"
+        },
+        sourceApplier: "{fluid.prefs.prefsEditor}.applier",
         listeners: {
             "{fluid.prefs.prefsEditor}.events.onPrefsEditorRefresh": "{fluid.prefs.panel}.refreshView"
         },
@@ -655,7 +614,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "text size" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.textSize", {
-        gradeNames: ["fluid.prefs.panel"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.textSize": {
                 "model.textSize": "default",
@@ -673,28 +632,32 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         selectors: {
             textSize: ".flc-prefsEditor-min-text-size",
             label: ".flc-prefsEditor-min-text-size-label",
-            multiplier: ".flc-prefsEditor-multiplier",
-            textSizeDescr: ".flc-prefsEditor-text-size-descr"
-        },
-        selectorsToIgnore: ["textSize"],
-        components: {
-            textfieldSlider: {
-                type: "fluid.textfieldSlider",
-                container: "{that}.dom.textSize",
-                createOnEvent: "afterRender",
-                options: {
-                    model: {
-                        value: "{fluid.prefs.panel.textSize}.model.textSize"
-                    },
-                    range: "{fluid.prefs.panel.textSize}.options.range",
-                    sliderOptions: "{fluid.prefs.panel.textSize}.options.sliderOptions"
-                }
-            }
+            smallIcon: ".flc-prefsEditor-min-text-size-smallIcon",
+            largeIcon: ".flc-prefsEditor-min-text-size-largeIcon",
+            multiplier: ".flc-prefsEditor-multiplier"
         },
         protoTree: {
             label: {messagekey: "textSizeLabel"},
+            smallIcon: {messagekey: "textSizeSmallIcon"},
+            largeIcon: {messagekey: "textSizeLargeIcon"},
             multiplier: {messagekey: "multiplier"},
-            textSizeDescr: {messagekey: "textSizeDescr"}
+            textSize: {
+                decorators: {
+                    type: "fluid",
+                    func: "fluid.textfieldSlider",
+                    options: {
+                        rules: {
+                            "textSize": "value"
+                        },
+                        model: {
+                            value: "{that}.model.textSize"
+                        },
+                        sourceApplier: "{that}.applier",
+                        range: "{that}.options.range",
+                        sliderOptions: "{that}.options.sliderOptions"
+                    }
+                }
+            }
         },
         sliderOptions: {
             orientation: "horizontal",
@@ -711,7 +674,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "text font" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.textFont", {
-        gradeNames: ["fluid.prefs.panel"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.textFont": {
                 "model.value": "default",
@@ -720,15 +683,13 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         },
         selectors: {
             textFont: ".flc-prefsEditor-text-font",
-            label: ".flc-prefsEditor-text-font-label",
-            textFontDescr: ".flc-prefsEditor-text-font-descr"
+            label: ".flc-prefsEditor-text-font-label"
         },
         stringArrayIndex: {
             textFont: ["textFont-default", "textFont-times", "textFont-comic", "textFont-arial", "textFont-verdana"]
         },
         protoTree: {
             label: {messagekey: "textFontLabel"},
-            textFontDescr: {messagekey: "textFontDescr"},
             textFont: {
                 optionnames: "${{that}.msgLookup.textFont}",
                 optionlist: "${{that}.options.controlValues.textFont}",
@@ -756,7 +717,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "line space" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.lineSpace", {
-        gradeNames: ["fluid.prefs.panel"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.lineSpace": {
                 "model.lineSpace": "default",
@@ -774,28 +735,32 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         selectors: {
             lineSpace: ".flc-prefsEditor-line-space",
             label: ".flc-prefsEditor-line-space-label",
-            multiplier: ".flc-prefsEditor-multiplier",
-            lineSpaceDescr: ".flc-prefsEditor-line-space-descr"
-        },
-        selectorsToIgnore: ["lineSpace"],
-        components: {
-            textfieldSlider: {
-                type: "fluid.textfieldSlider",
-                container: "{that}.dom.lineSpace",
-                createOnEvent: "afterRender",
-                options: {
-                    model: {
-                        value: "{fluid.prefs.panel.lineSpace}.model.lineSpace"
-                    },
-                    range: "{fluid.prefs.panel.lineSpace}.options.range",
-                    sliderOptions: "{fluid.prefs.panel.lineSpace}.options.sliderOptions"
-                }
-            }
+            narrowIcon: ".flc-prefsEditor-line-space-narrowIcon",
+            wideIcon: ".flc-prefsEditor-line-space-wideIcon",
+            multiplier: ".flc-prefsEditor-multiplier"
         },
         protoTree: {
             label: {messagekey: "lineSpaceLabel"},
+            narrowIcon: {messagekey: "lineSpaceNarrowIcon"},
+            wideIcon: {messagekey: "lineSpaceWideIcon"},
             multiplier: {messagekey: "multiplier"},
-            lineSpaceDescr: {messagekey: "lineSpaceDescr"}
+            lineSpace: {
+                decorators: {
+                    type: "fluid",
+                    func: "fluid.textfieldSlider",
+                    options: {
+                        rules: {
+                            "lineSpace": "value"
+                        },
+                        model: {
+                            value: "{that}.model.lineSpace"
+                        },
+                        sourceApplier: "{that}.applier",
+                        range: "{that}.options.range",
+                        sliderOptions: "{that}.options.sliderOptions"
+                    }
+                }
+            }
         },
         sliderOptions: {
             orientation: "horizontal",
@@ -812,7 +777,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "contrast" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.contrast", {
-        gradeNames: ["fluid.prefs.panel"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
                 "model.value": "default",
@@ -820,17 +785,13 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             }
         },
         listeners: {
-            "afterRender.style": "{that}.style"
+            afterRender: "{that}.style"
         },
         selectors: {
             themeRow: ".flc-prefsEditor-themeRow",
             themeLabel: ".flc-prefsEditor-theme-label",
             themeInput: ".flc-prefsEditor-themeInput",
-            label: ".flc-prefsEditor-contrast-label",
-            contrastDescr: ".flc-prefsEditor-contrast-descr"
-        },
-        styles: {
-            defaultThemeLabel: "fl-prefsEditor-contrast-defaultThemeLabel"
+            label: ".flc-prefsEditor-contrast-label"
         },
         stringArrayIndex: {
             theme: ["contrast-default", "contrast-bw", "contrast-wb", "contrast-by", "contrast-yb", "contrast-lgdg"]
@@ -838,7 +799,6 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         repeatingSelectors: ["themeRow"],
         protoTree: {
             label: {messagekey: "contrastLabel"},
-            contrastDescr: {messagekey: "contrastDescr"},
             expander: {
                 type: "fluid.renderer.selection.inputs",
                 rowID: "themeRow",
@@ -856,43 +816,28 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
             theme: ["default", "bw", "wb", "by", "yb", "lgdg"]
         },
         markup: {
-            // Aria-hidden needed on fl-preview-A and Display 'a' created as pseudo-content in css to prevent AT from reading out display 'a' on IE, Chrome, and Safari
-            // Aria-hidden needed on fl-crossout to prevent AT from trying to read crossout symbol in Safari
-            label: "<span class=\"fl-preview-A\" aria-hidden=\"true\"></span><span class=\"fl-hidden-accessible\">%theme</span><div class=\"fl-crossout\" aria-hidden=\"true\"></div>"
+            label: "<span class=\"fl-preview-A\">A</span><span class=\"fl-hidden-accessible\">%theme</span><div class=\"fl-crossout\"></div>"
         },
         invokers: {
             style: {
                 funcName: "fluid.prefs.panel.contrast.style",
                 args: [
-                    "{that}.dom.themeLabel",
-                    "{that}.msgLookup.theme",
-                    "{that}.options.markup.label",
-                    "{that}.options.controlValues.theme",
-                    "default",
-                    "{that}.options.classnameMap.theme",
-                    "{that}.options.styles.defaultThemeLabel"
-                ]
+                    "{that}.dom.themeLabel", "{that}.msgLookup.theme",
+                    "{that}.options.markup.label", "{that}.options.controlValues.theme",
+                    "{that}.options.classnameMap.theme"
+                ],
+                dynamic: true
             }
         }
     });
 
-    fluid.prefs.panel.contrast.style = function (labels, strings, markup, theme, defaultThemeName, style, defaultLabelStyle) {
+    fluid.prefs.panel.contrast.style = function (labels, strings, markup, theme, style) {
         fluid.each(labels, function (label, index) {
             label = $(label);
-
-            var themeValue = strings[index];
             label.html(fluid.stringTemplate(markup, {
-                theme: themeValue
+                theme: strings[index]
             }));
-
-            // Aria-label set to prevent Firefox from reading out the display 'a'
-            label.attr("aria-label", themeValue);
-
-            var labelTheme = theme[index];
-            if (labelTheme === defaultThemeName) {
-                label.addClass(defaultLabelStyle);
-            }
-            label.addClass(style[labelTheme]);
+            label.addClass(style[theme[index]]);
         });
     };
 
@@ -904,7 +849,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "layout and navigation" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.layoutControls", {
-        gradeNames: ["fluid.prefs.panel"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.tableOfContents": {
                 "model.toc": "default"
@@ -913,11 +858,11 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         selectors: {
             toc: ".flc-prefsEditor-toc",
             label: ".flc-prefsEditor-toc-label",
-            tocDescr: ".flc-prefsEditor-toc-descr"
+            choiceLabel: ".flc-prefsEditor-toc-choice-label"
         },
         protoTree: {
             label: {messagekey: "tocLabel"},
-            tocDescr: {messagekey: "tocDescr"},
+            choiceLabel: {messagekey: "tocChoiceLabel"},
             toc: "${toc}"
         }
     });
@@ -929,7 +874,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "links and buttons" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.emphasizeLinks", {
-        gradeNames: ["fluid.prefs.panel"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.emphasizeLinks": {
                 "model.links": "default"
@@ -952,7 +897,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "links and buttons" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.inputsLarger", {
-        gradeNames: ["fluid.prefs.panel"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.inputsLarger": {
                 "model.inputsLarger": "default"
@@ -975,7 +920,7 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component of fluid.prefs that renders the "links and buttons" panel of the user preferences interface.
      */
     fluid.defaults("fluid.prefs.panel.linksControls", {
-        gradeNames: ["fluid.prefs.compositePanel"],
+        gradeNames: ["fluid.prefs.compositePanel", "autoInit"],
         selectors: {
             label: ".flc-prefsEditor-linksControls-label"
         },
@@ -992,9 +937,9 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
      * A sub-component that decorates the options on the select dropdown list box with the css style
      */
     fluid.defaults("fluid.prefs.selectDecorator", {
-        gradeNames: ["fluid.viewComponent"],
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         listeners: {
-            "onCreate.decorateOptions": "fluid.prefs.selectDecorator.decorateOptions"
+            onCreate: "fluid.prefs.selectDecorator.decorateOptions"
         },
         styles: {
             preview: "fl-preview-theme"
@@ -1008,4 +953,4 @@ var fluid_2_0_0 = fluid_2_0_0 || {};
         });
     };
 
-})(jQuery, fluid_2_0_0);
+})(jQuery, fluid_1_5);
