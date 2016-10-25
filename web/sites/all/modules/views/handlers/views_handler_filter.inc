@@ -623,7 +623,8 @@ class views_handler_filter extends views_handler {
           // Check if the title is defined but value wasn't defined.
           if (!empty($group['title'])) {
             if ((!is_array($group['value']) && trim($group['value']) == "") ||
-                (is_array($group['value']) && count(array_filter($group['value'], '_views_array_filter_zero')) == 0)) {
+                // (is_array($group['value']) && count(array_filter($group['value'], '_views_array_filter_zero')) == 0)) {
+                (is_array($group['value']) && !in_array($group['operator'], array('empty', 'not empty')) && count(array_filter($group['value'], '_views_array_filter_zero')) == 0)) {
               form_error($form['group_info']['group_items'][$id]['value'],
                          t('The value is required if title for this item is defined.'));
             }
