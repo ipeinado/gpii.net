@@ -5166,7 +5166,6 @@ button.close {
     -webkit-transition: -webkit-transform 0.3s ease-out;
     -o-transition: -o-transform 0.3s ease-out;
     transition: -webkit-transform 0.3s ease-out;
-    -o-transition: transform 0.3s ease-out, -o-transform 0.3s ease-out;
     transition: transform 0.3s ease-out;
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out, -o-transform 0.3s ease-out; }
   .modal.in .modal-dialog {
@@ -5525,7 +5524,6 @@ button.close {
         -webkit-transition: -webkit-transform 0.6s ease-in-out;
         -o-transition: -o-transform 0.6s ease-in-out;
         transition: -webkit-transform 0.6s ease-in-out;
-        -o-transition: transform 0.6s ease-in-out, -o-transform 0.6s ease-in-out;
         transition: transform 0.6s ease-in-out;
         transition: transform 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out, -o-transform 0.6s ease-in-out;
         -webkit-backface-visibility: hidden;
@@ -6615,3 +6613,5 @@ body.page-search-advanced treeitem ul li:last-child {
  */
 .term-tree-list .selected {
   font-weight: normal; }
+
+/*# sourceMappingURL=style.css.map */
