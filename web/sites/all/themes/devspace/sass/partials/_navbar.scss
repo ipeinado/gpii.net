@@ -1,22 +1,16 @@
 header#navbar {
-  background: $ds-dark-green;
-  height: auto;
-  margin-bottom: 0;
-  padding: 0;
-
+  margin-bottom:0;
   .navbar-nav {
-    font-size: 140%;
-
-    li {
+    font-size: 1.1em;
+    display: table;
+    & > li {
       margin-right: 1rem;
-    }
-
-    li.open a {
-      color: #000;
-    }
-
-    li a {
-        padding: 1.5rem 1rem 1rem;
+      &.open a {
+        color: #000;
+      }
+      & > a {
+        padding: 1.5rem 1rem 3rem;
+      }
     }
   }
 }
@@ -226,6 +220,14 @@ header#navbar {
   }
 }
 
+
+
+header#navbar {
+  background: #fff;
+  height:auto;
+  padding:0;
+}
+
 .nav-search {
   margin:4em auto 0;
 
@@ -273,26 +275,29 @@ header#navbar {
   }
 }
 
-/*
-* FluidUI Preferences Editor
-*/
-.fl-prefsEditor-separatedPanel .fl-panelBar { 
-  border-bottom: none;
-
-  .fl-prefsEditor-buttons {
+.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
     box-shadow: 2px 2px 3px 0px #6f6f6f;
     border-bottom: 1px solid $palette-navbar-dark;
     border-left: 1px solid $palette-navbar-dark;
     margin-right: 2rem;
     max-width: 1100px;
-  }
-
-  .fl-prefsEditor-buttons, .fl-prefsEditor-showHide, .fl-prefsEditor-reset {
-    // change the background color of the FluidUI navigation bar
-    background-color: $palette-navbar-dark;
-    color: #fff;
-  }
 }
+
+.fl-prefsEditor-separatedPanel .fl-panelBar {
+  border-bottom: none;
+}
+
+// change the background color of the FluidUI navigation bar
+.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
+  background-color: $palette-navbar-dark;
+  color: #fff;
+}
+
+.fl-prefsEditor-separatedPanel .fl-prefsEditor-showHide, .fl-prefsEditor-separatedPanel .fl-prefsEditor-reset {
+  background-color: $palette-navbar-dark;
+  color: #fff;
+}
+
 
 /**
  * Login Toboggan and User Login blocks
@@ -301,3 +306,4 @@ header#navbar {
  #block-logintoboggan-logintoboggan-logged-in, #block-user-login {
   float: right;
  }
+Contact GitHub 

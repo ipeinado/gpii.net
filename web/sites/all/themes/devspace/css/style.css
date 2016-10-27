@@ -6200,24 +6200,21 @@ header#navbar {
     background-color: #eeeeee;
     color: #000; }
 
-.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-  -webkit-box-shadow: 2px 2px 3px 0px #6f6f6f;
-          box-shadow: 2px 2px 3px 0px #6f6f6f;
-  border-bottom: 1px solid #2d394a;
-  border-left: 1px solid #2d394a;
-  margin-right: 2rem;
-  max-width: 1100px; }
-
+/*
+* FluidUI Preferences Editor
+*/
 .fl-prefsEditor-separatedPanel .fl-panelBar {
   border-bottom: none; }
-
-.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-  background-color: #2d394a;
-  color: #fff; }
-
-.fl-prefsEditor-separatedPanel .fl-prefsEditor-showHide, .fl-prefsEditor-separatedPanel .fl-prefsEditor-reset {
-  background-color: #2d394a;
-  color: #fff; }
+  .fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
+    -webkit-box-shadow: 2px 2px 3px 0px #6f6f6f;
+            box-shadow: 2px 2px 3px 0px #6f6f6f;
+    border-bottom: 1px solid #2d394a;
+    border-left: 1px solid #2d394a;
+    margin-right: 2rem;
+    max-width: 1100px; }
+  .fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons, .fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-showHide, .fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-reset {
+    background-color: #2d394a;
+    color: #fff; }
 
 /**
  * Login Toboggan and User Login blocks

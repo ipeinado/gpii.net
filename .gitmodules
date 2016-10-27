@@ -7,3 +7,9 @@
 [submodule "web/sites/all/libraries/bootstrap-accessibility-plugin"]
 	path = web/sites/all/libraries/bootstrap-accessibility-plugin
 	url = https://github.com/paypal/bootstrap-accessibility-plugin.git
+[submodule "web/sites/all/modules/saa_advanced_search"]
+	path = web/sites/all/modules/saa_advanced_search
+	url = git@git.qualtim.com:GPII/saa-advanced-search.git
+[submodule "web/sites/all/modules/google_translator"]
+	path = web/sites/all/modules/google_translator
+	url = https://git.drupal.org/sandbox/fxarte/1473726.git

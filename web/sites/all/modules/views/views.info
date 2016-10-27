@@ -334,3 +334,4 @@ core = "7.x"
 project = "views"
 datestamp = "1466019588"
 
+patch[] = https://www.drupal.org/node/1818176 Issue 1818176, Patch #37
