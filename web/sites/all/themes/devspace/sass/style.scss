@@ -1,5 +1,6 @@
 // Bootstrap library.
 @import "partials/_variables.scss";
+@import "partials/_ds_variables.scss";
 @import "partials/_bootstrap-em.scss";
 @import "../bootstrap/assets/stylesheets/_bootstrap.scss"; // required for fluid overrides
 @import "partials/_overrides.scss";
@@ -11,5 +12,5 @@
 @import "partials/_content.scss";
 
 body {
-	background: #F2F2F2;
+	background: $ds-body-bg;
 }
