@@ -1,10 +1,11 @@
 $ds-body-bg: #f2f2f2;
 
-$shadow-color: #6f6f6f;
+$ds-shadow-color: rgba(0, 0, 0, .3);
 
-$gray-xlight: rgba(255, 255, 255, .95);
+$ds-navbar-grey: #dadada;
 
-$ds-dark-green: #005005;
+$ds-green: #005005;
+$ds-green-lighter: rgba($ds-green, .9);
 $ds-light-green: #116f17;
 $ds-red: #660300;
 $ds-blue: #21696c;
