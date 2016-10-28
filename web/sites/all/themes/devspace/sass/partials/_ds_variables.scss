@@ -6,11 +6,13 @@
 //
 //## Brand colors for use across the DeveloperSpace.
 
-$ds-dark-green: #005005;
-$ds-light-green: #116F17;
+$ds-body-bg: #f2f2f2;
+
+$ds-shadow-color: rgba(0, 0, 0, .3);
+
+$ds-navbar-grey: #dadada;
+
+$ds-green: #005005;
+$ds-light-green: #116f17;
 $ds-red: #660300;
-$ds-blue: #21696C;
-
-$ds-navbar-link: darken($palette-white, 13.5%);
-
-$ds-body-bg: #F2F2F2;
+$ds-blue: #21696c;
