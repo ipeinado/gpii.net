@@ -1,0 +1,7 @@
+name = TecoMigration
+description = Custom migration for Building Block Data
+core = 7.x
+
+dependencies[] = migrate
+
+files[] = includes/base.inc
