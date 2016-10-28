@@ -21,14 +21,30 @@ function search_api_exclude_permission() {
  * Implements hook_search_api_index_items_alter().
  */
 function search_api_exclude_search_api_index_items_alter(array &$items, SearchApiIndex $index) {
-  if ($index->getEntityType() === 'node') {
+  // TODO: Simplify this code when https://www.drupal.org/node/2666036 is
+  // committed and in a stable release.
+  $index_is_multi_entity = ($index->datasource() instanceof SearchApiCombinedEntityDataSourceController);
+  if ($index_is_multi_entity) {
+    $index_uses_nodes = in_array('node', $index->options['datasource']['types']);
+  }
+  else {
+    $index_uses_nodes = ($index->getEntityType() === 'node');
+  }
+  if ($index_uses_nodes) {
     $nids_to_ids = array();
     // Item IDs might not be identical with node NIDs, and there might be
     // multiple search items (with different item IDs) mapped to the same node.
     // (E.g., with the Search API Entity Translation module.)
-    foreach ($items as $item_id => $node) {
-      if (isset($node->nid)) {
-        $nids_to_ids[$node->nid][] = $item_id;
+    foreach ($items as $item_id => $item) {
+      if ($index_is_multi_entity) {
+        if ($item->item_type == 'node' && isset($item->node->nid)) {
+          $nids_to_ids[$item->node->nid][] = $item_id;
+        }
+      }
+      else {
+        if (isset($item->nid)) {
+          $nids_to_ids[$item->nid][] = $item_id;
+        }
       }
     }
     foreach (search_api_exclude_get_excluded(array_keys($nids_to_ids)) as $nid) {
@@ -88,7 +104,7 @@ function search_api_exclude_node_update($node) {
   if (!empty($node->search_api_exclude)) {
     search_api_exclude_add_node($node->nid);
   }
-  else {
+  elseif (isset($node->form_id)) {
     search_api_exclude_remove_node($node->nid);
   }
 }
@@ -137,11 +153,13 @@ function search_api_exclude_form_node_type_form_submit(array $form, array &$form
         $nids = $select->condition('n.type', $type)
           ->execute()
           ->fetchCol();
-        db_delete('search_api_exclude')
-          ->condition('nid', $nids)
-          ->execute();
-        foreach (node_load_multiple($nids) as $node) {
-          search_api_entity_update($node, 'node');
+        if (isset($nids) && !empty($nids)) {
+          db_delete('search_api_exclude')
+            ->condition('nid', $nids)
+            ->execute();
+          foreach (node_load_multiple($nids) as $node) {
+            search_api_entity_update($node, 'node');
+          }
         }
       }
       variable_set('search_api_exclude_types', $types);

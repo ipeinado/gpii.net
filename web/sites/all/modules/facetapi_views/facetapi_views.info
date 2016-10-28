@@ -11,10 +11,9 @@ configure = admin/config/search/facetapi/views
 files[] = plugins/facetapi/url_processor_exposed_facets.inc
 files[] = views/facetapi_views_handler_filter_keep_facet_values.inc
 
-; Information added by Drupal.org packaging script on 2016-04-05
-version = "7.x-1.x-dev"
+; Information added by Drupal.org packaging script on 2016-10-12
+version = "7.x-1.0-beta1"
 core = "7.x"
 project = "facetapi_views"
-datestamp = "1459885740"
+datestamp = "1476277441"
 
-patch[] = https://www.drupal.org/node/2785711 Issue 2785711

@@ -5,5 +5,5 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 
-# composer stuff
-sites/vendor/*
+# vendor files
+sites/vendor
