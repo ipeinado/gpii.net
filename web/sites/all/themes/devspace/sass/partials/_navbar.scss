@@ -69,10 +69,13 @@
     height: 120px;
     display: block;
     padding-top: 15px;
+    padding-left: 15px;
     width: 100%;
   }
 
   .navbar-inverse .navbar-nav {
+    padding: 0 15px;
+    
     li > a {
       border-top-color: transparent;
       border-top-style: solid;

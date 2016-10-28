@@ -6081,30 +6081,33 @@ body.navbar-is-fixed-top {
     height: 120px;
     display: block;
     padding-top: 15px;
+    padding-left: 15px;
     width: 100%; }
-  .navbar-inverse .navbar-nav li > a {
-    border-top-color: transparent;
-    border-top-style: solid;
-    border-top-width: 2px;
-    -webkit-transition: color .2s ease, border-top-color .2s ease;
-    -o-transition: color .2s ease, border-top-color .2s ease;
-    transition: color .2s ease, border-top-color .2s ease; }
-    .navbar-inverse .navbar-nav li > a:hover, .navbar-inverse .navbar-nav li > a:focus {
-      border-top-color: #777777;
+  .navbar-inverse .navbar-nav {
+    padding: 0 15px; }
+    .navbar-inverse .navbar-nav li > a {
+      border-top-color: transparent;
+      border-top-style: solid;
+      border-top-width: 2px;
+      -webkit-transition: color .2s ease, border-top-color .2s ease;
+      -o-transition: color .2s ease, border-top-color .2s ease;
+      transition: color .2s ease, border-top-color .2s ease; }
+      .navbar-inverse .navbar-nav li > a:hover, .navbar-inverse .navbar-nav li > a:focus {
+        border-top-color: #777777;
+        color: #fff; }
+    .navbar-inverse .navbar-nav .active > a,
+    .navbar-inverse .navbar-nav .active > a:hover,
+    .navbar-inverse .navbar-nav .active > a:focus,
+    .navbar-inverse .navbar-nav .active-trail > a,
+    .navbar-inverse .navbar-nav .active-trail > a:hover,
+    .navbar-inverse .navbar-nav .active-trail > a:focus {
+      background-color: transparent;
+      border-top-color: #eeeeee;
       color: #fff; }
-  .navbar-inverse .navbar-nav .active > a,
-  .navbar-inverse .navbar-nav .active > a:hover,
-  .navbar-inverse .navbar-nav .active > a:focus,
-  .navbar-inverse .navbar-nav .active-trail > a,
-  .navbar-inverse .navbar-nav .active-trail > a:hover,
-  .navbar-inverse .navbar-nav .active-trail > a:focus {
-    background-color: transparent;
-    border-top-color: #eeeeee;
-    color: #fff; }
-  .navbar-inverse .navbar-nav .open > a,
-  .navbar-inverse .navbar-nav .open > a:hover,
-  .navbar-inverse .navbar-nav .open > a:focus {
-    background-color: transparent; }
+    .navbar-inverse .navbar-nav .open > a,
+    .navbar-inverse .navbar-nav .open > a:hover,
+    .navbar-inverse .navbar-nav .open > a:focus {
+      background-color: transparent; }
   .navbar-inverse .dropdown-menu li > a,
   .navbar-inverse .dropdown-menu .active > a,
   .navbar-inverse .dropdown-menu .active-trail a {
