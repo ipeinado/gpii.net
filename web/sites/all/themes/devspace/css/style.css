@@ -6084,11 +6084,12 @@ body.navbar-is-fixed-top {
     padding-left: 15px;
     width: 100%; }
   .navbar-inverse .navbar-nav {
-    padding: 0 15px; }
+    padding: 0 10px; }
     .navbar-inverse .navbar-nav li > a {
       border-top-color: transparent;
       border-top-style: solid;
       border-top-width: 2px;
+      padding: 15px;
       -webkit-transition: color .2s ease, border-top-color .2s ease;
       -o-transition: color .2s ease, border-top-color .2s ease;
       transition: color .2s ease, border-top-color .2s ease; }
@@ -6127,10 +6128,19 @@ body.navbar-is-fixed-top {
     background-color: #eeeeee;
     color: #000; } }
 
+@media (min-width: 992px) {
+  .navbar-header {
+    padding-top: 15px;
+    padding-left: 30px; }
+  .navbar-inverse .navbar-nav {
+    padding: 0 36px; }
+    .navbar-inverse .navbar-nav li > a {
+      padding: 15px 20px; } }
+
 .fl-prefsEditor-separatedPanel .fl-panelBar {
   border-bottom: 0; }
   .fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-    margin-right: 2rem;
+    margin-right: 5rem;
     max-width: 1100px; }
 
 /**
