@@ -141,13 +141,14 @@ function facetapi_views_exposed_form_pre_render($element) {
  */
 function facetapi_views_block_info() {
   $blocks = array();
-  // foreach (facetapi_get_searcher_info() as $searcher => $searcher_info) {
-  //   // @todo Care for searcher names >30 chars.
-  //   $blocks["s:$searcher"] = array(
-  //     'info' => t('Facet search preparation block (experimental!) for index @index - place before exposed form', array('@index' => $searcher)),
-  //     'cache' => DRUPAL_NO_CACHE,
-  //   );
-  // }
+  foreach (facetapi_get_searcher_info() as $searcher => $searcher_info) {
+    $t_args = array('@index' => $searcher);
+    // Block deltas may be 32 char length, just the size of a MD5.
+    $blocks[_facetapi_views_searcher_hash($searcher)] = array(
+      'info' => t('Facet search preparation block (place before exposed form) for index: @index', $t_args),
+      'cache' => DRUPAL_NO_CACHE,
+    );
+  }
   return $blocks;
 }
 
@@ -163,13 +164,35 @@ function facetapi_views_ctools_block_info($module, $delta, &$info) {
  */
 function facetapi_views_block_view($delta = '') {
   $searchers = facetapi_get_searcher_info();
-  if (preg_match('/^s:(.*)$/', $delta, $m)
-    && ($name = $m[1])
-    && isset($searchers[$name])
-    && !facetapi_is_active_searcher($name)
+  $searchers_by_hash = _facetapi_views_searchers_by_hash($searchers);
+
+  if (
+    isset($searchers_by_hash[$delta])
+    && ($name = $searchers_by_hash[$delta])
   ) {
     facetapi_add_active_searcher($name);
   }
   // We do this only for the side effects, so don't return anything.
   return NULL;
+}
+
+/**
+ * @param array $searchers
+ * @return string[]
+ */
+function _facetapi_views_searchers_by_hash($searchers) {
+  $searchers_by_hash = array();
+  foreach ($searchers as $searcher => $info) {
+    $hash = _facetapi_views_searcher_hash($searcher);
+    $searchers_by_hash[$hash] = $searcher;
+  }
+  return $searchers_by_hash;
+}
+
+/**
+ * @param $searcher
+ * @return string
+ */
+function _facetapi_views_searcher_hash($searcher) {
+  return md5("searcher:$searcher");
 }
