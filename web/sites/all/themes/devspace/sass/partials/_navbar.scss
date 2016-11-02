@@ -1,303 +1,166 @@
-header#navbar {
-  margin-bottom:0;
-  .navbar-nav {
-    font-size: 1.1em;
-    display: table;
-    & > li {
-      margin-right: 1rem;
-      &.open a {
-        color: #000;
-      }
-      & > a {
-        padding: 1.5rem 1rem 3rem;
-      }
-    }
+.navbar-inverse {
+  background-color: $ds-green;
+  border: 0;
+  box-shadow: 0 2px 2px 0 $ds-shadow-color;
+
+  .container-fluid {
+    padding: 0;
   }
-}
 
-//
-// XS MEDIA QUERY
-//
+  .navbar-header .name {
+    display: none;
+  }
 
-.navbar-static-top {
-  z-index: 999 !important;
+  .navbar-toggle {
+    background-color: $ds-light-green;
+    margin-right: 25px;
+  }
+
+  .navbar-nav > li > a {
+    font-size: .9em;
+    text-transform: uppercase;
+    color: $ds-navbar-grey;
+    cursor: pointer;
+  }
+
+  .dropdown-menu > li > a {
+    text-transform: none;
+    border: 0;
+    color: $gray-darker;
+  }
+
+  .secondary > li > a {
+    text-transform: capitalize;
+  }
 }
 
 @media (max-width: $break-xs) {
+  .navbar-inverse .navbar-collapse,
+  .navbar-inverse .navbar-form {
+    background-color: $gray-darker;
+  }
 
-  header#navbar {
-    height:$navbar-height-xs;
-  }
-  .navbar.navbar-inverse {
-    & .navbar-header {
-      & .navbar-toggle {
-        margin:16px 15px;
-      }
-      & .navbar-brand {
-        color:#fff;
-        line-height:$navbar-height-xs;
-        float:left;
-        margin:0px;
-        padding:0em 1em;
-      }
-    }
-  }
-  .navbar-collapse {
-    & .navbar-nav.secondary {
-      float:right;
-    }
-    & .navbar-nav li {
-      text-align:center;
-      & span.nolink {
-        padding:10px 0px;
-        line-height:20px;
-        display:block;
-        color:#777;
-      }
-      & .dropdown-menu {
-        background-color:$palette-navbar-dark;
-        border:none;
-      }
-    }
-    & .navbar-form > .search-form {
-      display:block;
-      margin:1em 1em;
-      width:auto;
-      text-align:center;
-      border-bottom:none;
-      & .form-group {
-        margin-bottom:0px;
-      }
+  .container-fluid .navbar-header {
+    margin-left: -10px;
+    img {
+      height: 38px;
     }
   }
 
-}
+  .navbar-inverse .navbar-nav {
+    li a {
+      margin: 0 1em;
 
-//
-// SM+ MEDIA QUERY
-//
-
-@media (min-width:$break-sm) {
-
-  .nav > li > a, .nav > li > span.nolink {
-    padding:10px 10px;
-  }
-
-  .navbar-collapse {
-    & .navbar-nav  {
-      display:inline-block;
-      float:left;
-      margin:0 auto;
-
-      &.secondary {
-        float:right;
-      }
-
-      & .dropdown-menu {
-        background-color:$palette-red;
-        border:none;
-        & > li > a {
-          padding:3px 10px;
-          color:#000;
-          &:hover, &.active {
-            background-color:$palette-red-dark;
-          }
-        }
-      }
-
-
-      & > li {
-        & > a, & > span.nolink {
-          color:#fff;
-          height:$navbar-height;
-          vertical-align:middle;
-          &:hover {
-            cursor:pointer;
-          }
-        }
-      }
-      & .dropdown.open:after {
-        content:"";
-        display:block;
-        position:absolute;
-        width: 0;
-        height: 0;
-        left:50%;
-        margin-left: -15px;
-        bottom:0px;
-        // border-left: 15px solid transparent;
-        // border-right: 15px solid transparent;
-        // border-bottom: 8px solid $palette-red;
-        z-index:1000;
-      }
-      & > .active > a, & > .active-trail > a, & > .active-trail > span {
-        background: $navbar-gradient-dark;
-        position: relative;
-        &:hover {
-          background-color:#000;
-        }
-        &:before {
-          content: '';
-          display: block;
-          position: absolute;
-          width:100%;
-          height: $red-line-height;
-          top: 0px;
-          left:0px;
-          background: $palette-red;
-        }
+      a:hover,
+      a:focus {
+        background-color: $gray-dark;
       }
     }
-  }
-  .navbar {
 
-    & > nav {
-        height:$navbar-height;
-    }
-
-    .navbar-header {
-      display:none;
-    }
-
-    & .navbar-form {
-      margin:0px;
-      height:$navbar-height;
-      line-height:$navbar-height;
-
-      & .dropdown-menu {
-        & > li > a {
-          &:hover, &.active {
-            color:$palette-white;
-          }
-        }
-      }
-
-      & .input-group > input {
-        font-size:12px;
-      }
-      & button.form-submit {
-        padding-bottom:8px;
-        position:relative;
-        top:1px;
-        & span.fa {
-          position:relative;
-          top:1px;
-        }
-      }
-    }
-  }
-
-}
-
-//
-// MISC STYLES
-//
-
-#navbar {
-  ul.menu {
-    ul.dropdown-menu {
-      background: rgba(255, 255, 255, .95);
-      li {
-        padding: 3px;
-        a, a.active  {
-          &:hover, &:active, &:focus {
-            text-decoration: underline;
-            background: $gray-lighter;
-          }
-        }
-      }
-    }
-    .dropdown {
-      .highlighted {
-        background: $gray-lighter;
-      }
-      .active-trail, .active {
-        // set active background color here
-        color: black;
-        background: $gray-lighter;
-      }
+    .active > a {
+      background-color: $gray-dark;
     }
   }
 }
 
+@media (min-width: $break-xs) {
 
+  .navbar-header {
+    height: 120px;
+    display: block;
+    padding-top: 15px;
+    padding-left: 15px;
+    width: 100%;
+  }
 
-header#navbar {
-  background: #fff;
-  height:auto;
-  padding:0;
-}
+  .navbar-inverse .navbar-nav {
+    padding: 0 10px;
+    
+    li > a {
+      border-top-color: transparent;
+      border-top-style: solid;
+      border-top-width: 2px;
+      padding: 15px;
+      transition: color .2s ease,
+                  border-top-color .2s ease;
 
-.nav-search {
-  margin:4em auto 0;
+      &:hover,
+      &:focus {
+        border-top-color: $gray-light;
+        color: $palette-white;
+      }
+    }
 
-}
+    .active > a,
+    .active > a:hover,
+    .active > a:focus,
+    .active-trail > a,
+    .active-trail > a:hover,
+    .active-trail > a:focus {
+      background-color: transparent;
+      border-top-color: $gray-lighter;
+      color: $palette-white;
+    }
 
-.dropdown-menu {
-  border-radius:0px;
-}
+    .open > a,
+    .open > a:hover,
+    .open > a:focus {
+      background-color: transparent;
+    }
+  }
 
-.navbar-form {
-  padding:0px;
-}
+  .navbar-inverse .dropdown-menu {
 
-.navbar-toggle {
-  background-color: $palette-navbar-dark;
-}
+    li > a,
+    .active > a,
+    .active-trail a {
+      padding: 5px 20px;
+      border: 0;
+      background-color: transparent;
+      color: $gray-dark;
 
-.navbar-collapse {
-  .navbar-nav, .navbar-collapse {
-    a.active, a.active-trail {
-      color: #000;
-      background: $palette-white;
-      background-color: $palette-white;
-      &:hover, &:active {
+      &:hover,
+      &:focus {
         background-color: $gray-lighter;
-        color: #000;
+        color: $gray-base;
       }
     }
-  }
 
-  .navbar-collapse .navbar-nav .dropdown-menu {
-    background-color: $gray-lighter;
-    border: none;
-  }
-  .navbar-nav {
-    & > li {
-      & > a {
-        color: #000;
-        &:hover, &:active {
-          background-color: $gray-lighter;
-          color: #000;
-        }
-      }
+    .active > a,
+    .active-trail > a {
+      background-color: $gray-lighter;
+      color: $gray-base;
     }
   }
 }
 
-.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-    box-shadow: 2px 2px 3px 0px #6f6f6f;
-    border-bottom: 1px solid $palette-navbar-dark;
-    border-left: 1px solid $palette-navbar-dark;
-    margin-right: 2rem;
-    max-width: 1100px;
+@media (min-width: $break-sm) {
+  .navbar-header {
+    padding-top: 15px;
+    padding-left: 30px;
+  }
+
+  .navbar-inverse .navbar-nav {
+    padding: 0 36px;
+
+    li > a {
+      padding: 15px 20px;
+    }
+  }
 }
+
+//
+// UIOptions Preferences Editor bar
+//
 
 .fl-prefsEditor-separatedPanel .fl-panelBar {
-  border-bottom: none;
-}
+  border-bottom: 0;
 
-// change the background color of the FluidUI navigation bar
-.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-  background-color: $palette-navbar-dark;
-  color: #fff;
+  .fl-prefsEditor-buttons {
+    margin-right: 5rem;
+    max-width: 1100px;
+  }
 }
-
-.fl-prefsEditor-separatedPanel .fl-prefsEditor-showHide, .fl-prefsEditor-separatedPanel .fl-prefsEditor-reset {
-  background-color: $palette-navbar-dark;
-  color: #fff;
-}
-
 
 /**
  * Login Toboggan and User Login blocks
@@ -305,4 +168,4 @@ header#navbar {
 
  #block-logintoboggan-logintoboggan-logged-in, #block-user-login {
   float: right;
- }
+}

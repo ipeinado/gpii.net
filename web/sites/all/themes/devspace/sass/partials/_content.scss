@@ -169,5 +169,31 @@ body.page-search-advanced {
 
  // End Term Tree Styles
 
+//
+// Nodes - Node BB
+//
+.node {
+  background: $palette-white;
+  box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.1);
+  padding: 1em;
+  margin-bottom: 2em;
 
+  h2 {
+    font-size: 1.4em;
+    line-height: 1.4em;
+    margin-top: 0;
+
+    a:hover,
+    a:focus {
+      color: $ds-light-green;
+      text-decoration: none;
+    }
+  }
+
+  .fa {
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+    display: inline-block;
+  }
+}
 
