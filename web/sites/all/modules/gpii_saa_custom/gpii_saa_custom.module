@@ -230,11 +230,11 @@ function gpii_saa_custom_child_termrefs_table($vid, $tid, $vdisplay) {
      // dpm($result);
      // dpm(strpos($result, '<ul class="term">'));
      if (strpos($result, '<ul class="term">') !== false) {
-      $output .= '<tr><td>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . '</td><td>' . $result . '</td></tr>' .  gpii_saa_custom_child_termrefs_table($vid, $value->tid, $vdisplay);
+      $output .= '<tr><td>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' <a class="btn btn-sm btn-default pull-right" href="/taxonomy/term/' . $value->tid . '/edit">Edit</a></td><td>' . $result . '</td></tr>' .  gpii_saa_custom_child_termrefs_table($vid, $value->tid, $vdisplay);
       unset($count);
      }
      else {
-      $output .= '<td>' . t($value->name) . '</td><td>No related terms found. </td></tr>';
+      $output .= '<td>' . t($value->name) . '<a class="btn btn-sm btn-default pull-right" href="/taxonomy/term/' . $value->tid . '/edit">Edit</a></td><td>No related terms found. </td></tr>';
      }
 
     }
