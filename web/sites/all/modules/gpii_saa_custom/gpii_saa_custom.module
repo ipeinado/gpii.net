@@ -226,15 +226,19 @@ function gpii_saa_custom_child_termrefs_table($vid, $tid, $vdisplay) {
     $output .= '<table class="table table-striped table-bordered table-responsive"><tr><th>Term</th><th>Related</th></tr>';
     foreach ($children as $key => $value) {
      $link = taxonomy_term_uri($value);
+     $destination = drupal_get_destination();
+     $editlink = l(t('Edit'), '/taxonomy/term/' . $value->tid . '/edit', array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('btn btn-sm btn-default pull-right'))));
+
+
      $result = views_embed_view('get_related_terms', $vdisplay, $value->tid);
      // dpm($result);
      // dpm(strpos($result, '<ul class="term">'));
      if (strpos($result, '<ul class="term">') !== false) {
-      $output .= '<tr><td>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' <a class="btn btn-sm btn-default pull-right" href="/taxonomy/term/' . $value->tid . '/edit">Edit</a></td><td>' . $result . '</td></tr>' .  gpii_saa_custom_child_termrefs_table($vid, $value->tid, $vdisplay);
+      $output .= '<tr><td>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' ' . $editlink . '</td><td>' . $result . '</td></tr>' .  gpii_saa_custom_child_termrefs_table($vid, $value->tid, $vdisplay);
       unset($count);
      }
      else {
-      $output .= '<td>' . t($value->name) . '<a class="btn btn-sm btn-default pull-right" href="/taxonomy/term/' . $value->tid . '/edit">Edit</a></td><td>No related terms found. </td></tr>';
+      $output .= '<td>' . t($value->name) .  ' ' . $editlink . '</td><td>No related terms found. </td></tr>';
      }
 
     }
