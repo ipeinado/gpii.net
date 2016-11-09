@@ -15,6 +15,7 @@
   font-size: 20px;
   color: $ds-navbar-grey;
   line-height: 22px;
+  font-weight: 400;
 }
 
 .front {
@@ -29,6 +30,11 @@
   .navbar-nav {
     li > a {
       color: $ds-navbar-grey;
+      font-size: 14px;
+    }
+
+    .dropdown > a {
+      text-transform: uppercase;
     }
   }
 }
@@ -42,10 +48,11 @@
       padding-left: 30px;
       padding-right: 30px;
     }
-  }
 
-  .navbar-header {
-    padding-top: 8px;
+    .container-fluid .navbar-header {
+      padding-top: 8px;
+      margin-right: 12px;
+    }
   }
 
   .navbar-inverse {
@@ -53,7 +60,7 @@
 
     .navbar-nav {
       li > a {
-        padding: 24px 15px 21px;
+        padding: 24px 12px 21px;
         border-bottom: 3px solid $ds-green;
         transition: all .3s ease-in;
 

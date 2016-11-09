@@ -6048,7 +6048,8 @@ body.navbar-is-fixed-top {
 .navbar .name {
   font-size: 20px;
   color: #dadada;
-  line-height: 22px; }
+  line-height: 22px;
+  font-weight: 400; }
 
 .front .navbar .name {
   color: #fff; }
@@ -6056,7 +6057,10 @@ body.navbar-is-fixed-top {
 .navbar-inverse {
   margin-top: 2.4em; }
   .navbar-inverse .navbar-nav li > a {
-    color: #dadada; }
+    color: #dadada;
+    font-size: 14px; }
+  .navbar-inverse .navbar-nav .dropdown > a {
+    text-transform: uppercase; }
 
 @media (min-width: 768px) {
   .navbar {
@@ -6064,12 +6068,13 @@ body.navbar-is-fixed-top {
     .navbar .container-fluid {
       padding-left: 30px;
       padding-right: 30px; }
-  .navbar-header {
-    padding-top: 8px; }
+    .navbar .container-fluid .navbar-header {
+      padding-top: 8px;
+      margin-right: 12px; }
   .navbar-inverse {
     background-color: #005005; }
     .navbar-inverse .navbar-nav li > a {
-      padding: 24px 15px 21px;
+      padding: 24px 12px 21px;
       border-bottom: 3px solid #005005;
       -webkit-transition: all .3s ease-in;
       -o-transition: all .3s ease-in;
