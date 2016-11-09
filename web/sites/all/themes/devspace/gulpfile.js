@@ -19,7 +19,7 @@ var gulp = require('gulp'),
         // Find all `.scss` files from the `stylesheets/` folder
         .src(input)
         // Lint scss
-        .pipe(scsslint())
+        // .pipe(scsslint())
         // Run Sass on those files
         .pipe(sass({precision: '8'}).on('error', sass.logError))
         // Write the resulting CSS in the output folder

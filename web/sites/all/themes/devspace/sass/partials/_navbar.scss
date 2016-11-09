@@ -1,151 +1,106 @@
-.navbar-inverse {
+.navbar-header {
   background-color: $ds-green;
-  border: 0;
-  box-shadow: 0 2px 2px 0 $ds-shadow-color;
+}
 
-  .container-fluid {
-    padding: 0;
-  }
+.navbar .logo {
+  padding-right: 5px;
 
-  .navbar-header .name {
-    display: none;
-  }
-
-  .navbar-toggle {
-    background-color: $ds-light-green;
-    margin-right: 25px;
-  }
-
-  .navbar-nav > li > a {
-    font-size: .9em;
-    text-transform: uppercase;
-    color: $ds-navbar-grey;
-    cursor: pointer;
-  }
-
-  .dropdown-menu > li > a {
-    text-transform: none;
-    border: 0;
-    color: $gray-darker;
-  }
-
-  .secondary > li > a {
-    text-transform: capitalize;
+  img {
+    margin-top: -2px;
+    width: 64px;
   }
 }
 
-@media (max-width: $break-xs) {
-  .navbar-inverse .navbar-collapse,
-  .navbar-inverse .navbar-form {
-    background-color: $gray-darker;
+.navbar .name {
+  font-size: 20px;
+  color: $ds-navbar-grey;
+  line-height: 22px;
+}
+
+.front {
+  .navbar .name {
+    color: $palette-white;
   }
+}
 
-  .container-fluid .navbar-header {
-    margin-left: -10px;
-    img {
-      height: 38px;
-    }
-  }
+.navbar-inverse {
+  margin-top: 2.4em;
 
-  .navbar-inverse .navbar-nav {
-    li a {
-      margin: 0 1em;
-
-      a:hover,
-      a:focus {
-        background-color: $gray-dark;
-      }
-    }
-
-    .active > a {
-      background-color: $gray-dark;
+  .navbar-nav {
+    li > a {
+      color: $ds-navbar-grey;
     }
   }
 }
 
 @media (min-width: $break-xs) {
+  
+  .navbar {
+    border: 0;
+
+    .container-fluid {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
 
   .navbar-header {
-    height: 120px;
-    display: block;
-    padding-top: 15px;
-    padding-left: 15px;
-    width: 100%;
+    padding-top: 8px;
   }
 
-  .navbar-inverse .navbar-nav {
-    padding: 0 10px;
-    
-    li > a {
-      border-top-color: transparent;
-      border-top-style: solid;
-      border-top-width: 2px;
-      padding: 15px;
-      transition: color .2s ease,
-                  border-top-color .2s ease;
+  .navbar-inverse {
+    background-color: $ds-green;
 
-      &:hover,
-      &:focus {
-        border-top-color: $gray-light;
-        color: $palette-white;
+    .navbar-nav {
+      li > a {
+        padding: 24px 15px 21px;
+        border-bottom: 3px solid $ds-green;
+        transition: all .3s ease-in;
+
+
+        &:hover {
+          border-bottom-color: $gray-light;
+        }
+      }
+
+      .active > a,
+      .active > a:focus,
+      .active > a:hover {
+        background-color: $ds-green;
+        border-bottom-color: $palette-white;
+      }
+
+      .open > a,
+      .open > a:hover,
+      .open > a:focus {
+        background-color: $ds-green;
       }
     }
 
-    .active > a,
-    .active > a:hover,
-    .active > a:focus,
-    .active-trail > a,
-    .active-trail > a:hover,
-    .active-trail > a:focus {
-      background-color: transparent;
-      border-top-color: $gray-lighter;
-      color: $palette-white;
-    }
+    .dropdown-menu {
+      li > a {
+        color: $gray-dark;
+        padding: 10px 20px;
+        border: 0;
 
-    .open > a,
-    .open > a:hover,
-    .open > a:focus {
-      background-color: transparent;
-    }
-  }
+        &:hover {
+          color: $gray-base;
+        }
+      }
 
-  .navbar-inverse .dropdown-menu {
-
-    li > a,
-    .active > a,
-    .active-trail a {
-      padding: 5px 20px;
-      border: 0;
-      background-color: transparent;
-      color: $gray-dark;
-
-      &:hover,
-      &:focus {
-        background-color: $gray-lighter;
+      .active > a,
+      .active > a:hover,
+      .active > a:focus {
         color: $gray-base;
+        background-color: $gray-lighter;
       }
-    }
-
-    .active > a,
-    .active-trail > a {
-      background-color: $gray-lighter;
-      color: $gray-base;
     }
   }
 }
 
-@media (min-width: $break-sm) {
-  .navbar-header {
-    padding-top: 15px;
-    padding-left: 30px;
-  }
-
-  .navbar-inverse .navbar-nav {
-    padding: 0 36px;
-
-    li > a {
-      padding: 15px 20px;
-    }
+.logged-in {
+  .navbar-inverse {
+    margin-top: 0;
   }
 }
 
@@ -153,12 +108,18 @@
 // UIOptions Preferences Editor bar
 //
 
-.fl-prefsEditor-separatedPanel .fl-panelBar {
-  border-bottom: 0;
+.fl-prefsEditor-separatedPanel {
+  background-color: #080808;
+  height: 2.4em;
 
-  .fl-prefsEditor-buttons {
-    margin-right: 5rem;
-    max-width: 1100px;
+  .fl-panelBar {
+    border-bottom: 0;
+    background-color: #080808;
+
+    .fl-prefsEditor-buttons {
+      margin-right: 5rem;
+      max-width: 1100px;
+    }
   }
 }
 
