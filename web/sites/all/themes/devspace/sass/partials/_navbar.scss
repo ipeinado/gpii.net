@@ -1,303 +1,134 @@
-header#navbar {
-  margin-bottom:0;
+.navbar-header {
+  background-color: $ds-green;
+}
+
+.navbar .logo {
+  padding-right: 5px;
+
+  img {
+    margin-top: -2px;
+    width: 64px;
+  }
+}
+
+.navbar .name {
+  font-size: 20px;
+  color: $ds-navbar-grey;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.front {
+  .navbar .name {
+    color: $palette-white;
+  }
+}
+
+.navbar-inverse {
+  margin-top: 2.4em;
+
   .navbar-nav {
-    font-size: 1.1em;
-    display: table;
-    & > li {
-      margin-right: 1rem;
-      &.open a {
-        color: #000;
-      }
-      & > a {
-        padding: 1.5rem 1rem 3rem;
-      }
+    li > a {
+      color: $ds-navbar-grey;
+      font-size: 14px;
+    }
+
+    .dropdown > a {
+      text-transform: uppercase;
     }
   }
 }
 
-//
-// XS MEDIA QUERY
-//
-
-.navbar-static-top {
-  z-index: 999 !important;
-}
-
-@media (max-width: $break-xs) {
-
-  header#navbar {
-    height:$navbar-height-xs;
-  }
-  .navbar.navbar-inverse {
-    & .navbar-header {
-      & .navbar-toggle {
-        margin:16px 15px;
-      }
-      & .navbar-brand {
-        color:#fff;
-        line-height:$navbar-height-xs;
-        float:left;
-        margin:0px;
-        padding:0em 1em;
-      }
-    }
-  }
-  .navbar-collapse {
-    & .navbar-nav.secondary {
-      float:right;
-    }
-    & .navbar-nav li {
-      text-align:center;
-      & span.nolink {
-        padding:10px 0px;
-        line-height:20px;
-        display:block;
-        color:#777;
-      }
-      & .dropdown-menu {
-        background-color:$palette-navbar-dark;
-        border:none;
-      }
-    }
-    & .navbar-form > .search-form {
-      display:block;
-      margin:1em 1em;
-      width:auto;
-      text-align:center;
-      border-bottom:none;
-      & .form-group {
-        margin-bottom:0px;
-      }
-    }
-  }
-
-}
-
-//
-// SM+ MEDIA QUERY
-//
-
-@media (min-width:$break-sm) {
-
-  .nav > li > a, .nav > li > span.nolink {
-    padding:10px 10px;
-  }
-
-  .navbar-collapse {
-    & .navbar-nav  {
-      display:inline-block;
-      float:left;
-      margin:0 auto;
-
-      &.secondary {
-        float:right;
-      }
-
-      & .dropdown-menu {
-        background-color:$palette-red;
-        border:none;
-        & > li > a {
-          padding:3px 10px;
-          color:#000;
-          &:hover, &.active {
-            background-color:$palette-red-dark;
-          }
-        }
-      }
-
-
-      & > li {
-        & > a, & > span.nolink {
-          color:#fff;
-          height:$navbar-height;
-          vertical-align:middle;
-          &:hover {
-            cursor:pointer;
-          }
-        }
-      }
-      & .dropdown.open:after {
-        content:"";
-        display:block;
-        position:absolute;
-        width: 0;
-        height: 0;
-        left:50%;
-        margin-left: -15px;
-        bottom:0px;
-        // border-left: 15px solid transparent;
-        // border-right: 15px solid transparent;
-        // border-bottom: 8px solid $palette-red;
-        z-index:1000;
-      }
-      & > .active > a, & > .active-trail > a, & > .active-trail > span {
-        background: $navbar-gradient-dark;
-        position: relative;
-        &:hover {
-          background-color:#000;
-        }
-        &:before {
-          content: '';
-          display: block;
-          position: absolute;
-          width:100%;
-          height: $red-line-height;
-          top: 0px;
-          left:0px;
-          background: $palette-red;
-        }
-      }
-    }
-  }
+@media (min-width: $break-xs) {
+  
   .navbar {
+    border: 0;
 
-    & > nav {
-        height:$navbar-height;
+    .container-fluid {
+      padding-left: 30px;
+      padding-right: 30px;
     }
 
-    .navbar-header {
-      display:none;
-    }
-
-    & .navbar-form {
-      margin:0px;
-      height:$navbar-height;
-      line-height:$navbar-height;
-
-      & .dropdown-menu {
-        & > li > a {
-          &:hover, &.active {
-            color:$palette-white;
-          }
-        }
-      }
-
-      & .input-group > input {
-        font-size:12px;
-      }
-      & button.form-submit {
-        padding-bottom:8px;
-        position:relative;
-        top:1px;
-        & span.fa {
-          position:relative;
-          top:1px;
-        }
-      }
+    .container-fluid .navbar-header {
+      padding-top: 8px;
+      margin-right: 12px;
     }
   }
 
-}
+  .navbar-inverse {
+    background-color: $ds-green;
 
-//
-// MISC STYLES
-//
+    .navbar-nav {
+      li > a {
+        padding: 24px 12px 21px;
+        border-bottom: 3px solid $ds-green;
+        transition: all .3s ease-in;
 
-#navbar {
-  ul.menu {
-    ul.dropdown-menu {
-      background: rgba(255, 255, 255, .95);
-      li {
-        padding: 3px;
-        a, a.active  {
-          &:hover, &:active, &:focus {
-            text-decoration: underline;
-            background: $gray-lighter;
-          }
+
+        &:hover {
+          border-bottom-color: $gray-light;
         }
       }
-    }
-    .dropdown {
-      .highlighted {
-        background: $gray-lighter;
+
+      .active > a,
+      .active > a:focus,
+      .active > a:hover {
+        background-color: $ds-green;
+        border-bottom-color: $palette-white;
       }
-      .active-trail, .active {
-        // set active background color here
-        color: black;
-        background: $gray-lighter;
+
+      .open > a,
+      .open > a:hover,
+      .open > a:focus {
+        background-color: $ds-green;
       }
     }
-  }
-}
 
+    .dropdown-menu {
+      li > a {
+        color: $gray-dark;
+        padding: 10px 20px;
+        border: 0;
 
+        &:hover {
+          color: $gray-base;
+        }
+      }
 
-header#navbar {
-  background: #fff;
-  height:auto;
-  padding:0;
-}
-
-.nav-search {
-  margin:4em auto 0;
-
-}
-
-.dropdown-menu {
-  border-radius:0px;
-}
-
-.navbar-form {
-  padding:0px;
-}
-
-.navbar-toggle {
-  background-color: $palette-navbar-dark;
-}
-
-.navbar-collapse {
-  .navbar-nav, .navbar-collapse {
-    a.active, a.active-trail {
-      color: #000;
-      background: $palette-white;
-      background-color: $palette-white;
-      &:hover, &:active {
+      .active > a,
+      .active > a:hover,
+      .active > a:focus {
+        color: $gray-base;
         background-color: $gray-lighter;
-        color: #000;
-      }
-    }
-  }
-
-  .navbar-collapse .navbar-nav .dropdown-menu {
-    background-color: $gray-lighter;
-    border: none;
-  }
-  .navbar-nav {
-    & > li {
-      & > a {
-        color: #000;
-        &:hover, &:active {
-          background-color: $gray-lighter;
-          color: #000;
-        }
       }
     }
   }
 }
 
-.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-    box-shadow: 2px 2px 3px 0px #6f6f6f;
-    border-bottom: 1px solid $palette-navbar-dark;
-    border-left: 1px solid $palette-navbar-dark;
-    margin-right: 2rem;
-    max-width: 1100px;
+.logged-in {
+  .navbar-inverse {
+    margin-top: 0;
+  }
 }
 
-.fl-prefsEditor-separatedPanel .fl-panelBar {
-  border-bottom: none;
-}
+//
+// UIOptions Preferences Editor bar
+//
 
-// change the background color of the FluidUI navigation bar
-.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-  background-color: $palette-navbar-dark;
-  color: #fff;
-}
+.fl-prefsEditor-separatedPanel {
+  background-color: #080808;
+  height: 2.4em;
 
-.fl-prefsEditor-separatedPanel .fl-prefsEditor-showHide, .fl-prefsEditor-separatedPanel .fl-prefsEditor-reset {
-  background-color: $palette-navbar-dark;
-  color: #fff;
-}
+  .fl-panelBar {
+    border-bottom: 0;
+    background-color: #080808;
 
+    .fl-prefsEditor-buttons {
+      margin-right: 5rem;
+      max-width: 1100px;
+    }
+  }
+}
 
 /**
  * Login Toboggan and User Login blocks
@@ -305,4 +136,4 @@ header#navbar {
 
  #block-logintoboggan-logintoboggan-logged-in, #block-user-login {
   float: right;
- }
+}
