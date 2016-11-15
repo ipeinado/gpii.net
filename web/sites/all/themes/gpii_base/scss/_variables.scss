@@ -1,0 +1,30 @@
+// Typefaces
+$typeface-default: "Open Sans", "Helvetica Neue", sans-serif;
+
+// Colors
+$color-gpii-orange: #e44e31;
+$color-gpii-teal: #1e9b8c;
+$color-gpii-blue: #2783c6;
+$color-gpii-dark-blue: #1a608b;
+$color-gpii-light-gray: #eceeec;
+$color-gpii-gray: #bbbbbb;
+$color-gpii-dark-gray: #2c3849;
+$color-fluidui-beige: #b9b2ab;
+$color-fluidui-gray: #cccccc;
+$color-fluidui-dark-gray: #2f2b2a;
+
+// Fixes for the core variables.
+$icon-font-path: '../bootstrap/bootstrap/assets/fonts/bootstrap/';
+
+// Bootstrap core variables.
+@import '../bootstrap/bootstrap/assets/stylesheets/bootstrap/variables';
+
+// Mixins
+@mixin primary-column-width($offset: 0px) {
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: $screen-sm-min) { width: $container-sm - $grid-gutter-width + $offset; }
+  @media (min-width: $screen-md-min) { width: $container-md - $grid-gutter-width + $offset; }
+  @media (min-width: $screen-lg-min) { width: $container-lg - $grid-gutter-width + $offset; }
+}

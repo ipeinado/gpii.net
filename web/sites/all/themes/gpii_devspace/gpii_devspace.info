@@ -1,0 +1,47 @@
+name = GPII Developer Space
+description = GPII Developer Space theme based on the GPII base theme.
+core = 7.x
+base theme = gpii_base
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+
+regions[topbar_first]            = 'Top Bar First'
+regions[topbar_second]           = 'Top Bar Second'
+regions[header_first]            = 'Header First'
+regions[header_second]           = 'Header Second'
+regions[menu_first]              = 'Menu First'
+regions[menu_second]             = 'Menu Second'
+regions[hero]                    = 'Hero'
+regions[sidebar_first]           = 'Sidebar First'
+regions[sidebar_second]          = 'Sidebar Second'
+regions[highlighted]             = 'Highlighted'
+regions[help]                    = 'Help'
+regions[content_preface]         = 'Content Preface'
+regions[content]                 = 'Content'
+regions[content_postscript]      = 'Content Postscript'
+regions[secondary_first]         = 'Secondary Content First'
+regions[secondary_second]        = 'Secondary Content Second'
+regions[secondary_third]         = 'Secondary Content Third'
+regions[secondary_fourth]        = 'Secondary Content Fourth'
+regions[tertiary_first]          = 'Tertiary Content First'
+regions[tertiary_second]         = 'Tertiary Content Second'
+regions[tertiary_third]          = 'Tertiary Content Third'
+regions[tertiary_fourth]         = 'Tertiary Content Fourth'
+regions[footer_first]            = 'Footer First'
+regions[footer_second]           = 'Footer Second'
+regions[footer_third]            = 'Footer Third'
+regions[footer_fourth]           = 'Footer Fourth'
+regions[fine_print_first]        = 'Fine Print First'
+regions[fine_print_second]       = 'Fine Print Second'
+regions[fine_print_third]        = 'Fine Print Third'
+regions[fine_print_fourth]       = 'Fine Print Fourth'
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+
+stylesheets[all][] = css/gpii_devspace.css
