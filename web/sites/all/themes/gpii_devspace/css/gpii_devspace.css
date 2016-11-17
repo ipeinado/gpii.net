@@ -1,0 +1,16 @@
+.region-hero {
+  background-color: #1e9b8c;
+}
+
+.flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons, .flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons .fl-prefsEditor-showHide, .flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons .fl-prefsEditor-reset {
+  border: none;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+#gpii-translate-toggle_container, #gpii-translate-toggle_container #gpii-translate-toggle_button {
+  border: none;
+  background-color: #000000;
+  color: #ffffff;
+}
+/*# sourceMappingURL=gpii_devspace.css.map */
