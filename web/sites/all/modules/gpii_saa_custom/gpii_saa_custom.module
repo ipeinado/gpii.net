@@ -54,7 +54,7 @@ $block = array();
 $markup = <<<EOD
 <!-- taxonomy term links -->
 EOD;
-  $vid = 2;
+  $vid = 11;
   $vdisplay = 'block_1';
   $primaryCategory = taxonomy_get_tree($vid, 0, 1);
   //dpm($primaryCategory);
