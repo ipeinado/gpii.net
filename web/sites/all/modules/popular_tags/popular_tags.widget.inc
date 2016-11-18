@@ -46,9 +46,9 @@ function _popular_tags_inject(&$element, $context) {
       $term->name = '"'. $term->name . '"';
     }
     
-    $tag_terms .= t('<a class="@classes" href="#" title="x@freq" >@term</a>', array(
+    $tag_terms .= t('<a class="@classes" data-toggle="tooltip" data-placement="top" href="#" title="@freq" >@term</a>', array(
       '@term' => $term->name,
-      '@freq' => $term->freq,
+      '@freq' => $term->description.' (x'.$term->freq.')',
       '@classes' => implode(' ', $classes),
     ));
   }
