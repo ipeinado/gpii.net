@@ -15,8 +15,6 @@
  * @ingroup theme_process
  */
 function gpii_base_process_html(&$variables) {
-  bootstrap_process_html($variables);
-
   $block = block_load('google_translator', 'active_languages');
   $block = _block_get_renderable_array(_block_render_blocks(array($block)));
 
