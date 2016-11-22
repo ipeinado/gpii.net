@@ -40,15 +40,15 @@ function _popular_tags_inject(&$element, $context) {
         unset($classes[$key]);
       }
     }
-    
+
     // a term name containing comma needs to be quoted
     if(strpos($term->name, ',') !== FALSE) {
       $term->name = '"'. $term->name . '"';
     }
-    
+
     $tag_terms .= t('<a class="@classes" data-toggle="tooltip" data-placement="top" href="#" title="@freq" >@term</a>', array(
       '@term' => $term->name,
-      '@freq' => $term->description.' (x'.$term->freq.')',
+      '@freq' => truncate_utf8(strip_tags($term->description), '600') .' (x' . $term->freq . ')',
       '@classes' => implode(' ', $classes),
     ));
   }
@@ -77,7 +77,7 @@ function _popular_tags_inject(&$element, $context) {
  */
 function _popular_tags_get_terms($vname, $limit = NULL, $all = FALSE) {
   $query = db_select('taxonomy_term_data', 'td');
-  $query->fields('td', array('tid', 'name'));
+  $query->fields('td', array('tid', 'name', 'description'));
   $query->innerJoin('taxonomy_vocabulary', 'tv', 'tv.vid = td.vid');
   $query->leftJoin('taxonomy_index', 'tn', 'tn.tid = td.tid');
   $query->addExpression('COUNT(tn.tid)', 'freq');

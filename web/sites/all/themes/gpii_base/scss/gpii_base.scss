@@ -17,15 +17,54 @@ html, body {
 
 body {
   top: 0 !important;
-  border-top: 2.6rem solid #ffffff;
+  border-top: 10rem solid transparent;
   min-width: 300px;
   background-color: $color-gpii-light-gray;
   font-family: $typeface-default;
 }
 
+// adjust the position of a fixed-top navbar based on the different navbar admin
+// menu states.
+
+body.navbar-administration.navbar-is-fixed-top {
+  .navbar-fixed-top {
+    top: 1rem;
+  }
+}
+
+body.navbar-administration.navbar-is-fixed-top.navbar-horizontal {
+  .navbar-fixed-top {
+    top: -0.7rem;
+  }
+}
+
+body.navbar-administration.navbar-is-fixed-top.navbar-vertical {
+  .navbar-fixed-top {
+    top: -0.7rem;
+  }
+}
+
+
+body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-open {
+  .navbar-fixed-top {
+    top: 2.6rem;
+  }
+}
+
 // #############################################################################
 // Bootstrap and Drupal Bootstrap Overrides
 // #############################################################################
+
+.navbar-fixed-top {
+  z-index: 499;
+}
+
+#navbar {
+  nav {
+    clear:both;
+  }
+}
+
 
 .navbar-default .navbar-nav > li > a {
   color: #000000;

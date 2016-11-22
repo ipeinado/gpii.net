@@ -11,3 +11,4 @@ core = "7.x"
 project = "popular_tags"
 datestamp = "1421853484"
 
+patch[] = Customized popular_tags.widget.inc to include the taxonomy description and frequency count in the title attribute.

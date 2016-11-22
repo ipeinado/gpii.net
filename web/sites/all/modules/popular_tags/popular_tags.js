@@ -45,4 +45,4 @@ Drupal.behaviors.popular_tags = {
   }
 }
 
-})(jQuery)
+})(jQuery);
