@@ -1,0 +1,87 @@
+name = GPII Base
+description = GPII base theme based on the Bootstrap theme.
+core = 7.x
+base theme = bootstrap
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+
+regions[topbar_first]            = 'Top Bar First'
+regions[topbar_second]           = 'Top Bar Second'
+regions[header_first]            = 'Header First'
+regions[header_second]           = 'Header Second'
+regions[menu_first]              = 'Menu First'
+regions[menu_second]             = 'Menu Second'
+regions[hero]                    = 'Hero'
+regions[sidebar_first]           = 'Sidebar First'
+regions[sidebar_second]          = 'Sidebar Second'
+regions[highlighted]             = 'Highlighted'
+regions[help]                    = 'Help'
+regions[content_preface]         = 'Content Preface'
+regions[content]                 = 'Content'
+regions[content_postscript]      = 'Content Postscript'
+regions[secondary_first]         = 'Secondary Content First'
+regions[secondary_second]        = 'Secondary Content Second'
+regions[secondary_third]         = 'Secondary Content Third'
+regions[secondary_fourth]        = 'Secondary Content Fourth'
+regions[tertiary_first]          = 'Tertiary Content First'
+regions[tertiary_second]         = 'Tertiary Content Second'
+regions[tertiary_third]          = 'Tertiary Content Third'
+regions[tertiary_fourth]         = 'Tertiary Content Fourth'
+regions[footer_first]            = 'Footer First'
+regions[footer_second]           = 'Footer Second'
+regions[footer_third]            = 'Footer Third'
+regions[footer_fourth]           = 'Footer Fourth'
+regions[fine_print_first]        = 'Fine Print First'
+regions[fine_print_second]       = 'Fine Print Second'
+regions[fine_print_third]        = 'Fine Print Third'
+regions[fine_print_fourth]       = 'Fine Print Fourth'
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Theme Settings
+;;;;;;;;;;;;;;;;;;;;;
+
+; Drupal
+; --------------
+settings[toggle_slogan] = 0
+
+; Tables
+; --------------
+settings[bootstrap_table_hover] = 0
+
+; Navbar
+; --------------
+settings[bootstrap_navbar_position] = 'static-top'
+
+; Region Wells
+; --------------
+settings[bootstrap_region_well-sidebar_first] = ''
+
+; Forms
+; --------------
+settings[bootstrap_forms_smart_descriptions] = 0
+
+; Advanced
+; --------------
+settings[bootstrap_cdn] = ''
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+
+stylesheets[all][] = css/gpii_base.css
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Scripts
+;;;;;;;;;;;;;;;;;;;;;
+
+scripts[] = 'bootstrap/bootstrap/assets/javascripts/bootstrap.min.js'
+scripts[] = 'js/jquery.smartmenus.min.js'
+scripts[] = 'js/jquery.smartmenus.bootstrap.min.js'
+scripts[] = 'js/jquery-watch.min.js'
+scripts[] = 'js/gpii_base.js'

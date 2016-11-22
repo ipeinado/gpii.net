@@ -13,3 +13,7 @@ web/sites/all/themes/devspace/tmpcss/*
 
 # Ignore local symlinks
 web/sites/default
+
+# Ignore cache and development files created when generating Sass files.
+.sass-cache
+*.css.map
