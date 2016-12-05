@@ -73,7 +73,7 @@
       var visible = $googleTranslate.is(':visible');
 
       setTimeout(function(){ $fluidUiPanel.toggle(); }, (visible ? duration : 0));
-      $(this).text((visible ? '+' : '-') + ' Translate To...');
+      $(this).text((visible ? '+  Translate To...' : '- Hide'));
       $googleTranslate.slideToggle({
         duration: duration,
         progress: function(){ $toggleContainer.css('top', $googleTranslate.outerHeight()+'px'); },
