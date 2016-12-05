@@ -1,94 +1,95 @@
 @import 'variables';
 @import 'bootstrap';
 @import 'forceMobileLayout.scss';
-
 // #############################################################################
 // Default Elements
 // #############################################################################
-
 // Set some defaults to get the page to be properly rendered using rem units.
-html, body {
+html,
+body {
   font-size: 14px;
-
-  a, div, p, label, li, select, span {
+  a,
+  div,
+  p,
+  label,
+  li,
+  select,
+  span {
     font-size: 1rem;
   }
 }
 
 body {
   top: 0 !important;
-  border-top: 10rem solid transparent;
+  border-top: 4rem solid transparent;
   min-width: 300px;
   background-color: $color-gpii-light-gray;
   font-family: $typeface-default;
+  @media (min-width: $screen-sm-min) {
+    border-top: 9rem solid transparent;
+  }
 }
+
+
 
 // adjust the position of a fixed-top navbar based on the different navbar admin
 // menu states.
-
 body.navbar-administration.navbar-is-fixed-top {
+   border-top: 6rem solid transparent; // this is a workaround to adjust for the
+                                       // extra padding-top that the navbar javascript applies
   .navbar-fixed-top {
-    top: 1rem;
+    top: 2rem;
   }
 }
 
-body.navbar-administration.navbar-is-fixed-top.navbar-horizontal {
+body.navbar-administration.navbar-is-fixed-top.navbar-horizontal, body.navbar-administration.navbar-is-fixed-top.navbar-vertical {
   .navbar-fixed-top {
-    top: -0.7rem;
+    top: 0;
   }
 }
-
-body.navbar-administration.navbar-is-fixed-top.navbar-vertical {
-  .navbar-fixed-top {
-    top: -0.7rem;
-  }
-}
-
 
 body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-open {
   .navbar-fixed-top {
-    top: 2.6rem;
+    top: 3.2rem;
   }
 }
 
 // #############################################################################
 // Bootstrap and Drupal Bootstrap Overrides
 // #############################################################################
-
 .navbar-fixed-top {
   z-index: 499;
 }
 
 #navbar {
   nav {
-    clear:both;
+    clear: both;
   }
 }
-
 
 .navbar-default .navbar-nav > li > a {
   color: #000000;
 }
 
-.navbar-nav.primary, .navbar-nav.primary.menu.nav {
+.navbar-nav.primary,
+.navbar-nav.primary.menu.nav {
   & > li {
     padding: (7px/14px)*1em;
   }
-
-  html.force-mobile-layout & > li > a, & > li > a {
+  html.force-mobile-layout & > li > a,
+  & > li > a {
     padding: (8px/14px)*1em;
     border-radius: 2px;
   }
-
   & > li > .dropdown-menu {
     margin-left: (7px/14px)*1em !important;
   }
 }
 
-.navbar-nav.secondary, .navbar-nav.secondary.menu.nav {
+.navbar-nav.secondary,
+.navbar-nav.secondary.menu.nav {
   & > li > a {
     padding: (15px/14px)*1em;
-
     html.force-mobile-layout & {
       padding: (15px/14px)*1em !important;
     }
@@ -98,12 +99,10 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 .nav-tabs {
   margin-bottom: 0.72rem;
   border-color: $color-gpii-gray;
-
   & > li > a:hover {
     border-color: #cccccc #cccccc $color-gpii-gray;
     background-color: $color-gpii-light-gray;
   }
-
   & > li.active > a,
   & > li.active > a:hover,
   & > li.active > a:focus {
@@ -114,13 +113,15 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 }
 
 .navbar-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
   &:not(.caret) {
     margin-top: (8px/14px)*1em;
     margin-right: (15px/14px)*1em;
     margin-bottom: (8px/14px)*1em;
     padding: (9px/14px)*1em (10px/14px)*1em;
   }
-
   &.caret {
     float: none;
     margin-top: 0;
@@ -133,12 +134,10 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     border-radius: 0;
     background: none !important;
   }
-
   .icon-bar {
     width: (22px/14px)*1em;
     height: (2px/14px)*1em;
   }
-
   .icon-bar + .icon-bar {
     margin-top: (4px/14px)*1em;
   }
@@ -147,7 +146,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 // #############################################################################
 // Fluid UI
 // #############################################################################
-
 .flc-iframe {
   width: 100%;
 }
@@ -158,14 +156,19 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   body & {
     width: auto;
     z-index: 10000001;
+    position: initial;
+    @media (min-width: $screen-sm-min) {
+      position: fixed;
+    }
   }
-
   .fl-panelBar .fl-prefsEditor-buttons {
     margin-right: 3rem;
   }
+
 }
 
-.flc-toc-header, .flc-toc-levels-level1 {
+.flc-toc-header,
+.flc-toc-levels-level1 {
   margin-right: 15px;
   margin-left: 15px;
 }
@@ -189,10 +192,12 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 // #############################################################################
 // Google Translate
 // #############################################################################
-
 #block-google-translator-active-languages {
   display: none;
-  position: fixed;
+  position: initial;
+  @media (min-width: $screen-sm-min) {
+    position: fixed;
+  }
   top: 0;
   left: 0;
   z-index: 10000002;
@@ -203,7 +208,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   background-image: url('/sites/all/libraries/fluid/framework/preferences/images/default/separatedpanelbg.pang');
   background-repeat: repeat;
   text-align: center;
-
   .goog-te-gadget {
     margin-right: auto;
     margin-left: auto;
@@ -214,16 +218,15 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     box-shadow: 2px 2px #7a766d;
     background-color: #fff;
   }
-
   .google-translator-switch {
     display: none;
   }
-
-  .goog-te-combo, .goog-te-gadget, .goog-logo-link {
+  .goog-te-combo,
+  .goog-te-gadget,
+  .goog-logo-link {
     font-size: 1rem;
     white-space: normal;
   }
-
   .goog-logo-link img {
     width: auto;
     height: 1rem;
@@ -235,8 +238,12 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 }
 
 #gpii-translate-toggle_container {
-  position: fixed;
-  top: 0;
+  position: initial;
+  @media (min-width: $screen-sm-min) {
+    position: fixed;
+    top: 0;
+  }
+  width: 12em;
   right: calc(50px + 17.5714rem + 3rem);
   z-index: 10000001;
   min-height: 2em;
@@ -246,7 +253,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   background-color: white;
-
   #gpii-translate-toggle_button {
     height: 1.8em;
     min-width: 10em;
@@ -265,84 +271,84 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 // #############################################################################
 // Regions and Other Major Sections
 // #############################################################################
-
 .navbar.navbar-default {
   margin-bottom: 0;
   border-bottom: none;
   background-color: #ffffff;
   color: #000000;
-
-  & > .container-fluid:nth-child(2) {
-    border-top: 1px solid $color-gpii-gray;
+  .container-fluid {
+    padding-right: 0;
+    padding-left: 0;
   }
-
   .logo {
     margin: 0;
     padding: (12px/14px)*1em (15px/14px)*1em (13px/14px)*1em (15px/14px)*1em;
     border-right: 1px solid #ffffff;
     background-color: $color-gpii-dark-gray;
-
     img {
       width: 3.57143rem;
       max-width: 100%;
     }
   }
-
-  .navbar-brand {
-    display: inline-block;
-    height: auto;
+  .navbar-header {
     margin-left: 0;
-    padding: (15px/18px)*1em;
-    background-color: $color-gpii-dark-gray;
-
-    &, a {
-      color: #ffffff;
+    border-bottom: 0.5rem solid $color-gpii-blue;
+    width: 100%;
+    position: relative;
+    p.lead {
+      padding-top: 1.5rem;
+      margin: 0 6rem 0 6.5rem;
+      font-weight: bold;
     }
   }
 
   @media (min-width: $screen-sm-min) {
     html:not(.force-mobile-layout) & > .container-fluid:first-child {
-      min-height: 3.71429rem;
-    }
-
-    .navbar-header {
-      margin-left: -15px;
+      min-height: 3rem;
     }
   }
 }
 
 .region-hero {
   background-color: $color-gpii-dark-blue;
-
   & > * {
     @include primary-column-width;
   }
-
-  &, a {
+  &,
+  a {
     color: #ffffff;
   }
 }
 
 #main-container {
-  margin-top: 2.4rem;
+  margin-top: 3rem;
 }
 
-.region-sidebar-first, .region-sidebar-second {
-  & > :first-child {
+.region-sidebar-first,
+.region-sidebar-second {
+  & >:first-child {
     margin-top: 0;
   }
-
   @media (min-width: $screen-sm-min) {
     html:not(.force-mobile-layout) & > .block:first-child {
-      & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
+      & > h1,
+      & > h2,
+      & > h3,
+      & > h4,
+      & > h5,
+      & > h6 {
         &:first-child {
           margin-top: 0;
         }
       }
     }
-
-    html:not(.force-mobile-layout) & > .block:first-child > :first-child header {
-      h1, h2, h3, h4, h5, h6 {
+    html:not(.force-mobile-layout) & > .block:first-child >:first-child header {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         margin-top: 0;
       }
     }
@@ -350,21 +356,20 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 }
 
 #footer {
-  margin-top: 2.4rem;
-  padding-top: 2rem;
+  margin: 0;
+  clear: both;
+  padding: 3rem 0 3rem 0;
   background-color: $color-gpii-dark-blue;
-
-  &, a {
+  &,
+  a {
     color: #ffffff;
   }
-
-  .nav > li > a:hover, .nav > li > a:focus {
+  .nav > li > a:hover,
+  .nav > li > a:focus {
     background-color: transparent;
   }
-
   html:not(.force-mobile-layout) & {
     width: 100%;
-
     & > * {
       @include primary-column-width;
     }
@@ -378,15 +383,46 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   border-top: 0.1rem solid #ffffff;
 }
 
+// Sticky Footer @@ figure out why scroll bar doesn't go away on short pages
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: -24rem;
+}
+
+#footer-wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 18rem;
+}
+
+// #wrap {
+//   margin-bottom: 12em;
+// }
+#push {
+  height: 24rem; // for pages like advanced search, add some extra space to clear
+  // the sticky footer
+}
+
 //#############################################################################
 // Navigation
 // #############################################################################
-
 .menu.nav > li > a {
   padding: 2px 0;
 }
 
+.navbar-nav {
+  margin: 0 0;
+}
+
 .navbar-nav.primary {
+  background: $color-gpii-gray;
+  width: 100%;
   .navbar-default & > .active > a,
   .navbar-default & > .active > a:hover,
   .navbar-default & > .active > a:focus {
@@ -401,7 +437,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   .navbar-default & > .active > a:focus {
     background-color: transparent;
   }
-
   body.not-logged-in & {
     & > li.last > a {
       margin: (13px/14px)*1em (11px/14px)*1em (13px/14px)*1em (11px/14px)*1em;
@@ -410,23 +445,17 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
       color: #ffffff;
       font-size: 0.96rem;
       font-weight: bold;
-
-      &, &:hover {
+      &,
+      &:hover {
         background-color: $color-gpii-blue;
       }
-    }
-  }
-
-  body.logged-in & {
-    & > li.first, & > li.last {
-      display: none;
     }
   }
 
   @media (min-width: $screen-sm-min) {
     html:not(.force-mobile-layout) & {
       position: absolute;
-      top: 0;
+      top: 3rem;
       right: 15px;
     }
   }
@@ -435,7 +464,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 // #############################################################################
 // Blocks
 // #############################################################################
-
 .block-title {
   word-break: break-all;
 }
@@ -445,7 +473,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     .block-title {
       font-size: 1.6rem;
     }
-
     .nav > li > a {
       padding: 0;
     }
@@ -455,7 +482,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 // #############################################################################
 // Miscellaneous
 // #############################################################################
-
 .page-header {
   margin-top: 0;
 }

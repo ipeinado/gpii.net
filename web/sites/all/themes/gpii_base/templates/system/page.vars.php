@@ -17,21 +17,21 @@ function gpii_base_preprocess_page(&$variables) {
   // Set variables for the sidebar and content regions depending on which are
   // used on the page since the regions don't all have equal widths.
   if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
-    $variables['content_column_class'] = ' class="col-sm-6 col-sm-push-3"';
-    $variables['sidebar_first_column_class'] = 'col-sm-3 col-sm-pull-6';
-    $variables['sidebar_second_column_class'] = 'col-sm-3';
+    $variables['content_column_class'] = ' class="col-sm-12 col-sm-push-6"';
+    $variables['sidebar_first_column_class'] = 'col-sm-6 col-sm-pull-12';
+    $variables['sidebar_second_column_class'] = 'col-sm-6';
   }
   elseif (!empty($variables['page']['sidebar_first'])) {
-    $variables['content_column_class'] = ' class="col-sm-9 col-sm-push-3"';
-    $variables['sidebar_first_column_class'] = 'col-sm-3 col-sm-pull-9';
+    $variables['content_column_class'] = ' class="col-sm-18 col-sm-push-6"';
+    $variables['sidebar_first_column_class'] = 'col-sm-6 col-sm-pull-18';
   }
   elseif (!empty($variables['page']['sidebar_second'])) {
-    $variables['content_column_class'] = ' class="col-sm-9"';
+    $variables['content_column_class'] = ' class="col-sm-18"';
     $variables['sidebar_first_column_class'] = '';
-    $variables['sidebar_second_column_class'] = 'col-sm-3';
+    $variables['sidebar_second_column_class'] = 'col-sm-6';
   }
   else {
-    $variables['content_column_class'] = ' class="col-sm-12"';
+    $variables['content_column_class'] = ' class="col-sm-24"';
     $variables['sidebar_first_column_class'] = '';
     $variables['sidebar_second_column_class'] = '';
   }

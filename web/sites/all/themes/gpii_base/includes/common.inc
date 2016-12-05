@@ -83,3 +83,39 @@ function gpii_base_equal_width_column_regions($page, $region_info, $group) {
 
   return $html;
 }
+
+/**
+ * Generate HTML for a group that contains variable width regions meant to be
+ * displayed as columns.
+ *
+ * @param array $page
+ *   Standard Drupal page variables.
+ * @param array $region_info
+ *   Information about the region group.
+ * @param string $group
+ *   The name of the group.
+ * @param array $widths
+ *   An array of widths for each column.
+ *
+ * @return
+ *   Generated HTML for the group.
+ *
+ * @see gpii_base_column_regions_info()
+ */
+function gpii_base_variable_width_column_regions($page, $region_info, $group, $widths) {
+  $html = '<div class="row gpii-region_row-'.$group.'">';
+
+  foreach (array('first', 'second', 'third', 'fourth', 'fifth') as $column) {
+    $region = "{$group}_{$column}";
+
+    if (!empty($page[$region])) {
+      $html .= '<div class="gpii-region_column gpii-region_column-'.$region.' col-sm-'.$widths[$column].'">';
+      $html .= render($page[$region]);
+      $html .= '</div>';
+    }
+  }
+
+  $html .= '</div>';
+
+  return $html;
+}
