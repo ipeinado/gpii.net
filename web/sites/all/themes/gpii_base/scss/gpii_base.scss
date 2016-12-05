@@ -26,7 +26,9 @@ body {
   background-color: $color-gpii-light-gray;
   font-family: $typeface-default;
   @media (min-width: $screen-sm-min) {
-    border-top: 9rem solid transparent;
+    html:not(.force-mobile-layout) & {
+      border-top: 9rem solid transparent;
+    }
   }
 }
 
@@ -158,7 +160,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     z-index: 10000001;
     position: initial;
     @media (min-width: $screen-sm-min) {
-      position: fixed;
+      html:not(.force-mobile-layout) & {
+        position: fixed;
+      }
     }
   }
   .fl-panelBar .fl-prefsEditor-buttons {
@@ -196,7 +200,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   display: none;
   position: initial;
   @media (min-width: $screen-sm-min) {
-    position: fixed;
+    html:not(.force-mobile-layout) & {
+      position: fixed;
+    }
   }
   top: 0;
   left: 0;
@@ -264,14 +270,21 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     text-transform: lowercase;
   }
 
+  html.force-mobile-layout & {
+    float: right;
+    margin-right: calc(3rem + 6px);
+  }
+
   @media (max-width: $screen-xs-max) {
     float: right;
     margin-right: calc(3rem + 6px);
   }
 
   @media (min-width: $screen-sm-min) {
-    position: fixed;
-    top: 0;
+    html:not(.force-mobile-layout) & {
+      position: fixed;
+      top: 0;
+    }
   }
 }
 
@@ -302,6 +315,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     border-bottom: 0.5rem solid $color-gpii-blue;
     width: 100%;
     position: relative;
+    html.force-mobile-layout & {
+      margin-left: 0;
+    }
     p.lead {
       padding-top: 1.5rem;
       margin: 0 6rem 0 6.5rem;
