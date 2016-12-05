@@ -239,10 +239,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 
 #gpii-translate-toggle_container {
   position: initial;
-  @media (min-width: $screen-sm-min) {
-    position: fixed;
-    top: 0;
-  }
   width: 12em;
   right: calc(50px + 17.5714rem + 3rem);
   z-index: 10000001;
@@ -253,6 +249,7 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   background-color: white;
+
   #gpii-translate-toggle_button {
     height: 1.8em;
     min-width: 10em;
@@ -265,6 +262,16 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     font-size: 1.1em;
     font-weight: bold;
     text-transform: lowercase;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    float: right;
+    margin-right: calc(3rem + 6px);
+  }
+
+  @media (min-width: $screen-sm-min) {
+    position: fixed;
+    top: 0;
   }
 }
 
