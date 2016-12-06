@@ -25,7 +25,9 @@ body {
   min-width: 300px;
   font-family: $typeface-default;
   @media (min-width: $screen-sm-min) {
-    border-top: 9rem solid transparent;
+    html:not(.force-mobile-layout) & {
+      border-top: 9rem solid transparent;
+    }
   }
 }
 
@@ -165,7 +167,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     z-index: 10000001;
     position: initial;
     @media (min-width: $screen-sm-min) {
-      position: fixed;
+      html:not(.force-mobile-layout) & {
+        position: fixed;
+      }
     }
   }
   .fl-panelBar .fl-prefsEditor-buttons {
@@ -212,7 +216,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   display: none;
   position: initial;
   @media (min-width: $screen-sm-min) {
-    position: fixed;
+    html:not(.force-mobile-layout) & {
+      position: fixed;
+    }
   }
   top: 0;
   left: 0;
@@ -256,10 +262,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 
 #gpii-translate-toggle_container {
   position: initial;
-  @media (min-width: $screen-sm-min) {
-    position: fixed;
-    top: 0;
-  }
   width: 12em;
   right: calc(50px + 17.5714rem + 3rem);
   z-index: 10000001;
@@ -268,7 +270,6 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   border-bottom: 1px solid $color-fluidui-gray;
   border-left: 1px solid $color-fluidui-gray;
   border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
   background-color: #000;
   #gpii-translate-toggle_button {
     height: 1.8em;
@@ -282,6 +283,23 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     font-size: 1.1em;
     font-weight: bold;
     text-transform: lowercase;
+  }
+
+  html.force-mobile-layout & {
+    float: right;
+    margin-right: calc(3rem + 6px);
+  }
+
+  @media (max-width: $screen-xs-max) {
+    float: right;
+    margin-right: calc(3rem + 6px);
+  }
+
+  @media (min-width: $screen-sm-min) {
+    html:not(.force-mobile-layout) & {
+      position: fixed;
+      top: 0;
+    }
   }
 }
 
@@ -312,6 +330,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     border-bottom: 0.5rem solid $color-gpii-blue;
     width: 100%;
     position: relative;
+    html.force-mobile-layout & {
+      margin-left: 0;
+    }
     p.lead {
       padding-top: 1.5rem;
       margin: 0 6rem 0 6.5rem;

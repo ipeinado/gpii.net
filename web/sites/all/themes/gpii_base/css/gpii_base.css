@@ -6450,7 +6450,7 @@ body {
   min-width: 300px;
   font-family: "open-sans", "Helvetica Neue", sans-serif; }
   @media (min-width: 768px) {
-    body {
+    html:not(.force-mobile-layout) body {
       border-top: 9rem solid transparent; } }
 
 body.navbar-administration.navbar-is-fixed-top {
@@ -6545,7 +6545,7 @@ body .flc-prefsEditor-separatedPanel {
   z-index: 10000001;
   position: initial; }
   @media (min-width: 768px) {
-    body .flc-prefsEditor-separatedPanel {
+    html:not(.force-mobile-layout) body .flc-prefsEditor-separatedPanel {
       position: fixed; } }
 
 .flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
@@ -6590,7 +6590,7 @@ body .flc-prefsEditor-separatedPanel {
   background-repeat: repeat;
   text-align: center; }
   @media (min-width: 768px) {
-    #block-google-translator-active-languages {
+    html:not(.force-mobile-layout) #block-google-translator-active-languages {
       position: fixed; } }
   #block-google-translator-active-languages .goog-te-gadget {
     margin-right: auto;
@@ -6629,12 +6629,7 @@ body .flc-prefsEditor-separatedPanel {
   border-bottom: 1px solid #191919;
   border-left: 1px solid #191919;
   border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
   background-color: #000; }
-  @media (min-width: 768px) {
-    #gpii-translate-toggle_container {
-      position: fixed;
-      top: 0; } }
   #gpii-translate-toggle_container #gpii-translate-toggle_button {
     height: 1.8em;
     min-width: 10em;
@@ -6647,6 +6642,19 @@ body .flc-prefsEditor-separatedPanel {
     font-size: 1.1em;
     font-weight: bold;
     text-transform: lowercase; }
+  html.force-mobile-layout #gpii-translate-toggle_container {
+    float: right;
+    margin-right: -webkit-calc(3rem + 6px);
+    margin-right: calc(3rem + 6px); }
+  @media (max-width: 767px) {
+    #gpii-translate-toggle_container {
+      float: right;
+      margin-right: -webkit-calc(3rem + 6px);
+      margin-right: calc(3rem + 6px); } }
+  @media (min-width: 768px) {
+    html:not(.force-mobile-layout) #gpii-translate-toggle_container {
+      position: fixed;
+      top: 0; } }
 
 .navbar.navbar-default {
   margin-bottom: 0;
@@ -6669,6 +6677,8 @@ body .flc-prefsEditor-separatedPanel {
     border-bottom: 0.5rem solid #2783c6;
     width: 100%;
     position: relative; }
+    html.force-mobile-layout .navbar.navbar-default .navbar-header {
+      margin-left: 0; }
     .navbar.navbar-default .navbar-header p.lead {
       padding-top: 1.5rem;
       margin: 0 6rem 0 6.5rem;

@@ -20,6 +20,6 @@ function gpii_base_process_html(&$variables) {
 
   // These bits of content are added here at the root instead of elsewhere,
   // e.g., within a region, to allow z-index stacking to work properly.
-  $variables['page_top'] .= theme('gpii_base_translate_toggle');
   $variables['page_top'] .= drupal_render($block);
+  $variables['page_top'] .= theme('gpii_base_translate_toggle');
 }
