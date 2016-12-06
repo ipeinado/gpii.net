@@ -66,12 +66,12 @@ function gpii_base_preprocess_page(&$variables) {
   $variables['region_info']['tertiary'] = gpii_base_column_regions_info($variables, array(
     'tertiary_first', 'tertiary_second', 'tertiary_third', 'tertiary_fourth'));
   $variables['region_info']['footer'] = gpii_base_column_regions_info($variables, array(
-    'footer_first', 'footer_second', 'footer_third', 'footer_fourth'));
+    'footer_first', 'footer_second', 'footer_third', 'footer_fourth', 'footer_fifth'));
   $variables['region_info']['fine_print'] = gpii_base_column_regions_info($variables, array(
     'fine_print_first', 'fine_print_second', 'fine_print_third', 'fine_print_fourth'));
 
   $variables['has_footer_regions'] = gpii_base_num_set_regions($variables, array(
-    'footer_first', 'footer_second', 'footer_third', 'footer_fourth',
+    'footer_first', 'footer_second', 'footer_third', 'footer_fourth', 'footer_fifth',
     'fine_print_first', 'fine_print_second', 'fine_print_third',
     'fine_print_fourth', 'footer_postscript'));
 }
