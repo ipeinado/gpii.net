@@ -6619,14 +6619,14 @@ body .flc-prefsEditor-separatedPanel {
     padding-left: 0; }
   .navbar.navbar-default .logo {
     margin: 0;
-    padding: 1.28571429em 1.07142857em 0.71428571em 1.07142857em;
+    padding: 0 1.07142857em 0.42857143em 1.07142857em;
     border-right: 1px solid #ffffff;
     background-color: #fff; }
     .navbar.navbar-default .logo img {
-      width: 3.57143rem;
       max-width: 100%; }
   .navbar.navbar-default .navbar-header {
     margin-left: 0;
+    margin-top: -1rem;
     border-bottom: 0.5rem solid #2783c6;
     width: 100%;
     position: relative; }
