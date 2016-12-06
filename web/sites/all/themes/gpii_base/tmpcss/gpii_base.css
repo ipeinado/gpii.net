@@ -6766,9 +6766,9 @@ body {
 .navbar-nav.primary.menu.nav {
   background: #e5e5e5;
   width: 100%; }
-  .navbar-nav.primary.menu.nav li a {
+  .navbar-nav.primary.menu.nav > li > a {
     padding: 0.5rem 0 0.5rem 1em; }
-  .navbar-nav.primary.menu.nav li:not(.first) a {
+  .navbar-nav.primary.menu.nav > li:not(.first) > a {
     border-left: 1px solid #000;
     border-radius: 0 !important; }
   .navbar-nav.primary.menu.nav a:hover, .navbar-nav.primary.menu.nav a:focus, .navbar-nav.primary.menu.nav a:active {

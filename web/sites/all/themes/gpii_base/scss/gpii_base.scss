@@ -466,12 +466,12 @@ body {
 .navbar-nav.primary.menu.nav {
   background: $color-gpii-gray;
   width: 100%;
-  li {
-    a {
+  & > li {
+    & > a {
       padding: 0.5rem 0 0.5rem 1em;
     }
     &:not(.first) {
-      a {
+      & > a {
         border-left: 1px solid #000;
         border-radius: 0 !important;
       }
