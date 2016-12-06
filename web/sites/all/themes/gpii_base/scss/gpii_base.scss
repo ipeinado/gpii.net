@@ -173,7 +173,7 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     }
   }
   .fl-panelBar .fl-prefsEditor-buttons {
-    margin-right: 3rem;
+    margin-right: 0.5rem;
     box-shadow: 2px 2px 3px 0px #333333;
     border-bottom: 1px solid $color-fluidui-gray;
     border-left: 1px solid $color-fluidui-gray;
@@ -263,13 +263,14 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 #gpii-translate-toggle_container {
   position: initial;
   width: 12em;
-  right: calc(50px + 17.5714rem + 3rem);
+  right: calc(50px + 14rem + 1.5rem);
   z-index: 10000001;
   min-height: 2em;
   box-shadow: 2px 2px 3px 0px #333333;
   border-bottom: 1px solid $color-fluidui-gray;
   border-left: 1px solid $color-fluidui-gray;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   background-color: #000;
   #gpii-translate-toggle_button {
     height: 1.8em;
@@ -462,9 +463,21 @@ body {
   margin: 0 0;
 }
 
-.navbar-nav.primary {
+.navbar-nav.primary.menu.nav {
   background: $color-gpii-gray;
   width: 100%;
+  li {
+    a {
+      padding: 0.5rem 0 0.5rem 1em;
+    }
+    &:not(.first) {
+      a {
+        border-left: 1px solid #000;
+        border-radius: 0 !important;
+      }
+    }
+  }
+
   a:hover, a:focus, a:active {
       text-decoration: underline;
   }
