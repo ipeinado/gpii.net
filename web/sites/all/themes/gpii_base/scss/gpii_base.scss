@@ -397,10 +397,14 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   margin: 0;
   clear: both;
   padding: 3rem 0 3rem 0;
-  background-color: #000;
-  &,
+  //background-color: #000;
+  background: #000 url('../../gpii_base/footer-gradient.png') no-repeat center -20rem;
+  color: #ffffff;
   a {
     color: #ffffff;
+    &:hover, &:focus {
+      color: #F2EED2;
+    }
   }
   .nav > li > a:hover,
   .nav > li > a:focus {
@@ -411,6 +415,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     & > * {
       @include primary-column-width;
     }
+  }
+  h2 {
+    margin-top: 0;
   }
 }
 
@@ -429,7 +436,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: -24rem;
+  margin-bottom: -22rem;
 }
 
 #footer-wrap {
@@ -437,11 +444,10 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 18rem;
 }
 
 #push {
-  height: 24rem; // for pages like advanced search, add some extra space to clear
+  height: 22rem; // for pages like advanced search, add some extra space to clear
   // the sticky footer
 }
 
@@ -465,8 +471,7 @@ body {
   .navbar-default & > .active > a,
   .navbar-default & > .active > a:hover,
   .navbar-default & > .active > a:focus {
-    background-color: $color-gpii-blue;
-    color: #ffffff !important;
+    text-decoration: underline;
   }
 }
 
