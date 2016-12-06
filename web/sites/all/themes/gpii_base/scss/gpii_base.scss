@@ -23,7 +23,6 @@ body {
   top: 0 !important;
   border-top: 4rem solid transparent;
   min-width: 300px;
-  background-color: $color-gpii-light-gray;
   font-family: $typeface-default;
   @media (min-width: $screen-sm-min) {
     border-top: 9rem solid transparent;
@@ -143,6 +142,14 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   }
 }
 
+.nav {
+  li {
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 // #############################################################################
 // Fluid UI
 // #############################################################################
@@ -163,7 +170,16 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   }
   .fl-panelBar .fl-prefsEditor-buttons {
     margin-right: 3rem;
+    box-shadow: 2px 2px 3px 0px #333333;
+    border-bottom: 1px solid $color-fluidui-gray;
+    border-left: 1px solid $color-fluidui-gray;
+    background-color: #000;
+    button {
+      color: #fff;
+      background-color: #000;
+    }
   }
+
 
 }
 
@@ -235,6 +251,7 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 
 .goog-te-banner-frame {
   position: static !important;
+  margin: 2rem 0 0 !important;
 }
 
 #gpii-translate-toggle_container {
@@ -247,21 +264,21 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   right: calc(50px + 17.5714rem + 3rem);
   z-index: 10000001;
   min-height: 2em;
-  box-shadow: 2px 2px 3px 0px #6f6f6f;
+  box-shadow: 2px 2px 3px 0px #333333;
   border-bottom: 1px solid $color-fluidui-gray;
   border-left: 1px solid $color-fluidui-gray;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  background-color: white;
+  background-color: #000;
   #gpii-translate-toggle_button {
     height: 1.8em;
     min-width: 10em;
     margin-right: 0.5em;
     margin-left: 0.5em;
     border: 0;
-    background-color: white;
-    color: $color-fluidui-dark-gray;
-    font-family: 'OpenSans', 'Myriad Pro', 'Helvetica', 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    font-family: 'open-sans', 'Myriad Pro', 'Helvetica', 'Arial', sans-serif;
     font-size: 1.1em;
     font-weight: bold;
     text-transform: lowercase;
@@ -282,9 +299,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   }
   .logo {
     margin: 0;
-    padding: (12px/14px)*1em (15px/14px)*1em (13px/14px)*1em (15px/14px)*1em;
+    padding: (18px/14px)*1em (15px/14px)*1em (10px/14px)*1em (15px/14px)*1em;
     border-right: 1px solid #ffffff;
-    background-color: $color-gpii-dark-gray;
+    background-color: #fff;
     img {
       width: 3.57143rem;
       max-width: 100%;
@@ -298,7 +315,7 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
     p.lead {
       padding-top: 1.5rem;
       margin: 0 6rem 0 6.5rem;
-      font-weight: bold;
+      font-weight: 600;
     }
   }
 
@@ -359,7 +376,7 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   margin: 0;
   clear: both;
   padding: 3rem 0 3rem 0;
-  background-color: $color-gpii-dark-blue;
+  background-color: #000;
   &,
   a {
     color: #ffffff;
@@ -395,15 +412,13 @@ body {
 }
 
 #footer-wrap {
+  border-top: 0.5rem solid #2783c6;
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 18rem;
 }
 
-// #wrap {
-//   margin-bottom: 12em;
-// }
 #push {
   height: 24rem; // for pages like advanced search, add some extra space to clear
   // the sticky footer
@@ -423,6 +438,9 @@ body {
 .navbar-nav.primary {
   background: $color-gpii-gray;
   width: 100%;
+  a:hover, a:focus, a:active {
+      text-decoration: underline;
+  }
   .navbar-default & > .active > a,
   .navbar-default & > .active > a:hover,
   .navbar-default & > .active > a:focus {
