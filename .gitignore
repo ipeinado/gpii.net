@@ -10,6 +10,8 @@ web/sites/*/files
 web/sites/*/private
 web/sites/all/themes/devspace/node_modules/*
 web/sites/all/themes/devspace/tmpcss/*
+web/sites/all/themes/*node_modules/*
+web/sites/all/themes/*tmpcss/*
 
 # Ignore local symlinks
 web/sites/default
@@ -17,3 +19,5 @@ web/sites/default
 # Ignore cache and development files created when generating Sass files.
 .sass-cache
 *.css.map
+
+
