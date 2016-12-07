@@ -6544,7 +6544,7 @@ body .flc-prefsEditor-separatedPanel {
   padding: 1rem;
   border-bottom: 1px solid #191919;
   background-color: #b9b2ab;
-  background-image: url("/sites/all/libraries/fluid/framework/preferences/images/default/separatedpanelbg.pang");
+  background-image: url("/sites/all/libraries/fluid/framework/preferences/images/default/separatedpanelbg.png");
   background-repeat: repeat;
   text-align: center; }
   @media (min-width: 768px) {
