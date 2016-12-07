@@ -1,20 +1,20 @@
 <?php
 
-    /**
+/**
 
-    * Implements template_preprocess_html().
+* Implements template_preprocess_html().
 
-    */
+*/
 
 
 
-    function gpii_base_preprocess_html(&$variables) {
+function gpii_base_preprocess_html(&$variables) {
 
-     //Adds typekit js to theme
-     drupal_add_js('//use.typekit.net/bpk2tek.js', 'external');
-     drupal_add_js('try{Typekit.load({ async: true });}catch(e){}', 'inline', 'page_bottom');
+ //Adds typekit js to theme
+ drupal_add_js('//use.typekit.net/bpk2tek.js', 'external');
+ drupal_add_js('try{Typekit.load({ async: true });}catch(e){}', 'inline', 'page_bottom');
 
-    }
+}
 
 /**
  * @file
