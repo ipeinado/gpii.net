@@ -14,12 +14,12 @@
   <?php if ($left || $right): ?>
   <div class="row">
   <?php if ($left): ?>
-    <<?php print $left_wrapper; ?> class="<?php if (empty($right)): ?>col-sm-12 <?php else: ?>col-sm-2 <?php endif; ?><?php print $left_classes; ?>"><?php print $left_classes; ?>">
+    <<?php print $left_wrapper; ?> class="<?php if (empty($right)): ?>col-sm-24 <?php else: ?>col-sm-4 <?php endif; ?><?php print $left_classes; ?>">
       <?php print $left; ?>
     </<?php print $left_wrapper; ?>>
   <?php endif; ?>
   <?php if ($right): ?>
-    <<?php print $right_wrapper; ?> class="<?php if (empty($left)): ?>col-sm-12 <?php else: ?>col-sm-10 <?php endif; ?><?php print $left_classes; ?>"><?php print $right_classes; ?>">
+    <<?php print $right_wrapper; ?> class="<?php if (empty($left)): ?>col-sm-24 <?php else: ?>col-sm-20 <?php endif; ?><?php print $right_classes; ?>">
       <?php print $right; ?>
     </<?php print $right_wrapper; ?>>
   </div>

@@ -22,12 +22,12 @@
   <?php if ($left || $right): ?>
   <div class="row">
   <?php if ($left): ?>
-    <<?php print $left_wrapper; ?> class="<?php if (empty($right)): ?>col-sm-12 <?php else: ?>col-sm-3 <?php endif; ?><?php print $left_classes; ?>">
+    <<?php print $left_wrapper; ?> class="<?php if (empty($right)): ?>col-sm-24 <?php else: ?>col-sm-6 <?php endif; ?><?php print $left_classes; ?>">
       <?php print $left; ?>
     </<?php print $left_wrapper; ?>>
   <?php endif; ?>
   <?php if ($right): ?>
-    <<?php print $right_wrapper; ?> class="<?php if (empty($left)): ?>col-sm-12 <?php else: ?>col-sm-9 <?php endif; ?><?php print $right_classes; ?>">
+    <<?php print $right_wrapper; ?> class="<?php if (empty($left)): ?>col-sm-24 <?php else: ?>col-sm-18 <?php endif; ?><?php print $right_classes; ?>">
       <?php print $right; ?>
     </<?php print $right_wrapper; ?>>
   </div>

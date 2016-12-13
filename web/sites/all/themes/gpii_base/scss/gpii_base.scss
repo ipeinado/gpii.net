@@ -21,7 +21,10 @@ body {
 
 body {
   top: 0 !important;
-  border-top: 4rem solid transparent;
+  border-top: 4.4rem solid transparent;
+  @media (min-width: $screen-sm-min) {
+    border-top: 3.55rem solid transparent;
+  }
   min-width: 300px;
   font-family: $typeface-default;
   @media (min-width: $screen-sm-min) {
@@ -257,7 +260,7 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
 
 .goog-te-banner-frame {
   position: static !important;
-  margin: 2rem 0 0 !important;
+  margin: 1rem 0 0 !important;
 }
 
 #gpii-translate-toggle_container {
@@ -327,7 +330,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   }
   .navbar-header {
     margin-left: 0;
-    margin-top: -1rem;
+    @media (min-width: $screen-sm-min) {
+      margin-top: -0.9rem;
+    }
     border-bottom: 0.5rem solid $color-gpii-blue;
     width: 100%;
     position: relative;
@@ -399,7 +404,7 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   clear: both;
   padding: 3rem 0 3rem 0;
   //background-color: #000;
-  background: #000 url('../../gpii_base/footer-gradient.png') no-repeat center -9rem;
+  background: #000 url('../../gpii_base/footer-gradient.png') no-repeat center 0;
   color: #ffffff;
   a {
     color: #ffffff;
@@ -429,27 +434,37 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   border-top: 0.1rem solid #ffffff;
 }
 
-// Sticky Footer @@ figure out why scroll bar doesn't go away on short pages
+// Sticky Footer
 html {
   position: relative;
   min-height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: -22rem;
-}
-
 #footer-wrap {
-  border-top: 0.5rem solid #2783c6;
-  position: absolute;
-  bottom: 0;
+  border-top: 0.85rem solid #2783c6;
   width: 100%;
 }
 
-#push {
-  height: 22rem; // for pages like advanced search, add some extra space to clear
-  // the sticky footer
+  #push {
+    height: 4rem; // for pages like advanced search, add some extra space to clear
+    // the sticky footer
+  }
+
+@media (min-width: $screen-sm-min) {
+  body {
+    /* Margin bottom by footer height */
+    margin-bottom: -22rem;
+  }
+
+  #footer-wrap {
+    position: absolute;
+    bottom: 0;
+  }
+
+  #push {
+    height: 22rem; // for pages like advanced search, add some extra space to clear
+    // the sticky footer
+  }
 }
 
 //#############################################################################
@@ -522,7 +537,7 @@ body {
 // Blocks
 // #############################################################################
 .block-title {
-  word-break: break-all;
+  word-break: normal;
 }
 
 .block-menu-block {
@@ -541,4 +556,5 @@ body {
 // #############################################################################
 .page-header {
   margin-top: 0;
+  border-bottom: none;
 }
