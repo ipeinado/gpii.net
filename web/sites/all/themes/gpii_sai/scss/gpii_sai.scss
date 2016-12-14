@@ -5,5 +5,353 @@
 // #############################################################################
 
 .region-hero {
-  background-color: $color-gpii-teal;
+  background-color: $color-gpii-sai-primary;
 }
+
+.navbar.navbar-default {
+  .navbar-header {
+    border-bottom: 0.5rem solid $color-gpii-sai-primary;
+  }
+}
+
+#footer-wrap {
+  border-color: $color-gpii-sai-primary;
+}
+
+#navbar {
+  .navbar-header {
+    p.lead {
+      background-color: $color-gpii-sai-primary;
+      color: white;
+      text-align: center;
+      max-width: 16em;
+      padding-top: 0.35rem;
+      padding-bottom: 0.22rem;
+      margin-top: 1rem;
+      font-size: 1.4rem;
+      a, a:active, a:hover, a:focus {
+        color: #fff;
+        font-size: inherit;
+      }
+    }
+  }
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    background-color: $color-gpii-sai-primary;
+}
+
+// Pagination highlight color
+
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    background-color: $color-gpii-sai-primary;
+}
+
+.pagination > li {
+  & > a, & > span {
+    color: $color-gpii-sai-primary;
+    &:hover, &:focus {
+      color: $color-gpii-sai-primary;
+    }
+  }
+}
+
+.btn-primary {
+  background-color: $color-gpii-sai-primary;
+  &:focus, &:active, &:hover {
+    background-color: darken($color-gpii-sai-primary, 6%);
+  }
+}
+
+a {
+  color: $color-gpii-sai-primary;
+  &:hover, &:focus, &:active {
+    color: darken($color-gpii-sai-primary, 6%);
+  }
+  &:visited {
+    color: lighten($color-gpii-sai-primary, 6%);
+  }
+}
+// #############################################################################
+// Search
+// #############################################################################
+
+.field-name-accessible-read-more {
+  a.read-more {
+    & > .fa {
+      padding-left: 0.25rem;
+    }
+  }
+}
+
+#block-current-search-standard {
+  padding-bottom: 1rem;
+  h2 {
+    color: $color-gpii-sai-primary;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+}
+
+// #########################
+// Basic Search
+// #########################
+
+body.page-search {
+  .view-search {
+    border-top: 1px solid #000;
+    margin-top: 1rem;
+  }
+}
+
+.node-product.view-mode-search_results {
+  .field-name-field-product-image {
+    float: right;
+    margin-left: 3em;
+    margin-bottom: 2em;
+  }
+
+  h3 {
+    a {
+      font-size: 1.6rem;
+    }
+  }
+
+  .col-sm-20 {
+    div {
+      max-width: 60em;
+    }
+  }
+
+}
+
+#block-views-exp-search-page {
+  label {
+    font-weight: 600;
+  }
+  #edit-submit-search {
+    line-height: 1.3em;
+  }
+  #edit-search-api-views-fulltext-wrapper {
+    width: calc(82% - 10rem);
+    padding: .5em 0 0;
+  }
+  .form-control {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-color: #000;
+    border-right: 0;
+  }
+  .form-submit {
+    margin-top: 1.775em;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-color: #000;
+    border-left: 0;
+  }
+  .input-group {
+    display: inline;
+  }
+  .input-group-addon {
+    padding: 0 0;
+  }
+  .dropdown {
+    clear: both;
+  }
+}
+
+.view-search.view-display-id-page {
+  .view-mode-search_results {
+    .field-name-field-product-image {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 1em;
+      img {
+        margin-left: auto;
+        margin-right:auto;
+        padding: 2rem 0 1rem;
+      }
+    }
+
+  }
+}
+
+// End Basic Search
+
+
+/**
+ * Home Page Specific Styles
+ */
+
+body.front {
+  .highlighted.jumbotron {
+    background-color: $gray-lighter;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 2em;
+    margin-top: 0;
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    #block-bean-shopping-options {
+      h2 {
+        text-align: center;
+        margin-top: 0;
+      }
+
+      margin-bottom: 1em;
+    }
+
+    .searchtype {
+        border: 2px solid #ddd;
+        border: 2px solid rgba(86,61,124,.2);
+        padding: 1.5em 1.5em;
+        margin-bottom: 1.5em;
+        border-radius: 20px;
+        &:hover, &:focus, &:active {
+          background-color: lighten($gray-lighter, 2%);
+     }
+      p {
+        text-align: center;
+      }
+      h2 {
+        text-align: center;
+      }
+    }
+  /**
+   * Equal Height for search blocks in the home jumbotron
+   */
+    @media (min-width: $screen-md) {
+      .row-flex, .row-flex > div[class*='col-'] {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          flex:1 1 auto;
+      }
+
+      .row-flex-wrap {
+        -webkit-flex-flow: row wrap;
+          align-content: flex-start;
+          flex:0;
+      }
+
+      .row-flex > div[class*='col-'], .container-flex > div[class*='col-'] {
+         margin:-.2px; /* hack adjust for wrapping */
+      }
+
+      .container-flex > div[class*='col-'] div,.row-flex > div[class*='col-'] div:not(.contextual-links-wrapper) {
+        width:100%;
+      }
+
+      .flex-col {
+          display: flex;
+          display: -webkit-flex;
+          flex: 1 100%;
+        flex-flow: column nowrap;
+      }
+
+      .flex-grow {
+        display: flex;
+          -webkit-flex: 2;
+          flex: 2;
+      }
+    }
+  }
+  /*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+ h1.page-header {
+  display: none;
+ }
+}
+
+/**
+ * Experimental custom button with pure CSS transition/animation
+ */
+
+.gpii-button:hover {
+    background-color: $color-gpii-sai-primary;
+    color: #fff;
+    transition: .25s;
+    transition-delay: .25s;
+}
+.gpii-button {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    transition: .25s;
+    border: 0;
+    margin: 1rem;
+    font-weight:bold;
+}
+
+.gpii-button a {
+    color: $color-gpii-sai-primary;
+    display: block;
+    padding: 16px 35px;
+    font-size: 1em;
+    font-family: 'Montserrat-Bold', sans-serif;
+    line-height: 1em;
+    text-transform: uppercase;
+    transition: .25s;
+    text-decoration: none;
+}
+
+.gpii-button:hover a {
+    color: #fff;
+    transition: .25s;
+    transition-delay: .25s;
+    text-decoration: none;
+}
+
+.gpii-button:hover::before {
+    left: 0;
+    transition: .25s;
+}
+.gpii-button::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    left: -12px;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid $color-gpii-sai-primary;
+    border-top: 1px solid $color-gpii-sai-primary;
+    border-bottom: 1px solid $color-gpii-sai-primary;
+    transition: .25s;
+    transition-delay: .25s;
+}
+
+.gpii-button:hover::after {
+    right: 0;
+    transition: .25s;
+}
+
+.gpii-button::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    right: -12px;
+    top: 0;
+    bottom: 0;
+    border-right: 1px solid $color-gpii-sai-primary;
+    border-top: 1px solid $color-gpii-sai-primary;
+    border-bottom: 1px solid $color-gpii-sai-primary;
+    transition: .25s;
+    transition-delay: .25s;
+}
+
+// #############################################################################
+// Misc.
+// #############################################################################
+

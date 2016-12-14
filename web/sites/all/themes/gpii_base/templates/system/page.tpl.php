@@ -75,12 +75,12 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <?php if ($logo): ?>
-          <a class="logo navbar-btn pull-left" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+          <a class="logo navbar-btn pull-left" href="http://www.gpii.net" title="<?php print t('Home'); ?>">
             <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
           </a>
         <?php endif; ?>
         <?php if (!empty($site_slogan)): ?>
-          <p class="lead"><?php print $site_slogan; ?></p>
+          <p class="lead"><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_slogan; ?></a></p>
         <?php endif; ?>
 
         <?php if (!empty($site_name)): ?>
@@ -130,9 +130,59 @@
   <div id="main-container" class="main-container <?php print $container_class; ?>">
     <div class="row">
       <section<?php print $content_column_class; ?>>
-        <?php if (!empty($page['highlighted'])): ?>
+        <?php if (!empty($page['highlighted']) && !$is_front): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
         <?php endif; ?>
+        <?php if ($is_front == TRUE): ?>
+          <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?>
+            <div class="row row-flex row-flex-wrap">
+              <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'browse-virtual-stores');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                 </div>
+              </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'question-and-answer-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'simple-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'advanced-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+
+            </div><!--/row-->
+          </div>
+        </div>
+
+        <?php endif; ?>
+
         <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
         <a id="main-content"></a>
         <?php print render($title_prefix); ?>
