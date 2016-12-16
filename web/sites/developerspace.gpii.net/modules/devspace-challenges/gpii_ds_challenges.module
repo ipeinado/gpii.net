@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the GPII_DS_Challenges feature.
+ */
+
+include_once 'gpii_ds_challenges.features.inc';
