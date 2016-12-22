@@ -81,6 +81,6 @@ function popular_tags_field_widget_form_alter(&$element, &$form_state, $context)
        $context['instance']['widget']['type'] == 'active_tags_taxonomy_autocomplete')
      && !empty($context['instance']['widget']['settings']['popular_tags']['use'])) {
     module_load_include('inc', 'popular_tags', 'popular_tags.widget');
-    _popular_tags_inject($element, $context);
+    $element['#post_render'][] = '_popular_tags_inject';
   }
 }

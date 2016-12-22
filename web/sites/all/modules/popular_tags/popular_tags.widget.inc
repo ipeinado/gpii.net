@@ -9,18 +9,27 @@
 /**
  * Util function to inject the popular tags functionality into a form element.
  *
+ * @param string $children
+ *   rendered form element
  * @param array $element
  *   form element
- * @param array $context
- *   form element context
  */
-function _popular_tags_inject(&$element, $context) {
+function _popular_tags_inject($children, $element) {
+  if (preg_match('/<\\/[a-zA-Z0-9]+>$/', $children, $matches) != 1) {
+    return $children;
+  }
+
   drupal_add_js(drupal_get_path('module', 'popular_tags') . '/popular_tags.js');
   drupal_add_css(drupal_get_path('module', 'popular_tags') . '/popular_tags.css');
+
   $field_name = $element['#field_name'];
-  $vname = $context['field']['settings']['allowed_values'][0]['vocabulary'];
-  $limit = @$context['instance']['widget']['settings']['popular_tags']['limit'];
-  $showhide = @$context['instance']['widget']['settings']['popular_tags']['showhide'];
+  $field = field_info_field($field_name);
+  $instance = field_info_instance($element['#entity_type'], $field_name, $element['#bundle']);
+
+  $vname = $field['settings']['allowed_values'][0]['vocabulary'];
+  $limit = $instance['widget']['settings']['popular_tags']['limit'];
+  $showhide = $instance['widget']['settings']['popular_tags']['showhide'];
+
   if ($showhide) {
     $data['popular_tags'][$field_name]['limit'] = $limit;
     drupal_add_js($data, 'setting');
@@ -53,13 +62,14 @@ function _popular_tags_inject(&$element, $context) {
     ));
   }
   $tag_terms .= '</div>';
-  $html = '<div class="popular-tags">' . t('You can type your own tags, or choose from the most commonly used tags below.');
+  $html = '<div class="description popular-tags">' . t('You can type your own tags, or choose from the most commonly used tags below.');
   if (!empty($limit) && !empty($showhide)) {
     $html .= '<a href="#" class="show-all-terms">' . t('Show All Terms') . '</a>';
     $html .= '<a href="#" class="show-popular-terms">' . t('Show Popular Terms') . '</a>';
   }
   $html .= $tag_terms . '</div>';
-  $element['#description'] = isset($element['#description']) ? $element['#description'] . $html : $html;
+
+  return substr_replace($children, $html, -(strlen($matches[0])+1), 0);
 }
 
 /**
