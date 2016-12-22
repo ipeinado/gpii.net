@@ -130,8 +130,57 @@
   <div id="main-container" class="main-container <?php print $container_class; ?>">
     <div class="row">
       <section<?php print $content_column_class; ?>>
-        <?php if (!empty($page['highlighted'])): ?>
+        <?php if (!empty($page['highlighted']) && !$is_front): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
+        <?php endif; ?>
+        <?php if ($is_front == TRUE): ?>
+          <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?>
+            <div class="row row-flex row-flex-wrap">
+              <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'browse-virtual-stores');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                 </div>
+              </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'question-and-answer-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'simple-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="panel searchtype">
+                  <?php
+                    $blockObject = block_load('bean', 'advanced-search');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+
+            </div><!--/row-->
+          </div>
+        </div>
+
         <?php endif; ?>
 
         <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
