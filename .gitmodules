@@ -13,3 +13,6 @@
 [submodule "web/sites/all/modules/google_translator"]
 	path = web/sites/all/modules/google_translator
 	url = https://git.drupal.org/sandbox/fxarte/1473726.git
+[submodule "web/sites/all/modules/rating-tool"]
+	path = web/sites/all/modules/rating-tool
+	url = https://github.com/iluaepidi/rating-tool.git
