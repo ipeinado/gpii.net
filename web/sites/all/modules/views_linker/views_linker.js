@@ -9,10 +9,9 @@
       var delta = settings.viewsLinker.views_linker_block_delta;
 
       var query = document.URL.split('?')[1];
-      query = query.split('#')[0];
-
       // Check we are coming from a search.
       if (query) {
+        query = query.split('#')[0];
         $('#views-linker-'+ delta, context).show();
         $('#views-linker-'+ delta + ' a', context).text(searchLabel);
         $('#views-linker-'+ delta + ' a', context).attr('href', '/' + backPath + '?' + query);
