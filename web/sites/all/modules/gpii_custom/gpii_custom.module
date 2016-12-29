@@ -1,0 +1,58 @@
+<?php
+/**
+ * @file
+ *  *
+ * Custom Blocks and functions related to the GPII sites.
+ */
+
+/**
+ * Alter layouts found by Display Suite.
+ *
+ * @param $layouts
+ *   A array of layouts which keys are the layout and which values are
+ *   properties of that layout (label, path, regions and css).
+ */
+function gpii_custom_ds_layout_info_alter(&$layouts) {
+
+  // Create an array of default display suite layouts that we want to disable.
+  $ds_layouts = array(
+    'bootstrap_12',
+    'bootstrap_1_11',
+    'bootstrap_2_10',
+    'bootstrap_3_9',
+    'bootstrap_4_8',
+    'bootstrap_5_7',
+    'bootstrap_6_6',
+    'bootstrap_6_6_bricks',
+    'bootstrap_6_6_stacked',
+    'bootstrap_7_5',
+    'bootstrap_8_4',
+    'bootstrap_9_3',
+    'bootstrap_10_2',
+    'bootstrap_11_1',
+    'bootstrap_2_8_2',
+    'bootstrap_3_6_3',
+    'bootstrap_4_4_4',
+    'bootstrap_4_4_4_stacked',
+    'bootstrap_5_5_2',
+    'ds_1col',
+    'ds_1col_wrapper',
+    'ds_2col',
+    'ds_2col_fluid',
+    'ds_2col_stacked',
+    'ds_2col_stacked_fluid',
+    'ds_3col',
+    'ds_3col_equal_width',
+    'ds_3col_stacked',
+    'ds_3col_stacked_fluid',
+    'ds_3col_stacked_equal_width',
+    'ds_4col',
+    'ds_reset'
+  );
+
+  // unset each of the layouts defined in $ds_layouts
+  foreach ($ds_layouts as $key) {
+    unset($layouts[$key]);
+  }
+
+}
