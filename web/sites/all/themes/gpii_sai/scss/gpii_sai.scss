@@ -8,9 +8,35 @@
   background-color: $color-gpii-sai-primary;
 }
 
-.navbar.navbar-default {
-  .navbar-header {
-    border-bottom: 0.5rem solid $color-gpii-sai-primary;
+.navbar-nav.primary.menu.nav {
+  @media (min-width: $screen-sm-min) {
+    li {
+      & > a {
+        &:hover {
+          border-top-color: $color-gpii-sai-primary;
+        }
+        &.dropdown > a {
+          &:hover {
+            border-top-color: $color-gpii-sai-primary;
+          }
+        }
+      }
+    }
+    .dropdown.active > a,
+    .dropdown.active > a:hover,
+    .dropdown.active > a:focus,
+    .active > a,
+    .active > a:hover,
+    .active > a:focus {
+      border-top-color: $color-gpii-sai-primary;
+    }
+
+    .dropdown.open > a,
+    .dropdown.open > a:hover,
+    .dropdown.open > a:focus {
+      color: $color-gpii-sai-primary;
+      border-top-color: $color-gpii-sai-primary;
+    }
   }
 }
 
@@ -21,16 +47,13 @@
 #navbar {
   .navbar-header {
     p.lead {
-      background-color: $color-gpii-sai-primary;
-      color: white;
-      text-align: center;
-      max-width: 16em;
+
+      color: $color-gpii-sai-primary;
+      text-align: left;
       padding-top: 0.35rem;
-      padding-bottom: 0.22rem;
       margin-top: 1rem;
-      font-size: 1.4rem;
       a, a:active, a:hover, a:focus {
-        color: #fff;
+        color: $color-gpii-sai-primary;
         font-size: inherit;
       }
     }
