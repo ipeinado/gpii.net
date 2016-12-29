@@ -8,7 +8,7 @@
  * Implements hook_views_plugins().
  */
 function views_linker_views_plugins() {
-  $path = drupal_get_path('module', 'views_linker_views');
+  $path = drupal_get_path('module', 'views_linker');
   $plugins = array();
   $plugins['display_extender']['views_linker'] = array(
     'title' => t('Views Linker'),
