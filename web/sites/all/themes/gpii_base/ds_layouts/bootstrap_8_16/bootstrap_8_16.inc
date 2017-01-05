@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Display Suite Bootstrap Two Col 2 22 configuration.
+ * Display Suite Bootstrap Two Col 8 16 configuration.
  */
 
 function ds_bootstrap_8_16() {

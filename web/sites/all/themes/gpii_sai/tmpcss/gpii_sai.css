@@ -259,3 +259,20 @@ body.front {
   border-bottom: 1px solid #A72534;
   transition: .25s;
   transition-delay: .25s; }
+
+.page-search-facet .block-facetapi ul {
+  list-style-type: none;
+  padding-left: 1rem; }
+
+.page-search-facet .block-facetapi .facetapi-checkbox {
+  margin-right: 0.4rem; }
+
+.view-search-facets- .view-mode-search_results h3 {
+  margin-top: 0; }
+
+.view-search-facets- .view-mode-search_results .field-name-field-product-image {
+  float: none;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-top: 1rem;
+  text-align: center; }

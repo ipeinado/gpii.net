@@ -5,23 +5,93 @@
 // #############################################################################
 
 .region-hero {
-  background-color: $color-gpii-teal;
+  background-color: $color-gpii-devspace-primary;
 }
 
-.flc-prefsEditor-separatedPanel {
-  .fl-panelBar .fl-prefsEditor-buttons {
-    &, .fl-prefsEditor-showHide, .fl-prefsEditor-reset {
-      border: none;
-      background-color: #000000;
-      color: #ffffff;
+.navbar-nav.primary.menu.nav {
+  @media (min-width: $screen-sm-min) {
+    li {
+      & > a {
+        &:hover {
+          border-top-color: $color-gpii-devspace-primary;
+        }
+        &.dropdown > a {
+          &:hover {
+            border-top-color: $color-gpii-devspace-primary;
+          }
+        }
+      }
+    }
+    .dropdown.active > a,
+    .dropdown.active > a:hover,
+    .dropdown.active > a:focus,
+    .active > a,
+    .active > a:hover,
+    .active > a:focus {
+      border-top-color: $color-gpii-devspace-primary;
+    }
+
+    .dropdown.open > a,
+    .dropdown.open > a:hover,
+    .dropdown.open > a:focus {
+      color: $color-gpii-devspace-primary;
+      border-top-color: $color-gpii-devspace-primary;
     }
   }
 }
 
-#gpii-translate-toggle_container {
-  &, #gpii-translate-toggle_button {
-    border: none;
-    background-color: #000000;
-    color: #ffffff;
+#footer-wrap {
+  border-color: $color-gpii-devspace-primary;
+}
+
+#navbar {
+  .navbar-header {
+    p.lead {
+      color: $color-gpii-devspace-primary;
+      text-align: left;
+      padding-top: 0.35rem;
+      margin-top: 0.9rem;
+      a, a:active, a:hover, a:focus {
+        color: $color-gpii-devspace-primary;
+        font-size: 1.9rem;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    background-color: $color-gpii-devspace-primary;
+}
+
+// Pagination highlight color
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    background-color: $color-gpii-devspace-primary;
+}
+
+.pagination > li {
+  & > a, & > span {
+    color: $color-gpii-devspace-primary;
+    &:hover, &:focus {
+      color: $color-gpii-devspace-primary;
+    }
+  }
+}
+
+.btn-primary {
+  background-color: $color-gpii-devspace-primary;
+  &:focus, &:active, &:hover {
+    background-color: darken($color-gpii-devspace-primary, 6%);
+  }
+}
+
+a {
+  color: $color-gpii-devspace-primary;
+  &:hover, &:focus, &:active {
+    color: darken($color-gpii-devspace-primary, 6%);
+  }
+  &:visited {
+    color: lighten($color-gpii-devspace-primary, 6%);
   }
 }

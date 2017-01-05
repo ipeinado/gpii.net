@@ -1,16 +1,58 @@
 .region-hero {
-  background-color: #1e9b8c;
-}
+  background-color: #18606b; }
 
-.flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons, .flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons .fl-prefsEditor-showHide, .flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons .fl-prefsEditor-reset {
-  border: none;
-  background-color: #000000;
-  color: #ffffff;
-}
+@media (min-width: 768px) {
+  .navbar-nav.primary.menu.nav li > a:hover {
+    border-top-color: #18606b; }
+  .navbar-nav.primary.menu.nav li > a.dropdown > a:hover {
+    border-top-color: #18606b; }
+  .navbar-nav.primary.menu.nav .dropdown.active > a,
+  .navbar-nav.primary.menu.nav .dropdown.active > a:hover,
+  .navbar-nav.primary.menu.nav .dropdown.active > a:focus,
+  .navbar-nav.primary.menu.nav .active > a,
+  .navbar-nav.primary.menu.nav .active > a:hover,
+  .navbar-nav.primary.menu.nav .active > a:focus {
+    border-top-color: #18606b; }
+  .navbar-nav.primary.menu.nav .dropdown.open > a,
+  .navbar-nav.primary.menu.nav .dropdown.open > a:hover,
+  .navbar-nav.primary.menu.nav .dropdown.open > a:focus {
+    color: #18606b;
+    border-top-color: #18606b; } }
 
-#gpii-translate-toggle_container, #gpii-translate-toggle_container #gpii-translate-toggle_button {
-  border: none;
-  background-color: #000000;
-  color: #ffffff;
-}
+#footer-wrap {
+  border-color: #18606b; }
+
+#navbar .navbar-header p.lead {
+  color: #18606b;
+  text-align: left;
+  padding-top: 0.35rem;
+  margin-top: 0.9rem; }
+  #navbar .navbar-header p.lead a, #navbar .navbar-header p.lead a:active, #navbar .navbar-header p.lead a:hover, #navbar .navbar-header p.lead a:focus {
+    color: #18606b;
+    font-size: 1.9rem;
+    font-weight: 600; }
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+  background-color: #18606b; }
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  background-color: #18606b; }
+
+.pagination > li > a, .pagination > li > span {
+  color: #18606b; }
+  .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+    color: #18606b; }
+
+.btn-primary {
+  background-color: #18606b; }
+  .btn-primary:focus, .btn-primary:active, .btn-primary:hover {
+    background-color: #124a52; }
+
+a {
+  color: #18606b; }
+  a:hover, a:focus, a:active {
+    color: #124a52; }
+  a:visited {
+    color: #1e7684; }
+
 /*# sourceMappingURL=gpii_devspace.css.map */
