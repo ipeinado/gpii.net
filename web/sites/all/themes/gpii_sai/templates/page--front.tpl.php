@@ -75,8 +75,8 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <?php if ($logo): ?>
-          <a class="logo navbar-btn pull-left" href="http://www.gpii.net" title="<?php print t('Home'); ?>">
-            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+          <a class="logo navbar-btn pull-left" href="http://www.gpii.net" title="<?php print t('Visit the GPII.net Home Page to learn more about GPII'); ?>">
+            <img src="<?php print $logo; ?>" alt="<?php print t('GPII.net Home Page'); ?>" />
           </a>
         <?php endif; ?>
         <?php if (!empty($site_slogan)): ?>

@@ -9,6 +9,6 @@
  */
 
 $plugin = array(
-  'title' => t('Generic'),
+  'title' => t('P4A IAM'),
   'class' => 'OpenIDConnectClientGeneric',
 );
