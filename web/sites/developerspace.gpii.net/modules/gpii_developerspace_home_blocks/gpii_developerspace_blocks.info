@@ -1,0 +1,17 @@
+name = GPII DeveloperSpace Blocks
+description = Hero banner and links for the GPII DeveloperSpace home
+core = 7.x
+package = DeveloperSpace Features
+version = 7.x-1.0
+dependencies[] = block
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = fe_block
+dependencies[] = search_api_page
+features[context][] = homepage
+features[ctools][] = context:context:3
+features[fe_block_boxes][] = home_links
+features[fe_block_boxes][] = welcome_block
+features[fe_block_settings][] = block-home_links
+features[fe_block_settings][] = block-welcome_block
+features[features_api][] = api:2
