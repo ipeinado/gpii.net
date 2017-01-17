@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the GPII DeveloperSpace Blocks feature.
+ */
+
+include_once 'gpii_developerspace_blocks.features.inc';
