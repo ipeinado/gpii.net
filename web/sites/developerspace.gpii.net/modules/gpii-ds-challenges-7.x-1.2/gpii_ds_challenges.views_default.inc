@@ -33,11 +33,8 @@ function gpii_ds_challenges_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['style_options']['uses_fields'] = TRUE;
-  $handler->display->display_options['row_plugin'] = 'fields';
-  $handler->display->display_options['row_options']['inline'] = array(
-    'uid' => 'uid',
-  );
-  $handler->display->display_options['row_options']['hide_empty'] = TRUE;
+  $handler->display->display_options['row_plugin'] = 'node';
+  $handler->display->display_options['row_options']['links'] = FALSE;
   /* Header: Global: Unfiltered text */
   $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
@@ -47,6 +44,14 @@ function gpii_ds_challenges_views_default_views() {
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   $handler->display->display_options['relationships']['uid']['ui_name'] = 'who posted the challenge';
+  /* Relationship: Flags: upvote_challenge counter */
+  $handler->display->display_options['relationships']['flag_count_rel']['id'] = 'flag_count_rel';
+  $handler->display->display_options['relationships']['flag_count_rel']['table'] = 'node';
+  $handler->display->display_options['relationships']['flag_count_rel']['field'] = 'flag_count_rel';
+  $handler->display->display_options['relationships']['flag_count_rel']['ui_name'] = 'number of votes';
+  $handler->display->display_options['relationships']['flag_count_rel']['label'] = 'Number of votes';
+  $handler->display->display_options['relationships']['flag_count_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_count_rel']['flag'] = 'upvote_challenge';
   /* Field: challenge title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -74,7 +79,7 @@ function gpii_ds_challenges_views_default_views() {
   $handler->display->display_options['fields']['body']['settings'] = array(
     'trim_length' => '600',
   );
-  /* Field: Content: Bounty */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_bounty']['id'] = 'field_bounty';
   $handler->display->display_options['fields']['field_bounty']['table'] = 'field_data_field_bounty';
   $handler->display->display_options['fields']['field_bounty']['field'] = 'field_bounty';
@@ -98,6 +103,20 @@ function gpii_ds_challenges_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Flags: Flag counter */
+  $handler->display->display_options['sorts']['count']['id'] = 'count';
+  $handler->display->display_options['sorts']['count']['table'] = 'flag_counts';
+  $handler->display->display_options['sorts']['count']['field'] = 'count';
+  $handler->display->display_options['sorts']['count']['relationship'] = 'flag_count_rel';
+  $handler->display->display_options['sorts']['count']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['count']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['count']['expose']['label'] = 'Most voted';
+  /* Sort criterion: Content: Level of complexity (field_level_of_complexity) */
+  $handler->display->display_options['sorts']['field_level_of_complexity_tid']['id'] = 'field_level_of_complexity_tid';
+  $handler->display->display_options['sorts']['field_level_of_complexity_tid']['table'] = 'field_data_field_level_of_complexity';
+  $handler->display->display_options['sorts']['field_level_of_complexity_tid']['field'] = 'field_level_of_complexity_tid';
+  $handler->display->display_options['sorts']['field_level_of_complexity_tid']['exposed'] = TRUE;
+  $handler->display->display_options['sorts']['field_level_of_complexity_tid']['expose']['label'] = 'Complexity';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -112,32 +131,6 @@ function gpii_ds_challenges_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'challenge' => 'challenge',
   );
-  /* Filter criterion: Content: Level of complexity (field_level_of_complexity) */
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['id'] = 'field_level_of_complexity_tid';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['table'] = 'field_data_field_level_of_complexity';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['field'] = 'field_level_of_complexity_tid';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['value'] = array(
-    1246 => '1246',
-    1247 => '1247',
-    1248 => '1248',
-    1249 => '1249',
-  );
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['expose']['operator_id'] = 'field_level_of_complexity_tid_op';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['expose']['label'] = 'Complexity';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['expose']['description'] = 'Select the level of complexity of the challenges';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['expose']['operator'] = 'field_level_of_complexity_tid_op';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['expose']['identifier'] = 'field_level_of_complexity_tid';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    5 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['expose']['reduce'] = TRUE;
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_level_of_complexity_tid']['vocabulary'] = 'challenge_difficulty';
 
   /* Display: Challenges Page */
   $handler = $view->new_display('page', 'Challenges Page', 'page');
@@ -148,9 +141,7 @@ function gpii_ds_challenges_views_default_views() {
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['empty'] = TRUE;
-  $handler->display->display_options['header']['area']['content'] = 'Some of these challenges are for volunteers and others have funding or prizes associated with them. All are intended to inspire and guide people who would like to work on key issues.
-
-The challenges are particularly good for student projects, either as individuals or as teams. All are needed and provide an opportunity to carry our academic work that will really mean something if you are successful.';
+  $handler->display->display_options['header']['area']['content'] = 'Some of these challenges are for volunteers and others have funding or prizes associated with them. All are intended to inspire and guide people who would like to work on key issues.';
   $handler->display->display_options['header']['area']['format'] = 'markdown';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: challenge title */
@@ -180,13 +171,6 @@ The challenges are particularly good for student projects, either as individuals
   $handler->display->display_options['fields']['body']['settings'] = array(
     'trim_length' => '300',
   );
-  /* Field: Content: Bounty */
-  $handler->display->display_options['fields']['field_bounty']['id'] = 'field_bounty';
-  $handler->display->display_options['fields']['field_bounty']['table'] = 'field_data_field_bounty';
-  $handler->display->display_options['fields']['field_bounty']['field'] = 'field_bounty';
-  $handler->display->display_options['fields']['field_bounty']['label'] = 'Prize';
-  $handler->display->display_options['fields']['field_bounty']['element_type'] = 'strong';
-  $handler->display->display_options['fields']['field_bounty']['empty'] = 'no prize';
   /* Field: Content: prize_explanation */
   $handler->display->display_options['fields']['field_prize_explanation']['id'] = 'field_prize_explanation';
   $handler->display->display_options['fields']['field_prize_explanation']['table'] = 'field_data_field_prize_explanation';
