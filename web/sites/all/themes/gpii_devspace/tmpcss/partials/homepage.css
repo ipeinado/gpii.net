@@ -1,0 +1,58 @@
+.front .welcome-block {
+  margin-bottom: 1em; }
+
+.front .page-header {
+  display: none; }
+
+.front .region-hero {
+  padding: 1em 0;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  overflow: hidden; }
+
+.front .input-group {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto; }
+
+.front input[type='text'] {
+  font-size: 1.2em;
+  padding: 1em;
+  margin: 0 auto;
+  border-color: #2c3849; }
+
+.front .btn-primary {
+  background-color: #e5e5e5;
+  color: #2c3849;
+  font-weight: 600; }
+  .front .btn-primary:focus, .front .btn-primary:active, .front .btn-primary:hover {
+    background-color: #dbdbdb;
+    color: #202936; }
+
+.card header {
+  padding: 10px 0;
+  text-align: center; }
+
+.card header > h2 {
+  font-size: 19px;
+  color: #FFF; }
+  .card header > h2 .glyphicon {
+    top: 0;
+    font-size: .8em;
+    margin-right: .2em; }
+
+.card .card-content {
+  padding: 15px 20px; }
+
+#learning-card header {
+  background-color: #e44e31; }
+
+#develop-card header {
+  background-color: #084C56; }
+
+#market-card header {
+  background-color: #A72534; }
+
+#people-card header {
+  background-color: #2783c6; }

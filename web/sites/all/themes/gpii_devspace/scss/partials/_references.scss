@@ -1,0 +1,79 @@
+.node-reference.view-mode-full {
+
+	.field-ref-row {
+		overflow: hidden;
+	}
+
+	.field-ref-label {
+		margin-bottom: 1em;
+		color: #777;
+
+		@media(min-width: 768px) {
+			width: 200px;
+			float: left;
+			text-align: right;
+		}
+	}
+
+	.field-ref-items {
+		margin-bottom: 1em;
+		@media(min-width: 768px) {
+			margin-left: 216px;
+		}
+	}
+
+	.group-action-links {
+		padding: 1em;
+		border-bottom: 1px solid #e2e2e2;
+		margin-bottom: 1em;
+	}
+}
+
+.node-reference.node-teaser {
+	border-bottom: 1px solid #e2e2e2;
+	padding: 1em 0;
+
+	.reference-type {
+		font-size: (12px/14px)*1rem;
+		font-weight: 600;
+		color: #777;
+	}
+
+	h3 {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+		a {
+			font-size: (18px/14px)*1rem;
+		}
+	}
+}
+
+.field-publication-authors:not(.last) {
+	margin-right: .3em;
+	&:after {
+		content: ",";
+	}
+} 
+
+.group-user-info {
+	display: block;
+	clear: both;
+	overflow: hidden;
+	color: #777;
+	margin-bottom: (10px/14px)*1rem;
+}
+
+.user-info-picture {
+	img {
+		width: 40px;
+		float: left;
+		border-radius: 100%;
+		margin-right: (10px/14px)*1rem;
+	}
+}
+
+.group-action-links > div {
+	display: inline-block;
+	margin-right: (7px/14px)*1rem;
+}
+

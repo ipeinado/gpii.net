@@ -57,6 +57,48 @@
 #people-card header {
   background-color: #2783c6; }
 
+
+.node-reference.view-mode-full .field-ref-row {
+  overflow: hidden; }
+
+.node-reference.view-mode-full .field-ref-label {
+  margin-bottom: 1em;
+  color: #777; }
+  @media (min-width: 768px) {
+    .node-reference.view-mode-full .field-ref-label {
+      width: 200px;
+      float: left;
+      text-align: right; } }
+
+.node-reference.view-mode-full .field-ref-items {
+  margin-bottom: 1em; }
+  @media (min-width: 768px) {
+    .node-reference.view-mode-full .field-ref-items {
+      margin-left: 216px; } }
+
+.node-reference.view-mode-full .group-action-links {
+  padding: 1em;
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 1em; }
+
+.node-reference.node-teaser {
+  border-bottom: 1px solid #e2e2e2;
+  padding: 1em 0; }
+  .node-reference.node-teaser .reference-type {
+    font-size: 0.85714286rem;
+    font-weight: 600;
+    color: #777; }
+  .node-reference.node-teaser h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem; }
+    .node-reference.node-teaser h3 a {
+      font-size: 1.28571429rem; }
+
+.field-publication-authors:not(.last) {
+  margin-right: .3em; }
+  .field-publication-authors:not(.last):after {
+    content: ","; }
+
 .node-teaser {
   padding-top: 1em;
   padding-bottom: 1em;
@@ -76,6 +118,7 @@
   display: block;
   clear: both;
   overflow: hidden;
+  color: #777;
   margin-bottom: 0.71428571rem; }
 
 .user-info-picture img {
@@ -83,6 +126,11 @@
   float: left;
   border-radius: 100%;
   margin-right: 0.71428571rem; }
+
+
+.group-action-links > div {
+  display: inline-block;
+  margin-right: 0.5rem; }
 
 .group-action-links {
   margin: 1.5rem 0 1rem; }
