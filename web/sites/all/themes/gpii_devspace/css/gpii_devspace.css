@@ -58,6 +58,103 @@
 #people-card header {
   background-color: #2783c6; }
 
+.node-teaser {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-top: 1px solid #e2e2e2; }
+  .node-teaser h3 {
+    margin-top: 0; }
+    .node-teaser h3 a {
+      font-size: 1.28571429rem; }
+
+.node .field {
+  margin-bottom: 1em; }
+
+.field-type-taxonomy-term-reference {
+  margin-bottom: 1em; }
+
+.group-user-info {
+  display: block;
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 0.71428571rem; }
+
+.user-info-picture img {
+  width: 40px;
+  float: left;
+  border-radius: 100%;
+  margin-right: 0.71428571rem; }
+
+.group-action-links {
+  margin: 1.5rem 0 1rem; }
+  .group-action-links div {
+    display: inline-block;
+    margin-right: 0.71428571rem; }
+
+.challenge-prize-div,
+.challenge-complexity-div,
+.challenge-status-div {
+  margin-bottom: 0.57142857rem; }
+
+.challenge-prize-label,
+.challenge-complexity-label,
+.challenge-status-label {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-right: .5em;
+  color: #777; }
+
+.field-level-of-complexity {
+  font-size: 1.1em;
+  color: #FFF;
+  padding: 0.1em 0.3em;
+  line-height: 2em; }
+
+.field-level-of-complexity.Low {
+  background-color: green; }
+
+.field-level-of-complexity.Medium {
+  background-color: orange; }
+
+.field-level-of-complexity.High {
+  background-color: red; }
+
+.field-level-of-complexity.Grand {
+  background-color: black; }
+
+.challenge-prize-value {
+  line-height: 1.6em;
+  font-size: 1.1em;
+  font-weight: 600; }
+
+.challenge-status-value {
+  font-weight: 600;
+  padding: 0.3em;
+  text-align: center;
+  background-color: rgba(255, 255, 0, 0.2);
+  margin-bottom: 1em; }
+
+.flag-upvote-challenge {
+  background-color: red;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 1px 0 rgba(200, 200, 200, 0.2);
+          box-shadow: 0 1px 1px 0 rgba(200, 200, 200, 0.2);
+  font-weight: 500;
+  padding: 3px 3px 4px 7px;
+  text-align: center;
+  background: #f1f8fb;
+  border: 1px solid #bbcadc; }
+  .flag-upvote-challenge .glyphicon {
+    font-size: .9em;
+    margin-right: .3em; }
+  .flag-upvote-challenge:hover {
+    border-color: #1e7684; }
+  .flag-upvote-challenge .flag-count {
+    margin-left: 3px;
+    padding-left: 5px;
+    font-size: .9em;
+    border-left: 1px solid #bbcadc; }
+
 .region-hero {
   background-color: #18606b; }
 
