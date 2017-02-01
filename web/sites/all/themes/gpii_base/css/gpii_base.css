@@ -6456,6 +6456,9 @@ body {
     html:not(.force-mobile-layout) body {
       border-top: 9rem solid transparent; } }
 
+pre {
+  font-size: 0.9rem; }
+
 body.navbar-administration.navbar-is-fixed-top {
   border-top: 6rem solid transparent; }
   body.navbar-administration.navbar-is-fixed-top .navbar-fixed-top {
