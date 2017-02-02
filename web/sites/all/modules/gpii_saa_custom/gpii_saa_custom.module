@@ -285,7 +285,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_products_advsearch',
         'access arguments' => array('access content'),
       );
-      $items['api/v1/products'] = array(
+      $items['api/v1/products-new'] = array(
         'title' => 'Products Endpoint',
         'page callback' => 'gpii_saa_custom_products_ulisting',
         'access arguments' => array('access content'),
