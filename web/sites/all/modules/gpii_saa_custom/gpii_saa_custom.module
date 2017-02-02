@@ -268,3 +268,190 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
   // widget on the correct form elements.
   $form['#attached']['js'][] = drupal_get_path('module', 'gpii_saa_custom') . '/js/gpii_saa_custom.facetapi.multiselect.js';
 }
+
+
+    /**
+    * Implements hook_menu().
+     * This is experimental code to look at whether we can bypass services and kick out some JSON that doesn't take forever and a day to load.
+    */
+    function gpii_saa_custom_menu() {
+      $items['api/v1/productapi'] = array( // used for testing and manipulating objects before converting to JSON
+        'title' => 'Products API Experimentation',
+        'page callback' => 'gpii_saa_custom_products_json',
+        'access arguments' => array('administer content'),
+      );
+      $items['api/v1/products/adv-search'] = array(
+        'title' => 'Products Advanced Search Endpoint',
+        'page callback' => 'gpii_saa_custom_products_advsearch',
+        'access arguments' => array('access content'),
+      );
+      $items['api/v1/products'] = array(
+        'title' => 'Products Endpoint',
+        'page callback' => 'gpii_saa_custom_products_ulisting',
+        'access arguments' => array('access content'),
+      );
+
+      return $items;
+    }
+
+    /**
+    * Custom callback function used for experimenting with objects and proof of concept
+    */
+    function gpii_saa_custom_products_json() {
+      $result = db_query('SELECT * FROM ProductsUnifiedListing LIMIT 10');
+        $record = $result->fetchAll();
+
+        // initialize a new variable for use in the output
+        $output = array();
+        // iterate through the records and remove null values
+        foreach ($record as $key => $value) {
+          $output[] = (object) array_filter((array) $value);
+        }
+
+        // trim the body field by calling text_summary and clean up the markup
+        foreach ($output as $key => $value) {
+          if (isset($value->body)) {
+            $summary = text_summary($value->body, $value->format, 400);
+            $summary = check_markup($summary, $value->format);
+            $value->body = $summary;
+          }
+
+          // make needs into an object that matches the original format
+          if (isset($value->needs)) {
+            $tids = explode(',', $value->needs);
+
+            foreach ($tids as $num => $id) {
+              $tid[] = (object) array('tid' => $id);
+            }
+            $value->needs = $tid;
+            // clear this after each loop
+            unset($tid);
+          }
+        }
+        //using kpr due to issue with dpm in latest bootstrap
+        kpr($output);
+        return '';
+    }
+
+    /**
+    * This callback is used by the advanced search nodejs application
+    */
+    function gpii_saa_custom_products_advsearch() {
+      $result = db_query('SELECT * FROM ProductsAdvSearch');
+        $record = $result->fetchAll();
+
+        // initialize a new variable for use in the output
+        $output = array();
+
+        // iterate through the records and remove null values
+        foreach ($record as $key => $value) {
+          $output[] = (object) array_filter((array) $value);
+        }
+
+        // trim the body field by calling text_summary and clean up the markup
+        foreach ($output as $key => $value) {
+          if (isset($value->body)) {
+            $summary = text_summary($value->body, $value->format, 400);
+            $summary = check_markup($summary, $value->format);
+            $value->body = $summary;
+          }
+        }
+
+        // convert the object to JSON
+        return drupal_json_output($output);
+    }
+
+    /**
+    * This callback is used by the Unified Listing application to retrieve a list
+     * of SAI records for comparison and synchronization.
+    */
+    function gpii_saa_custom_products_ulisting() {
+      $result = db_query('SELECT * FROM ProductsUnifiedListing');
+        $record = $result->fetchAll();
+
+        // initialize a new variable for use in the output
+        $output = array();
+
+        // iterate through the records and remove null values
+        foreach ($record as $key => $value) {
+          $output[] = (object) array_filter((array) $value);
+        }
+
+        // trim the body field by calling text_summary and clean up the markup
+        foreach ($output as $key => $value) {
+          if (isset($value->body)) {
+            $summary = text_summary($value->body, $value->format, 400);
+            $summary = check_markup($summary, $value->format);
+            $value->body = $summary;
+          }
+
+          // make needs into an object that matches the original format
+          if (isset($value->needs)) {
+            $tids = explode(',', $value->needs);
+
+            foreach ($tids as $num => $id) {
+              $tid[] = (object) array('tid' => $id);
+            }
+            $value->needs = $tid;
+            // clear this after each loop
+            unset($tid);
+          }
+
+          // make needs into an object that matches the original format
+          if (isset($value->product_category)) {
+            $tids = explode(',', $value->product_category);
+
+            foreach ($tids as $num => $id) {
+              $tid[] = (object) array('tid' => $id);
+            }
+            $value->product_category = $tid;
+            // clear this after each loop
+            unset($tid);
+          }
+
+          // make needs into an object that matches the original format
+          if (isset($value->product_image)) {
+            //@@ this needs to be rewritten to handle additional image fields (hidden, permission, source)
+            //as well as to handle multiple values
+
+
+            // alt may be empty, so set it to null if it's not available in this context
+            if (!isset($value->alt)) {
+              $value->alt = '';
+            }
+            // pull a few values out of the top level and insert them as
+            // objects under product_image
+
+            $value->product_image = (object) array(
+              'fid' => $value->fid,
+              'filename' => $value->filename,
+              'uri' => $value->product_image,
+              'alt' => $value->alt,
+              'filemime' => $value->filemime,
+              'filesize' => $value->filesize,
+              'status' => $value->status,
+              'timestamp' => $value->timestamp,
+              'origname' => $value->origname,
+              //'experiment' => $value->experiment
+              );
+
+
+            // unset variables used above
+            unset($value->fid);
+            unset($value->filename);
+            unset($value->alt);
+            unset($value->filemime);
+            unset($value->filesize);
+            unset($value->status);
+            unset($value->timestamp);
+            unset($value->origname);
+
+          }
+        }
+
+        // convert the object to JSON
+        return drupal_json_output($output);
+    }
+
+
+
