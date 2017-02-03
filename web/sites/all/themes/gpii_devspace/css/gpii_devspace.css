@@ -58,6 +58,64 @@
 #people-card header {
   background-color: #2783c6; }
 
+.view-subcategories-with-icons {
+  overflow: hidden;
+  margin-bottom: 1em; }
+  .view-subcategories-with-icons .item-subcategory {
+    display: inline-block;
+    padding: 0.5rem 1em;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    height: 110px;
+    border: 1px solid #FFF;
+    border-radius: 5px;
+    -webkit-transition: border-color .3s ease;
+    -o-transition: border-color .3s ease;
+    transition: border-color .3s ease; }
+    .view-subcategories-with-icons .item-subcategory h2 {
+      display: inline;
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 2rem;
+      font-weight: 100; }
+    .view-subcategories-with-icons .item-subcategory h2 > a {
+      color: #18606b;
+      font-size: 1.28571429rem;
+      font-weight: 100;
+      -webkit-transition: color .3s ease;
+      -o-transition: color .3s ease;
+      transition: color .3s ease; }
+  .view-subcategories-with-icons .subcategory-icon {
+    background-color: #18606b;
+    float: left;
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    border-radius: 100%;
+    margin-right: 0.71428571rem;
+    -webkit-transition: background-color .3s ease;
+    -o-transition: background-color .3s ease;
+    transition: background-color .3s ease; }
+  .view-subcategories-with-icons i.fa {
+    font-size: 1.71428571rem;
+    color: white;
+    padding-top: 8px; }
+  .view-subcategories-with-icons .field-content p {
+    font-size: 0.85714286rem;
+    margin-top: 0.35714286rem;
+    margin-bottom: 0;
+    margin-left: 52px;
+    white-space: pre-line;
+    display: block; }
+  .view-subcategories-with-icons .item-subcategory:hover {
+    border-color: #F1EEEA; }
+    .view-subcategories-with-icons .item-subcategory:hover h2 > a {
+      text-decoration: underline;
+      color: #009688; }
+    .view-subcategories-with-icons .item-subcategory:hover .subcategory-icon {
+      background-color: #009688; }
+
 .node-reference.view-mode-full .field-ref-row {
   overflow: hidden; }
 
@@ -212,6 +270,19 @@
     padding-left: 5px;
     font-size: .9em;
     border-left: 1px solid #bbcadc; }
+
+.node-type-list dt {
+  border-top: 1px solid #CCC;
+  padding: .5em 0; }
+  .node-type-list dt a:before {
+    content: "+";
+    font-size: 1.1em;
+    margin-right: .3em;
+    color: #666; }
+
+.node-type-list dd {
+  padding-bottom: .5em;
+  text-indent: 1em; }
 
 .region-hero {
   background-color: #18606b; }
