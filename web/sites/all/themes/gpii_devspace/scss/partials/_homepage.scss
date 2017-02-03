@@ -78,3 +78,76 @@
 #people-card header {
 	background-color: #2783c6;
 }
+
+// CATEGORIES & SUBCATEGORIES
+
+.view-subcategories-with-icons {
+	overflow: hidden;
+	margin-bottom: 1em;
+
+	.item-subcategory {
+		display: inline-block;
+		padding: (7px/14px)*1rem 1em;
+		box-sizing: border-box;
+		height: 110px;
+		border: 1px solid #FFF;
+		border-radius: 5px;
+		transition: border-color .3s ease;
+
+		h2 {
+			display: inline;
+			margin-top: 0;
+			margin-bottom: 0;
+			line-height: (28px/14px)*1rem;
+			font-weight: 100;
+		}
+
+		h2 > a {
+			color: #18606b;
+			font-size: (18px/14px)*1rem;
+			font-weight: 100;
+			transition: color .3s ease;
+		}
+	}
+
+	.subcategory-icon {
+		background-color: #18606b;
+		float: left;
+		width: 42px;
+		height: 42px;
+		text-align: center;
+		border-radius: 100%;
+		margin-right: (10px/14px)*1rem;
+		transition: background-color .3s ease;
+	}
+
+	i.fa {
+		font-size: (24px/14px)*1rem;
+		color: white;
+		padding-top: 8px;
+	}
+
+	.field-content {
+
+		p {
+			font-size: (12px/14px)*1rem;
+			margin-top: (5px/14px)*1rem;
+			margin-bottom: 0;
+			margin-left	: 52px;
+			white-space: pre-line;
+			display: block;
+		}
+	}
+
+	.item-subcategory:hover {
+		border-color: #F1EEEA;
+
+		h2 > a {
+			text-decoration: underline;
+			color: #009688;
+		}
+		.subcategory-icon {
+			background-color: #009688;
+		}
+	}
+}
