@@ -17,8 +17,8 @@
   margin-right: auto; }
 
 .front input[type='text'] {
-  font-size: 1.2em;
-  padding: 1em;
+  font-size: 1.21428571rem;
+  height: 38px;
   margin: 0 auto;
   border-color: #2c3849; }
 
