@@ -14,6 +14,20 @@
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		box-shadow: 0 1px 4px rgba(0,0,0,.04);
 		overflow: hidden;
+
+		@media (max-width: $screen-sm-max) {
+			width: 100%;
+			padding: 0 1em 1em 1em;
+
+			h1 {
+				font-size: 2rem;
+				line-height: 2.6rem;
+			}
+
+			.input-group {
+				width: 100%;
+			}
+		}
 	}
 
 	.input-group {
@@ -33,7 +47,10 @@
   	background-color: #e5e5e5;
   	color: #2c3849;
   	font-weight: 600;
-  	&:focus, &:active, &:hover {
+
+  	&:focus, 
+  	&:active, 
+  	&:hover {
     	background-color: darken(#e5e5e5, 4%);
     	color: darken(#2c3849, 6%);
   	}
