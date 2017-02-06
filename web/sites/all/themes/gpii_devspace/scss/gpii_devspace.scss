@@ -13,18 +13,23 @@
 
 .navbar-nav.primary.menu.nav {
   @media (min-width: $screen-sm-min) {
-    li {
-      & > a {
-        &:hover {
-          border-top-color: $color-gpii-devspace-primary;
-        }
-        &.dropdown > a {
-          &:hover {
-            border-top-color: $color-gpii-devspace-primary;
-          }
-        }
-      }
+    
+    li > a:hover,
+    li > a:focus {
+      border-top-color: $color-gpii-devspace-primary;
+      color: $color-gpii-devspace-primary;
+      background-color: #FFF;
     }
+    
+    li > a:focus {
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px;
+    }
+
+    li.dropdown > a:hover {
+      border-top-color: $color-gpii-devspace-primary;
+    }
+
     .dropdown.active > a,
     .dropdown.active > a:hover,
     .dropdown.active > a:focus,
@@ -48,16 +53,35 @@
 }
 
 #navbar {
-  .navbar-header {
-    p.lead {
+  p.lead {
+    color: $color-gpii-devspace-primary;
+    text-align: left;
+    padding-top: 0.35rem;
+    margin-top: 0.9rem;
+  
+    a, a:active, a:hover, a:focus {
       color: $color-gpii-devspace-primary;
-      text-align: left;
-      padding-top: 0.35rem;
-      margin-top: 0.9rem;
-      a, a:active, a:hover, a:focus {
-        color: $color-gpii-devspace-primary;
-        font-size: 1.9rem;
-        font-weight: 600;
+      font-size: 1.9rem;
+      font-weight: 600;
+    }
+  }
+
+  .navbar-header {
+    @media(max-width: 767px) {
+      height: 50px;
+      border-bottom: 1px solid #e5e5e5;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+      .navbar-btn {
+        width: 64px;
+        float: left;
+        margin: (5px/14px)*1rem 0 0 (8px/14px)*1rem;
+        padding: 0;
+      }
+      p.lead {
+        margin: (6px/14px)*1rem 0 0 0;
+        a {
+          font-size: 1.5rem;
+        }
       }
     }
   }
@@ -96,5 +120,17 @@ a {
   }
   &:visited {
     color: lighten($color-gpii-devspace-primary, 6%);
+  }
+}
+
+.views-row {
+  padding: 1em 0 0 0;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  h2 > a {
+    font-size: (18px/14px)*1rem;
   }
 }

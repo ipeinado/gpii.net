@@ -10,6 +10,15 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   overflow: hidden; }
+  @media (max-width: 991px) {
+    .front .region-hero {
+      width: 100%;
+      padding: 0 1em 1em 1em; }
+      .front .region-hero h1 {
+        font-size: 2rem;
+        line-height: 2.6rem; }
+      .front .region-hero .input-group {
+        width: 100%; } }
 
 .front .input-group {
   width: 60%;
@@ -278,9 +287,15 @@
   background-color: #18606b; }
 
 @media (min-width: 768px) {
-  .navbar-nav.primary.menu.nav li > a:hover {
-    border-top-color: #18606b; }
-  .navbar-nav.primary.menu.nav li > a.dropdown > a:hover {
+  .navbar-nav.primary.menu.nav li > a:hover,
+  .navbar-nav.primary.menu.nav li > a:focus {
+    border-top-color: #18606b;
+    color: #18606b;
+    background-color: #FFF; }
+  .navbar-nav.primary.menu.nav li > a:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px; }
+  .navbar-nav.primary.menu.nav li.dropdown > a:hover {
     border-top-color: #18606b; }
   .navbar-nav.primary.menu.nav .dropdown.active > a,
   .navbar-nav.primary.menu.nav .dropdown.active > a:hover,
@@ -298,15 +313,30 @@
 #footer-wrap {
   border-color: #18606b; }
 
-#navbar .navbar-header p.lead {
+#navbar p.lead {
   color: #18606b;
   text-align: left;
   padding-top: 0.35rem;
   margin-top: 0.9rem; }
-  #navbar .navbar-header p.lead a, #navbar .navbar-header p.lead a:active, #navbar .navbar-header p.lead a:hover, #navbar .navbar-header p.lead a:focus {
+  #navbar p.lead a, #navbar p.lead a:active, #navbar p.lead a:hover, #navbar p.lead a:focus {
     color: #18606b;
     font-size: 1.9rem;
     font-weight: 600; }
+
+@media (max-width: 767px) {
+  #navbar .navbar-header {
+    height: 50px;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+    #navbar .navbar-header .navbar-btn {
+      width: 64px;
+      float: left;
+      margin: 0.35714286rem 0 0 0.57142857rem;
+      padding: 0; }
+    #navbar .navbar-header p.lead {
+      margin: 0.42857143rem 0 0 0; }
+      #navbar .navbar-header p.lead a {
+        font-size: 1.5rem; } }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: #18606b; }
@@ -330,3 +360,10 @@ a {
     color: #124a52; }
   a:visited {
     color: #1e7684; }
+
+.views-row {
+  padding: 1em 0 0 0; }
+  .views-row h2 {
+    margin-top: 0; }
+  .views-row h2 > a {
+    font-size: 1.28571429rem; }
