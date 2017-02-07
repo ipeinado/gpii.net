@@ -214,3 +214,4 @@ core = "7.x"
 project = "bootstrap"
 datestamp = "1480458193"
 
+patch[] = https://www.drupal.org/node/2850262 Issue 2850262, Patch #1

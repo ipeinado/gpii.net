@@ -6387,14 +6387,12 @@ html.force-mobile-layout .container, html.force-mobile-layout .container-fluid {
 html,
 body {
   font-size: 14px; }
-  html a,
   html div,
   html p,
   html label,
   html li,
   html select,
   html span,
-  body a,
   body div,
   body p,
   body label,
@@ -6792,7 +6790,7 @@ html {
         border-top-style: solid;
         border-top-color: transparent;
         text-decoration: none; }
-        .navbar-nav.primary.menu.nav li > a:hover {
+        .navbar-nav.primary.menu.nav li > a:hover, .navbar-nav.primary.menu.nav li > a:focus {
           border-top-color: #2783c6;
           background-color: #fff; }
         .navbar-nav.primary.menu.nav li > a.dropdown > a {

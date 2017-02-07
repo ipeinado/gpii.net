@@ -2,9 +2,9 @@
   background-color: #A72534; }
 
 @media (min-width: 768px) {
-  .navbar-nav.primary.menu.nav li > a:hover {
+  .navbar-nav.primary.menu.nav li > a:hover, .navbar-nav.primary.menu.nav li > a:focus {
     border-top-color: #A72534; }
-  .navbar-nav.primary.menu.nav li > a.dropdown > a:hover {
+  .navbar-nav.primary.menu.nav li > a.dropdown > a:hover, .navbar-nav.primary.menu.nav li > a.dropdown > a:focus {
     border-top-color: #A72534; }
   .navbar-nav.primary.menu.nav .dropdown.active > a,
   .navbar-nav.primary.menu.nav .dropdown.active > a:hover,
@@ -65,7 +65,6 @@ a {
     font-weight: 600; }
 
 body.page-search .view-search {
-  border-top: 1px solid #000;
   margin-top: 1rem; }
 
 .node-product.view-mode-search_results .field-name-field-product-image {
@@ -123,6 +122,28 @@ body.page-search .view-search {
     margin-left: auto;
     margin-right: auto;
     padding: 2rem 0 1rem; }
+
+.page-adv-search .form-control {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-color: #000;
+  padding: 1.4rem 0.85rem 1.3rem; }
+
+.page-adv-search .btn.reset {
+  line-height: 1.1; }
+
+.page-adv-search .list-unstyled {
+  border-top: 1px solid #000; }
+
+.page-adv-search .col-xs-8 {
+  text-align: center;
+  margin-bottom: 1em; }
+  .page-adv-search .col-xs-8 img {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem 0.5rem 0 1rem; }
 
 /**
  * Home Page Specific Styles

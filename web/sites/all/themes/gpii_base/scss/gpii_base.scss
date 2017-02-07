@@ -8,7 +8,6 @@
 html,
 body {
   font-size: 14px;
-  a,
   div,
   p,
   label,
@@ -504,7 +503,7 @@ html {
         border-top-style: solid;
         border-top-color: transparent;
         text-decoration: none;
-        &:hover {
+        &:hover, &:focus {
           border-top-color: $color-gpii-blue;
           background-color: #fff;
 
