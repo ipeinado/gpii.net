@@ -1,0 +1,12 @@
+/**
+ * @file
+ * RTL styling for the 2col-stacked-fluid template.
+ */
+
+.2col-stacked-fluid > .group-left {
+  float: right;
+}
+
+.2col-stacked-fluid > .group-right {
+  float: left;
+}
