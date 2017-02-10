@@ -1,0 +1,139 @@
+// FULL PAGE
+.view-mode-full {
+
+	.field {
+		margin-bottom: 1em;
+	}
+
+	.group-action-links {
+		overflow: hidden;
+		margin-bottom: 1em;
+		padding: .5em 0;
+		border-bottom: 1px solid $color-gpii-gray;
+
+		div {	
+			display: inline-block;
+			margin-right: (10px/14px)*1rem;
+		}
+	}
+
+	aside {
+		h3 {
+			font-size: (13px/14px)*1rem;
+			text-transform: uppercase;
+			font-weight: 600;
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				margin-bottom: (7px/14px)*1rem;
+			}
+		}
+	}
+}
+
+
+// TEASER
+.node-teaser {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-top: 1px solid rgb(226, 226, 226);
+
+	h2 {
+		margin-top: 0;
+		line-height: (20px/14px)*1rem;
+		font-size: (18px/14px)*1rem;
+		a {
+			font-size: (18px/14px)*1rem;	
+		}
+	}
+}
+
+// NODE CARD
+.node-card {
+	padding: 0;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	border: 1px solid $color-gpii-gray;
+	border-radius: 5px;
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, .1);
+	overflow: hidden;
+
+	.card-header {
+		overflow: hidden;
+		@include aspect-ratio(16,9);
+	}
+
+	h2 {
+		margin-top: 0;
+		margin-bottom: .2em;
+		font-size: (18px/14px)*1rem;
+		font-weight: 600,
+	}
+
+	.card-content {
+		padding: 1rem;
+
+		p {
+			font-size: (13px/14px)*1rem;
+			margin: 1em 0;
+		}
+	}
+
+	.card-footer {
+		padding: 1em;
+		overflow: hidden;
+		div {
+			display: inline-block;
+			margin-right: (7px/14px)*1rem;
+		}
+	}
+
+	@media (min-width: 480px) and (max-width: $screen-xs-max) {
+
+		border: 0;
+
+		.card-header {
+			width: 33%;
+			float: left;
+			height: 100%;
+		}
+
+		.card-content {
+			padding-top: 0;
+		}
+
+		.card-content,
+		.card-footer {
+			margin-left: 33%;
+			padding-left: 1em;
+		}
+	}
+
+	@media (min-width: $screen-md-min) {
+
+	}
+}
+
+// ADD NODE LIST
+.node-type-list {
+	dt {
+		border-top: 1px solid #CCC;
+		padding: .5em 0;
+
+		a:before {
+			content: "+";
+			font-size: 1.1em;
+			margin-right: .3em;
+			color: #666;
+		}
+	}
+	dd {
+		padding-bottom: .5em;
+		text-indent: 1em;
+	}
+}
