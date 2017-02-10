@@ -5,6 +5,19 @@
  * Custom Blocks and functions related to the SAA site.
  */
 
+
+/**
+ * Implements hook_permission().
+ */
+function gpii_saa_custom_permission() {
+  return array(
+    'access advanced search data' => array(
+      'title' => t('Access api data for advanced search'),
+    )
+  );
+}
+
+
 /**
  * Implements hook_block_info().
  */
@@ -247,8 +260,6 @@ function gpii_saa_custom_child_termrefs_table($vid, $tid, $vdisplay) {
 
   return $output;
 
-
-
 }
 
 /**
@@ -275,17 +286,17 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
      * This is experimental code to look at whether we can bypass services and kick out some JSON that doesn't take forever and a day to load.
     */
     function gpii_saa_custom_menu() {
-      $items['api/v1/productapi'] = array( // used for testing and manipulating objects before converting to JSON
-        'title' => 'Products API Experimentation',
-        'page callback' => 'gpii_saa_custom_products_json',
-        'access arguments' => array('administer content'),
-      );
+      // $items['api/v1/productapi'] = array( // used for testing and manipulating objects before converting to JSON
+      //   'title' => 'Products API Experimentation',
+      //   'page callback' => 'gpii_saa_custom_products_json',
+      //   'access arguments' => array('administer content'),
+      // );
       $items['api/v1/products/adv-search'] = array(
         'title' => 'Products Advanced Search Endpoint',
         'page callback' => 'gpii_saa_custom_products_advsearch',
-        'access arguments' => array('access content'),
+        'access arguments' => array('access advanced search data'),
       );
-      $items['api/v1/products-new'] = array(
+      $items['api/v1/products/all'] = array(
         'title' => 'Products Endpoint',
         'page callback' => 'gpii_saa_custom_products_ulisting',
         'access arguments' => array('access content'),
