@@ -1,31 +1,7 @@
-.node-teaser {
-	padding-top: 1em;
-	padding-bottom: 1em;
-	border-top: 1px solid rgb(226, 226, 226);
-	h3 {
-		margin-top: 0;
-		a {
-			font-size: (18px/14px)*1rem;	
-		}
-	}
-}
-
-.node .field {
-	margin-bottom: 1em;
-}
-
 // CHALLENGES
 
 .field-type-taxonomy-term-reference {
 	margin-bottom: 1em;
-}
-
-.group-user-info {
-	display: block;
-	clear: both;
-	overflow: hidden;
-	margin-bottom: (10px/14px)*1rem;
-
 }
 
 .user-info-picture {
@@ -33,15 +9,6 @@
 		width: 40px;
 		float: left;
 		border-radius: 100%;
-		margin-right: (10px/14px)*1rem;
-	}
-}
-
-.group-action-links {
-	margin: 1.5rem 0 1rem;
-
-	div {	
-		display: inline-block;
 		margin-right: (10px/14px)*1rem;
 	}
 }
@@ -67,19 +34,19 @@
 	padding: 0.1em 0.3em;
 	line-height: 2em;
 }
-.field-level-of-complexity.Low {
+.Low {
 	background-color: green;
 }
 
-.field-level-of-complexity.Medium {
+.Medium {
 	background-color: orange;
 }
 
-.field-level-of-complexity.High {
+.High {
 	background-color: red;
 }
 
-.field-level-of-complexity.Grand {
+.Grand {
 	background-color: black;
 }
 
@@ -125,21 +92,20 @@
 	}
 }
 
-// ADD NODE LIST
-.node-type-list {
-	dt {
-		border-top: 1px solid #CCC;
-		padding: .5em 0;
-
-		a:before {
-			content: "+";
-			font-size: 1.1em;
-			margin-right: .3em;
-			color: #666;
-		}
+.node-card {
+	.card-content .challenge-author {
+		font-size: (13px/14px)*1rem;
+		color: #666;
+		font-weight: 600;
 	}
-	dd {
-		padding-bottom: .5em;
-		text-indent: 1em;
+
+	.overlay {
+		opacity: .7;
+		padding: 1em;
+		text-align: center;
+		font-weight: bolder;
+		text-transform: uppercase;
+		font-size: (18px/14px)*1rem;
+		color: #FFF;
 	}
 }

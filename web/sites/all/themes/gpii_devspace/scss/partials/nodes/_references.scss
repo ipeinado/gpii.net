@@ -8,7 +8,7 @@
 		margin-bottom: 1em;
 		color: #777;
 
-		@media(min-width: 768px) {
+		@media(min-width: $screen-md-min) {
 			width: 200px;
 			float: left;
 			text-align: right;
@@ -17,34 +17,27 @@
 
 	.field-ref-items {
 		margin-bottom: 1em;
-		@media(min-width: 768px) {
+		@media(min-width: $screen-md-min) {
 			margin-left: 216px;
 		}
-	}
-
-	.group-action-links {
-		padding: 1em;
-		border-bottom: 1px solid #e2e2e2;
-		margin-bottom: 1em;
 	}
 }
 
 .node-reference.node-teaser {
-	border-bottom: 1px solid #e2e2e2;
-	padding: 1em 0;
 
-	.reference-type {
-		font-size: (12px/14px)*1rem;
-		font-weight: 600;
-		color: #777;
+	.group-metadata {
+		margin-bottom: (10px/14px)*1rem;
+		color: #666;
 	}
 
-	h3 {
-		margin-top: 0;
-		margin-bottom: 0.5rem;
-		a {
-			font-size: (18px/14px)*1rem;
-		}
+	.group-metadata > .reference-type {
+		color: #333;
+	}
+
+	.group-metadata,
+	.group-metadata > span,
+	.group-metadata > a {
+		font-size: (13px/14px)*1rem;
 	}
 }
 
@@ -54,14 +47,6 @@
 		content: ",";
 	}
 } 
-
-.group-user-info {
-	display: block;
-	clear: both;
-	overflow: hidden;
-	color: #777;
-	margin-bottom: (10px/14px)*1rem;
-}
 
 .user-info-picture {
 	img {
