@@ -438,3 +438,20 @@ body.front {
   }
 }
 
+
+// Override the formatting from taxonomy term tree
+body.node-type-product {
+  .term-tree-list .selected {
+    font-weight:normal;
+  }
+}
+
+.term-tree-list {
+  ul:first-child {
+    margin-left: 0.75em;
+  }
+  ul {
+    margin-left: 0;
+    padding-left: 1em;
+  }
+}

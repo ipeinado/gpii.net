@@ -6468,6 +6468,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal .navbar-fixed-t
 body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-open .navbar-fixed-top {
   top: 3.2rem; }
 
+body.admin-menu .flc-prefsEditor-separatedPanel {
+  top: 29px; }
+
 .navbar-fixed-top {
   z-index: 499; }
 
@@ -6904,5 +6907,8 @@ body.not-logged-in .navbar-nav.secondary > li.last > a {
 .page-header {
   margin-top: 0;
   border-bottom: none; }
+
+body.node-type-product .term-tree-list .selected {
+  font-weight: normal; }
 
 /*# sourceMappingURL=gpii_base.css.map */

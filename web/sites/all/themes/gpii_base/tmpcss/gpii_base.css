@@ -6427,6 +6427,9 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal .navbar-fixed-t
 body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-open .navbar-fixed-top {
   top: 3.2rem; }
 
+body.admin-menu .flc-prefsEditor-separatedPanel {
+  top: 29px; }
+
 .navbar-fixed-top {
   z-index: 499; }
 

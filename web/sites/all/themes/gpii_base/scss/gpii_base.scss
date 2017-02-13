@@ -60,6 +60,15 @@ body.navbar-administration.navbar-is-fixed-top.navbar-horizontal.navbar-tray-ope
   }
 }
 
+// make some adjustments when admin menu is in use
+
+body.admin-menu {
+  .flc-prefsEditor-separatedPanel {
+    top: 29px;
+  }
+}
+
+
 // #############################################################################
 // Bootstrap and Drupal Bootstrap Overrides
 // #############################################################################
@@ -604,3 +613,4 @@ html {
   margin-top: 0;
   border-bottom: none;
 }
+

@@ -298,3 +298,13 @@ body.front {
   margin-bottom: 0;
   margin-top: 1rem;
   text-align: center; }
+
+body.node-type-product .term-tree-list .selected {
+  font-weight: normal; }
+
+.term-tree-list ul:first-child {
+  margin-left: 0.75em; }
+
+.term-tree-list ul {
+  margin-left: 0;
+  padding-left: 1em; }
