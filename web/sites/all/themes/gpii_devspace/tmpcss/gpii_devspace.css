@@ -40,20 +40,38 @@
     background-color: #dbdbdb;
     color: #202936; }
 
-.card header {
-  padding: 10px 0;
-  text-align: center; }
+.front #main-container {
+  margin-top: 2rem; }
 
-.card header > h2 {
-  font-size: 19px;
-  color: #FFF; }
-  .card header > h2 .glyphicon {
-    top: 0;
-    font-size: .8em;
-    margin-right: .2em; }
+.card {
+  border: 1px solid #FFF;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  transition: border-color .3s ease, box-shadow .3s ease; }
+  .card header {
+    padding: 10px 0;
+    text-align: center; }
+  .card header > h2 {
+    font-size: 1.28571429rem;
+    line-height: 1.57142857rem;
+    color: #FFF; }
+    .card header > h2 .glyphicon {
+      top: 0;
+      font-size: .8em;
+      margin-right: .2em; }
+  .card .card-content {
+    padding: 15px 15px;
+    font-size: 0.92857143rem; }
+  .card .card-content > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; }
+    .card .card-content > ul li {
+      margin-bottom: .6em; }
 
-.card .card-content {
-  padding: 15px 20px; }
+.card:hover {
+  border-color: #e5e5e5;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1); }
 
 #learning-card header {
   background-color: #e44e31; }
@@ -66,6 +84,89 @@
 
 #people-card header {
   background-color: #3391d8; }
+
+.front .view {
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 2em; }
+
+.front .view-header {
+  margin-bottom: 2.2rem;
+  text-align: center; }
+
+.front .view-content {
+  overflow: hidden; }
+
+.front .view-footer {
+  clear: both;
+  margin-top: 1.5rem;
+  text-align: center; }
+  .front .view-footer a {
+    font-size: 1.14285714rem; }
+
+.view-recent-components ul.recent-components-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none; }
+
+.view-recent-components ul.recent-components-list > li {
+  margin-bottom: 1em; }
+  .view-recent-components ul.recent-components-list > li .category-icon {
+    float: left; }
+    .view-recent-components ul.recent-components-list > li .category-icon i {
+      font-size: 1.14285714rem;
+      color: #666;
+      font-weight: 500; }
+  .view-recent-components ul.recent-components-list > li h3 {
+    margin-top: 0;
+    margin-left: 22px;
+    font-size: 1.14285714rem;
+    font-weight: 600; }
+
+.view-recent-components .span-published {
+  margin-left: 22px; }
+
+ul.components-count-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+  ul.components-count-list li {
+    display: inline-block; }
+  ul.components-count-list li:not(.views-row-last):after {
+    content: "|"; }
+
+.view-success-stories .ss-card {
+  padding: 1.42857143rem;
+  border: 1px solid #e5e5e5; }
+  .view-success-stories .ss-card .ss-card-image > img {
+    margin: 0 auto;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; }
+  .view-success-stories .ss-card h3 {
+    font-size: 1.28571429rem;
+    text-align: center;
+    margin-bottom: 1.2rem; }
+
+.view-social .view-content {
+  text-align: center; }
+  .view-social .view-content ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; }
+    .view-social .view-content ul li {
+      display: inline-block; }
+    .view-social .view-content ul li > a {
+      background-color: #3D4557;
+      border-radius: 2em;
+      color: #EBECEC;
+      display: inline-block;
+      height: 2em;
+      line-height: 2em;
+      margin: auto 3px;
+      width: 2em;
+      font-size: 2em;
+      text-align: center; }
 
 .view-subcategories-with-icons {
   overflow: hidden;
@@ -154,7 +255,6 @@
 
 .node-card {
   padding: 0;
-  margin-right: 15px;
   margin-bottom: 15px;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
@@ -176,7 +276,7 @@
       bottom: 0; }
   .node-card h2 {
     margin-top: 0;
-    margin-bottom: .2em;
+    margin-bottom: 1rem;
     font-size: 1.28571429rem;
     font-weight: 600; }
   .node-card .card-content {
@@ -348,16 +448,17 @@
   display: inline-block;
   margin-right: 0.5rem; }
 
-a:hover,
-a:focus,
-a:active {
-  color: #009688; }
-
 dl dt {
   margin-bottom: 0.71428571rem; }
 
 .region-hero {
   background-color: #18606b; }
+
+article h2 {
+  font-size: 1.57142857rem; }
+
+article h3 {
+  font-size: 1.28571429rem; }
 
 @media (min-width: 768px) {
   .navbar-nav.primary.menu.nav li > a {
@@ -442,3 +543,10 @@ a {
     color: #124a52; }
   a:visited {
     color: #1e7684; }
+
+.view .view-header {
+  padding: .5em 0; }
+
+@media (min-width: 768px) {
+  #footer-wrap {
+    position: relative; } }

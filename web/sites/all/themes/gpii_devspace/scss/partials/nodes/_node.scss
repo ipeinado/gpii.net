@@ -56,7 +56,6 @@
 // NODE CARD
 .node-card {
 	padding: 0;
-	margin-right: 15px;
 	margin-bottom: 15px;
 	border: 1px solid $color-gpii-gray;
 	border-radius: 5px;
@@ -70,9 +69,9 @@
 
 	h2 {
 		margin-top: 0;
-		margin-bottom: .2em;
+		margin-bottom: 1rem;
 		font-size: (18px/14px)*1rem;
-		font-weight: 600,
+		font-weight: 600;
 	}
 
 	.card-content {
