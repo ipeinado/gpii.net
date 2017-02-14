@@ -60,7 +60,17 @@
   }
 }
 
+.front #main-container {
+	margin-top: 2rem;
+}
+
 .card {
+
+	border: 1px solid #FFF;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	transition: border-color .3s ease,
+				box-shadow .3s ease;
 
 	header {
 		padding: 10px 0;
@@ -68,7 +78,8 @@
 	}
 
 	header > h2 {
-		font-size: 19px;
+		font-size: (18px/14px)*1rem;
+		line-height: (22px/14px)*1rem;
 		color: #FFF;
 
 		.glyphicon {
@@ -79,8 +90,24 @@
 	}
 
 	.card-content {
-		padding: 15px 20px;
+		padding: 15px 15px;
+		font-size: (13px/14px)*1rem;
 	}
+
+	.card-content > ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+
+		li {
+			margin-bottom: .6em;
+		}
+	}
+}
+
+.card:hover {
+	border-color: $color-gpii-gray;
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, .1);
 }
 
 #learning-card header {
@@ -98,3 +125,127 @@
 #people-card header {
 	background-color: $color-gpii-dark-blue;
 }
+
+.front {
+	.view {
+		clear: both;
+		overflow: hidden;
+		margin-bottom: 2em;
+	}
+
+	.view-header {
+		margin-bottom: 2.2rem;
+		text-align: center;
+	}
+
+	.view-content {
+		overflow: hidden;
+	}
+
+	.view-footer {
+		clear: both;
+		margin-top: 1.5rem;
+		text-align: center;
+
+		a {
+			font-size: (16px/14px)*1rem;
+		}
+	}
+}
+
+.view-recent-components {
+	
+	ul.recent-components-list {
+		padding: 0;
+		margin: 0;
+		list-style-type: none;
+	}
+
+	ul.recent-components-list > li {
+		margin-bottom: 1em;
+		.category-icon {
+			float: left;
+
+			i {
+				font-size: (16px/14px)*1rem;
+				color: #666;
+				font-weight: 500;
+			}
+		}
+		h3 {
+			margin-top: 0;
+			margin-left: 22px;
+			font-size: (16px/14px)*1rem;
+			font-weight: 600;
+		}
+	}
+
+	.span-published {
+		margin-left: 22px;
+	}
+}
+
+ul.components-count-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+
+	li {
+		display: inline-block;
+	}
+
+	li:not(.views-row-last) {
+		&:after {
+			content: "|";
+		}
+	}
+}
+
+.view-success-stories {
+	.ss-card {
+		padding: (20px/14px)*1rem;
+		border: 1px solid $color-gpii-gray;
+
+		.ss-card-image > img {
+			margin: 0 auto;
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+		}
+
+		h3 {
+			font-size: (18px/14px)*1rem;
+			text-align: center;
+			margin-bottom: 1.2rem;
+		}
+	}
+}
+
+.view-social .view-content {
+	text-align: center;
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+
+		li {
+			display: inline-block;
+		}
+
+		li > a {
+    	background-color: #3D4557;
+    	border-radius: 2em;
+    	color: #EBECEC;
+    	display: inline-block;
+    	height: 2em;
+    	line-height: 2em;
+    	margin: auto 3px;
+    	width: 2em;
+    	font-size: 2em;
+    	text-align: center;
+		}
+	}
+}
+
+
