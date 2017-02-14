@@ -12,18 +12,22 @@
 
 $color-gpii-devspace-bright-green: #009688;
 
-a:hover,
-a:focus,
-a:active {
-  color: $color-gpii-devspace-bright-green;
-}
-
 dl dt {
   margin-bottom: (10px/14px)*1rem;
 }
 
 .region-hero {
   background-color: $color-gpii-devspace-primary;
+}
+
+article {
+  h2 {
+    font-size: (22px/14px)*1rem;
+  }
+
+  h3 {
+    font-size: (18px/14px)*1rem;
+  }
 }
 
 .navbar-nav.primary.menu.nav {
@@ -149,3 +153,14 @@ a {
     color: lighten($color-gpii-devspace-primary, 6%);
   }
 }
+
+.view .view-header {
+  padding: .5em 0;
+}
+
+@media (min-width: 768px) {
+  #footer-wrap {
+    position: relative;
+  }
+}
+
