@@ -134,7 +134,7 @@
 	}
 
 	.view-header {
-		margin-bottom: 2.2rem;
+		margin-bottom: 1rem;
 		text-align: center;
 	}
 
@@ -153,6 +153,10 @@
 	}
 }
 
+#block-views-recent-components-block {
+	clear: both;
+}
+
 .view-recent-components {
 	
 	ul.recent-components-list {
@@ -162,7 +166,7 @@
 	}
 
 	ul.recent-components-list > li {
-		margin-bottom: 1em;
+		margin-bottom: 2em;
 		.category-icon {
 			float: left;
 

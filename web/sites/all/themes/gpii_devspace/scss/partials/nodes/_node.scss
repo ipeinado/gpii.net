@@ -5,7 +5,13 @@
 		margin-bottom: 1em;
 	}
 
+	.group-user-info {
+		margin-bottom: 1em;
+	}
+
 	.group-action-links {
+		display: block;
+		clear: both;
 		overflow: hidden;
 		margin-bottom: 1em;
 		padding: .5em 0;
@@ -14,6 +20,14 @@
 		div {	
 			display: inline-block;
 			margin-right: (10px/14px)*1rem;
+		}
+	}
+
+	article {
+		img {
+			float: left;
+			margin-right: 1em;
+			margin-bottom: 1em;
 		}
 	}
 
@@ -45,11 +59,20 @@
 
 	h2 {
 		margin-top: 0;
+		margin-bottom: .25em;
 		line-height: (20px/14px)*1rem;
 		font-size: (18px/14px)*1rem;
 		a {
 			font-size: (18px/14px)*1rem;	
 		}
+	}
+
+	.node-teaser-subtitle {
+		color: #666;
+	}
+
+	.node-teaser-body {
+		margin-top: (10px/14px)*1rem;
 	}
 }
 

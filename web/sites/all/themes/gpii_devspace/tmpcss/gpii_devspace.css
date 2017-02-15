@@ -91,7 +91,7 @@
   margin-bottom: 2em; }
 
 .front .view-header {
-  margin-bottom: 2.2rem;
+  margin-bottom: 1rem;
   text-align: center; }
 
 .front .view-content {
@@ -104,13 +104,16 @@
   .front .view-footer a {
     font-size: 1.14285714rem; }
 
+#block-views-recent-components-block {
+  clear: both; }
+
 .view-recent-components ul.recent-components-list {
   padding: 0;
   margin: 0;
   list-style-type: none; }
 
 .view-recent-components ul.recent-components-list > li {
-  margin-bottom: 1em; }
+  margin-bottom: 2em; }
   .view-recent-components ul.recent-components-list > li .category-icon {
     float: left; }
     .view-recent-components ul.recent-components-list > li .category-icon i {
@@ -221,7 +224,12 @@ ul.components-count-list {
 .view-mode-full .field {
   margin-bottom: 1em; }
 
+.view-mode-full .group-user-info {
+  margin-bottom: 1em; }
+
 .view-mode-full .group-action-links {
+  display: block;
+  clear: both;
   overflow: hidden;
   margin-bottom: 1em;
   padding: .5em 0;
@@ -229,6 +237,11 @@ ul.components-count-list {
   .view-mode-full .group-action-links div {
     display: inline-block;
     margin-right: 0.71428571rem; }
+
+.view-mode-full article img {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 1em; }
 
 .view-mode-full aside h3 {
   font-size: 0.92857143rem;
@@ -248,10 +261,15 @@ ul.components-count-list {
   border-top: 1px solid #e2e2e2; }
   .node-teaser h2 {
     margin-top: 0;
+    margin-bottom: .25em;
     line-height: 1.42857143rem;
     font-size: 1.28571429rem; }
     .node-teaser h2 a {
       font-size: 1.28571429rem; }
+  .node-teaser .node-teaser-subtitle {
+    color: #666; }
+  .node-teaser .node-teaser-body {
+    margin-top: 0.71428571rem; }
 
 .node-card {
   padding: 0;
@@ -550,3 +568,18 @@ a {
 @media (min-width: 768px) {
   #footer-wrap {
     position: relative; } }
+
+.facetapi-facetapi-checkbox-links {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+  .facetapi-facetapi-checkbox-links li {
+    margin-bottom: .25rem; }
+  .facetapi-facetapi-checkbox-links input[type="checkbox"] {
+    background-color: red; }
+  .facetapi-facetapi-checkbox-links a.facetapi-checkbox {
+    display: inline;
+    margin-left: .25rem; }
+
+.btn.btn-navbar {
+  background-color: yellow; }
