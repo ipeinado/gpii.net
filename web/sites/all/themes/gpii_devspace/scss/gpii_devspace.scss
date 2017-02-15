@@ -164,3 +164,25 @@ a {
   }
 }
 
+.facetapi-facetapi-checkbox-links {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    margin-bottom: .25rem;
+  }
+
+  input[type="checkbox"] {
+    background-color: red;
+  }
+
+  a.facetapi-checkbox {
+    display: inline;
+    margin-left: .25rem;
+  }
+}
+
+.btn.btn-navbar {
+  background-color: yellow;
+}
