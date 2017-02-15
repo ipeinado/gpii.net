@@ -97,7 +97,7 @@
   margin-bottom: 2em; }
 
 .front .view-header {
-  margin-bottom: 2.2rem;
+  margin-bottom: 1rem;
   text-align: center; }
 
 .front .view-content {
@@ -119,7 +119,7 @@
   list-style-type: none; }
 
 .view-recent-components ul.recent-components-list > li {
-  margin-bottom: 1em; }
+  margin-bottom: 2em; }
   .view-recent-components ul.recent-components-list > li .category-icon {
     float: left; }
     .view-recent-components ul.recent-components-list > li .category-icon i {
