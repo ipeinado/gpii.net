@@ -107,28 +107,6 @@
 #block-views-recent-components-block {
   clear: both; }
 
-.view-recent-components ul.recent-components-list {
-  padding: 0;
-  margin: 0;
-  list-style-type: none; }
-
-.view-recent-components ul.recent-components-list > li {
-  margin-bottom: 2em; }
-  .view-recent-components ul.recent-components-list > li .category-icon {
-    float: left; }
-    .view-recent-components ul.recent-components-list > li .category-icon i {
-      font-size: 1.14285714rem;
-      color: #666;
-      font-weight: 500; }
-  .view-recent-components ul.recent-components-list > li h3 {
-    margin-top: 0;
-    margin-left: 22px;
-    font-size: 1.14285714rem;
-    font-weight: 600; }
-
-.view-recent-components .span-published {
-  margin-left: 22px; }
-
 ul.components-count-list {
   margin: 0;
   padding: 0;
@@ -216,7 +194,6 @@ ul.components-count-list {
   .view-subcategories-with-icons .item-subcategory:hover {
     border-color: #F1EEEA; }
     .view-subcategories-with-icons .item-subcategory:hover h2 > a {
-      text-decoration: underline;
       color: #009688; }
     .view-subcategories-with-icons .item-subcategory:hover .subcategory-icon {
       background-color: #009688; }
@@ -321,6 +298,46 @@ ul.components-count-list {
       .node-card .card-footer {
         margin-left: 33%;
         padding-left: 1em; } }
+
+.node-overview-list {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+
+.node-overview {
+  float: none;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0.5rem;
+  margin-right: -4px;
+  margin-bottom: 1em;
+  border: 1px solid #FFF;
+  transition: border-color .2s ease, box-shadow .2s ease; }
+  .node-overview .category-icon {
+    display: inline-block;
+    float: left; }
+    .node-overview .category-icon i.fa {
+      font-size: 18px;
+      line-height: 22px;
+      color: #777; }
+  .node-overview h3 {
+    margin-top: 0;
+    margin-left: 24px;
+    margin-bottom: 0.21428571rem;
+    font-size: 1rem;
+    line-height: 1.57142857rem;
+    font-weight: 600; }
+  .node-overview span {
+    font-size: 0.92857143rem;
+    color: #777; }
+  .node-overview .span-published {
+    margin-left: 24px; }
+  .node-overview:hover {
+    border-color: #e5e5e5;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); }
+    .node-overview:hover h3 > a {
+      color: #009688; }
 
 .node-type-list dt {
   border-top: 1px solid #CCC;
