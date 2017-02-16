@@ -157,38 +157,6 @@
 	clear: both;
 }
 
-.view-recent-components {
-	
-	ul.recent-components-list {
-		padding: 0;
-		margin: 0;
-		list-style-type: none;
-	}
-
-	ul.recent-components-list > li {
-		margin-bottom: 2em;
-		.category-icon {
-			float: left;
-
-			i {
-				font-size: (16px/14px)*1rem;
-				color: #666;
-				font-weight: 500;
-			}
-		}
-		h3 {
-			margin-top: 0;
-			margin-left: 22px;
-			font-size: (16px/14px)*1rem;
-			font-weight: 600;
-		}
-	}
-
-	.span-published {
-		margin-left: 22px;
-	}
-}
-
 ul.components-count-list {
 	margin: 0;
 	padding: 0;
