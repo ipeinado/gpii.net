@@ -264,7 +264,10 @@ ul.components-count-list {
 
 .node-card {
   padding: 0;
-  margin-bottom: 15px;
+  float: none;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: 2rem;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
   -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
@@ -285,8 +288,7 @@ ul.components-count-list {
       right: 0;
       bottom: 0; }
   .node-card h2 {
-    margin-top: 0;
-    margin-bottom: 1rem;
+    margin: .5rem 0;
     font-size: 1.28571429rem;
     font-weight: 600; }
   .node-card .card-content {
@@ -295,14 +297,18 @@ ul.components-count-list {
       font-size: 0.92857143rem;
       margin: 1em 0; }
   .node-card .card-footer {
-    padding: 1em;
+    padding: .3em 1em 1em 1em;
     overflow: hidden; }
     .node-card .card-footer div {
       display: inline-block;
       margin-right: 0.5rem; }
-  @media (min-width: 480px) and (max-width: 767px) {
+  @media (min-width: 480px) and (max-width: 991px) {
     .node-card {
-      border: 0; }
+      border: 0;
+      border-bottom: 1px solid #b2b2b2;
+      -webkit-box-shadow: none;
+              box-shadow: none;
+      margin-bottom: 1rem; }
       .node-card .card-header {
         width: 33%;
         float: left;
