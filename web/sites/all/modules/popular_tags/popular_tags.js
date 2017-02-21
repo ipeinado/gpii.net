@@ -24,7 +24,6 @@ Drupal.behaviors.popular_tags = {
     if(Drupal.settings.popular_tags) {
       for(field_name in Drupal.settings.popular_tags) {
         var field_name = field_name.replace(/_/g, '-');
-        console.log(field_name);
         var field_container = $('.form-item-' + field_name + '-und', context);
         var tag_container = field_container.find('.popular-tags');
         var show = tag_container.find('a.show-all-terms');
