@@ -15,9 +15,11 @@
  *   form element
  */
 function _popular_tags_inject($children, $element) {
+
   if (preg_match('/<\\/[a-zA-Z0-9]+>$/', $children, $matches) != 1) {
     return $children;
   }
+
 
   drupal_add_js(drupal_get_path('module', 'popular_tags') . '/popular_tags.js');
   drupal_add_css(drupal_get_path('module', 'popular_tags') . '/popular_tags.css');
@@ -30,10 +32,13 @@ function _popular_tags_inject($children, $element) {
   $limit = $instance['widget']['settings']['popular_tags']['limit'];
   $showhide = $instance['widget']['settings']['popular_tags']['showhide'];
 
+
   if ($showhide) {
+    $data = array();
     $data['popular_tags'][$field_name]['limit'] = $limit;
-    drupal_add_js($data, 'setting');
+    drupal_add_js($data, array('type' =>'setting'));
   }
+
   $terms = _popular_tags_get_terms($vname, $limit, $showhide);
   $tag_terms = '<div class="tag-terms">';
   $classes[] = 'term';
@@ -69,7 +74,17 @@ function _popular_tags_inject($children, $element) {
   }
   $html .= $tag_terms . '</div>';
 
-  return substr_replace($children, $html, -(strlen($matches[0])+1), 0);
+// BBC: There are a few issues with this module related to how the popular tags code gets injected.
+// Temporary fix below is to test which theme is active and inject the popular tags code in slightly different locations
+  global $theme;
+
+  if ($theme == 'gpii_devspace') {
+    return substr_replace($children, $html, -(strlen($matches[0])), 0);
+  }
+
+  else {
+    return substr_replace($children, $html, -(strlen($matches[0])+1), 0);
+  }
 }
 
 /**
