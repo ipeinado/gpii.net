@@ -120,7 +120,9 @@
     html += '  <div class="ctools-modal-dialog modal-dialog">';
     html += '    <div class="modal-content">';
     html += '      <div class="modal-header">';
-    html += '        <button type="button" class="close ctools-close-modal" aria-hidden="true">&times;</button>';
+    html += '        <button type="button" class="close ctools-close-modal" aria-hidden="true" aria-label="Close">';
+    html += '          <span aria-hidden="true">&times;</span>';
+    html += '        </button>';
     html += '        <h4 id="modal-title" class="modal-title">&nbsp;</h4>';
     html += '      </div>';
     html += '      <div id="modal-content" class="modal-body">';

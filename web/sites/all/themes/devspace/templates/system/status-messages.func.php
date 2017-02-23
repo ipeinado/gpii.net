@@ -49,7 +49,9 @@ function devspace_status_messages($variables) {
   foreach (drupal_get_messages($display) as $type => $messages) {
     $class = (isset($status_class[$type])) ? ' alert-' . $status_class[$type] : '';
     $output .= "<div class=\"alert alert-block$class messages $type\">\n";
-    $output .= "  <a class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\" href=\"#\">&times;</a>\n";
+    $output .= "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n";
+    $output .= "    <span aria-hidden=\"true\">&times;</span>\n";
+    $output .= "  </button>\n";
 
     if (!empty($status_heading[$type])) {
       $output .= '<h4 class="element-invisible">' . _bootstrap_filter_xss($status_heading[$type]) . "</h4>\n";

@@ -99,7 +99,7 @@ Drupal.progressBar.prototype.sendPing = function () {
  * Display errors on the page.
  */
 Drupal.progressBar.prototype.displayError = function (string) {
-  var error = $('<div class="alert alert-block alert-error"><a class="close" data-dismiss="alert" aria-hidden="true" href="#">&times;</a><h4>Error message</h4></div>').append(string);
+  var error = $('<div class="alert alert-block alert-error"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4>Error message</h4></div>').append(string);
   $(this.element).before(error).hide();
 
   if (this.errorCallback) {
