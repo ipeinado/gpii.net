@@ -224,6 +224,13 @@ body.admin-menu {
 // #############################################################################
 // Google Translate
 // #############################################################################
+
+// hide translate iframe
+
+body > div.skiptranslate {
+  display: none;
+}
+
 #block-google-translator-active-languages {
   display: none;
   position: initial;

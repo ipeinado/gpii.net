@@ -6538,6 +6538,9 @@ body .flc-prefsEditor-separatedPanel {
 .fl-font-prefsEditor-verdana *:not(.fa):not(.fl-icon-undo) {
   font-family: 'Verdana', sans-serif !important; }
 
+body > div.skiptranslate {
+  display: none; }
+
 #block-google-translator-active-languages {
   display: none;
   position: initial;

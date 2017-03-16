@@ -108,8 +108,13 @@
       } else {
         setTimeout(function(){ $fluidUiPanel.css('width', 'auto'); }, 1000);
       }
-
-      setTimeout(function() { $('.flc-prefsEditor-separatedPanel-tabs').focus() }, 1250);
+      console.log(document.getElementById('iframe-focus'));
+      if (document.getElementById('iframe-focus')) {
+        $('#iframe-focus').focus();
+      } else { 
+        $('.flc-prefsEditor-iframe').before('<a id="iframe-focus" href></a>');
+        $('#iframe-focus').focus();
+      }
     });
   });
 
