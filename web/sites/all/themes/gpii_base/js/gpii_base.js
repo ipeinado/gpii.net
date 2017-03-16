@@ -27,7 +27,7 @@
   $(document).ready(function(){
     var $html = $('html'),
         baseFontSize = 1,
-        breakpoints = [];
+        breakpoints = {};
 
     // The base font size and breakpoints (indices) must match the stylesheet.
     // The values represent the ratios at which the screen size should be forced
@@ -77,7 +77,12 @@
       $googleTranslate.slideToggle({
         duration: duration,
         progress: function(){ $toggleContainer.css('top', $googleTranslate.outerHeight()+'px'); },
-        complete: function(){ if (visible) { $toggleContainer.css('top', '0px'); } }
+        complete: function(){
+          $('.goog-te-combo').focus();
+          if (visible) {
+            $toggleContainer.css('top', '0px');
+          }
+        }
       });
     });
 
@@ -103,7 +108,34 @@
       } else {
         setTimeout(function(){ $fluidUiPanel.css('width', 'auto'); }, 1000);
       }
+
+      setTimeout(function() { $('.flc-prefsEditor-separatedPanel-tabs').focus() }, 1250);
     });
   });
 
 }(jQuery));
+
+// setTimeout(function () {
+//   // google translate selector
+//   var translate = document.querySelector('.goog-te-combo');
+//   var languages = [ 'af', 'sq', 'ar', 'be', 'bg', 'ca', 'zh-CN', 'zh-TW', 'hr', 'cs', 'da', 'nl', 'eo', 'et', 'tl', 'fi', 'fr', 'gl', 'de', 'el', 'ht', 'iw', 'hi', 'hu', 'is', 'id', 'ga', 'it', 'ja', 'ko', 'lv', 'lt', 'mk', 'ms', 'mt', 'no', 'fa', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk', 'sl', 'es', 'sw', 'sv', 'th', 'tr', 'uk', 'vi', 'cy', 'yi'];
+//   // add event listener
+//   translate.addEventListener('change', function () {
+//     // split path into segments
+//     var href = window.location.href.split('/');
+//     // new language
+//     var newLang = translate.value;
+//     var oldLang = href[3];
+//     if (languages.indexOf(oldLang) > -1) {
+//       if (newLang !== 'en') {
+//         href.splice(3, 1, newLang);
+//       } else {
+//         href.splice(3, 1);
+//       }
+//     } else {
+//       href.splice(3, 0, newLang);
+//     }
+//     // redirect!
+//     window.location.href = href.join('/');
+//   });
+// }, 2500);
