@@ -1,5 +1,6 @@
 {
     "require": {
-        "drush/drush": "6.*"
+        "drush/drush": "6.*",
+        "google/cloud": "^0.24.0"
     }
 }

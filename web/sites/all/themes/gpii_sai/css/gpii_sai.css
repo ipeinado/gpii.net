@@ -326,6 +326,16 @@ body.front {
        -o-transition-delay: .25s;
           transition-delay: .25s; }
 
+#provideoyourrate .widget_label, #provideoyourrate .spanstar {
+  font-size: 2.5rem; }
+
+#widget_stars_comments_part.widget_stars #histogram {
+  max-width: 50%;
+  width: auto;
+  text-align: right; }
+  #widget_stars_comments_part.widget_stars #histogram td > div {
+    float: left; }
+
 .page-search-facet .block-facetapi ul {
   list-style-type: none;
   padding-left: 1rem; }

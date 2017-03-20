@@ -406,6 +406,27 @@ body.front {
     transition-delay: .25s;
 }
 
+
+// #############################################################################
+// Feed 3 Formatting
+// #############################################################################
+
+#provideoyourrate {
+  .widget_label, .spanstar {
+    font-size: 2.5rem;
+  }
+}
+
+#widget_stars_comments_part.widget_stars #histogram {
+  max-width: 50%;
+  width: auto;
+  text-align: right;
+  td > div {
+    float: left;
+  }
+}
+
+
 // #############################################################################
 // Misc.
 // #############################################################################
