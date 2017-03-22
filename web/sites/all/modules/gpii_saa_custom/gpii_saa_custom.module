@@ -389,7 +389,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
         // trim the body field by calling text_summary and clean up the markup
         foreach ($output as $key => $value) {
-          if (isset($value->body)) {
+          if (isset($value->body_summary)) {
+            $value->body = $value->body_summary;
+          }
+
+          elseif (isset($value->body)) {
             $summary = text_summary($value->body, $value->format, 400);
             $summary = check_markup($summary, $value->format);
             $value->body = $summary;
