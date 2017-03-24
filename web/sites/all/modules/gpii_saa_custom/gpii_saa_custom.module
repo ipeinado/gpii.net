@@ -5,27 +5,27 @@
 /**
  * hook_search_api_solr_query_alter
  *
- * add the
+ * make the basic search translate terms if non-English
  */
 
-// require __DIR__ . '/../../../vendor/autoload.php';
-// use Google\Cloud\Translate\TranslateClient;
+require __DIR__ . '/../../../vendor/autoload.php';
+use Google\Cloud\Translate\TranslateClient;
 
-// function gpii_saa_custom_search_api_solr_query_alter(&$call_args, $query) {
-//   $pathArray = explode('/', request_path());
-//   $language = $pathArray[0];
-//   if ($language !== 'en') {
-//     $googleApiKey = variable_get('GOOGLE_API_KEY');
-//     $clientSettings = array('key' => $googleApiKey);
-//     $translateSettings = array('target' => 'en');
-//     $translate = new TranslateClient($clientSettings);
-//     $result = $translate->translate($call_args['query'], $translateSettings);
-//     $translated = $result['text'];
-//     $call_args['query'] = str_replace('&quot;', '', $translated);
-//     // Uncomment to view/debug query string
-//     // drupal_set_message(json_encode($call_args), 'status');
-//   }
-// }
+function gpii_saa_custom_search_api_solr_query_alter(&$call_args, $query) {
+  $pathArray = explode('/', request_path());
+  $language = $pathArray[0];
+  if ($language !== 'en') {
+    $googleApiKey = variable_get('GOOGLE_API_KEY');
+    $clientSettings = array('key' => $googleApiKey);
+    $translateSettings = array('target' => 'en');
+    $translate = new TranslateClient($clientSettings);
+    $result = $translate->translate($call_args['query'], $translateSettings);
+    $translated = $result['text'];
+    $call_args['query'] = str_replace('&quot;', '', $translated);
+    // Uncomment to view/debug query string
+    // drupal_set_message(json_encode($call_args), 'status');
+  }
+}
 
 /**
  * @file
