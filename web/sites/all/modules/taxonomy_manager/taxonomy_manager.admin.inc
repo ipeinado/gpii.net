@@ -23,7 +23,15 @@ function taxonomy_manager_voc_list() {
   $voc_list = array();
 
   foreach ($vocabularies as $vocabulary) {
-    $voc_list[] = l($vocabulary->name, 'admin/structure/taxonomy_manager/voc/' . $vocabulary->machine_name);
+    $voc_list[] = l($vocabulary->name,
+      'admin/structure/taxonomy_manager/voc/' . $vocabulary->machine_name,
+      array(
+        'attributes' => array(
+          'title' => $vocabulary->description,
+          'alt' => $vocabulary->description,
+        ),
+      )
+    );
   }
   if (!count($voc_list)) {
     $voc_list[] = t('No Vocabularies available');
@@ -525,7 +533,7 @@ function taxonomy_manager_add_form(&$form, $voc, $hide_form = TRUE) {
     $form['toolbar']['add_show'] = array(
       //'#type' => 'button',
       '#attributes' => array('class' => 'taxonomy-manager-buttons add'),
-      '#value' => t('Add'),
+      '#value' => t('Add to Taxonomy'),
       '#theme' => 'no_submit_button',
     );
   }
@@ -559,7 +567,7 @@ function taxonomy_manager_add_form(&$form, $voc, $hide_form = TRUE) {
   $form['add']['add'] = array(
     '#type' => 'submit',
     '#attributes' => array('class' => array('taxonomy-manager-buttons', 'add')),
-    '#value' => t('Add to Taxonomy'),
+    '#value' => t('Add'),
     '#submit' => array('taxonomy_manager_form_add_submit'),
   );
   $form['add']['cancel'] = array(
