@@ -120,27 +120,5 @@
 
 }(jQuery));
 
-// setTimeout(function () {
-//   // google translate selector
-//   var translate = document.querySelector('.goog-te-combo');
-//   var languages = [ 'af', 'sq', 'ar', 'be', 'bg', 'ca', 'zh-CN', 'zh-TW', 'hr', 'cs', 'da', 'nl', 'eo', 'et', 'tl', 'fi', 'fr', 'gl', 'de', 'el', 'ht', 'iw', 'hi', 'hu', 'is', 'id', 'ga', 'it', 'ja', 'ko', 'lv', 'lt', 'mk', 'ms', 'mt', 'no', 'fa', 'pl', 'pt', 'ro', 'ru', 'sr', 'sk', 'sl', 'es', 'sw', 'sv', 'th', 'tr', 'uk', 'vi', 'cy', 'yi'];
-//   // add event listener
-//   translate.addEventListener('change', function () {
-//     // split path into segments
-//     var href = window.location.href.split('/');
-//     // new language
-//     var newLang = translate.value;
-//     var oldLang = href[3];
-//     if (languages.indexOf(oldLang) > -1) {
-//       if (newLang !== 'en') {
-//         href.splice(3, 1, newLang);
-//       } else {
-//         href.splice(3, 1);
-//       }
-//     } else {
-//       href.splice(3, 0, newLang);
-//     }
-//     // redirect!
-//     window.location.href = href.join('/');
-//   });
-// }, 2500);
+// language switcher functionality
+!function(n){function e(n){return t(n).then(function(n){var e=n.innerText;return new Promise(function(t,r){var o=setInterval(function(){n.innerText!==e&&(clearInterval(o),t(n))},250)})})}function t(n){return new Promise(function(e,t){var r=setInterval(function(){var t=document.querySelector(n);t&&(clearInterval(r),e(t))},250)})}function r(n){var t=["af","sq","ar","be","bg","ca","zh-CN","zh-TW","hr","cs","da","nl","en","eo","et","tl","fi","fr","gl","de","el","ht","iw","hi","hu","is","id","ga","it","ja","ko","lv","lt","mk","ms","mt","no","fa","pl","pt","ro","ru","sr","sk","sl","es","sw","sv","th","tr","uk","vi","cy","yi"],r=window.location.href.split("/"),o=n.target.value,i=r[3];t.indexOf(i)>-1?"en"!==o?r.splice(3,1,o):(r.splice(3,1),window.location.href=r.join("/")):r.splice(3,0,o),e("#block-bean-footer-about").then(function(){window.location.href=r.join("/")})}t(".goog-te-combo").then(function(e){return null===document.querySelector('option[value="en"]')&&n(e).children().eq(12).after(new Option("English","en")),e}).then(function(n){return n.addEventListener("change",r)})}(jQuery);
