@@ -19,3 +19,6 @@
 [submodule "web/sites/all/modules/google_material_icons"]
 	path = web/sites/all/modules/google_material_icons
 	url = https://git.drupal.org/sandbox/hctom/2513252.git
+[submodule "web/sites/all/modules/github_projects"]
+	path = web/sites/all/modules/github_projects
+	url = https://github.com/davidgreiner/github_projects
