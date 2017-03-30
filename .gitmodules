@@ -22,3 +22,4 @@
 [submodule "web/sites/all/modules/github_projects"]
 	path = web/sites/all/modules/github_projects
 	url = https://github.com/davidgreiner/github_projects
+	branch = 7.x-1.x
