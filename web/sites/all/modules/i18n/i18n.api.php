@@ -85,6 +85,7 @@ function hook_i18n_object_info() {
  * @see i18n_object_info()
  */
 function hook_i18n_object_info_alter(&$info) {
+  drupal_set_message(t($info), 'status', FALSE);
 }
 
 /**
