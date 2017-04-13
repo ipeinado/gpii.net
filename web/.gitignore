@@ -4,3 +4,6 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
+
+# Ignore files that contain server-specific configuration
+sites/all/drush/aliases.drushrc.php
