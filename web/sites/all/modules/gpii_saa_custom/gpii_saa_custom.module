@@ -514,7 +514,7 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
 
    // Identify JSON returned by the documents available view and make a few adjustments to the output.
    if (isset($controller['view info'])) {
-    if ($controller['view info']['view_name'] == 'product_categories' || $controller['view info']['view_name'] == 'difficulties_categories') {
+    if ($controller['view info']['view_name'] == 'product_categories') { // || $controller['view info']['view_name'] == 'difficulties_categories'
 
       // get the currently active language
       global $language ;
