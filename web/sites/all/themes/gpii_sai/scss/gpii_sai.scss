@@ -476,3 +476,228 @@ body.node-type-product {
     padding-left: 1em;
   }
 }
+
+
+/**
+ * Advanced Search Overrides
+ */
+
+tree-control.tree-dark li .tree-selected,
+tree-control.tree-light li .tree-selected {
+  font-weight: 700;
+}
+tree-control {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 13px;
+  color: #555;
+}
+tree-control.tree-classic li .tree-unselectable,
+tree-control.tree-light li .tree-unselectable {
+  color: #ddd;
+}
+tree-control ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: none;
+}
+tree-control li {
+  position: relative;
+  line-height: 1.5;
+}
+tree-control li.tree-collapsed i.tree-leaf-head,
+tree-control li.tree-expanded i.tree-leaf-head {
+  display: none
+}
+tree-control li.tree-collapsed i.tree-branch-head,
+tree-control li.tree-expanded i.tree-branch-head {
+  display: inline;
+}
+tree-control li.tree-leaf i.tree-branch-head {
+  display: none;
+}
+tree-control li.tree-leaf i.tree-leaf-head {
+  display: inline;
+}
+tree-control li i.tree-branch-head {
+  cursor: pointer;
+}
+tree-control li .tree-label {
+  cursor: pointer;
+  display: inline;
+  padding-right: 0.1rem;
+}
+tree-control li .tree-unselectable {
+  cursor: not-allowed;
+}
+tree-control.tree-classic li.tree-branch-head {
+  position: relative;
+}
+tree-control.tree-classic li.tree-branch-head.expanded ul {
+  margin-left: 1rem;
+}
+tree-control.tree-classic li.tree-branch-head.expanded a {
+  background: url(images/folder.png) 0 6px no-repeat;
+  padding-left: 2.5rem;
+}
+tree-control.tree-classic li.tree-branch-head.collapsed a {
+  background: url(images/folder-closed.png) 0 6px no-repeat;
+  padding-left: 2.5rem;
+}
+
+tree-control.tree-classic li.tree-branch-head .pretty,
+tree-control.tree-classic li.tree-leaf-head .pretty {
+  position: absolute;
+  z-index: 200;
+  left:  1.1rem;
+  margin: 4px 0 0 1px;
+}
+
+tree-control.tree-classic li.tree-branch-head a.tree-label ,
+tree-control.tree-classic li.tree-leaf-head a.tree-label {
+  position: relative;
+  z-index: 100;
+  padding-left: 2.6rem;
+}
+
+tree-control.tree-classic li.tree-branch-head span.label-group {
+  text-indent: -2.6rem;
+  margin-left: 2.6rem;
+  display: inline-block;
+}
+
+tree-control.tree-classic li.tree-branch-head.expanded li.tree-leaf-head span.label-group {
+  text-indent:0;
+  margin-left: 0;
+}
+
+tree-control.tree-classic li.tree-branch-head span.tree-label,
+tree-control.tree-classic li.tree-leaf-head span.tree-label {
+  position: relative;
+  z-index: 100;
+}
+
+tree-control.tree-classic li.tree-leaf-head {
+  padding: 0 0 0 2.6rem;
+}
+
+tree-control.tree-classic li .tree-selected {
+  background-color: #adf;
+  font-weight: 700;
+}
+.text-inverse {
+  color: #fff;
+}
+.label-lg {
+  font-size: 1em;
+}
+.label-default {
+  background-color: #111;
+}
+.text-left .taxonomy-label {
+  position: relative;
+}
+.text-right .taxonomy-label {
+  position: relative;
+}
+.text-right .taxonomy-label::before {
+  content:" ";
+  border-style: solid;
+  border-width: .8rem 0 .8rem 1rem;
+  border-color: transparent transparent transparent #000;
+  position: absolute;
+  right: -.95rem;
+  top:0;
+}
+.text-left .taxonomy-label::before {
+  content:" ";
+  border-style: solid;
+  border-width: .8rem 1rem .8rem 0;
+  border-color: transparent #A72534 transparent transparent;
+  position: absolute;
+  left: -.95rem;
+  top:0;
+}
+.label.taxonomy-label {
+  margin: 0 1rem 0.25rem;
+  display: inline-block;
+  white-space: normal;
+  text-align: left;
+  padding: 3px 6px 5px;
+}
+
+.taxonomy-label.label-default {
+  background-color: #111;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-left: 10px;
+}
+
+.taxonomy-label.label-danger {
+  background-color: #A72534;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-right: 10px;
+}
+
+.input-stretch {
+  display: block;
+  width: 100% !important;
+}
+.search-group {
+  position: relative;
+}
+.search-group > button {
+  padding-right: 0.8rem;
+  border: 1px solid transparent;
+  background-color: transparent;
+  display: inline-block;
+  vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  top: 2.25rem;
+}
+.search-group > button:after {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  z-index: 1;
+  margin: auto;
+  padding: 2px;
+  text-align: center;
+  color: grey;
+  font-weight: normal;
+  font-size: 12px;
+  cursor: pointer;
+}
+.search-group input[name="search"]:not(:valid) ~ button {
+  display: none;
+}
+
+.btn-primary.reset {
+  border-color: transparent;
+  font-weight: bold;
+}
+
+.btn-link.sharelink {
+  color: #A72534;
+}
+
+.btn-link.sharelink:hover, .btn-link.sharelink:focus {
+    color: #8E212E;
+  }
+
+#saa-app.hide-until-loaded {
+  display: none;
+}
+
+#status-root {
+  display: none;
+}
