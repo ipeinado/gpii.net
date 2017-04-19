@@ -498,3 +498,36 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
 
 
+/**
+ * Implements hook_services_postprocess() to insert info about the language we're actually sending
+ *
+ * @@ need to add same logic for the needs and wants view
+ */
+
+function gpii_saa_custom_services_request_postprocess_alter($controller, $args, &$result) {
+
+  //Debugging
+   // print($controller['view info']['view_name']);
+   // print_r($controller);
+   // print_r($result);
+   // exit;
+
+   // Identify JSON returned by the documents available view and make a few adjustments to the output.
+   if (isset($controller['view info'])) {
+    if ($controller['view info']['view_name'] == 'product_categories' || $controller['view info']['view_name'] == 'difficulties_categories') {
+
+      // get the currently active language
+      global $language ;
+      $lang = $language->language ;
+
+
+      foreach ($result as $key => $value) {
+        // call the fuction with term id and language
+        $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
+        if ($translation_status > 0) {
+          $result[$key]->lang = $lang;
+        }
+      }
+    }
+  }
+}

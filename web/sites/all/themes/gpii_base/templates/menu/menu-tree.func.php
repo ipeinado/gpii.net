@@ -16,14 +16,14 @@ function gpii_base_menu_tree__primary(&$variables) {
   // It also introduces a "skiptranslate" class that tells Google Translate
 
 
-  // get a list of installed languages and determine
+  // get a list of installed languages
   $languages = array_keys(language_list());
   // remove the leading slash
   $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
   // reduce the string to the first three characters
   $currlanguage = substr($currlanguage, 0, 3);
 
-  // initialize a variable in case we need to tell Translate to skip this menu
+  // initialize a variable in case we need to tell Google Translate to skip this menu
   $skiptranslate = '';
   // if the first three characters include a slash, then this
   if(strstr($currlanguage, '/')) {
@@ -32,8 +32,6 @@ function gpii_base_menu_tree__primary(&$variables) {
       $skiptranslate = ' skiptranslate';
     }
   }
-
-
 
   return '<ul class="menu nav navbar-nav primary' . $skiptranslate . '">' . $variables['tree'] . '</ul>';
 }
