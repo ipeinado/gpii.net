@@ -20,15 +20,20 @@ dl dt {
   background-color: $color-gpii-devspace-primary;
 }
 
-article {
-  h2 {
-    font-size: (22px/14px)*1rem;
-  }
 
-  h3 {
-    font-size: (18px/14px)*1rem;
-  }
+h2 {
+  font-size: (22px/14px)*1rem;
+  font-size: 400;
 }
+
+h3 {
+  font-size: (18px/14px)*1rem;
+}
+
+h4 {
+  font-size: (16px/14px)*1rem;
+}
+
 
 .navbar-nav.primary.menu.nav {
   @media (min-width: $screen-sm-min) {
@@ -183,6 +188,34 @@ a {
   }
 }
 
-.btn.btn-navbar {
-  background-color: yellow;
+.developer-hero {
+  width: 100%;
+  padding: 3rem 0;
+
+  i.fa {
+    float: left;
+    font-size: (64px/14px)*1rem;
+    padding-top: (18px/14px)*1rem;
+    padding-right: (18px/14px)*1rem; 
+    color: yellow;
+  }
+
+  h1 {
+    font-size: (32px/14px)*1rem;
+    line-height: (44px/14px)*1rem;
+  }
+}
+
+.grid.section {
+
+}
+
+.homepage-news {
+  #challenges {
+    background-color: rgb(90, 133, 215);
+  }
+
+  #calendar {
+    background-color: #eceff1;
+  }
 }
