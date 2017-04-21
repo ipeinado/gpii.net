@@ -1,4 +1,12 @@
-.front, .not-logged-in {
+.front {
+	h2 {
+		font-size: (30px/14px)*1rem;
+	}
+
+	section {
+		margin-bottom: 2rem;
+	}
+
 	.welcome-block {
 		margin-bottom: 1em;
 	}
@@ -60,48 +68,39 @@
   }
 }
 
+.front > section {
+	margin-bottom: 3em;
+}
+
 .front #main-container {
 	margin-top: 2rem;
 }
 
 .card {
-
 	border: 1px solid #FFF;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
+	padding: (14px/14px)*1rem;
 	transition: border-color .3s ease,
 				box-shadow .3s ease;
 
 	header {
-		padding: 10px 0;
-		text-align: center;
+		padding: 0;
 	}
 
 	header > h2 {
-		font-size: (18px/14px)*1rem;
-		line-height: (22px/14px)*1rem;
-		color: #FFF;
+		font-size: (20px/14px)*1rem;
+		margin-top: 0;
+		color: #000;
 
-		.glyphicon {
-			top: 0;
-			font-size: .8em;
-			margin-right: .2em;
+		.fa {
+			font-size: (20px/14px)*1rem;
+			margin-right: (5px/14px)*1rem;
 		}
 	}
 
-	.card-content {
-		padding: 15px 15px;
-		font-size: (13px/14px)*1rem;
-	}
-
-	.card-content > ul {
-		margin: 0;
-		padding: 0;
-		list-style-type: none;
-
-		li {
-			margin-bottom: .6em;
-		}
+	.glyphicon {
+		top: 3px;
 	}
 }
 
@@ -110,21 +109,21 @@
 	box-shadow: 1px 2px 4px rgba(0, 0, 0, .1);
 }
 
-#learning-card header {
-	background-color: $color-gpii-orange;
-}
+// #learning-card header {
+// 	background-color: $color-gpii-orange;
+// }
 
-#develop-card header {
-	background-color: $color-gpii-devspace-primary;
-}
+// #develop-card header {
+// 	background-color: $color-gpii-devspace-primary;
+// }
 
-#market-card header {
-	background-color: $color-gpii-sai-primary;
-}
+// #market-card header {
+// 	background-color: $color-gpii-sai-primary;
+// }
 
-#people-card header {
-	background-color: $color-gpii-dark-blue;
-}
+// #people-card header {
+// 	background-color: $color-gpii-dark-blue;
+// }
 
 .front {
 	.view {
@@ -173,7 +172,12 @@ ul.components-count-list {
 	}
 }
 
+.user-groups {
+	margin-bottom: 2rem;
+}
+
 .view-success-stories {
+	margin-top: 1em;
 	.ss-card {
 		padding: (20px/14px)*1rem;
 		border: 1px solid $color-gpii-gray;
@@ -219,5 +223,79 @@ ul.components-count-list {
 		}
 	}
 }
+
+.challenges-banner {
+	background-color: #455a64;
+	padding: 2rem;
+
+	.fa {
+		float: left;
+		font-size: 64px;
+		color: yellow;
+	}
+
+	.challenges-banner-content {
+		overflow: hidden;
+		margin-left: 60px;
+		color: #FFF;
+
+		h2 {
+			margin-top: 0;
+			color: #FFF;
+		}
+		p {
+			margin-bottom: 1rem;
+		}
+	}
+}
+
+.events-banner {
+	padding: 0;
+
+	img {
+		float: right;
+		width: 33%;
+		margin-left: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	h2 {
+		margin-top: 0;
+	}
+
+	h3 {
+		font-size: (20px/14px)*1rem;
+	}
+
+	p {
+		margin-bottom: (5px/14px)*1rem;
+	}
+}
+
+#block-views-topics-block {
+	clear: both;
+
+	h2 {
+		text-align: center;
+		margin-bottom: 1em;
+	}
+
+	ul.topic-list {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		background-color: yellow;
+
+		li {
+			margin-bottom: 1rem;
+
+			a, i {
+				font-size: 1rem;
+			}
+		}
+	}
+}
+
+
 
 
