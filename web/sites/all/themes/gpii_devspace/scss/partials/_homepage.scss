@@ -5,6 +5,7 @@
 
 	section {
 		margin-bottom: 2rem;
+		clear: both;
 	}
 
 	.welcome-block {
@@ -66,14 +67,6 @@
     	color: darken($color-gpii-dark-gray, 6%);
   	}
   }
-}
-
-.front > section {
-	margin-bottom: 3em;
-}
-
-.front #main-container {
-	margin-top: 2rem;
 }
 
 .card {
@@ -156,18 +149,30 @@
 	clear: both;
 }
 
-ul.components-count-list {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-
-	li {
-		display: inline-block;
+.components-block {
+	.view-header,
+	.view-footer {
+		text-align: center;
 	}
 
-	li:not(.views-row-last) {
-		&:after {
-			content: "|";
+	.components-count-pane {
+		text-align: center;
+		margin-bottom: 1em;
+	}
+
+	ul.components-count-list {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+
+		li {
+			display: inline-block;
+		}
+
+		li:not(.views-row-last) {
+			&:after {
+				content: "|";
+			}
 		}
 	}
 }

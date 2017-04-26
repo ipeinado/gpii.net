@@ -2,7 +2,8 @@
   font-size: 2.14285714rem; }
 
 .front section {
-  margin-bottom: 2rem; }
+  margin-bottom: 2rem;
+  clear: both; }
 
 .front .welcome-block {
   margin-bottom: 1em; }
@@ -46,12 +47,6 @@
   .front .btn-primary:focus, .front .btn-primary:active, .front .btn-primary:hover {
     background-color: #dbdbdb;
     color: #202936; }
-
-.front > section {
-  margin-bottom: 3em; }
-
-.front #main-container {
-  margin-top: 2rem; }
 
 .card {
   border: 1px solid #FFF;
@@ -102,13 +97,21 @@
 #block-views-recent-components-block {
   clear: both; }
 
-ul.components-count-list {
+.components-block .view-header,
+.components-block .view-footer {
+  text-align: center; }
+
+.components-block .components-count-pane {
+  text-align: center;
+  margin-bottom: 1em; }
+
+.components-block ul.components-count-list {
   margin: 0;
   padding: 0;
   list-style-type: none; }
-  ul.components-count-list li {
+  .components-block ul.components-count-list li {
     display: inline-block; }
-  ul.components-count-list li:not(.views-row-last):after {
+  .components-block ul.components-count-list li:not(.views-row-last):after {
     content: "|"; }
 
 .user-groups {
@@ -277,6 +280,61 @@ ul.components-count-list {
       margin-bottom: 1.2rem; }
       #block-views-topics-block ul.topic-list li a, #block-views-topics-block ul.topic-list li i {
         font-size: 1rem; }
+
+.page-node-3230 .region-hero,
+.page-node-3231 .region-hero,
+.page-node-3232 .region-hero,
+.page-node-3233 .region-hero {
+  padding: 6em 0; }
+  .page-node-3230 .region-hero i.fa,
+  .page-node-3231 .region-hero i.fa,
+  .page-node-3232 .region-hero i.fa,
+  .page-node-3233 .region-hero i.fa {
+    font-size: 90px;
+    float: right;
+    margin-right: 32px; }
+  .page-node-3230 .region-hero h1,
+  .page-node-3231 .region-hero h1,
+  .page-node-3232 .region-hero h1,
+  .page-node-3233 .region-hero h1 {
+    font-size: 32px;
+    line-height: 48px; }
+
+.page-node-3230 .page-header,
+.page-node-3231 .page-header,
+.page-node-3232 .page-header,
+.page-node-3233 .page-header {
+  display: none; }
+
+.page-node-3230 section,
+.page-node-3231 section,
+.page-node-3232 section,
+.page-node-3233 section {
+  margin-bottom: 1em; }
+  .page-node-3230 section p, .page-node-3230 section a,
+  .page-node-3231 section p,
+  .page-node-3231 section a,
+  .page-node-3232 section p,
+  .page-node-3232 section a,
+  .page-node-3233 section p,
+  .page-node-3233 section a {
+    font-size: 1.14285714rem; }
+
+.page-node-3230 section > div,
+.page-node-3231 section > div,
+.page-node-3232 section > div,
+.page-node-3233 section > div {
+  overflow: hidden; }
+
+.page-node-3230 .view-header,
+.page-node-3230 .view-footer,
+.page-node-3231 .view-header,
+.page-node-3231 .view-footer,
+.page-node-3232 .view-header,
+.page-node-3232 .view-footer,
+.page-node-3233 .view-header,
+.page-node-3233 .view-footer {
+  text-align: center; }
 
 .view-mode-full .field {
   margin-bottom: 1em; }
