@@ -1,9 +1,6 @@
 .front h2 {
   font-size: 2.14285714rem; }
 
-.front section {
-  margin-bottom: 2rem; }
-
 .front .welcome-block {
   margin-bottom: 1em; }
 
@@ -16,6 +13,8 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   overflow: hidden; }
+  .front .region-hero p {
+    font-size: 1.14285714rem; }
   .front .region-hero .input-group {
     margin-left: auto;
     margin-right: auto; }
@@ -26,10 +25,10 @@
       .front .region-hero h1 {
         font-size: 2rem;
         line-height: 2.6rem; }
-      .front .region-hero .input-group {
+      .front .region-hero .input-group, .front .region-hero p {
         width: 90%; } }
   @media (min-width: 768px) {
-    .front .region-hero .input-group {
+    .front .region-hero .input-group, .front .region-hero p {
       width: 60%; } }
 
 .front input[type='text'] {
@@ -45,6 +44,9 @@
   .front .btn-primary:focus, .front .btn-primary:active, .front .btn-primary:hover {
     background-color: #dbdbdb;
     color: #202936; }
+
+.front .main-container > section {
+  margin-bottom: 2rem; }
 
 .card {
   border: 1px solid #FFF;
@@ -619,10 +621,12 @@ dl dt {
 
 h2 {
   font-size: 1.57142857rem;
-  font-size: 400; }
+  font-weight: 600; }
 
 h3 {
-  font-size: 1.28571429rem; }
+  font-size: 1.28571429rem;
+  font-weight: 600;
+  color: #777; }
 
 h4 {
   font-size: 1.14285714rem; }
