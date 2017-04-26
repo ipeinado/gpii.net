@@ -112,3 +112,46 @@
 		}
 	}
 }
+
+// PAGES
+.page-node-3230,
+.page-node-3231,
+.page-node-3232,
+.page-node-3233
+{
+	.region-hero {
+		padding: 6em 0;
+
+		i.fa {
+			font-size: 90px;
+			float: right;
+			margin-right: 32px;
+		}
+
+		h1 {
+			font-size: 32px;
+			line-height: 48px; 
+		}
+	}
+
+	.page-header {
+		display: none;
+	}
+
+	section {
+		margin-bottom: 1em;
+
+		p, a {
+			font-size: (16px/14px)*1rem;
+		}
+	}
+
+	section > div {
+		overflow: hidden;
+	}
+
+	.view-header,
+	.view-footer {
+		text-align: center;
+	}
+}
