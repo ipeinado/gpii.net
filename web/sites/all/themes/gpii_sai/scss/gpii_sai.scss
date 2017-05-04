@@ -593,7 +593,7 @@ tree-control.tree-classic li .tree-selected {
   color: #fff;
 }
 .label-lg {
-  font-size: 1em;
+  font-size: 1rem;
 }
 .label-default {
   background-color: #111;
@@ -607,7 +607,7 @@ tree-control.tree-classic li .tree-selected {
 .text-right .taxonomy-label::before {
   content:" ";
   border-style: solid;
-  border-width: .8rem 0 .8rem 1rem;
+  border-width: 0.73rem 0 0.73rem 0.95rem;
   border-color: transparent transparent transparent #000;
   position: absolute;
   right: -.95rem;
@@ -627,21 +627,30 @@ tree-control.tree-classic li .tree-selected {
   display: inline-block;
   white-space: normal;
   text-align: left;
-  padding: 3px 6px 5px;
+  padding: 4px 1.5rem 4px 0.5rem;
+
+
+  .fa.fa-close {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+  }
 }
 
 .taxonomy-label.label-default {
   background-color: #111;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  padding-left: 10px;
+
 }
 
 .taxonomy-label.label-danger {
   background-color: #A72534;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  padding-right: 10px;
+  .fa.fa-close {
+    right: 0.4rem;
+  }
 }
 
 .input-stretch {
@@ -701,3 +710,53 @@ tree-control.tree-classic li .tree-selected {
 #status-root {
   display: none;
 }
+
+/**
+ * P4A Rating Tool Styles
+ */
+
+.group-feed3 {
+  .widget_stars .blue_button {
+    background-color: $color-gpii-sai-primary;
+    &:focus, &:hover {
+      outline: none;
+      text-shadow: none;
+      background-color: darken($color-gpii-sai-primary, 6%);
+    }
+  }
+
+  h2, h2 > span.widgetStrings {
+    margin-top: 1.42857143rem;
+    margin-bottom: 0.71428571rem;
+    font-size: 1.4rem;
+  }
+
+  .help-block {
+    font-size: 0.9rem;
+  }
+
+  textarea {
+    height:2.5rem;
+    -webkit-transition: all 0.5s ease-in-out;
+  }
+
+  textarea:focus, textarea:hover {
+    height:calc(100% - 2.5rem);
+    -webkit-transition: all 0.8s ease-in-out;
+  }
+
+
+  .webform-client-form:hover, .webform-client-form:focus {
+    & > div {
+      height:20rem;
+      textarea {
+        height:calc(100% - 2.5rem);
+        -webkit-transition: all 0.8s ease-in-out;
+      }
+    }
+  }
+}
+
+
+
+// End P4A

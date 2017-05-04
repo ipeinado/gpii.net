@@ -426,7 +426,7 @@ tree-control.tree-classic li .tree-selected {
   color: #fff; }
 
 .label-lg {
-  font-size: 1em; }
+  font-size: 1rem; }
 
 .label-default {
   background-color: #111; }
@@ -440,7 +440,7 @@ tree-control.tree-classic li .tree-selected {
 .text-right .taxonomy-label::before {
   content: " ";
   border-style: solid;
-  border-width: .8rem 0 .8rem 1rem;
+  border-width: 0.73rem 0 0.73rem 0.95rem;
   border-color: transparent transparent transparent #000;
   position: absolute;
   right: -.95rem;
@@ -460,19 +460,23 @@ tree-control.tree-classic li .tree-selected {
   display: inline-block;
   white-space: normal;
   text-align: left;
-  padding: 3px 6px 5px; }
+  padding: 4px 1.5rem 4px 0.5rem; }
+  .label.taxonomy-label .fa.fa-close {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem; }
 
 .taxonomy-label.label-default {
   background-color: #111;
   border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  padding-left: 10px; }
+  border-bottom-right-radius: 0; }
 
 .taxonomy-label.label-danger {
   background-color: #A72534;
   border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  padding-right: 10px; }
+  border-bottom-left-radius: 0; }
+  .taxonomy-label.label-danger .fa.fa-close {
+    right: 0.4rem; }
 
 .input-stretch {
   display: block;
@@ -525,3 +529,35 @@ tree-control.tree-classic li .tree-selected {
 
 #status-root {
   display: none; }
+
+/**
+ * P4A Rating Tool Styles
+ */
+.group-feed3 .widget_stars .blue_button {
+  background-color: #A72534; }
+  .group-feed3 .widget_stars .blue_button:focus, .group-feed3 .widget_stars .blue_button:hover {
+    outline: none;
+    text-shadow: none;
+    background-color: #8e1f2c; }
+
+.group-feed3 h2, .group-feed3 h2 > span.widgetStrings {
+  margin-top: 1.42857143rem;
+  margin-bottom: 0.71428571rem;
+  font-size: 1.4rem; }
+
+.group-feed3 .help-block {
+  font-size: 0.9rem; }
+
+.group-feed3 textarea {
+  height: 2.5rem;
+  -webkit-transition: all 0.5s ease-in-out; }
+
+.group-feed3 textarea:focus, .group-feed3 textarea:hover {
+  height: calc(100% - 2.5rem);
+  -webkit-transition: all 0.8s ease-in-out; }
+
+.group-feed3 .webform-client-form:hover > div, .group-feed3 .webform-client-form:focus > div {
+  height: 20rem; }
+  .group-feed3 .webform-client-form:hover > div textarea, .group-feed3 .webform-client-form:focus > div textarea {
+    height: calc(100% - 2.5rem);
+    -webkit-transition: all 0.8s ease-in-out; }

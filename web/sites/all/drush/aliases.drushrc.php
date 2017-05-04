@@ -123,8 +123,8 @@ $aliases['saastaging'] = array(
   'remote-host' => 'qual-msn-stg07.qualtim.local',
   'remote-user' => 'gpiiweb',
   'path-aliases' => array(
-    '%dump' => '/var/www/clients/client2/web3/tmp/dump.sql',
-    '%dump-dir' => '/var/www/clients/client2/web3/tmp',
+    '%dump' => '/tmp/dump.sql',
+    '%dump-dir' => '/tmp',
     '%files' => 'sites/saa.gpii.net/files',
   ),
 );
