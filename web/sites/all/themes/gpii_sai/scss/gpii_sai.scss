@@ -757,6 +757,154 @@ tree-control.tree-classic li .tree-selected {
   }
 }
 
+// End P4A Rating Tool Styles
 
 
-// End P4A
+/**
+ * Open Marketplace
+ */
+
+#bootstrap-fieldgroup-accordion--product-info {
+  .panel {
+    box-shadow: none;
+  }
+  .panel-heading {
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    h2 {
+      a::before {
+        content: '\f078';
+        font-family: FontAwesome;
+        font-size: 0.8em;
+      }
+      a.collapsed::before {
+        content: '\f054';
+      }
+    }
+  }
+  .panel-default > .panel-heading {
+    background-color: $color-gpii-light-gray;
+  }
+  .panel-default {
+    border: none;
+  }
+  .panel-body {
+    padding: 0 1rem 0;
+  }
+
+  // @@ make the active control mouse/hover unfriendly
+  .panel-heading {
+    a:not(.collapsed) {
+      color: $color-gpii-dark-gray;
+      &:hover, &:focus {
+        text-decoration: none;
+        cursor: default;
+        outline: none;
+      }
+    }
+  }
+}
+
+.node-type-open-marketplace-product {
+  h1, .tabs--primary, .region-content {
+    background: #fff;
+    z-index: 10;
+    position: relative;
+  }
+
+  h1 {
+    border-bottom: 1px solid $color-gpii-med-gray;
+  }
+
+  .region-hero {
+    background-color: $color-gpii-sai-primary;
+    padding:0 0 0 0;
+    border-radius: 0;
+    #OMicon {
+      width: 11rem;
+      margin-bottom: -.6rem;
+      padding-top: 0.4rem;
+    }
+  }
+
+  .field-name-field-om-product-image {
+    margin-bottom: 1rem;
+    img {
+      margin: auto;
+    }
+  }
+
+
+  #main-container {
+    margin-top: 1.5rem;
+
+    .col-sm-6 {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .field-product-price {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .btn-purchase {
+      background-color: #FFBB00;
+      width: 100%;
+      &:hover, &:focus {
+        background-color: darken(#FFBB00, 5%)
+      }
+    }
+
+    .field-access-features {
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      ul {
+        padding-left: 2rem;
+        li {
+          margin-bottom: 1.3rem;
+        }
+      }
+    }
+  }
+}
+
+
+@media (min-width: $screen-sm) {
+  .node.node-open-marketplace-product {
+    .row {
+      .col-sm-18 {
+        border-right: 1px solid $color-gpii-dark-gray;
+        padding-right: 1.5rem;
+      }
+    }
+  }
+}
+
+@media (min-width: $screen-lg + 300px) { // ~1500 px
+  .region-highlighted {
+    z-index: 0;
+  }
+  .region-hero {
+    background-color: transparent !important;
+    overflow: visible;
+    position: fixed;
+    top: 10rem;
+    left: 0;
+    float: none;
+    width: 16rem;
+    #OMicon {
+      width: 12rem;
+      margin-bottom: auto;
+      padding-top: 0;
+    }
+  }
+
+}
+
+// End Open Marketplace
