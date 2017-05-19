@@ -664,6 +664,9 @@ tree-control.tree-classic li .tree-selected {
   .node-type-open-marketplace-product .field-name-field-om-product-image img {
     margin: auto; }
 
+.node-type-open-marketplace-product .field-name-field-om-manufacturer-reference {
+  margin-bottom: 1rem; }
+
 .node-type-open-marketplace-product #main-container {
   margin-top: 1.5rem; }
   .node-type-open-marketplace-product #main-container .col-sm-6 {
