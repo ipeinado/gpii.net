@@ -22,21 +22,6 @@
     $('#search-form').attr('role', 'search');
   });
 
-  // Override default Bootstrap accordion behavior to force one item to always
-  // be open. (makes open marketplace pages look less wonky when all collapsed)
-
-  $(document).ready(function() {
-    $('.panel-heading a').on('click',function(e){
-      if($(this).parents('.panel').children('.panel-collapse').hasClass('in')){
-        e.stopPropagation();
-      }
-      // You can also add preventDefault to remove the anchor behavior that makes
-      // the page jump
-       e.preventDefault();
-    });
-  });
-
-
   // Dynamically adjust the breakpoints based on font changes to the <html>
   // element from Fluid UI.
   $(document).ready(function(){

@@ -641,9 +641,14 @@ tree-control.tree-classic li .tree-selected {
       margin-bottom: 1.3rem; }
 
 @media (min-width: 768px) {
-  .node.node-open-marketplace-product .row .col-sm-18 {
-    border-right: 1px solid #2c3849;
-    padding-right: 1.5rem; } }
+  .node.node-open-marketplace-product .row {
+    overflow: hidden; }
+    .node.node-open-marketplace-product .row .col-sm-18 {
+      border-right: 1px solid #2c3849;
+      padding-right: 1.5rem; }
+    .node.node-open-marketplace-product .row .col-sm-18, .node.node-open-marketplace-product .row .col-sm-6 {
+      padding-bottom: 2000rem;
+      margin-bottom: -2000rem; } }
 
 @media (min-width: 1500px) {
   .region-highlighted {

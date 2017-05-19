@@ -878,9 +878,14 @@ tree-control.tree-classic li .tree-selected {
 @media (min-width: $screen-sm) {
   .node.node-open-marketplace-product {
     .row {
+      overflow: hidden;
       .col-sm-18 {
         border-right: 1px solid $color-gpii-dark-gray;
         padding-right: 1.5rem;
+      }
+      .col-sm-18, .col-sm-6 {
+        padding-bottom: 2000rem;
+        margin-bottom: -2000rem;
       }
     }
   }
