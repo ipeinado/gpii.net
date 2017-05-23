@@ -6664,6 +6664,10 @@ body > div.skiptranslate {
       position: fixed;
       top: 0; } }
 
+body.i18n-el #gpii-translate-toggle_container {
+  right: -webkit-calc(50px + 18rem + 1.5rem);
+  right: calc(50px + 18rem + 1.5rem); }
+
 .navbar.navbar-default {
   margin-bottom: 0;
   border-bottom: none;

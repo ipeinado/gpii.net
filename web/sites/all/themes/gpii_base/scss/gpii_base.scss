@@ -323,6 +323,14 @@ body > div.skiptranslate {
   }
 }
 
+
+// Language-specific customizations
+body.i18n-el {
+  #gpii-translate-toggle_container {
+    right: calc(50px + 18rem + 1.5rem);
+  }
+}
+
 // #############################################################################
 // Regions and Other Major Sections
 // #############################################################################
