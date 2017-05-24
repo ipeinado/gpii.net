@@ -72,55 +72,6 @@
   }
 }
 
-.card {
-	border: 1px solid #FFF;
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	padding: (14px/14px)*1rem;
-	transition: border-color .3s ease,
-				box-shadow .3s ease;
-
-	header {
-		padding: 0;
-	}
-
-	header > h2 {
-		font-size: (20px/14px)*1rem;
-		margin-top: 0;
-		color: #000;
-
-		.fa {
-			font-size: (20px/14px)*1rem;
-			margin-right: (5px/14px)*1rem;
-		}
-	}
-
-	.glyphicon {
-		top: 3px;
-	}
-}
-
-.card:hover {
-	border-color: $color-gpii-gray;
-	box-shadow: 1px 2px 4px rgba(0, 0, 0, .1);
-}
-
-// #learning-card header {
-// 	background-color: $color-gpii-orange;
-// }
-
-// #develop-card header {
-// 	background-color: $color-gpii-devspace-primary;
-// }
-
-// #market-card header {
-// 	background-color: $color-gpii-sai-primary;
-// }
-
-// #people-card header {
-// 	background-color: $color-gpii-dark-blue;
-// }
-
 .front {
 	.view {
 		clear: both;

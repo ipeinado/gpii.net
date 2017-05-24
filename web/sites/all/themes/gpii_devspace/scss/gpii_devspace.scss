@@ -1,6 +1,7 @@
 @import "../../gpii_base/scss/variables";
 @import "utilities.scss";
 @import "partials/homepage.scss";
+@import "partials/beans.scss";
 @import "partials/categories.scss";
 @import "partials/nodes/node.scss";
 @import "partials/nodes/challenges.scss";
@@ -205,10 +206,6 @@ a {
     font-size: (32px/14px)*1rem;
     line-height: (44px/14px)*1rem;
   }
-}
-
-.grid.section {
-
 }
 
 .homepage-news {
