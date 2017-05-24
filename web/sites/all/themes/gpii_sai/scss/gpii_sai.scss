@@ -712,7 +712,7 @@ tree-control.tree-classic li .tree-selected {
 }
 
 /**
- * P4A Rating Tool Styles
+ * P4A Rating Tool and Feed3 Styles
  */
 
 .group-feed3 {
@@ -737,21 +737,21 @@ tree-control.tree-classic li .tree-selected {
 
   textarea {
     height:2.5rem;
-    -webkit-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
   }
 
-  textarea:focus, textarea:hover {
+  textarea:focus, textarea:active {
     height:calc(100% - 2.5rem);
-    -webkit-transition: all 0.8s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
   }
 
 
-  .webform-client-form:hover, .webform-client-form:focus {
+  .webform-client-form:focus, .webform-client-form:active {
     & > div {
       height:20rem;
       textarea {
         height:calc(100% - 2.5rem);
-        -webkit-transition: all 0.8s ease-in-out;
+        -webkit-transition: all 1s ease-in-out;
       }
     }
   }
@@ -917,3 +917,14 @@ tree-control.tree-classic li .tree-selected {
 }
 
 // End Open Marketplace
+
+.field-name-field-product-image {
+  .mfp-thumbnail-tiny.img-responsive {
+    max-width: 3rem;
+    display: inline;
+    border: 1px solid $color-gpii-med-gray;
+    padding: 2px;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+  }
+  margin-bottom: 1rem;
+}

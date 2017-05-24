@@ -574,7 +574,7 @@ tree-control.tree-classic li .tree-selected {
   display: none; }
 
 /**
- * P4A Rating Tool Styles
+ * P4A Rating Tool and Feed3 Styles
  */
 .group-feed3 .widget_stars .blue_button {
   background-color: #A72534; }
@@ -593,19 +593,19 @@ tree-control.tree-classic li .tree-selected {
 
 .group-feed3 textarea {
   height: 2.5rem;
-  -webkit-transition: all 0.5s ease-in-out; }
+  -webkit-transition: all 1s ease-in-out; }
 
-.group-feed3 textarea:focus, .group-feed3 textarea:hover {
+.group-feed3 textarea:focus, .group-feed3 textarea:active {
   height: -webkit-calc(100% - 2.5rem);
   height: calc(100% - 2.5rem);
-  -webkit-transition: all 0.8s ease-in-out; }
+  -webkit-transition: all 1s ease-in-out; }
 
-.group-feed3 .webform-client-form:hover > div, .group-feed3 .webform-client-form:focus > div {
+.group-feed3 .webform-client-form:focus > div, .group-feed3 .webform-client-form:active > div {
   height: 20rem; }
-  .group-feed3 .webform-client-form:hover > div textarea, .group-feed3 .webform-client-form:focus > div textarea {
+  .group-feed3 .webform-client-form:focus > div textarea, .group-feed3 .webform-client-form:active > div textarea {
     height: -webkit-calc(100% - 2.5rem);
     height: calc(100% - 2.5rem);
-    -webkit-transition: all 0.8s ease-in-out; }
+    -webkit-transition: all 1s ease-in-out; }
 
 /**
  * Open Marketplace
@@ -714,5 +714,14 @@ tree-control.tree-classic li .tree-selected {
       width: 12rem;
       margin-bottom: auto;
       padding-top: 0; } }
+
+.field-name-field-product-image {
+  margin-bottom: 1rem; }
+  .field-name-field-product-image .mfp-thumbnail-tiny.img-responsive {
+    max-width: 3rem;
+    display: inline;
+    border: 1px solid #b2b2b2;
+    padding: 2px;
+    margin: 0.5rem 0.5rem 0.5rem 0; }
 
 /*# sourceMappingURL=gpii_sai.css.map */
