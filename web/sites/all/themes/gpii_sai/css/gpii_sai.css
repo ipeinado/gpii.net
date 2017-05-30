@@ -17,7 +17,8 @@
   .navbar-nav.primary.menu.nav .dropdown.open > a:hover,
   .navbar-nav.primary.menu.nav .dropdown.open > a:focus {
     color: #A72534;
-    border-top-color: #A72534; } }
+    border-top-color: #A72534;
+    outline: 1px dotted #2783c6; } }
 
 #footer-wrap {
   border-color: #A72534; }
@@ -719,9 +720,16 @@ tree-control.tree-classic li .tree-selected {
   margin-bottom: 1rem; }
   .field-name-field-product-image .mfp-thumbnail-tiny.img-responsive {
     max-width: 3rem;
-    display: inline;
+    display: inline; }
+  .field-name-field-product-image .mfp-title {
+    padding-right: 0;
+    display: inline-block;
     border: 1px solid #b2b2b2;
     padding: 2px;
     margin: 0.5rem 0.5rem 0.5rem 0; }
+  .field-name-field-product-image a:focus {
+    outline: none; }
+    .field-name-field-product-image a:focus .mfp-title, .field-name-field-product-image a:focus .mfp-thumbnail {
+      outline: 1px dotted #2783c6; }
 
 /*# sourceMappingURL=gpii_sai.css.map */

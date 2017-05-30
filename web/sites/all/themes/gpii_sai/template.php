@@ -5,8 +5,8 @@
  */
 
 /**
- * Tell subtheme to go ahead and use template overrides as originally designed
- * (bootstrap module changes this)
+ * Tell subthemes to go ahead and use template overrides as originally designed
+ * (bootstrap module changes this by default)
  */
 
 function gpii_sai_preprocess_page(&$vars, $hook) {

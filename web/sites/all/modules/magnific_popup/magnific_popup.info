@@ -12,3 +12,4 @@ core = "7.x"
 project = "magnific_popup"
 datestamp = "1464094156"
 
+patch[] = Manual overrides to magnific_popup_field_formatter_view function in includes/magnific_popup.formatters.inc to address accessibility issues and preferences to incclude thumbnails in first image display.

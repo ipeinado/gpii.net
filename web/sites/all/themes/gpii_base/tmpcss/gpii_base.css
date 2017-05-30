@@ -6617,8 +6617,15 @@ body > div.skiptranslate {
       position: fixed;
       top: 0; } }
 
+a:focus {
+  outline: 1px dotted #2f2b2a;
+  outline-offset: 0px; }
+
 body.i18n-el #gpii-translate-toggle_container {
   right: calc(50px + 18rem + 1.5rem); }
+
+body.i18n-de #gpii-translate-toggle_container {
+  width: 15em; }
 
 .navbar.navbar-default {
   margin-bottom: 0;

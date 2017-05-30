@@ -36,6 +36,7 @@
     .dropdown.open > a:focus {
       color: $color-gpii-sai-primary;
       border-top-color: $color-gpii-sai-primary;
+      outline: 1px dotted $color-gpii-blue;
     }
   }
 }
@@ -922,9 +923,19 @@ tree-control.tree-classic li .tree-selected {
   .mfp-thumbnail-tiny.img-responsive {
     max-width: 3rem;
     display: inline;
+  }
+  .mfp-title {
+    padding-right: 0;
+    display:inline-block;
     border: 1px solid $color-gpii-med-gray;
     padding: 2px;
     margin: 0.5rem 0.5rem 0.5rem 0;
+  }
+  a:focus {
+    outline: none;
+.mfp-title, .mfp-thumbnail {
+      outline: 1px dotted $color-gpii-blue;
+    }
   }
   margin-bottom: 1rem;
 }

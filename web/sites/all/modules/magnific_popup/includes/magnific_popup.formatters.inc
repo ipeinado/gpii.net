@@ -280,23 +280,28 @@ function magnific_popup_field_formatter_view($entity_type, $entity, $field, $ins
       // Normally the title comes from img.mfp-thumbnail's title attribute.
       // Since this a.mfp-item will not have a thumbnail image, add the title to
       // a special span.mfp-title's title attribute.
-      // $popup_gallery['item-' . $delta]['#text'] = t('<span class="mfp-title" title="@title">&nbsp;</span>', array('@title' => $item['title']));
-      // // Hide the a.mfp-item (and any span.mfp-title).
-      // $popup_gallery['item-' . $delta]['#options']['attributes']['style'][] = 'display: none;';
+      // @@ rewritten to show thumbnails instead of empty spans
+      $popup_gallery['item-' . $delta]['#text'] = t('<span class="mfp-title" title="@title"><img src="@path" alt="@alt" class="mfp-thumbnail-tiny img-responsive"/></span>', array(
+        '@title' => $item['title'],
+        '@path' => $item['thumbnail_path'],
+        '@alt' => $item['alt'])
+      );
+      // Hide the a.mfp-item (and any span.mfp-title).
+      //$popup_gallery['item-' . $delta]['#options']['attributes']['class'][] = 'mfp-thumbnail-tiny';
       // BBC: Hacked in a new gallery here that includes differently styled thumbnails and some accessibility improvements
 
-      $thumbs = array(
-        // Try to use a "figure" theme implementation if it exists, or fall back
-        // to "image".
-        '#theme' => array('figure', 'image'),
-        '#path' => $item['thumbnail_path'],
-        '#alt' => $item['alt'],
-        '#title' => $item['title'],
-        '#attributes' => array(
-          'class' => array('mfp-thumbnail-tiny'),
-        ),
-      );
-      $popup_gallery['item-' . $delta]['#text'] =  render($thumbs);
+      // $thumbs = array(
+      //   // Try to use a "figure" theme implementation if it exists, or fall back
+      //   // to "image".
+      //   '#theme' => array('figure', 'image'),
+      //   '#path' => $item['thumbnail_path'],
+      //   '#alt' => $item['alt'],
+      //   '#title' => $item['title'],
+      //   '#attributes' => array(
+      //     'class' => array('mfp-thumbnail-tiny'),
+      //   ),
+      // );
+      // $popup_gallery['item-' . $delta]['#text'] =  render($thumbs);
     }
   }
   if (count($items)) {
