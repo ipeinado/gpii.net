@@ -1,0 +1,6 @@
+name = GPII OAuth2 Authentication
+description = Authenticates users via the OAuth2 Identity and Access Management component.
+core = 7.x
+package = OAuth2
+configure = admin/config/people/gpii-oauth2
+dependencies[] = libraries

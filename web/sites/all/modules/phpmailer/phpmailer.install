@@ -15,7 +15,7 @@ function phpmailer_requirements($phase) {
 
   if ($phase == 'runtime' && phpmailer_library_exists()) {
     $mail = new PHPMailer();
-    $required_version = '5.2.5';
+    $required_version = '5.2.21';
     $installed_version = $mail->Version;
     $requirements['phpmailer'] = array(
       'title' => $t('PHPMailer library'),
@@ -75,6 +75,7 @@ function phpmailer_uninstall() {
   variable_del('smtp_password');
   variable_del('smtp_keepalive');
   variable_del('smtp_debug');
+  variable_del('smtp_debug_log');
 }
 
 /**

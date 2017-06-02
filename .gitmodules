@@ -19,3 +19,12 @@
 [submodule "web/sites/all/modules/google_material_icons"]
 	path = web/sites/all/modules/google_material_icons
 	url = https://git.drupal.org/sandbox/hctom/2513252.git
+[submodule "web/sites/all/libraries/guzzle"]
+	path = web/sites/all/libraries/guzzle
+	url = https://github.com/guzzle/guzzle.git
+[submodule "web/sites/all/libraries/constant_time_encoding"]
+	path = web/sites/all/libraries/constant_time_encoding
+	url = https://github.com/paragonie/constant_time_encoding.git
+[submodule "web/sites/all/libraries/hash-compat"]
+	path = web/sites/all/libraries/hash-compat
+	url = https://github.com/indigophp/hash-compat.git

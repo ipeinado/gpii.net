@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file gpii_oauth2.install
+ * Install, update, and uninstall the module.
+ */
+
+/**
+ * Perform additional uninstallation actions for the module.
+ *
+ * @see hook_uninstall()
+ */
+function gpii_oauth2_uninstall() {
+  variable_del('gpii_oauth2_account_management_url');
+  variable_del('gpii_oauth2_authorization_endpoint');
+  variable_del('gpii_oauth2_client_id');
+  variable_del('gpii_oauth2_client_secret');
+  variable_del('gpii_oauth2_scope');
+  variable_del('gpii_oauth2_token_endpoint');
+  variable_del('gpii_oauth2_userinfo_endpoint');
+}
