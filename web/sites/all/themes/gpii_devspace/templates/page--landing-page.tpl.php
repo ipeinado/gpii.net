@@ -73,6 +73,9 @@
     </div>
 
     <div class="container-fluid">
+        <?php if (!empty($title)): ?>
+          <h1 class="page-header element-invisible"><?php print $title; ?></h1>
+        <?php endif; ?>
       <div class="navbar-header">
         <?php if ($logo): ?>
           <a class="logo navbar-btn pull-left" href="http://www.gpii.net" title="<?php print t('Visit the GPII.net Home Page to learn more about GPII'); ?>">
@@ -124,77 +127,13 @@
     </div>
   </header>
 
-  <section id="hero-homepage" role="banner">
-    <?php if (!empty($page['hero'])): ?>
-      <?php print render($page['hero']); ?>
-    <?php endif; ?>
-  </section>
+  <?php if (!empty($page['hero'])): ?>
+    <?php print render($page['hero']); ?>
+  <?php endif; ?>
 
-  <div id="main-container" class="main-container <?php print $container_class; ?>">
-    <div class="row">
-      <section <?php print $content_column_class; ?>>
-        <?php if (!empty($page['highlighted']) && !$is_front): ?>
-          <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
-        <?php endif; ?>
-
-        <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
-        <a id="main-content"></a>
-        <?php print render($title_prefix); ?>
-        <?php if (!empty($title)): ?>
-          <h1 class="page-header element-invisible"><?php print $title; ?></h1>
-        <?php endif; ?>
-        <?php print render($title_suffix); ?>
-        <?php print $messages; ?>
-        <?php if (!empty($tabs)): ?>
-          <?php print render($tabs); ?>
-        <?php endif; ?>
-        <?php if (!empty($page['help'])): ?>
-          <?php print render($page['help']); ?>
-        <?php endif; ?>
-        <?php if (!empty($action_links)): ?>
-          <ul class="action-links"><?php print render($action_links); ?></ul>
-        <?php endif; ?>
-
-        <?php if (!empty($page['user_groups'])): ?>
-          <h2 class="element-invisible">User Groups</h2>
-          <?php print render($page['user_groups']); ?>
-        <?php endif; ?>
-
-        <?php if (!empty($page['content_preface'])): ?>
-          <?php print render($page['content_preface']); ?>
-        <?php endif; ?>
-
-        <?php print render($page['content']); ?>
-
-        <?php if (!empty($page['content_postscript'])): ?>
-          <?php print render($page['content_postscript']); ?>
-        <?php endif; ?>
-      </section>
-
-      <?php if (!empty($page['sidebar_first'])): ?>
-        <aside id="sidebar_first" class="<?php print $sidebar_first_column_class; ?>" role="complementary">
-          <?php print render($page['sidebar_first']); ?>
-        </aside>  <!-- /#sidebar-first -->
-      <?php endif; ?>
-
-      <?php if (!empty($page['sidebar_second'])): ?>
-        <aside id="sidebar_second" class="<?php print $sidebar_second_column_class; ?>" role="complementary">
-          <?php print render($page['sidebar_second']); ?>
-        </aside>  <!-- /#sidebar-second -->
-      <?php endif; ?>
-    </div>
-
-    <?php if ($region_info['secondary']['has_columns']): ?>
-      <section id="secondary" class="<?php print $container_class; ?>">
-        <?php print gpii_base_equal_width_column_regions($page, $region_info, 'secondary'); ?>
-      </section>
-    <?php endif; ?>
-
-    <?php if ($region_info['tertiary']['has_columns']): ?>
-      <section id="tertiary" class="<?php print $container_class; ?>">
-        <?php print gpii_base_equal_width_column_regions($page, $region_info, 'tertiary'); ?>
-      </section>
-    <?php endif; ?>
+  <div id="main-container" class="main-container container-fluid">
+    <a id="main-content"></a>
+    <?php print render($page['stories']); ?>
   </div>
 </div>
 
@@ -204,7 +143,7 @@
   <div id="footer-wrap">
     <footer id="footer" class="footer container-fluid">
       <section>
-        <h1 class="element-invisible">Footer</h1>
+        <h1 class="element-invisible">Footer Navigation</h1>
         <?php if ($region_info['footer']['has_columns']): ?>
           <?php
             $widths = array(

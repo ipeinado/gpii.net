@@ -4,9 +4,6 @@
 .front .welcome-block {
   margin-bottom: 1em; }
 
-.front .page-header {
-  display: none; }
-
 .front .region-hero {
   padding: 1em 0;
   text-align: center;
@@ -189,7 +186,7 @@
     font-size: 1.42857143rem;
     margin-right: 0.35714286rem;
     margin-top: 0.14285714rem; }
-  .card header > h2 {
+  .card header > h3 {
     display: inline-block;
     font-size: 1.42857143rem;
     margin-top: 0;
@@ -206,36 +203,56 @@
   padding: 2rem 0;
   margin: 0 15px; }
 
+.region-stories {
+  margin: 0 -15px; }
+
 @media (max-width: 767px) {
   .story-item .story-content {
     width: 100%; }
   .story-item .story-image {
-    display: none; } }
+    width: 100%;
+    margin: 0 auto; } }
 
 @media (min-width: 768px) {
-  .story-item .story-content {
-    position: absolute;
-    width: 50%;
-    max-width: 520px;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-         -o-transform: translateY(-50%);
-            transform: translateY(-50%);
-    padding-left: 72px; }
-    .story-item .story-content p, .story-item .story-content a {
-      font-size: 1.21428571rem; }
-  .story-item .story-image {
-    position: relative;
-    width: 50%;
-    overflow: hidden; }
-    .story-item .story-image img {
-      display: block;
-      height: 100%; }
+  .story-item {
+    max-width: 1170px;
+    margin: 0 auto; }
+    .story-item .story-content {
+      position: absolute;
+      width: 50%;
+      max-width: 480px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+           -o-transform: translateY(-50%);
+              transform: translateY(-50%); }
+      .story-item .story-content h1 {
+        font-size: 2rem; }
+      .story-item .story-content p, .story-item .story-content a {
+        font-size: 1.21428571rem; }
+    .story-item .story-image {
+      position: relative;
+      width: 50%;
+      overflow: hidden; }
+      .story-item .story-image img {
+        display: block;
+        height: 100%; }
+  .image-on-right .story-content {
+    padding-left: 96px; }
   .image-on-right .story-image {
-    float: right; }
+    left: 50%; }
   .image-on-left .story-content {
-    left: 50%; } }
+    left: 50%;
+    padding-left: 48px; } }
+
+/***************************************
+*
+* HERO MESSAGE BEANS
+*
+***************************************/
+.bean-hero-block {
+  padding-top: 4rem;
+  padding-bottom: 4rem; }
 
 .subcategories-block {
   overflow: hidden;
@@ -621,7 +638,12 @@
 dl dt {
   margin-bottom: 0.71428571rem; }
 
+.region {
+  display: block;
+  overflow: hidden; }
+
 .region-hero {
+  clear: both;
   background-color: #18606b; }
 
 h2 {

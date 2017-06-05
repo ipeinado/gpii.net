@@ -79,9 +79,6 @@
             <img src="<?php print $logo; ?>" alt="<?php print t('GPII.net Home Page'); ?>" />
           </a>
         <?php endif; ?>
-        <?php if (!empty($site_slogan)): ?>
-          <p class="lead"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
-        <?php endif; ?>
 
         <?php if (!empty($site_name)): ?>
           <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
@@ -104,7 +101,7 @@
           <?php endif; ?>
 
           <nav role="navigation">
-            <h1 class="sr-only">Main Navigation</h1>
+            <h1 class="element-invisible">Main Navigation</h1>
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
             <?php endif; ?>
@@ -124,16 +121,14 @@
     </div>
   </header>
 
-  <section id="hero-homepage" role="banner">
-    <?php if (!empty($page['hero'])): ?>
-      <?php print render($page['hero']); ?>
-    <?php endif; ?>
-  </section>
+  <?php if (!empty($page['hero'])): ?>
+    <?php print render($page['hero']); ?>
+  <?php endif; ?>
 
   <div id="main-container" class="main-container <?php print $container_class; ?>">
     <div class="row">
       <section <?php print $content_column_class; ?>>
-        <?php if (!empty($page['highlighted']) && !$is_front): ?>
+        <?php if (!empty($page['highlighted'])): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
         <?php endif; ?>
 
@@ -141,7 +136,7 @@
         <a id="main-content"></a>
         <?php print render($title_prefix); ?>
         <?php if (!empty($title)): ?>
-          <h1 class="page-header element-invisible"><?php print $title; ?></h1>
+          <h1 class="page-header"><?php print $title; ?></h1>
         <?php endif; ?>
         <?php print render($title_suffix); ?>
         <?php print $messages; ?>
@@ -153,11 +148,6 @@
         <?php endif; ?>
         <?php if (!empty($action_links)): ?>
           <ul class="action-links"><?php print render($action_links); ?></ul>
-        <?php endif; ?>
-
-        <?php if (!empty($page['user_groups'])): ?>
-          <h2 class="element-invisible">User Groups</h2>
-          <?php print render($page['user_groups']); ?>
         <?php endif; ?>
 
         <?php if (!empty($page['content_preface'])): ?>
@@ -173,12 +163,14 @@
 
       <?php if (!empty($page['sidebar_first'])): ?>
         <aside id="sidebar_first" class="<?php print $sidebar_first_column_class; ?>" role="complementary">
+          <h1 class="element-invisible">Filters</h1>
           <?php print render($page['sidebar_first']); ?>
         </aside>  <!-- /#sidebar-first -->
       <?php endif; ?>
 
       <?php if (!empty($page['sidebar_second'])): ?>
         <aside id="sidebar_second" class="<?php print $sidebar_second_column_class; ?>" role="complementary">
+          <h1 class="element-invisible">Complementary Information</h1>
           <?php print render($page['sidebar_second']); ?>
         </aside>  <!-- /#sidebar-second -->
       <?php endif; ?>
@@ -203,8 +195,8 @@
 <?php if ($has_footer_regions): ?>
   <div id="footer-wrap">
     <footer id="footer" class="footer container-fluid">
-      <section>
-        <h1 class="element-invisible">Footer</h1>
+      <section class="footer-section">
+        <h1 class="element-invisible">Footer Navigation</h1>
         <?php if ($region_info['footer']['has_columns']): ?>
           <?php
             $widths = array(

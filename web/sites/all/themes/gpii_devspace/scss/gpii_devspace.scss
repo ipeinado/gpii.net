@@ -17,7 +17,13 @@ dl dt {
   margin-bottom: (10px/14px)*1rem;
 }
 
+.region {
+  display: block;
+  overflow: hidden;
+}
+
 .region-hero {
+  clear: both;
   background-color: $color-gpii-devspace-primary;
 }
 

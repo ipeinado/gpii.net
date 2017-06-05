@@ -19,7 +19,7 @@
 		margin-top: (2px/14px)*1rem;
 	}
 
-	header > h2 {
+	header > h3 {
 		display: inline-block;
 		font-size: (20px/14px)*1rem;
 		margin-top: 0;
@@ -40,6 +40,9 @@
 } 
 
 // STORIES
+.region-stories {
+	margin: 0 -15px;
+}
 @media (max-width: $screen-xs-max) {
 	.story-item {
 		
@@ -48,21 +51,26 @@
 		}
 		
 		.story-image {
-			display: none;
+			width: 100%;
+			margin: 0 auto;
 		}
 	}
 }
 
 @media (min-width: $screen-sm-min) {
 	.story-item {
-
+		max-width: 1170px;
+		margin: 0 auto;
 		.story-content {
 			position: absolute;
 			width: 50%;
-			max-width: 520px;
+			max-width: 480px;
 			top: 50%;
 			transform: translateY(-50%);
-			padding-left: 72px;
+
+			h1 {
+				font-size: (28px/14px)*1rem;
+			}
 
 			p, a {
 				font-size: (17px/14px)*1rem;
@@ -79,11 +87,29 @@
 		}
 	}
 
-	.image-on-right .story-image {
-		text-align: right;
+	.image-on-right {
+		.story-content {
+			padding-left: 96px;
+		}
+		.story-image {
+			left: 50%;
+		}
 	}
 
-	.image-on-left .story-content {
-		left: 50%;
-	}	
+	.image-on-left {
+		.story-content {
+			left: 50%;
+			padding-left: 48px;
+		}
+	}
+}
+
+/***************************************
+*
+* HERO MESSAGE BEANS
+*
+***************************************/
+.bean-hero-block {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
 }
