@@ -169,12 +169,38 @@
       #block-views-topics-block ul.topic-list li a, #block-views-topics-block ul.topic-list li i {
         font-size: 1rem; }
 
+.region.region-user-groups {
+  margin-bottom: 3rem; }
+
+/***************************************
+*
+* USER GROUPS BEANS
+*
+***************************************/
+.block-bean-user-group {
+  padding: 0;
+  display: inline-block;
+  vertical-align: top;
+  float: none; }
+  @media (max-width: 767px) {
+    .block-bean-user-group {
+      width: 66%;
+      margin: 0 auto; } }
+  @media (min-width: 768px) {
+    .block-bean-user-group {
+      width: 50%;
+      margin: 0 -2px; } }
+  @media (min-width: 992px) {
+    .block-bean-user-group {
+      width: 25%;
+      margin: 0 -2px; } }
+
 .card {
   border: 1px solid #FFF;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   -webkit-transition: border-color .3s ease, -webkit-box-shadow .3s ease;
   transition: border-color .3s ease, -webkit-box-shadow .3s ease;
   -o-transition: border-color .3s ease, box-shadow .3s ease;
@@ -183,12 +209,14 @@
   .card header {
     padding: 0; }
   .card header .fa {
-    font-size: 1.42857143rem;
+    font-size: 1.21428571rem;
     margin-right: 0.35714286rem;
-    margin-top: 0.14285714rem; }
-  .card header > h3 {
+    margin-top: 0.14285714rem;
     display: inline-block;
-    font-size: 1.42857143rem;
+    float: left; }
+  .card header > h3 {
+    margin-left: 1.85714286rem;
+    font-size: 1.28571429rem;
     margin-top: 0;
     color: #000; }
 
@@ -203,6 +231,11 @@
   padding: 2rem 0;
   margin: 0 15px; }
 
+/***************************************
+*
+* STORIES BEANS
+*
+***************************************/
 .region-stories {
   margin: 0 -15px; }
 
@@ -253,6 +286,9 @@
 .bean-hero-block {
   padding-top: 4rem;
   padding-bottom: 4rem; }
+  .bean-hero-block h2 {
+    font-size: 2.28571429rem;
+    line-height: 2.57142857rem; }
 
 .subcategories-block {
   overflow: hidden;
