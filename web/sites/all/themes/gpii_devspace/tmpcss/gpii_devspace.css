@@ -4,9 +4,6 @@
 .front .welcome-block {
   margin-bottom: 1em; }
 
-.front .page-header {
-  display: none; }
-
 .front .region-hero {
   padding: 1em 0;
   text-align: center;
@@ -171,22 +168,50 @@
       #block-views-topics-block ul.topic-list li a, #block-views-topics-block ul.topic-list li i {
         font-size: 1rem; }
 
+.region.region-user-groups {
+  margin-bottom: 3rem; }
+
+/***************************************
+*
+* USER GROUPS BEANS
+*
+***************************************/
+.block-bean-user-group {
+  padding: 0;
+  vertical-align: top;
+  float: none; }
+  @media (max-width: 767px) {
+    .block-bean-user-group {
+      width: 66%;
+      margin: 0 auto; } }
+  @media (min-width: 768px) {
+    .block-bean-user-group {
+      display: inline-block;
+      width: 50%;
+      margin: 0 -2px; } }
+  @media (min-width: 992px) {
+    .block-bean-user-group {
+      width: 25%;
+      margin: 0 -2px; } }
+
 .card {
   border: 1px solid #FFF;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   transition: border-color .3s ease, box-shadow .3s ease; }
   .card header {
     padding: 0; }
   .card header .fa {
-    font-size: 1.42857143rem;
+    font-size: 1.21428571rem;
     margin-right: 0.35714286rem;
-    margin-top: 0.14285714rem; }
-  .card header > h2 {
+    margin-top: 0.14285714rem;
     display: inline-block;
-    font-size: 1.42857143rem;
+    float: left; }
+  .card header > h3 {
+    margin-left: 1.85714286rem;
+    font-size: 1.28571429rem;
     margin-top: 0;
     color: #000; }
 
@@ -200,33 +225,61 @@
   padding: 2rem 0;
   margin: 0 15px; }
 
+/***************************************
+*
+* STORIES BEANS
+*
+***************************************/
+.region-stories {
+  margin: 0 -15px; }
+
 @media (max-width: 767px) {
   .story-item .story-content {
     width: 100%; }
   .story-item .story-image {
-    display: none; } }
+    width: 100%;
+    margin: 0 auto; } }
 
 @media (min-width: 768px) {
-  .story-item .story-content {
-    position: absolute;
-    width: 50%;
-    max-width: 520px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding-left: 72px; }
-    .story-item .story-content p, .story-item .story-content a {
-      font-size: 1.21428571rem; }
-  .story-item .story-image {
-    position: relative;
-    width: 50%;
-    overflow: hidden; }
-    .story-item .story-image img {
-      display: block;
-      height: 100%; }
+  .story-item {
+    max-width: 1170px;
+    margin: 0 auto; }
+    .story-item .story-content {
+      position: absolute;
+      width: 50%;
+      max-width: 480px;
+      top: 50%;
+      transform: translateY(-50%); }
+      .story-item .story-content h1 {
+        font-size: 2rem; }
+      .story-item .story-content p, .story-item .story-content a {
+        font-size: 1.21428571rem; }
+    .story-item .story-image {
+      position: relative;
+      width: 50%;
+      overflow: hidden; }
+      .story-item .story-image img {
+        display: block;
+        height: 100%; }
+  .image-on-right .story-content {
+    padding-left: 96px; }
   .image-on-right .story-image {
-    text-align: right; }
+    left: 50%; }
   .image-on-left .story-content {
-    left: 50%; } }
+    left: 50%;
+    padding-left: 48px; } }
+
+/***************************************
+*
+* HERO MESSAGE BEANS
+*
+***************************************/
+.bean-hero-block {
+  padding-top: 4rem;
+  padding-bottom: 4rem; }
+  .bean-hero-block h2 {
+    font-size: 2.28571429rem;
+    line-height: 2.57142857rem; }
 
 .subcategories-block {
   overflow: hidden;
@@ -596,7 +649,12 @@
 dl dt {
   margin-bottom: 0.71428571rem; }
 
+.region {
+  display: block;
+  overflow: hidden; }
+
 .region-hero {
+  clear: both;
   background-color: #18606b; }
 
 h2 {

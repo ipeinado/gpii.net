@@ -18,7 +18,7 @@
     $('.region-content').attr('role', 'main');
     $('.footer').attr('role', 'contentinfo');
     $('.node').attr('role', 'article');
-    $('.block').attr('role', 'complementary');
+    // $('.block').attr('role', 'complementary');
     $('#search-form').attr('role', 'search');
   });
 

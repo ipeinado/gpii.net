@@ -1,11 +1,37 @@
-// USER GROUP BEANS
+/***************************************
+*
+* USER GROUPS BEANS
+*
+***************************************/
+
+.block-bean-user-group {
+	padding: 0;
+	vertical-align: top;
+	float: none;
+
+	@media (max-width: $screen-xs-max) {
+		width: 66%;
+		margin: 0 auto;
+	}
+
+	@media (min-width: $screen-sm-min) {
+		display: inline-block;
+		width: 50%;
+		margin: 0 -2px;
+	}
+
+	@media (min-width: $screen-md-min) {
+		width: 25%;
+		margin: 0 -2px;
+	}
+}
 
 .card {
 	border: 1px solid #FFF;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
 	padding: (14px/14px)*1rem;
-	margin-bottom: 1rem;
+	margin: 0 auto 1rem;
 	transition: border-color .3s ease,
 				box-shadow .3s ease;
 
@@ -14,14 +40,16 @@
 	}
 
 	header .fa {
-		font-size: (20px/14px)*1rem;
+		font-size: (17px/14px)*1rem;
 		margin-right: (5px/14px)*1rem;
 		margin-top: (2px/14px)*1rem;
+		display: inline-block;
+		float: left;
 	}
 
-	header > h2 {
-		display: inline-block;
-		font-size: (20px/14px)*1rem;
+	header > h3 {
+		margin-left: (26px/14px)*1rem;
+		font-size: (18px/14px)*1rem;
 		margin-top: 0;
 		color: #000;
 	}
@@ -39,7 +67,16 @@
 	margin: 0 15px;
 } 
 
-// STORIES
+/***************************************
+*
+* STORIES BEANS
+*
+***************************************/
+
+.region-stories {
+	margin: 0 -15px;
+}
+
 @media (max-width: $screen-xs-max) {
 	.story-item {
 		
@@ -48,21 +85,26 @@
 		}
 		
 		.story-image {
-			display: none;
+			width: 100%;
+			margin: 0 auto;
 		}
 	}
 }
 
 @media (min-width: $screen-sm-min) {
 	.story-item {
-
+		max-width: 1170px;
+		margin: 0 auto;
 		.story-content {
 			position: absolute;
 			width: 50%;
-			max-width: 520px;
+			max-width: 480px;
 			top: 50%;
 			transform: translateY(-50%);
-			padding-left: 72px;
+
+			h1 {
+				font-size: (28px/14px)*1rem;
+			}
 
 			p, a {
 				font-size: (17px/14px)*1rem;
@@ -79,11 +121,35 @@
 		}
 	}
 
-	.image-on-right .story-image {
-		text-align: right;
+	.image-on-right {
+		.story-content {
+			padding-left: 96px;
+		}
+		.story-image {
+			left: 50%;
+		}
 	}
 
-	.image-on-left .story-content {
-		left: 50%;
-	}	
+	.image-on-left {
+		.story-content {
+			left: 50%;
+			padding-left: 48px;
+		}
+	}
+}
+
+/***************************************
+*
+* HERO MESSAGE BEANS
+*
+***************************************/
+
+.bean-hero-block {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+
+	h2 {
+		font-size: (32px/14px)*1rem;
+		line-height: (36px/14px)*1rem;
+	}
 }
