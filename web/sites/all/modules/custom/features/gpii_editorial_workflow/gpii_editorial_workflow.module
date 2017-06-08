@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the GPII Editorial Workflow feature.
+ */
+
+include_once 'gpii_editorial_workflow.features.inc';

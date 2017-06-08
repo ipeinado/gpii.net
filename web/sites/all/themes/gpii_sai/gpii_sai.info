@@ -46,3 +46,10 @@ regions[fine_print_fourth]       = 'Fine Print Fourth'
 ;;;;;;;;;;;;;;;;;;;;;
 
 stylesheets[all][] = css/gpii_sai.css
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Scripts
+;;;;;;;;;;;;;;;;;;;;;
+
+scripts[] = 'js/alter_flag_links.js'

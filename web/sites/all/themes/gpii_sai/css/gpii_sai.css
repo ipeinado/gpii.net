@@ -732,4 +732,48 @@ tree-control.tree-classic li .tree-selected {
     .field-name-field-product-image a:focus .mfp-title, .field-name-field-product-image a:focus .mfp-thumbnail {
       outline: 1px dotted #2783c6; }
 
+/**
+ * Editorial progress view and Curator's notes
+ */
+#block-views-node-flag-report-block {
+  background: #FFFDD9;
+  border-color: #e5e5e5;
+  border-style: solid dotted;
+  border-width: 1px;
+  padding: 0; }
+  #block-views-node-flag-report-block h2 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+    color: #e5e5e5;
+    padding: 0.6rem 0.5rem 0.5rem;
+    background: #666; }
+  #block-views-node-flag-report-block table {
+    margin: 0.5rem 1rem 0.5rem 0; }
+    #block-views-node-flag-report-block table th {
+      padding-bottom: 0.15rem; }
+  #block-views-node-flag-report-block th.views-field-view {
+    padding-left: 11.6rem; }
+  #block-views-node-flag-report-block .view-node-flag-report .views-field-view {
+    width: 16rem; }
+  #block-views-node-flag-report-block .view-node-flag-done.view-display-id-block_2 .views-field {
+    position: relative;
+    margin-bottom: 0.3rem; }
+  #block-views-node-flag-report-block .view-node-flag-done.view-display-id-block_1 .views-field {
+    padding-left: 2rem;
+    margin-bottom: 0.3rem; }
+  #block-views-node-flag-report-block .flag-photo-complete, #block-views-node-flag-report-block .flag-description-complete, #block-views-node-flag-report-block .flag-alt-title-complete, #block-views-node-flag-report-block .flag-mfgr-complete, #block-views-node-flag-report-block .flag-taxonomy-complete, #block-views-node-flag-report-block .flag-wheretobuy-complete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 12rem; }
+
+.field-name-field-notes {
+  background: #FFFDD9;
+  border-color: #e5e5e5;
+  border-style: solid dotted;
+  border-width: 1px;
+  border-top: none;
+  padding: 1rem 0.5rem; }
+
 /*# sourceMappingURL=gpii_sai.css.map */

@@ -12,9 +12,26 @@
   padding-right: 0;
 }
 
+
+
 .admin-views-view .form-item-operation {
   float: left;
   margin-top: 0;
   margin-bottom: 0;
   margin-right: 1em;
 }
+
+/**
+ * BBC: Admin views overrides to make filters a bit more manageable
+ */
+
+.admin-views-view .views-exposed-form .views-submit-button {
+  clear: both;
+  margin-bottom: 2em;
+}
+
+.admin-views-view #edit-secondary-wrapper {
+  clear: both;
+  width: 100%;
+}
+

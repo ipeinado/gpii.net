@@ -939,3 +939,67 @@ tree-control.tree-classic li .tree-selected {
   }
   margin-bottom: 1rem;
 }
+
+/**
+ * Editorial progress view and Curator's notes
+ */
+
+#block-views-node-flag-report-block {
+  background: #FFFDD9;
+  border-color: $color-gpii-gray;
+  border-style: solid dotted;
+  border-width: 1px;
+  padding: 0;
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+    color: $color-gpii-gray;
+    padding: 0.6rem 0.5rem 0.5rem;
+    background: #666;
+  }
+
+  table {
+    margin: 0.5rem 1rem 0.5rem 0;
+    th {
+      padding-bottom: 0.15rem;
+    }
+  }
+  th.views-field-view {
+    padding-left: 11.6rem;
+  }
+  .view-node-flag-report { // width of first column
+    .views-field-view {
+      width: 16rem;
+    }
+  }
+  .view-node-flag-done.view-display-id-block_2 {
+    .views-field {
+      position: relative;
+      margin-bottom: 0.3rem;
+    }
+  }
+
+  .view-node-flag-done.view-display-id-block_1 {
+    .views-field {
+      padding-left: 2rem;
+      margin-bottom: 0.3rem;
+    }
+  }
+  .flag-photo-complete, .flag-description-complete, .flag-alt-title-complete, .flag-mfgr-complete, .flag-taxonomy-complete, .flag-wheretobuy-complete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 12rem;
+  }
+}
+
+.field-name-field-notes {
+  background: #FFFDD9;
+  border-color: $color-gpii-gray;
+  border-style: solid dotted;
+  border-width: 1px;
+  border-top: none;
+  padding: 1rem 0.5rem;
+}
