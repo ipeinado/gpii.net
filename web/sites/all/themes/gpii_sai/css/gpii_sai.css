@@ -761,7 +761,7 @@ tree-control.tree-classic li .tree-selected {
     margin-bottom: 0.3rem; }
   #block-views-node-flag-report-block .view-node-flag-done.view-display-id-block_1 .views-field {
     padding-left: 2rem;
-    margin-bottom: 0.3rem; }
+    margin-bottom: 0.162rem; }
   #block-views-node-flag-report-block .flag-photo-complete, #block-views-node-flag-report-block .flag-description-complete, #block-views-node-flag-report-block .flag-alt-title-complete, #block-views-node-flag-report-block .flag-mfgr-complete, #block-views-node-flag-report-block .flag-taxonomy-complete, #block-views-node-flag-report-block .flag-wheretobuy-complete {
     position: absolute;
     top: 0;
