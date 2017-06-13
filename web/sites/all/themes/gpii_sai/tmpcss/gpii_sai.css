@@ -707,18 +707,20 @@ tree-control.tree-classic li .tree-selected {
     #block-views-node-flag-report-block table th {
       padding-bottom: 0.15rem; }
   #block-views-node-flag-report-block th.views-field-view {
-    padding-left: 11.6rem; }
+    padding-left: 11.7rem; }
   #block-views-node-flag-report-block .view-node-flag-report .views-field-view {
     width: 16rem; }
   #block-views-node-flag-report-block .view-node-flag-done.view-display-id-block_2 .views-field {
     position: relative; }
   #block-views-node-flag-report-block .view-node-flag-done.view-display-id-block_1 .views-field {
-    padding-left: 2rem; }
+    padding-left: 1.7rem; }
   #block-views-node-flag-report-block .flag-photo-complete, #block-views-node-flag-report-block .flag-description-complete, #block-views-node-flag-report-block .flag-alt-title-complete, #block-views-node-flag-report-block .flag-mfgr-complete, #block-views-node-flag-report-block .flag-taxonomy-complete, #block-views-node-flag-report-block .flag-wheretobuy-complete {
     position: absolute;
     top: 0;
     left: 0;
     padding-left: 12rem; }
+  #block-views-node-flag-report-block input[type="checkbox"] {
+    margin: 0; }
 
 .field-name-field-notes {
   background: #FFFDD9;

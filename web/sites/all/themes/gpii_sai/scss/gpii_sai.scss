@@ -967,7 +967,7 @@ tree-control.tree-classic li .tree-selected {
     }
   }
   th.views-field-view {
-    padding-left: 11.6rem;
+    padding-left: 11.7rem;
   }
   .view-node-flag-report { // width of first column
     .views-field-view {
@@ -982,7 +982,7 @@ tree-control.tree-classic li .tree-selected {
 
   .view-node-flag-done.view-display-id-block_1 {
     .views-field {
-      padding-left: 2rem;
+      padding-left: 1.7rem;
     }
   }
   .flag-photo-complete, .flag-description-complete, .flag-alt-title-complete, .flag-mfgr-complete, .flag-taxonomy-complete, .flag-wheretobuy-complete {
@@ -990,6 +990,9 @@ tree-control.tree-classic li .tree-selected {
     top: 0;
     left: 0;
     padding-left: 12rem;
+  }
+  input[type="checkbox"] {
+    margin: 0;
   }
 }
 
