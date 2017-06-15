@@ -238,6 +238,7 @@ EOD;
 
 function gpii_saa_custom_list_child_terms($vid, $tid, $vdisplay) {
   $li = '';
+  $destination = drupal_get_destination();
   $children = taxonomy_get_tree($vid, $tid, 1);
   if ($children) {
     $li .= '<ul>';
@@ -246,7 +247,7 @@ function gpii_saa_custom_list_child_terms($vid, $tid, $vdisplay) {
      $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $value->tid));
      //dpm(count($count));
      if ($count > 0) {
-      $li .= '<li>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')</li>' .  gpii_saa_custom_list_child_terms($vid, $value->tid, $vdisplay);
+      $li .= '<li>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $value->name . '\' as their terminal record."></i>'), '/reports/taxonomy/terminal/' . $value->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</li>' .  gpii_saa_custom_list_child_terms($vid, $value->tid, $vdisplay);
      }
      else {
       $li .= '<li>' . t($value->name) . '</li>';
@@ -329,8 +330,137 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_products_ulisting',
         'access arguments' => array('access advanced search data'),
       );
+      $items['reports/taxonomy/terminal/%'] = array(
+        'title' => 'Terminal Taxonomy Report',
+        'page callback' => 'gpii_saa_custom_term_terminal',
+        'page arguments' => array(3),
+        'access arguments' => array('administer content'),
+      );
 
       return $items;
+    }
+
+
+    /**
+    * This callback is used to view a list of product records where a given taxonomy
+     * term has children, but the products do not have any of those children selected.
+     *
+     * Note: the taxonomy_review_depth_experiment_ view can't use "Term Reference Tree"
+     * or else this page returns no results. (known bug)
+    */
+
+    function gpii_saa_custom_term_terminal($tid) {
+      $children = taxonomy_get_children($tid);
+
+      $name = 'taxonomy_review_depth_experiment_';
+      $display_id = 'page';
+
+      $result = views_get_view_result($name, $display_id, $tid);
+
+      //kpr($result);
+      //kpr(array_keys($children));
+      $children = array_keys($children);
+
+      foreach ($result as $key => $value) {
+        # get the terms on the node and unset the row if we find a match
+        $terms = gpii_saa_custom_get_term_ids($value->_field_data['nid']['entity']);
+        $match = array_intersect($children, $terms);
+        if (count($match) > 0) {
+          unset($result[$key]);
+        }
+      }
+
+
+      $headers = array(
+          'user' => array('data' => t('NID'), 'field' => 'nid'),
+          'title' => array('data' => t('Title'), 'field' => 'title'),
+          'prod_categories' => array('data' => t('Product Categories'), 'field' => 'prod_categories'),
+          'prod_features' => array('data' => t('Needs and Wants'), 'field' => 'prod_features'),
+          'ops' => array('data' => t('Operations'))
+      );
+
+      $rows = array();
+      foreach ($result as $terminal_nodes) {
+        if (isset($terminal_nodes->field_field_features[0]['rendered']['#markup'])) {
+          $features = $terminal_nodes->field_field_features[0]['rendered']['#markup'];
+        }
+        else {
+          $features = '';
+        }
+
+      $rows[$terminal_nodes->nid] = array(
+      'nid' => $terminal_nodes->_field_data['nid']['entity']->nid,
+       'title' => l($terminal_nodes->_field_data['nid']['entity']->title, 'node/' . $terminal_nodes->_field_data['nid']['entity']->nid),
+       'prod_categories' => $terminal_nodes->field_field_product_categories1[0]['rendered']['#markup'],
+       'prod_features' => $features,
+       // 'terms' => implode(", ", gpii_saa_custom_get_terms($terminal_nodes->_field_data['nid']['entity'])), // allows for all terms defined below
+       'ops' => l(t('edit'), '/node/' . $terminal_nodes->_field_data['nid']['entity']->nid . '/edit', array('query' => array('destination' => current_path()),'attributes' => array('class' => array('btn', 'btn-success'))))
+      );
+      }
+
+      $form['invited_users'] = array(
+        '#markup' => theme('table', array(
+        'header' => $headers,
+        'rows' => $rows,
+        'attributes' => array('class' => array('terminal_nodes')),
+        '#empty' =>t('No results.'),
+        ))
+      );
+
+
+      $term = taxonomy_term_load($tid);
+      $destination = drupal_get_destination();
+      return '<p>The following table includes product records where <strong>' . $term->name  . ' (tid: ' . $tid . ')</strong> is the terminal item in this branch of the tree.</p><p><strong>Result Count: </strong>' . count($rows) . '</p> ' . render($form['invited_users']) . '<a href="/node/3244" class="btn btn-primary btn-lg"><i class="fa fa-chevron-left" style="margin-right: 0.rem;"></i> Return to Product Categories Outline</a>';
+    }
+
+
+    function gpii_saa_custom_get_term_ids($node) {
+      $terms = array();
+
+      // Duplicate foreach loop below - based on https://www.drupal.org/node/909968#comment-11979178
+      // which was throwing a bunch of php warnings for no good reason and slowed everything way down
+        if (field_get_items('node', $node, 'field_product_categories1') != '') {
+          foreach (field_get_items('node', $node, 'field_product_categories1') as $item) {
+            if (is_array($item) && !empty($item['tid'])) {
+              $terms[] = $item['tid'];
+            }
+          }
+        }
+        if (field_get_items('node', $node, 'field_features') != '') {
+          foreach (field_get_items('node', $node, 'field_features') as $item) {
+            if (is_array($item) && !empty($item['tid'])) {
+              $terms[] = $item['tid'];
+            }
+          }
+        }
+
+      return $terms;
+    }
+    function gpii_saa_custom_get_terms($node) {
+      $terms = array();
+
+      // Duplicate foreach loop below - based on https://www.drupal.org/node/909968#comment-11979178
+      // which was throwing a bunch of php warnings for no good reason and slowed everything way down
+        if (field_get_items('node', $node, 'field_product_categories1') != '') {
+          foreach (field_get_items('node', $node, 'field_product_categories1') as $item) {
+            if (is_array($item) && !empty($item['tid'])) {
+              $terms[] = $item['tid'];
+            }
+          }
+        }
+        if (field_get_items('node', $node, 'field_features') != '') {
+          foreach (field_get_items('node', $node, 'field_features') as $item) {
+            if (is_array($item) && !empty($item['tid'])) {
+              $terms[] = $item['tid'];
+            }
+          }
+        }
+
+        foreach ($terms as $key => $value) {
+           $term = taxonomy_term_load($value);
+           $terms[$key] = $term->name;
+        }
+      return $terms;
     }
 
     /**

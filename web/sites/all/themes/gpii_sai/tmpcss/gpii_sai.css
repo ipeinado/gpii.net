@@ -52,7 +52,7 @@ a {
   color: #A72534; }
   a:hover, a:focus, a:active {
     color: #8e1f2c; }
-  a:visited {
+  a:not(.btn):visited {
     color: #c02b3c; }
 
 .field-name-accessible-read-more a.read-more > .fa {
