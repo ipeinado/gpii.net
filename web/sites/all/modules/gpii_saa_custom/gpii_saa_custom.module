@@ -41,6 +41,9 @@ function gpii_saa_custom_permission() {
   return array(
     'access advanced search data' => array(
       'title' => t('Access api data for advanced search'),
+    ),
+    'access terminal taxonomy report' => array(
+      'title' => t('Access terminal taxonomy term reports.'),
     )
   );
 }
@@ -336,7 +339,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'title' => 'Terminal Taxonomy Report',
         'page callback' => 'gpii_saa_custom_term_terminal',
         'page arguments' => array(3),
-        'access arguments' => array('administer content'),
+        'access arguments' => array('access terminal taxonomy report'),
       );
 
       return $items;
