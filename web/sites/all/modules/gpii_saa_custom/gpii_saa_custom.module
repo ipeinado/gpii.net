@@ -247,7 +247,7 @@ function gpii_saa_custom_list_child_terms($vid, $tid, $vdisplay) {
      $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $value->tid));
      //dpm(count($count));
      if ($count > 0) {
-      $li .= '<li>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $value->name . '\' as their terminal record."></i>'), '/reports/taxonomy/terminal/' . $value->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</li>' .  gpii_saa_custom_list_child_terms($vid, $value->tid, $vdisplay);
+      $li .= '<li>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $value->name . '\' as their terminal record."></i><span class="sr-only">Products with \'' . $value->name . '\' as their terminal record.</span>'), '/reports/taxonomy/terminal/' . $value->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</li>' .  gpii_saa_custom_list_child_terms($vid, $value->tid, $vdisplay);
      }
      else {
       $li .= '<li>' . t($value->name) . '</li>';
