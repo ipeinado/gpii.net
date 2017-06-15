@@ -39,7 +39,7 @@ class taxonomy_entity_index_handler_argument_tid_depth extends views_handler_arg
     }
     // Now build the subqueries.
     $subquery = db_select('taxonomy_entity_index', 'tn');
-    $subquery->addField('tn', 'entity_id');
+    $subquery->addField('tn', 'revision_id');
     if (isset($this->base_table_info['table']['entity type'])) {
       $subquery->condition('entity_type', $this->base_table_info['table']['entity type']);
     }
