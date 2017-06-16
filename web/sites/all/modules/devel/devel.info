@@ -13,3 +13,4 @@ core = "7.x"
 project = "devel"
 datestamp = "1398963366"
 
+patch[] = https://www.drupal.org/node/2855666 Issue 2855666, Patch #9

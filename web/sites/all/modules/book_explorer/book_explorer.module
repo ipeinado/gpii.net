@@ -4,7 +4,7 @@
  * Implements hook_block_info().
  */
 function book_explorer_block_info() {
-  $blocks = array();  
+  $blocks = array();
   $blocks['book_explorer'] = array(
     'info' => t('Book explorer navigation'),
     'cache' => DRUPAL_CACHE_PER_ROLE | DRUPAL_CACHE_PER_PAGE,
@@ -81,27 +81,27 @@ function book_explorer_block_book_explorer_view() {
     $block['content'] = $book_menus;
   }
   elseif ($current_bid) {
-    
+
     // Only display this block when the user is browsing a book.
     $select = db_select('node', 'n')
     ->fields('n', array('title'))
     ->condition('n.nid', $node->book['bid'])
     ->addTag('node_access');
     $title = $select->execute()->fetchField(0);
-    
+
     // Only show the block if the user has view access for the top-level node.
     if ($title) {
-      
+
       $tree = menu_tree_all_data($node->book['menu_name'] /*, $node->book */);
       // There should only be one element at the top level.
       $tree = book_menu_subtree_data($node->book);
       $data = array_shift($tree);
-      
+
       $block['subject'] = theme('book_title_link', array('link' => $data['link']));
       //$block['content'] = ($data['below']) ? menu_tree_output($data['below']) : '';
-      $block['content'] = ($data['below']) ? _book_explorer_menu_tree_output($data['below']) : '';      
+      $block['content'] = ($data['below']) ? _book_explorer_menu_tree_output($data['below']) : '';
     }
-  }  
+  }
 
   if (!empty($block['content'])) {
     // Move block content down one level so we can wrap a div around it
@@ -113,7 +113,7 @@ function book_explorer_block_book_explorer_view() {
 
     // Attach css and js which implements the 'explorer' behaviour
     $dir = drupal_get_path('module', 'book_explorer');
-    $block['content']['build']['#attached']['css'] = array($dir . '/book_explorer.css');      
+    $block['content']['build']['#attached']['css'] = array($dir . '/book_explorer.css');
     $block['content']['build']['#attached']['js'] = array($dir . '/book_explorer.js');
   }
   return $block;
@@ -129,21 +129,23 @@ function _book_explorer_menu_tree_output($tree) {
   // get an accurate count for the first/last classes.
   foreach ($tree as $data) {
     if ($data['link']['access'] && !$data['link']['hidden']) {
-      
+
       // Get the node body so we can render it.
-      
+
       $node = node_load($data['link']['nid']);
+      // BBC: Updated to include summary instead of node
       $body = field_get_items('node', $node,'body');
-      
+
+
       if (!empty($body)) {
-        $data['markup'] = $body[0]['safe_value'];
+        $data['markup'] = $body[0]['safe_summary'];
       } else {
-        $data['markup'] = false; 
+        $data['markup'] = false;
       }
-      
+
       $items[] = $data;
     }
-    
+
   }
 
   $router_item = menu_get_item();
@@ -168,13 +170,13 @@ function _book_explorer_menu_tree_output($tree) {
     } else {
       $class[] = 'leaf';
     }
-    
+
     // Set a class if the link is in the active trail.
     if ($data['link']['in_active_trail']) {
       $class[] = 'active-trail';
       $data['link']['localized_options']['attributes']['class'][] = 'active-trail';
     }
-    
+
     // Normally, l() compares the href of every link with $_GET['q'] and sets
     // the active class accordingly. But local tasks do not appear in menu
     // trees, so if the current path is a local task, and this link is its
@@ -191,24 +193,24 @@ function _book_explorer_menu_tree_output($tree) {
     $element['#localized_options'] = !empty($data['link']['localized_options']) ? $data['link']['localized_options'] : array();
     //$element['#below'] = $data['below'] ? _book_explorer_menu_tree_output($data['below']) : $data['below'];
     $element['#original_link'] = $data['link'];
-    
+
     // Index using the link's unique mlid.
-    
+
     // Create the markup element to stuff body text in.
-    
+
     if ($data['markup']) {
       $markup = array(
         '#markup' => '<div class="book-explorer-markup">' . $data['markup'] . '</div>'
       );
-      
+
       $element['#below'] = $data['below'] ? array($markup, _book_explorer_menu_tree_output($data['below'])) : array($markup, $data['below']);
     } else {
       $element['#below'] = $data['below'] ? _book_explorer_menu_tree_output($data['below']) : $data['below'];
     }
-    
-    
+
+
     //$elementArray = $data['markup'] ? array($element, array('#markup' => $data['markup'])) : $data['below'];
-    
+
     $build[$data['link']['mlid']] = $element;
   }
   if ($build) {
