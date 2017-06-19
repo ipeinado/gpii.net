@@ -464,19 +464,64 @@ function gpii_oauth2_login_authorization_callback_page() {
   // something goes wrong below.
   unset($_SESSION['gpii_oauth2']);
 
-  user_external_login_register($json['name'], 'gpii_oauth2');
-  $account = user_external_load($json['name']);
+  $account_name = $json['name'];
+  $account_email = $json['email'];
+  $existing_authmaps = user_get_authmaps($account_name);
+
+	// Try to link to an account if not already linked.
+  if (!isset($existing_authmaps['gpii_oauth2'])) {
+    $existing_account_by_name = user_load_by_name($account_name);
+    $existing_account_by_email = user_load_by_mail($account_email);
+
+    if (!empty($existing_account_by_name) && !empty($existing_account_by_email)) {
+      if ($existing_account_by_name->uid == $existing_account_by_email->uid) {
+        // Link an account from the IAM component when the user name and email
+        // address match. Login will still occur below in
+        // user_external_login_register().
+        user_set_authmaps($existing_account_by_name, array("authname_gpii_oauth2" => $account_name));
+      }
+      else {
+        // The information from the IAM component matches two different accounts
+        // on the site. Inform the user and log the error.
+
+        $existing_uid_by_name = $existing_account_by_name->uid;
+        $existing_uid_by_email = $existing_account_by_email->uid;
+
+        watchdog('gpii_oauth2', t('User tried to log in using a single sign-on account that has user information which matches multiple existing accounts. Fixing this will require manual intervention. Matching name UID: %existing_uid_by_name. Matching email address UID: %existing_uid_by_email.', array('%existing_uid_by_name' => $existing_uid_by_name, '%existing_uid_by_email' => $existing_uid_by_email)), NULL, WATCHDOG_ERROR);
+        drupal_set_message(t('You tried to log in using a single sign-on account that has user information which matches multiple existing accounts on this site. To avoid problems, your single sign-on account can\'t be used to log in at this time. Please contact the administrator to have this resolved.'), 'error');
+        gpii_oauth2_goto($destination);
+      }
+    }
+    elseif (!empty($existing_account_by_name) || !empty($existing_account_by_email)) {
+      // Here, either the user name or email address matched but not both. This
+      // should definitely be an error if only the user name matches to prevent
+      // malicious users from taking over accounts by taking advantage of the IAM
+      // component. This falls more on the side of being an error if only the
+      // email address matches to prevent similar issues, though it's less of a
+      // problem if the IAM component is validating email address ownership.
+
+      $existing_uid_by_name = isset($existing_account_by_name->uid) ? $existing_account_by_name->uid : t('none');
+      $existing_uid_by_email = isset($existing_account_by_email->uid) ? $existing_account_by_email->uid : t('none');
+
+      watchdog('gpii_oauth2', t('User tried to log in using a single sign-on account that has user information which only partially matches an existing account. Fixing this will require manual intervention. Matching name UID: %existing_uid_by_name. Matching email address UID: %existing_uid_by_email.', array('%existing_uid_by_name' => $existing_uid_by_name, '%existing_uid_by_email' => $existing_uid_by_email)), NULL, WATCHDOG_ERROR);
+      drupal_set_message(t('You tried to log in using a single sign-on account that has user information which only partially matches an existing account on this site. To avoid problems, your single sign-on account can\'t be used to log in at this time. Please contact the administrator to have this resolved.'), 'error');
+      gpii_oauth2_goto($destination);
+    }
+  }
+
+  user_external_login_register($account_name, 'gpii_oauth2');
+  $account = user_external_load($account_name);
 
   if (empty($account)) {
     // Drupal already notifies the user in user_external_login_register() if
     // registration fails, so there's no need to use drupal_set_message() here.
-    watchdog('gpii_oauth2', t('Couldn\'t register user %user_name.', array('%user_name' => $json['name'])), NULL, WATCHDOG_ERROR);
+    watchdog('gpii_oauth2', t('Couldn\'t register user %user_name.', array('%user_name' => $account_name)), NULL, WATCHDOG_ERROR);
     gpii_oauth2_goto($destination);
   }
 
   // Save the email address manually since user_external_login_register()
   // doesn't provide a way save email addresses.
-  user_save($account, array('mail' => $json['email']));
+  user_save($account, array('mail' => $account_email));
 
   gpii_oauth2_goto($destination);
 }
@@ -663,7 +708,7 @@ function gpii_oauth2_form_admin_settings() {
     '#disabled' => !$can_update_fields,
     '#default_value' => variable_get('gpii_oauth2_account_management_url', ''),
     '#description' => t('A valid URL on the single sign-on server to which to direct users to manage their accounts.'),
-    '#attributes' => array('placeholder' => 'https://idp.example.com/identity-access-manager/index'),
+    '#attributes' => array('placeholder' => 'https://idp.example.com/identity-access-manager/profile'),
     '#element_validate' => array('gpii_oauth2_form_validate_url'));
 
   $form = system_settings_form($form);
