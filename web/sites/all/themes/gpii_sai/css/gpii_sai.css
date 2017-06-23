@@ -776,4 +776,47 @@ tree-control.tree-classic li .tree-selected {
   border-top: none;
   padding: 1rem 0.5rem; }
 
+.view-editorial-status .table-condensed > tbody > tr > td {
+  padding: 0.5rem 0.25rem 0.25rem 0.25rem; }
+
+.view-editorial-status .view-filters label {
+  font-size: 0.9rem; }
+
+.view-editorial-status .view-header {
+  border-bottom: 1px solid #2c3849;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem; }
+
+.view-editorial-status #edit-combine-wrapper {
+  margin-bottom: 1rem; }
+
+.view-editorial-status #edit-flagged-wrapper {
+  clear: both; }
+
+.view-editorial-status div[class*=" views-widget-filter-flagged"] {
+  min-width: 15rem; }
+
+.view-editorial-status div[class*=" views-widget-filter-flagged"]:nth-child(4n) {
+  clear: both; }
+
+.view-editorial-status #edit-secondary-wrapper {
+  margin-top: 1rem;
+  width: 100%;
+  clear: both; }
+
+.view-editorial-status div[class*="-button"] {
+  margin: 1rem 0.5rem 1rem 0; }
+  .view-editorial-status div[class*="-button"] .btn {
+    font-size: 1.6rem; }
+
+.view-editorial-status legend .panel-title {
+  font-size: 1.5rem; }
+
+.view-editorial-status .views-field-edit-node {
+  text-align: center; }
+
+.view-editorial-status .views-field-views-bulk-operations .checkbox {
+  margin-top: 0;
+  margin-bottom: 0; }
+
 /*# sourceMappingURL=gpii_sai.css.map */

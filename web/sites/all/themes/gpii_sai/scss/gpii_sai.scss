@@ -1004,3 +1004,67 @@ tree-control.tree-classic li .tree-selected {
   border-top: none;
   padding: 1rem 0.5rem;
 }
+
+.view-editorial-status {
+  .table-condensed > tbody > tr > td {
+    padding: 0.5rem 0.25rem 0.25rem 0.25rem;
+  }
+  .view-filters {
+    label {
+      font-size: 0.9rem;
+    }
+  }
+
+  .view-header {
+    border-bottom: 1px solid $color-gpii-dark-gray;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+// Add some padding below the keywords filter
+  #edit-combine-wrapper {
+    margin-bottom: 1rem;
+  }
+
+  #edit-flagged-wrapper {
+    clear: both;
+  }
+
+  div[class*=" views-widget-filter-flagged"] {
+    min-width: 15rem;
+  }
+
+  div[class*=" views-widget-filter-flagged"]:nth-child(4n) {
+    clear: both;
+  }
+
+  #edit-secondary-wrapper {
+    margin-top: 1rem;
+    width: 100%;
+    clear: both;
+  }
+
+  div[class*="-button"] {
+    margin: 1rem 0.5rem 1rem 0;
+    .btn {
+      font-size: 1.6rem;
+    }
+  }
+
+  legend {
+    .panel-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .views-field-edit-node {
+    text-align: center;
+  }
+
+  .views-field-views-bulk-operations {
+    .checkbox {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+}
