@@ -971,19 +971,13 @@ function workbench_moderation_form_node_form_alter(&$form, $form_state) {
       '#access' => $states ? TRUE: FALSE,
     );
 
+    // If the user has access to the pre-set default state, make it the default
+    // here.  Otherwise, don't set a default in this case.
     $default_state = variable_get('workbench_moderation_default_state_' . $form['type']['#value']);
-    if (user_access('bypass workbench moderation')) {
-      // If the user may bypass moderation, the default state is for the node to
-      // go straight to the published state.
-      $form['revision_information']['workbench_moderation_state_new']['#default_value'] = workbench_moderation_state_published();
-    }
-    elseif ($default_state && array_key_exists($default_state, $states)) {
-      // If the user has access to the pre-set default state, make it the default
-      // here.
+    if ($default_state && array_key_exists($default_state, $states)) {
       $form['revision_information']['workbench_moderation_state_new']['#default_value'] = $default_state;
     }
     else {
-      // Otherwise, don't set a default in this case.
       $form['revision_information']['workbench_moderation_state_new']['#default_value'] = workbench_moderation_state_none();
     }
   }

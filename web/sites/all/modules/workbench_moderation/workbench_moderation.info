@@ -28,3 +28,4 @@ core = "7.x"
 project = "workbench_moderation"
 datestamp = "1478119457"
 
+patch[] = https://www.drupal.org/node/1338750 Issue 1338750, Patch #5
