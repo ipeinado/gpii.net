@@ -772,3 +772,6 @@ tree-control.tree-classic li .tree-selected {
 .view-editorial-status .views-field-views-bulk-operations .checkbox {
   margin-top: 0;
   margin-bottom: 0; }
+
+.view-editorial-status .views-exposed-form .views-exposed-widget .form-submit {
+  margin-top: 0; }
