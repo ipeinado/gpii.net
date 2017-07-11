@@ -127,6 +127,10 @@
     </div>
   </header>
 
+  <?php if(!empty($page['search_box'])): ?>
+    <?php print render($page['search_box']); ?>
+  <?php endif; ?>
+
   <?php if (!empty($page['hero'])): ?>
     <?php print render($page['hero']); ?>
   <?php endif; ?>

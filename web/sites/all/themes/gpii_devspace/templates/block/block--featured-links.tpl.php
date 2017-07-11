@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Default theme implementation to display a USER GROUP block.
+ * Default theme implementation to display a block.
  *
  * Available variables:
  * - $block->subject: Block title.
@@ -45,7 +45,7 @@
  * @ingroup templates
  */
 ?>
-<div id="<?php print $block_html_id; ?>" class="block-bean-user-group clearfix"<?php print $attributes; ?>>
+<div id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> col-sm-6 featured-link-block clearfix"<?php print $attributes; ?>>
 
   <?php print $content ?>
 
