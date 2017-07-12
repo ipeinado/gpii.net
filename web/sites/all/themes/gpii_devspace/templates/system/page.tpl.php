@@ -131,11 +131,13 @@
 
   <div id="main-container" class="main-container <?php print $container_class; ?>">
     <div class="row">
+      <?php if(!empty($page['featured_links'])): ?>
+        <h2 class="element-invisible">Featured Links</h2>
+        <?php print render($page['featured_links']); ?>
+      <?php endif; ?>
+    </div>
+    <div class="row">
       <section <?php print $content_column_class; ?>>
-        <?php if(!empty($page['featured_links'])): ?>
-          <h2 class="element-invisible">Featured Links</h2>
-          <?php print render($page['featured_links']); ?>
-        <?php endif; ?>
 
         <?php if (!empty($page['highlighted'])): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
