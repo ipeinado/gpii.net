@@ -6,22 +6,25 @@
 
 .bean-featured-link {
 	cursor: pointer;
-	padding: 10px 0;
+	padding-top: 1rem;
 	border-bottom: 3px solid #FFF;
+	color: #777;
 
 	img {
 		opacity: 0.85;
-		margin-bottom: (10px/14px)*1rem;
+		margin-bottom: (7px/14px)*1rem;
 		height: 120px;
 	}
 
 	.internal-link {
-		margin-bottom: (10px/14px)*1rem;
+		display: block;
+		margin-bottom: (3px/14px)*1rem;
 		font-size: (18px/14px)*1rem;
-		font-weight: 500;
+		font-weight: 600;
 	}
 
 	&:hover {
+		color: #000;
 		border-bottom: 3px solid #E5E5E5;
 
 		img {
@@ -32,6 +35,7 @@
 
 .bean-featured-link.selected {
 	border-bottom: 3px solid $color-gpii-devspace-primary;
+	color: #000;
 	img {
 		opacity: 1;
 	}
