@@ -4,42 +4,40 @@
 *
 ***************************************/
 
-.featured-link-block {
-	padding: 10px;
-	border: 1px solid #FFF;
+.bean-featured-link {
+	cursor: pointer;
+	padding: 10px 0;
+	border-bottom: 3px solid #FFF;
 
 	img {
-		opacity: 0.9;
+		opacity: 0.85;
+		margin-bottom: (10px/14px)*1rem;
+		height: 120px;
+	}
+
+	.internal-link {
+		margin-bottom: (10px/14px)*1rem;
+		font-size: (18px/14px)*1rem;
+		font-weight: 500;
 	}
 
 	&:hover {
-		border: 1px solid #E5E5E5;
-		box-shadow: 0 3px 3px -2px rgba(0,0,0,.2), 
-					0 3px 4px 0 rgba(0,0,0,.14), 
-					0 1px 4px 0 rgba(0,0,0,.12);
+		border-bottom: 3px solid #E5E5E5;
+
 		img {
 			opacity: 1;
 		}
 	}
 }
 
-.featured-link-block.selected {
+.bean-featured-link.selected {
 	border-bottom: 3px solid $color-gpii-devspace-primary;
 	img {
 		opacity: 1;
 	}
 
-	h3 > a {
+	.internal-link {
 		color: #000;
-	}
-}
-
-.bean-featured-link {
-	cursor: pointer;
-	overflow: hidden;
-
-	h3 {
-		font-weight: 500;
 	}
 }
 

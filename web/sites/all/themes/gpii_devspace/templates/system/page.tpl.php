@@ -125,17 +125,19 @@
     <?php print render($page['search_box']); ?>
   <?php endif; ?>
 
+  <?php if(!empty($page['featured_links'])): ?>
+    <div class="container">
+      <h2 class="element-invisible">Featured Links</h2>
+      <?php print render($page['featured_links']); ?>
+    </div>
+  <?php endif; ?>
+
   <?php if (!empty($page['hero'])): ?>
     <?php print render($page['hero']); ?>
   <?php endif; ?>
 
   <div id="main-container" class="main-container <?php print $container_class; ?>">
-    <div class="row">
-      <?php if(!empty($page['featured_links'])): ?>
-        <h2 class="element-invisible">Featured Links</h2>
-        <?php print render($page['featured_links']); ?>
-      <?php endif; ?>
-    </div>
+
     <div class="row">
       <section <?php print $content_column_class; ?>>
 
