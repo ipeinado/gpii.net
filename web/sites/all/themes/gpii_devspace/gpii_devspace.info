@@ -48,3 +48,9 @@ regions[fine_print_fourth]       = 'Fine Print Fourth'
 ;;;;;;;;;;;;;;;;;;;;;
 
 stylesheets[all][] = css/gpii_devspace.css
+
+;;;;;;;;;;;;;;;;;;;;;
+;; JavaScript
+;;;;;;;;;;;;;;;;;;;;;
+
+scripts[] = js/gpii_devspace.js
