@@ -341,6 +341,12 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page arguments' => array(3),
         'access arguments' => array('access terminal taxonomy report'),
       );
+      $items['testing/sync/photos/%'] = array(
+        'title' => 'Image Import Test',
+        'page callback' => 'gpii_saa_custom_image_import',
+        'page arguments' => array(3),
+        'access arguments' => array('access terminal taxonomy report'),
+      );
 
       return $items;
     }
@@ -680,4 +686,243 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
       }
     }
   }
+}
+
+
+/**
+ * Implements hook_action_info() to add some custom VBO actions
+ */
+function gpii_saa_custom_action_info() {
+  return array(
+    'gpii_saa_custom_import_ul_images' => array(
+      'type' => 'entity',
+      'label' => t('Import new images from the Unified Listing'),
+      'behavior' => array('changes_property'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
+  );
+}
+
+
+/**
+ * This function is called from the action_info array above
+ */
+
+function gpii_saa_custom_import_ul_images(&$entity) {
+
+  // call the gpii_saa_custom_image_import_vbo function
+  return gpii_saa_custom_image_import_vbo($entity);
+}
+
+
+function gpii_saa_custom_image_import_vbo(&$entity) {
+  //if the product record doesn't have a UID, there's no reason to try to continue.
+  if (isset($entity->field_uid)) {
+
+    $original_image = field_view_field('node', $entity, 'field_product_image');
+
+    // find out if there are any new images in the UL
+
+    $url = 'https://ul.gpii.net/api/images/metadata/' . $entity->field_uid['und'][0]['value'];
+    $result = file_get_contents($url);
+    //dsm($result);
+    $result = drupal_json_decode($result, true);
+    //dsm($result[0]['image_id']);
+
+    // Compare the original files to the new ones to see if anything should be overwritten
+
+    $original_file_hashes = array();
+
+    foreach ($entity->field_product_image['und'] as $key => $value) {
+      $original_file_hashes[$key] = md5_file($value['uri']);
+    }
+
+    //dsm('Original Images: ' . implode(', ', $original_filenames));
+
+    $imported_file_hashes = array();
+
+    if ($result) {
+      foreach ($result as $key => $value) {
+        $imported_file_hashes[$key] = md5_file('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+      }
+    }
+
+
+    //dsm('Imported Images: ' . implode(', ', $imported_filenames));
+
+
+    $diff_files = array_diff($imported_file_hashes, $original_file_hashes);
+    //drupal_set_message(count($diff_files) . t(' new files found for !link', array('!link' =>  l('node ' . $entity->nid, 'node/' . $entity->nid))));
+    // dsm(implode(', ', $diff_filenames));
+
+    if (count($diff_files)) {
+
+      foreach ($result as $key => $value) {
+
+          $filename = $value['image_id'];
+
+          $image = file_get_contents('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          //dpm('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
+          $file->alt = $value['description'];
+          $file->title = $value['description'];
+
+          //dpm($file);
+          $entity->field_product_image['und'][] = (array)$file;
+          //dpm($entity->field_product_image);
+
+          // Remove the default image thumbnail if there were no images to begin with.
+          //dsm($entity->field_product_image['und'][0]['filename']);
+
+          if (isset($entity->field_product_image['und'][0]) && $entity->field_product_image['und'][0]['filename'] === 'product-default-thumb.png') {
+            unset($entity->field_product_image['und'][0]);
+          }
+      }
+
+      // unset all related to photo and alt text status as they will have changed as a result of the import
+
+      $unflagids = array(
+        'photo_complete',
+        'photo_reviewed',
+        'alt_title_complete',
+        'alt_title_reviewed'
+        );
+
+      foreach ($unflagids as $key => $value) {
+        $flag = flag_get_flag($value);
+        $flag->flag('unflag', $entity->nid, user_load('1'), FALSE);
+      }
+
+
+      watchdog('gpii_saa_custom', count($diff_files) . 'new image(s) for node ' . $entity->nid . ' have been imported.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+
+      // return the modified entity to VBO for processing
+      return $entity;
+
+    }
+  }
+
+  return;
+
+}
+
+/**
+ * This function is really just for testing at this point. @@ remove before launch
+ *
+ */
+
+function gpii_saa_custom_image_import($uid) {
+  //dsm('UID: ' . $uid);
+
+  $query = new EntityFieldQuery();
+
+  $query->entityCondition('entity_type', 'node')
+  ->entityCondition('bundle', 'product')
+  ->fieldCondition('field_uid', 'value', $uid, '=')
+  ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+  $result = $query->execute();
+
+  //dsm('NID: ' . key($result['node']));
+
+  $product = node_load(key($result['node']), NULL, true);
+  //dsm($product);
+
+
+  if (isset($product)) {
+    $original_image = field_view_field('node', $product, 'field_product_image');
+
+    $markup = '';
+
+    $markup .= '<h2>Original Image(s)</h2>';
+    $markup .= render($original_image);
+
+    // find out if there are any new images in the UL
+
+    $url = 'https://ul.gpii.net/api/images/metadata/' . $uid;
+    $result = file_get_contents($url);
+    $result = json_decode($result, true);
+    //dsm($result);
+
+    // Compare the original files to the new ones to see if anything should be overwritten
+
+    $original_file_hashes = array();
+
+    foreach ($original_image['#items'] as $key => $value) {
+      $original_file_hashes[$key] = md5_file($value['uri']);
+    }
+
+    dsm('Original Images: ' . implode(', ', $original_file_hashes));
+
+    $imported_file_hashes = array();
+
+    foreach ($result as $key => $value) {
+      $imported_file_hashes[$key] = md5_file('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+    }
+
+    dsm('Imported Images: ' . implode(', ', $imported_file_hashes));
+
+
+    $diff_files = array_diff($imported_file_hashes, $original_file_hashes);
+
+    dsm(count($diff_files) . ' new files found.');
+
+    if (count($diff_files)) {
+      // create an array that we can go through and do housekeeping on later
+      $housekeeping = array();
+
+      foreach ($result as $key => $value) {
+
+        // BBC: not sure the first if statement below is needed anymore
+        $filename = $value['image_id'];
+
+        if (recursive_array_search($filename, $product->field_product_image) !== false) {
+          // we already have this file, so don't do anything
+          // @@ this assumes that we don't have any updated text alternatives
+          dsm("DUPLICATE FOUND");
+        }
+
+        else {
+          $image = file_get_contents('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          //dpm('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
+          $file->alt = $value['description'];
+          $file->title = $value['description'];
+
+          //dsm($file);
+          $product->field_product_image['und'][] = (array)$file;
+          dpm($product->field_product_image);
+          $housekeeping[] = $filename;
+        }
+
+      }
+
+      // since we have new images, go ahead and save the updated product
+      // @@ keep it from blowing away alt text and status fields
+      node_save($product);
+
+      foreach ($housekeeping as $value) {
+        // clean up the previously uploaded file
+        file_unmanaged_delete('public://' . $value);
+      }
+    }
+
+
+
+  }
+  dsm($product->field_product_image['und']);
+  return $markup;
+
+}
+
+function recursive_array_search($needle,$haystack) {
+    foreach($haystack as $key=>$value) {
+        $current_key=$key;
+        if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
+            return $current_key;
+        }
+    }
+    return false;
 }
