@@ -719,7 +719,7 @@ function gpii_saa_custom_import_ul_images(&$entity) {
 
 function gpii_saa_custom_image_import_vbo(&$entity) {
   //if the product record doesn't have a UID, there's no reason to try to continue.
-  if (isset($entity->field_uid)) {
+  if (isset($entity->field_uid['und'][0])) {
 
     $original_image = field_view_field('node', $entity, 'field_product_image');
 
