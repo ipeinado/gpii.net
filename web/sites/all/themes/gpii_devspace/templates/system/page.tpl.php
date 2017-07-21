@@ -80,6 +80,10 @@
           </a>
         <?php endif; ?>
 
+        <?php if (!empty($site_slogan)): ?>
+          <p class="lead"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
+        <?php endif; ?>
+
         <?php if (!empty($site_name)): ?>
           <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
         <?php endif; ?>
@@ -121,13 +125,26 @@
     </div>
   </header>
 
+  <?php if(!empty($page['search_box'])): ?>
+    <?php print render($page['search_box']); ?>
+  <?php endif; ?>
+
+  <?php if(!empty($page['featured_links'])): ?>
+    <div class="container">
+      <h2 class="element-invisible">Featured Links</h2>
+      <?php print render($page['featured_links']); ?>
+    </div>
+  <?php endif; ?>
+
   <?php if (!empty($page['hero'])): ?>
     <?php print render($page['hero']); ?>
   <?php endif; ?>
 
   <div id="main-container" class="main-container <?php print $container_class; ?>">
+
     <div class="row">
       <section <?php print $content_column_class; ?>>
+
         <?php if (!empty($page['highlighted'])): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
         <?php endif; ?>

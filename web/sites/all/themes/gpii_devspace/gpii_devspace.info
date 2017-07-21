@@ -14,8 +14,9 @@ regions[header_first]            = 'Header First'
 regions[header_second]           = 'Header Second'
 regions[menu_first]              = 'Menu First'
 regions[menu_second]             = 'Menu Second'
+regions[search_box]				 = 'Search Box'
+regions[featured_links]			 = 'Featured Links'	
 regions[hero]                    = 'Hero'
-regions[user_groups]			 = 'User Groups'
 regions[stories]				 = 'Stories'
 regions[sidebar_first]           = 'Sidebar First'
 regions[sidebar_second]          = 'Sidebar Second'
@@ -47,3 +48,9 @@ regions[fine_print_fourth]       = 'Fine Print Fourth'
 ;;;;;;;;;;;;;;;;;;;;;
 
 stylesheets[all][] = css/gpii_devspace.css
+
+;;;;;;;;;;;;;;;;;;;;;
+;; JavaScript
+;;;;;;;;;;;;;;;;;;;;;
+
+scripts[] = js/gpii_devspace.js

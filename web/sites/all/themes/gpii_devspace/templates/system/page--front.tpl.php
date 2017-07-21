@@ -124,6 +124,10 @@
     </div>
   </header>
 
+  <?php if(!empty($page['search_box'])): ?>
+    <?php print render($page['search_box']); ?>
+  <?php endif; ?>
+
   <section id="hero-homepage" role="banner">
     <?php if (!empty($page['hero'])): ?>
       <?php print render($page['hero']); ?>
@@ -133,12 +137,17 @@
   <div id="main-container" class="main-container <?php print $container_class; ?>">
     <div class="row">
       <section <?php print $content_column_class; ?>>
+        <?php if(!empty($page['featured_links'])): ?>
+          <h2 class="element-invisible">Featured Links</h2>
+          <?php print render($page['featured_links']); ?>
+        <?php endif; ?>
         <?php if (!empty($page['highlighted']) && !$is_front): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
         <?php endif; ?>
 
         <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
         <a id="main-content"></a>
+
         <?php print render($title_prefix); ?>
         <?php if (!empty($title)): ?>
           <h1 class="page-header element-invisible"><?php print $title; ?></h1>
@@ -153,11 +162,6 @@
         <?php endif; ?>
         <?php if (!empty($action_links)): ?>
           <ul class="action-links"><?php print render($action_links); ?></ul>
-        <?php endif; ?>
-
-        <?php if (!empty($page['user_groups'])): ?>
-          <h2 class="element-invisible">User Groups</h2>
-          <?php print render($page['user_groups']); ?>
         <?php endif; ?>
 
         <?php if (!empty($page['content_preface'])): ?>
