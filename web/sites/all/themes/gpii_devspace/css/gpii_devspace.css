@@ -179,7 +179,6 @@
 ***************************************/
 .block-bean-user-group {
   padding: 0;
-  display: inline-block;
   vertical-align: top;
   float: none; }
   @media (max-width: 767px) {
@@ -188,6 +187,7 @@
       margin: 0 auto; } }
   @media (min-width: 768px) {
     .block-bean-user-group {
+      display: inline-block;
       width: 50%;
       margin: 0 -2px; } }
   @media (min-width: 992px) {
