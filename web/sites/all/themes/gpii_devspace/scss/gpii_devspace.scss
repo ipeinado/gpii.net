@@ -18,12 +18,85 @@ dl dt {
 
 .region {
   display: block;
-  overflow: hidden;
+  clear: both;
+  overflow: visible;
 }
 
 .region-hero {
   clear: both;
   background-color: $color-gpii-devspace-primary;
+}
+
+.region-search-box {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.20);
+  display: none;
+
+  
+  @media (min-width: 768px) {
+    width: 740px;
+  }
+  @media (min-width: 992px) {
+    width: 960px;
+  }
+  @media (min-width: 1200px) {
+    width: 1160px;
+  }
+
+  .search-block {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .terms-block {
+    padding-top: (22px/14px)*1rem;
+  }
+
+  .input-group {
+    width: 100%;
+
+    input[type="text"] {
+      border-radius: 3px;
+    }
+
+    input[type="text"]:focus {
+      outline: 1px solid #009688;
+    }
+  }
+
+  .btn.btn-primary {
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+  }
+
+  .search-stats-block {
+    @media (max-width: $screen-xs-max) {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: $screen-sm-min) {
+      margin-top: (22px/14px)*1rem;
+    }
+  }
+
+  .search-api-stats-top-phrases {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+  }
 }
 
 h2 {
@@ -43,6 +116,22 @@ h4 {
 
 
 .navbar-nav.primary.menu.nav {
+  @media (max-width: $screen-xs-max) {
+    background-color: yellow;
+    li {
+      border-bottom: 1px solid #555;  
+
+      ul {
+        background: #FFF;
+        margin: 0;
+
+        li {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+
   @media (min-width: $screen-sm-min) {
 
     li > a {
@@ -84,6 +173,41 @@ h4 {
   }
 }
 
+.navbar-nav.navbar-right {
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    position: absolute;
+    right: 0;
+
+    li > a {
+      padding: 0.6rem 1.2em;
+      margin: 0;
+      font-weight: 600;
+      font-size: 1em;
+      border-top-width: 0.3rem;
+      border-top-style: solid;
+      border-top-color: transparent;
+      text-decoration: none;
+    }
+
+    li > a > .search-text {
+      display: none;
+    }
+
+    li > a:hover,
+    li > a:focus,
+    li > a[aria-pressed="true"] {
+      border-top-color: $color-gpii-devspace-primary;
+      color: $color-gpii-devspace-primary;
+      background-color: #FFFFFF;
+    }
+  }
+}
+
 #footer-wrap {
   border-color: $color-gpii-devspace-primary;
 }
@@ -106,7 +230,6 @@ h4 {
     @media(max-width: $screen-sm-max) {
       height: 50px;
       border-bottom: 1px solid $color-gpii-gray;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
       .navbar-btn {
         width: 64px;
         float: left;
@@ -195,24 +318,6 @@ a {
   }
 }
 
-.developer-hero {
-  width: 100%;
-  padding: 3rem 0;
-
-  i.fa {
-    float: left;
-    font-size: (64px/14px)*1rem;
-    padding-top: (18px/14px)*1rem;
-    padding-right: (18px/14px)*1rem; 
-    color: yellow;
-  }
-
-  h1 {
-    font-size: (32px/14px)*1rem;
-    line-height: (44px/14px)*1rem;
-  }
-}
-
 .homepage-news {
   #challenges {
     background-color: rgb(90, 133, 215);
@@ -220,5 +325,25 @@ a {
 
   #calendar {
     background-color: #eceff1;
+  }
+}
+
+.search-button {
+  @media (max-width: $screen-xs-max) {
+    position: absolute;
+    top: 0;
+    right: 45px;
+    padding: (4px/14px)*1rem (12px/14px)*1rem;
+    margin-top: (8px/14px)*1rem;
+    margin-right: 1.07142857em;
+    margin-bottom: 0.57142857em;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 17px;
+    color: #888;
+  }
+  @media (min-width: $screen-sm-min) {
+    display: none;
   }
 }

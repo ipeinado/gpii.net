@@ -89,6 +89,8 @@
         <?php endif; ?>
 
         <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation']) || $region_info['menu']['has_columns']): ?>
+          <button class="search-button" aria-label="Search" aria-pressed="false"><i class="fa fa-search" aria-hidden="true"></i></button>
+
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only"><?php print t('Toggle navigation'); ?></span>
             <span class="icon-bar"></span>
@@ -109,6 +111,9 @@
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
             <?php endif; ?>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="search-button" href="#" role="button" aria-pressed="false"><i class="fa fa-search"></i> <span class="search-text">Search</span></a></li>
+            </ul>
             <?php if (!empty($secondary_nav)): ?>
               <?php print render($secondary_nav); ?>
             <?php endif; ?>
