@@ -34,16 +34,12 @@
 	padding: 0.1em 0.3em;
 	line-height: 2em;
 }
-.Low {
+.Task {
 	background-color: green;
 }
 
-.Medium {
+.Challenge {
 	background-color: orange;
-}
-
-.High {
-	background-color: red;
 }
 
 .Grand {
@@ -108,4 +104,50 @@
 		font-size: (18px/14px)*1rem;
 		color: #FFF;
 	}
+}
+
+.challenges-row {
+	padding: 1rem 0;
+	border-bottom: 1px solid #e7e7e7;
+
+	h3 {
+		margin-top: 0.3rem;
+		margin-bottom: 1rem;
+	}
+}
+
+.tags {
+	margin-bottom: 1rem;
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	ul > li {
+		display: inline-block;
+		margin-right: 0.2rem;
+		font-size: (12px/14px)*1rem;
+		background-color: rgba(24, 96, 107, .1);
+		padding: .2em .5em;
+	}
+}
+
+.challenge-icon {
+	padding: 0.3rem;
+	border-radius: 50%;
+	color: #FFF;
+}
+
+.challenge-icon.Tasks {
+	background-color: green;
+}
+
+.challenge-icon.Challenges {
+	background-color: orange
+}
+
+.challenge-icon.Grand-Challenges {
+	background-color: DarkSlateGray;
 }
