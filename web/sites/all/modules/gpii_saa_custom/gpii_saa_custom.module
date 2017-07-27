@@ -364,7 +364,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $children = taxonomy_get_children($tid);
 
       $name = 'taxonomy_review_depth_experiment_';
-      $display_id = 'page';
+      $display_id = 'page_1';
 
       $result = views_get_view_result($name, $display_id, $tid);
 
@@ -374,6 +374,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
       foreach ($result as $key => $value) {
         # get the terms on the node and unset the row if we find a match
+        kpr($value->_field_data['nid']['entity']);
         $terms = gpii_saa_custom_get_term_ids($value->_field_data['nid']['entity']);
         $match = array_intersect($children, $terms);
         if (count($match) > 0) {
