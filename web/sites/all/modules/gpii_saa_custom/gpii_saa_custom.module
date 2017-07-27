@@ -364,7 +364,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $children = taxonomy_get_children($tid);
 
       $name = 'taxonomy_review_depth_experiment_';
-      $display_id = 'page_1';
+      $display_id = 'page';
 
       $result = views_get_view_result($name, $display_id, $tid);
 
@@ -410,10 +410,16 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       );
       }
 
-      $form['invited_users'] = array(
+      $per_page = 25;
+      // Initialize the pager
+      $current_page = pager_default_initialize(count($rows), $per_page);
+      // Split your list into page sized chunks
+      $chunks = array_chunk($rows, $per_page, TRUE);
+
+      $form['terminal_nodes'] = array(
         '#markup' => theme('table', array(
         'header' => $headers,
-        'rows' => $rows,
+        'rows' => $chunks[$current_page],
         'attributes' => array('class' => array('terminal_nodes')),
         '#empty' =>t('No results.'),
         ))
@@ -422,7 +428,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
       $term = taxonomy_term_load($tid);
       $destination = drupal_get_destination();
-      return '<p>The following table includes product records where <strong>' . $term->name  . ' (tid: ' . $tid . ')</strong> is the terminal item in this branch of the tree.</p><p><strong>Result Count: </strong>' . count($rows) . '</p> ' . render($form['invited_users']) . '<a href="/node/3244" class="btn btn-primary btn-lg"><i class="fa fa-chevron-left" style="margin-right: 0.rem;"></i> Return to Product Categories Outline</a>';
+      return '<p>The following table includes product records where <strong>' . $term->name  . ' (tid: ' . $tid . ')</strong> is the terminal item in this branch of the tree.</p><p><strong>Result Count: </strong>' . count($rows) . '</p> ' . render($form['terminal_nodes']) . theme('pager', array('quantity',count($rows))) . '<a href="/node/3244" class="btn btn-primary btn-lg"><i class="fa fa-chevron-left" style="margin-right: 0.rem;"></i> Return to Product Categories Outline</a>';
     }
 
 
@@ -510,7 +516,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           }
         }
         //using kpr due to issue with dpm in latest bootstrap
-        kpr($output);
+        //kpr($output);
         return '';
     }
 
