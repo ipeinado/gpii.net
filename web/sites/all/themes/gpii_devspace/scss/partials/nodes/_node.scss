@@ -18,8 +18,10 @@
 	}
 
 	aside {
-		h3 {
-			font-size: (13px/14px)*1rem;
+		h2, h3 {
+			margin-top: 0;
+			margin-bottom: 1rem;
+			font-size: 1rem;
 			text-transform: uppercase;
 			font-weight: 600;
 		}
@@ -210,8 +212,9 @@
 .group-action-links {
 	display: block;
 	margin-top: 0.5rem;
+	margin-bottom: 1rem;
 	clear: both;
-	overflow: hidden;
+	overflow: visible;
 
 	div {	
 		display: inline-block;
