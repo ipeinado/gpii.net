@@ -45,7 +45,7 @@
  * @ingroup templates
  */
 ?>
-<div id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> col-sm-6 featured-link-block clearfix"<?php print $attributes; ?>>
+<div id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> col-xs-12 col-xs-offset-6 col-sm-12 col-sm-offset-0 col-md-6 col-md-offset-0 featured-link-block clearfix"<?php print $attributes; ?>>
 
   <?php print $content ?>
 
