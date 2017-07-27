@@ -374,7 +374,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
       foreach ($result as $key => $value) {
         # get the terms on the node and unset the row if we find a match
-        kpr($value->_field_data['nid']['entity']);
+        //kpr($value->_field_data['nid']['entity']);
         $terms = gpii_saa_custom_get_term_ids($value->_field_data['nid']['entity']);
         $match = array_intersect($children, $terms);
         if (count($match) > 0) {
