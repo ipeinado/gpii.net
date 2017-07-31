@@ -24,7 +24,6 @@ if (typeof Drupal.jsAC != 'undefined') {
    * Overridden to set the proper "role" attribute on the input element.
    */
   Drupal.jsAC = function ($input, db) {
-console.log($input.data);
     if ($input.data('search-api-autocomplete-search')) {
       $input.attr('role', 'combobox');
       $input.parent().attr('role', 'search');
@@ -32,6 +31,7 @@ console.log($input.data);
     oldJsAC.call(this, $input, db);
   };
   Drupal.jsAC.prototype = oldJsAC.prototype;
+
   /**
    * Handler for the "keyup" event.
    *

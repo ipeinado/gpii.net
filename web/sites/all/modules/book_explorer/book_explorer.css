@@ -7,13 +7,17 @@
   list-style:inherit;
 }
 
-.book-explorer ul.menu li {
+.book-explorer ul.menu li, .book-explorer-markup {
   list-style: none;
   list-style-image: none;
   margin-left: 0;
   padding-left: 18px;
   background: transparent url('line.png') no-repeat scroll 0 -11px;
 
+}
+
+.book-explorer-markup {
+  background: transparent url('line.png') no-repeat scroll 0 -22px;
 }
 
 .sr-only {
@@ -35,7 +39,7 @@
 }
 
 .book-explorer li > div {
- padding:0.5em 0.5em 0.5em 0; 
+ padding:0.25em 0.5em 0.75em 20px;
 }
 
 .book-explorer ul p {
@@ -43,5 +47,5 @@
 }
 
 .book-explorer {
-  margin:1em 0em; 
+  margin:1em 0em;
 }}

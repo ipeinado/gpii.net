@@ -1,0 +1,132 @@
+/***************************************
+*
+* FEATURED LINKS
+*
+***************************************/
+
+.bean-featured-link {
+	cursor: pointer;
+	padding-top: 1rem;
+	border-bottom: 3px solid #FFF;
+	color: #777;
+
+	img {
+		opacity: 0.9;
+		margin-bottom: (7px/14px)*1rem;
+	}
+
+	.internal-link {
+		display: block;
+		margin-bottom: (3px/14px)*1rem;
+		font-size: (18px/14px)*1rem;
+		font-weight: 600;
+	}
+
+	&:hover {
+		color: #000;
+		border-bottom: 3px solid #E5E5E5;
+
+		img {
+			opacity: 1;
+		}
+	}
+}
+
+.bean-featured-link.selected {
+	border-bottom: 3px solid $color-gpii-devspace-primary;
+	color: #000;
+	img {
+		opacity: 1;
+	}
+
+	.internal-link {
+		color: #000;
+	}
+}
+
+/***************************************
+*
+* STORIES BEANS
+*
+***************************************/
+
+.region-stories {
+	margin: 0 -15px;
+}
+
+@media (max-width: $screen-xs-max) {
+	.story-item {
+		
+		.story-content {
+			width: 100%;
+		}
+		
+		.story-image {
+			width: 100%;
+			margin: 0 auto;
+		}
+	}
+}
+
+@media (min-width: $screen-sm-min) {
+	.story-item {
+		max-width: 1170px;
+		margin: 0 auto;
+		.story-content {
+			position: absolute;
+			width: 50%;
+			max-width: 480px;
+			top: 50%;
+			transform: translateY(-50%);
+
+			h1 {
+				font-size: (28px/14px)*1rem;
+			}
+
+			p, a {
+				font-size: (17px/14px)*1rem;
+			}
+		}
+		.story-image {
+			position: relative;
+			width: 50%;
+			overflow: hidden;
+			img {
+				display: block;
+				height: 100%;
+			}
+		}
+	}
+
+	.image-on-right {
+		.story-content {
+			padding-left: 96px;
+		}
+		.story-image {
+			left: 50%;
+		}
+	}
+
+	.image-on-left {
+		.story-content {
+			left: 50%;
+			padding-left: 48px;
+		}
+	}
+}
+
+/***************************************
+*
+* HERO MESSAGE BEANS
+*
+***************************************/
+
+.bean-hero-block {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+
+	h2 {
+		font-size: (32px/14px)*1rem;
+		line-height: (36px/14px)*1rem;
+	}
+}

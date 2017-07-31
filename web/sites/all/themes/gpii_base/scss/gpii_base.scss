@@ -224,6 +224,13 @@ body.admin-menu {
 // #############################################################################
 // Google Translate
 // #############################################################################
+
+// hide translate iframe
+
+body > div.skiptranslate {
+  display: none;
+}
+
 #block-google-translator-active-languages {
   display: none;
   position: initial;
@@ -313,6 +320,24 @@ body.admin-menu {
       position: fixed;
       top: 0;
     }
+  }
+}
+
+a:focus {
+  outline: 1px dotted $color-fluidui-dark-gray;
+  outline-offset: 0px;
+}
+
+// Language-specific customizations
+body.i18n-el {
+  #gpii-translate-toggle_container {
+    right: calc(50px + 18rem + 1.5rem);
+  }
+}
+
+body.i18n-de {
+  #gpii-translate-toggle_container {
+    width: 15em;
   }
 }
 

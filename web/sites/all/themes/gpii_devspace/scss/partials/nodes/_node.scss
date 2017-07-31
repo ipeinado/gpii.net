@@ -9,20 +9,6 @@
 		margin-bottom: 1em;
 	}
 
-	.group-action-links {
-		display: block;
-		clear: both;
-		overflow: hidden;
-		margin-bottom: 1em;
-		padding: .5em 0;
-		border-bottom: 1px solid $color-gpii-gray;
-
-		div {	
-			display: inline-block;
-			margin-right: (10px/14px)*1rem;
-		}
-	}
-
 	article {
 		img {
 			float: left;
@@ -32,8 +18,10 @@
 	}
 
 	aside {
-		h3 {
-			font-size: (13px/14px)*1rem;
+		h2, h3 {
+			margin-top: 0;
+			margin-bottom: 1rem;
+			font-size: 1rem;
 			text-transform: uppercase;
 			font-weight: 600;
 		}
@@ -217,4 +205,36 @@
 		padding-bottom: .5em;
 		text-indent: 1em;
 	}
+}
+
+// ACTION LINKS
+
+.group-action-links {
+	display: block;
+	margin-top: 0.5rem;
+	margin-bottom: 1rem;
+	clear: both;
+	overflow: visible;
+
+	div {	
+		display: inline-block;
+		margin-right: (16px/14px)*1rem;
+	}
+
+	a.flag,
+	a.twitter-share,
+	a.linkedin-share,
+	a.flag:visited, {
+		font-size: (16px/14px)*1rem;
+		color: #777;
+
+		&:hover {
+			color: $color-gpii-devspace-primary;
+		}
+
+		.fa-bookmark {
+			color: $color-gpii-devspace-primary;
+		}
+	}
+
 }

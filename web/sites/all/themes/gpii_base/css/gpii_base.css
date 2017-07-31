@@ -6580,6 +6580,9 @@ body .flc-prefsEditor-separatedPanel {
 .fl-font-prefsEditor-verdana *:not(.fa):not(.fl-icon-undo) {
   font-family: 'Verdana', sans-serif !important; }
 
+body > div.skiptranslate {
+  display: none; }
+
 #block-google-translator-active-languages {
   display: none;
   position: initial;
@@ -6660,6 +6663,17 @@ body .flc-prefsEditor-separatedPanel {
     html:not(.force-mobile-layout) #gpii-translate-toggle_container {
       position: fixed;
       top: 0; } }
+
+a:focus {
+  outline: 1px dotted #2f2b2a;
+  outline-offset: 0px; }
+
+body.i18n-el #gpii-translate-toggle_container {
+  right: -webkit-calc(50px + 18rem + 1.5rem);
+  right: calc(50px + 18rem + 1.5rem); }
+
+body.i18n-de #gpii-translate-toggle_container {
+  width: 15em; }
 
 .navbar.navbar-default {
   margin-bottom: 0;
@@ -6907,8 +6921,5 @@ body.not-logged-in .navbar-nav.secondary > li.last > a {
 .page-header {
   margin-top: 0;
   border-bottom: none; }
-
-body.node-type-product .term-tree-list .selected {
-  font-weight: normal; }
 
 /*# sourceMappingURL=gpii_base.css.map */

@@ -13,3 +13,4 @@ project = "term_reference_tree"
 datestamp = "1382146740"
 
 
+patch[] = https://www.drupal.org/node/1514794 Issue 1514794, Patch #27

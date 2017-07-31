@@ -5,5 +5,15 @@
 // #############################################################################
 
 .region-hero {
-  background-color: $color-gpii-teal;
+  background-color: $color-gpii-dark-blue;
+}
+
+.region-content {
+  margin-bottom: 2rem;
+}
+
+#block-book-navigation {
+  ul {
+    margin-left: 1rem;
+  }
 }

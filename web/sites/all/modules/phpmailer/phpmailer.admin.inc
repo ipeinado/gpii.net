@@ -13,6 +13,17 @@
  * @see phpmailer_settings_form_submit()
  */
 function phpmailer_settings_form($form, $form_state) {
+  // Re-check the requirements, in case a newer version is required since
+  // original installation.
+  module_load_install('phpmailer');
+  $requirements = phpmailer_requirements('runtime');
+  if (!empty($requirements)
+    && isset($requirements['phpmailer']['severity'])
+    && $requirements['phpmailer']['severity'] == REQUIREMENT_ERROR
+    && isset($requirements['phpmailer']['description'])) {
+    drupal_set_message($requirements['phpmailer']['description'], 'error');
+  }
+
   $form['smtp_on'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use PHPMailer to send e-mails'),
@@ -132,6 +143,46 @@ function phpmailer_settings_form($form, $form_state) {
     '#options' => array(0 => t('Disabled'), 1 => t('Errors only'), 2 => t('Server responses'), 4 => t('Full communication')),
     '#description' => t("Debug the communication with the SMTP server.  You normally shouldn't enable this unless you're trying to debug e-mail sending problems."),
   );
+  $form['advanced']['smtp_debug_log'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("Record debugging output in Drupal's log"),
+    '#default_value' => variable_get('smtp_debug_log', 0),
+    '#description' => t("If this is checked, the debugging out put that is produced will also be recorded in Drupal's database log."),
+    '#states' => array(
+      'visible' => array(
+        ':input[name=smtp_debug]' => array('!value' => 0),
+      ),
+    ),
+  );
+
+  $form['advanced']['ssl_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Advanced SSL settings'),
+    '#description' => t('If you are attempting to connect to a broken or malconfigured secure mail server, you can try toggling one or more of the following. If that allows the connection, consider fixing the SSL certifcate, as it may be insecure.'),
+  );
+  $form['advanced']['ssl_settings']['ssl_verify_peer'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Verfy peer'),
+    '#default_value' => variable_get('ssl_verify_peer', 1),
+    '#description' => t('If this is checked, it will require verification of the SSL certificate being used on the mail server.'),
+  );
+  $form['advanced']['ssl_settings']['ssl_verify_peer_name'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Verfy peer name'),
+    '#default_value' => variable_get('ssl_verify_peer_name', 1),
+    '#description' => t("If this is checked, it will require verification of the mail server's name in the SSL certificate."),
+  );
+  $form['advanced']['ssl_settings']['ssl_allow_self_signed'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Allow self signed'),
+    '#default_value' => variable_get('ssl_allow_self_signed', 0),
+    '#description' => t('If this is checked, it will allow conecting to a mail server with a self-signed SSL certificate. (This requires "Verfy peer" to be enabled.)'),
+    '#states' => array(
+      'enabled' => array(
+        ':input[name="ssl_verify_peer"]' => array('checked' => TRUE),
+      ),
+    ),
+  );
 
   // Send a test email message if an address has been entered.
   if ($test_address = variable_get('phpmailer_test', '')) {
@@ -139,7 +190,7 @@ function phpmailer_settings_form($form, $form_state) {
     variable_del('phpmailer_test');
     // If PHPMailer is enabled, send via regular drupal_mail().
     if (phpmailer_enabled()) {
-      drupal_mail('phpmailer', 'test', $test_address, NULL);
+      $result = drupal_mail('phpmailer', 'test', $test_address, NULL);
     }
     // Otherwise, prepare and send the test mail manually.
     else {
@@ -149,12 +200,20 @@ function phpmailer_settings_form($form, $form_state) {
       // is enabled, so drupal_mail_send() cannot be used.
       // @see drupal_mail_send()
       module_load_include('inc', 'phpmailer', 'includes/phpmailer.drupal');
-      phpmailer_send($message);
+      $result = phpmailer_send($message);
     }
-    drupal_set_message(t('A test e-mail has been sent to %email. <a href="@watchdog-url">Check the logs</a> for any error messages.', array(
+
+    $notice = 'A test e-mail has been sent to %email. You might still want to !watchdog-url for possible error messages.';
+    $replacements = array(
       '%email' => $test_address,
-      '@watchdog-url' => url('admin/reports/dblog'),
-    )));
+      '!watchdog-url' => l(t('check the logs'), 'admin/reports/dblog'),
+    );
+    $message_type = 'status';
+    if (empty($result) || (is_array($result) && empty($result['result']))) {
+      $notice = 'A test e-mail has NOT been sent to %email. You should !watchdog-url for error messages.';
+      $message_type = 'error';
+    }
+    drupal_set_message(t($notice, $replacements), $message_type);
   }
 
   $form['test'] = array(

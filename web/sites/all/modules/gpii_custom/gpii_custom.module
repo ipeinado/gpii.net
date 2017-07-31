@@ -56,3 +56,32 @@ function gpii_custom_ds_layout_info_alter(&$layouts) {
   }
 
 }
+
+/**
+ * Determine whether a translation for a specific term (or other) exists in the database for a given language
+ *
+ * @param $item
+ *   Unique ID for the item we're interested in translating
+ * @param $lang
+ *   ID of the language we're interested in
+ *
+ */
+
+function gpii_custom_get_translation_status($item, $lang) {
+    $result = db_query('SELECT * FROM TranslationLookup WHERE objectid = :itemid and language = :lang', array(
+        ':itemid' => $item,
+        'lang' => $lang
+        ));
+
+    $record = $result->fetchAll();
+    return count($record);
+}
+
+function gpii_custom_init() {
+  global $user;
+  $isTranslator = in_array('Translator', $user->roles);
+  $path = drupal_get_path('module', 'gpii_custom');
+  drupal_add_js(array('isTranslator' => $isTranslator), 'setting');
+  drupal_add_js($path . '/js/cookie.min.js');
+  drupal_add_js($path . '/js/switcher.min.js');
+}

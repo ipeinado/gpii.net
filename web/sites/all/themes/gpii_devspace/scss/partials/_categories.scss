@@ -1,8 +1,15 @@
 // CATEGORIES & SUBCATEGORIES
 
-.view-subcategories-with-icons {
+.subcategories-block {
 	overflow: hidden;
-	margin-bottom: 1em;
+
+	clear: both;
+	margin-bottom: 2rem;
+
+	h2 {
+		margin-bottom: 1em;
+		text-align: center;
+	}
 
 	.item-subcategory {
 		display: inline-block;
@@ -13,18 +20,16 @@
 		border-radius: 5px;
 		transition: border-color .3s ease;
 
-		h2 {
+		h3 {
 			display: inline;
 			margin-top: 0;
 			margin-bottom: 0;
 			line-height: (28px/14px)*1rem;
-			font-weight: 100;
 		}
 
-		h2 > a {
+		h3 > a {
 			color: #18606b;
 			font-size: (18px/14px)*1rem;
-			font-weight: 100;
 			transition: color .3s ease;
 		}
 	}
@@ -66,6 +71,44 @@
 		}
 		.subcategory-icon {
 			background-color: #009688;
+		}
+	}
+}
+
+// TOPICS
+#block-views-topics-block {
+	clear: both;
+	margin-bottom: 2rem;
+
+	.topics-list-container {
+		margin: 0 auto;
+
+		@media (max-width: $screen-xs-max) {
+			width: 100%;
+		}
+
+		@media (min-width: $screen-sm-min) {
+			width: 66%;
+		}
+	}
+	
+	h2 {
+		text-align: center;
+		margin-bottom: 1em;
+	}
+
+	ul.topic-list {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		background-color: yellow;
+
+		li {
+			margin-bottom: 1.2rem;
+
+			a, i {
+				font-size: 1rem;
+			}
 		}
 	}
 }

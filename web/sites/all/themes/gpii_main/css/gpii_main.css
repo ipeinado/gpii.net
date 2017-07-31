@@ -1,4 +1,10 @@
 .region-hero {
-  background-color: #1e9b8c;
-}
+  background-color: #3391d8; }
+
+.region-content {
+  margin-bottom: 2rem; }
+
+#block-book-navigation ul {
+  margin-left: 1rem; }
+
 /*# sourceMappingURL=gpii_main.css.map */

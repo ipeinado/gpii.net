@@ -217,7 +217,25 @@ function _term_reference_tree_output_list_level(&$element, &$tree) {
         $output .= token_replace($replace, array('term' => $term), array('clear' => TRUE));
       }
       else {
-        $output .= l(entity_label('taxonomy_term', $term), $uri['path'], $uri['options']);
+        /**
+         * BBC: Call a custom fuction in gpii_custom to see if what we're about to render has a translation
+         * @@ move this out to a more maintainable location (gpii_custom)
+         */
+
+        // get the currently active language
+        global $language ;
+        $lang = $language->language ;
+
+        // call the fuction with term id and language
+        $translation_status = gpii_custom_get_translation_status($term->tid, $lang);
+
+        if ($translation_status > 0) {
+          $output .= '<span class="skiptranslate">' . l(entity_label('taxonomy_term', $term), $uri['path'], $uri['options']) . '</span>';
+        }
+        else {
+          $output .= l(entity_label('taxonomy_term', $term), $uri['path'], $uri['options']);
+        }
+
       }
       if (isset($item['children'])) {
         $output .= _term_reference_tree_output_list_level($element, $item);
@@ -286,9 +304,10 @@ function term_reference_tree_process_checkbox_tree($element, $form_state) {
       if ($element['#max_choices'] == 1 && !$required) {
         array_unshift($element['#options_tree'], (object) array(
           'tid' => '',
-          'name' => 'N/A',
+          'name' => t('N/A'),
           'depth' => 0,
           'vocabulary_machine_name' => $element['#vocabulary']->machine_name,
+          'children' => array(),
         ));
       }
       $element['#options'] = _term_reference_tree_get_options($element['#options_tree'], $allowed, $element['#filter_view']);

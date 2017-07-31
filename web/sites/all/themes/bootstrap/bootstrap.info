@@ -215,3 +215,4 @@ project = "bootstrap"
 datestamp = "1480458193"
 
 patch[] = https://www.drupal.org/node/2850262 Issue 2850262, Patch #1
+patch[] = https://www.drupal.org/node/1697570 Commented out $tree from book-navigation.tpl.php due to rendering issues and lack of need

@@ -1,0 +1,791 @@
+<?php
+
+/**
+ * @file gpii_oauth2.module
+ * Provides functionality for the GPII OAuth2 Authentication module.
+ */
+
+// -----------------------------------------------------------------------------
+// Hooks
+
+/**
+ * Declare the menu items for the module.
+ *
+ * @return
+ *   Array of menu items for the module.
+ *
+ * @see hook_menu()
+ */
+function gpii_oauth2_menu() {
+  $menu['admin/config/people/gpii-oauth2'] = array(
+    'title' => t('GPII OAuth2 settings'),
+    'description' => t('Configure GPII OAuth2 single sign-on settings.'),
+    'page callback' => 'gpii_oauth2_admin_settings_page',
+    'access arguments' => array('gpii_oauth2_administer'),
+    'type' => MENU_NORMAL_ITEM);
+
+  $menu['gpii-oauth2/login'] = array(
+    'title' => t('Log in'),
+    'description' => t('Log in using the GPII OAuth2 single sign-on server.'),
+    'page callback' => 'gpii_oauth2_login_page',
+    'access callback' => 'gpii_oauth2_can_log_in',
+    'type' => MENU_CALLBACK);
+
+  $menu['gpii-oauth2/logout'] = array(
+    'title' => t('Log out'),
+    'description' => t('Log out using the GPII OAuth2 single sign-on server.'),
+    'page callback' => 'gpii_oauth2_logout_page',
+    'access callback' => 'gpii_oauth2_can_log_out',
+    'type' => MENU_CALLBACK);
+
+  $menu['gpii-oauth2/authorized'] = array(
+    'title' => t('Authorization Callback'),
+    'description' => t('Login authorization callback page used by the GPII OAuth2 single sign-on server.'),
+    'page callback' => 'gpii_oauth2_login_authorization_callback_page',
+    'access callback' => 'gpii_oauth2_can_log_in',
+    'type' => MENU_CALLBACK);
+
+  return $menu;
+}
+
+/**
+ * Declare the blocks for the module.
+ *
+ * @return
+ *   Array of blocks for the module.
+ *
+ * @see hook_block_info()
+ */
+function gpii_oauth2_block_info() {
+  if (!gpii_oauth2_is_ready()) {
+    return array();
+  }
+
+  $blocks['gpii_oauth2_user'] = array(
+    'info' => t('GPII OAuth2 user menu'),
+    'cache' => DRUPAL_NO_CACHE);
+
+  return $blocks;
+}
+
+/**
+ * Return the block view for a specific block.
+ *
+ * @param $delta
+ *   The block to render.
+ *
+ * @return
+ *   Block view for the requested block.
+ *
+ * @see hook_block_info()
+ */
+function gpii_oauth2_block_view($delta = '') {
+  if (!gpii_oauth2_is_ready()) {
+    return array();
+  }
+
+  $block = array();
+
+  if ($delta == 'gpii_oauth2_user') {
+    $list['title'] = NULL;
+    $list['type'] = 'ul';
+    $list['attributes'] = array();
+    $list['items'] = array();
+
+    if (gpii_oauth2_can_log_in()) {
+      $url = 'gpii-oauth2/login';
+      $url_options['query']['destination'] = current_path();
+      $list['items'][] = l(t('Log in'), $url, $url_options);
+    }
+
+    if (gpii_oauth2_can_log_out()) {
+      $list['items'][] = l(t('Log out'), 'gpii-oauth2/logout');
+    }
+
+    $list['items'][] = l(t('Manage SSO account'), variable_get('gpii_oauth2_account_management_url'));
+
+    $block['subject'] = t('User menu');
+    $block['content'] = theme_item_list($list);
+  }
+
+  return $block;
+}
+
+/**
+ * Declare the permissions for the module.
+ *
+ * @return
+ *   Array of permissions for the module.
+ *
+ * @see hook_permission()
+ */
+function gpii_oauth2_permission() {
+  $permissions['gpii_oauth2_administer'] = array(
+    'title' => t('Administer settings'),
+    'description' => t('View and change settings, including endpoints and client credentials.'));
+
+  return $permissions;
+}
+
+/**
+ * Handle a user logout.
+ *
+ * @param $account
+ *   The user object on which the operation was just performed.
+ */
+function gpii_oauth2_user_logout($account) {
+  if (gpii_oauth2_is_ready()) {
+    gpii_oauth2_log_out($account);
+  }
+}
+
+/**
+ * Modify the user profile form.
+ *
+ * @param $form
+ *   Form elements.
+ * @param $form_state
+ *   Form state.
+ */
+function gpii_oauth2_form_user_profile_form_alter(&$form, &$form_state) {
+  $account = $form['#user'];
+  $authmaps = user_get_authmaps($account->name);
+  $is_own_account = $GLOBALS['user']->uid == $account->uid;
+
+  if (!isset($authmaps['gpii_oauth2'])) {
+    return;
+  }
+
+  $form['account']['name']['#disabled'] = TRUE;
+  $form['account']['mail']['#disabled'] = TRUE;
+
+  if (isset($form['account']['pass'])) {
+    $form['account']['pass']['#type'] = 'hidden';
+    $form['account']['pass']['#disabled'] = TRUE;
+  }
+
+  if (isset($form['account']['current_pass'])) {
+    $form['account']['current_pass']['#type'] = 'hidden';
+    $form['account']['current_pass']['#disabled'] = TRUE;
+  }
+
+  if ($is_own_account) {
+    $account_management_url = variable_get('gpii_oauth2_account_management_url');
+
+    $form['account']['name']['#description'] = t('Your username can\'t be modified because you log in using the single sign-on server. <a href="@account_management_url">Manage your single sign-on account</a>.', array('@account_management_url' => $account_management_url));
+    $form['account']['mail']['#description'] = t('Your e-mail address can\'t be modified because you log in using the single sign-on server, but it\'s updated from the server whenever you log in. <a href="@account_management_url">Manage your single sign-on account</a>.', array('@account_management_url' => $account_management_url));
+  }
+  else {
+    $form['account']['name']['#description'] = t('This user\'s username can\'t be modified because the user logs in using the single sign-on server.');
+    $form['account']['mail']['#description'] = t('This user\'s e-mail address can\'t be modified because the user logs in using the single sign-on server.');
+  }
+}
+
+/**
+ * Modify the full login form.
+ *
+ * @param $form
+ *   Form elements.
+ * @param $form_state
+ *   Form state.
+ */
+function gpii_oauth2_form_user_login_alter(&$form, &$form_state) {
+  $form['#validate'][] = 'gpii_oauth2_form_login_form_validate';
+}
+
+/**
+ * Modify the block login form.
+ *
+ * @param $form
+ *   Form elements.
+ * @param $form_state
+ *   Form state.
+ */
+function gpii_oauth2_form_user_login_block_alter(&$form, &$form_state) {
+  $form['#validate'][] = 'gpii_oauth2_form_login_form_validate';
+}
+
+/**
+ * Modify the password reset form.
+ *
+ * @param $form
+ *   Form elements.
+ * @param $form_state
+ *   Form state.
+ */
+function gpii_oauth2_form_user_pass_alter(&$form, &$form_state) {
+  $form['#validate'][] = 'gpii_oauth2_form_user_pass_validate';
+}
+
+/**
+ * Declare the library dependencies for the module.
+ *
+ * @return
+ *   Array of libraries that the module depends on.
+ *
+ * @see hook_libraries_info()
+ */
+function gpii_oauth2_libraries_info() {
+  $libraries['guzzle'] = array(
+    'name' => t('Guzzle, PHP HTTP client'),
+    'vendor url' => 'https://github.com/guzzle/guzzle',
+    'download url' => 'https://github.com/guzzle/guzzle/archive/6.2.3.zip',
+    'version arguments' => array(
+      'file' => 'CHANGELOG.md',
+      'lines' => 50,
+      'pattern' => '/^## ([0-9][0-9a-zA-Z.-]+)/'),
+    'files' => array(
+      'php' => array(
+        'vendor/autoload.php')));
+
+  $libraries['constant_time_encoding'] = array(
+    'name' => t('Constant-Time Encoding'),
+    'vendor url' => 'https://github.com/paragonie/constant_time_encoding',
+    'download url' => 'https://github.com/paragonie/constant_time_encoding/archive/1.0.1.zip',
+    'version callback' => 'gpii_oauth2_return_true',
+    'files' => array(
+      'php' => array(
+        'vendor/autoload.php')));
+
+  $libraries['hash-compat'] = array(
+    'name' => t('hash_*() compat'),
+    'vendor url' => 'https://github.com/indigophp/hash-compat',
+    'download url' => 'https://github.com/indigophp/hash-compat/archive/1.1.0.zip',
+    'version arguments' => array(
+      'file' => 'CHANGELOG.md',
+      'lines' => 50,
+      'pattern' => '/^## ([0-9][0-9a-zA-Z.-]+)/'),
+    'files' => array(
+      'php' => array(
+        'vendor/autoload.php')));
+
+  return $libraries;
+}
+
+// -----------------------------------------------------------------------------
+// General Functions
+
+/**
+ * Determine if the module is ready to be used.
+ *
+ * @return
+ *   TRUE if the module is ready to be used and FALSE otherwise.
+ */
+function gpii_oauth2_is_ready() {
+  return !empty(variable_get('gpii_oauth2_authorization_endpoint')) && gpii_oauth2_are_libraries_installed();
+}
+
+/**
+ * Determine if the current user can log in.
+ *
+ * @return
+ *   TRUE if the current user can log in and FALSE otherwise.
+ */
+function gpii_oauth2_can_log_in() {
+  return gpii_oauth2_is_ready() && user_is_anonymous();
+}
+
+/**
+ * Determine if the current user can log out.
+ *
+ * @return
+ *   TRUE if the current user can log out and FALSE otherwise.
+ */
+function gpii_oauth2_can_log_out() {
+  return gpii_oauth2_is_ready() && user_is_logged_in();
+}
+
+/**
+ * Generate the administration settings page.
+ *
+ * @return
+ *   Administration settings page.
+ */
+function gpii_oauth2_admin_settings_page() {
+  if (!gpii_oauth2_are_libraries_installed()) {
+    drupal_set_message(t('The libraries for this module aren\'t installed. Please read the documentation and install them before continuing.'), 'error');
+  }
+
+  return drupal_get_form('gpii_oauth2_form_admin_settings');
+}
+
+/**
+ * Perform actions for the login page.
+ */
+function gpii_oauth2_login_page() {
+  try {
+    gpii_oauth2_load_libraries();
+  }
+  catch (Exception $exception) {
+    watchdog('gpii_oauth2', $exception->getMessage(), NULL, WATCHDOG_ERROR);
+    drupal_set_message(t('An error occurred while trying to redirect you to the login page. Please contact the administrator if this continues to occur.'), 'error');
+    gpii_oauth2_goto(url());
+  }
+
+  $state = \ParagonIE\ConstantTime\Encoding::hexEncode(drupal_random_bytes(16));
+  $endpoint = variable_get('gpii_oauth2_authorization_endpoint');
+  $options['query']['response_type'] = 'code';
+  $options['query']['client_id'] = variable_get('gpii_oauth2_client_id');
+  $options['query']['redirect_uri'] = url('gpii-oauth2/authorized', array('absolute' => TRUE));
+  $options['query']['scope'] = variable_get('gpii_oauth2_scope');
+  $options['query']['state'] = $state;
+
+  if (!empty($_GET['destination']) && !url_is_external($_GET['destination'])) {
+    $destination = $_GET['destination'];
+  } else {
+    $destination = url();
+  }
+
+  $_SESSION['gpii_oauth2']['state'] = $state;
+  $_SESSION['gpii_oauth2']['destination'] = $destination;
+
+  gpii_oauth2_goto($endpoint, $options);
+}
+
+/**
+ * Perform actions for the logout page.
+ */
+function gpii_oauth2_logout_page() {
+  module_load_include('pages.inc', 'user', 'user');
+
+  gpii_oauth2_log_out($GLOBALS['user']);
+  user_logout();
+}
+
+/**
+ * Perform actions for the authorization callback page.
+ */
+function gpii_oauth2_login_authorization_callback_page() {
+  $user_error_message = t('An error occurred while trying to log you in. Please contact the administrator if this continues to occur.');
+
+  if (empty($_SESSION['gpii_oauth2']['state']) || empty($_SESSION['gpii_oauth2']['destination'])) {
+    watchdog('gpii_oauth2', t('State or destination not set in the session.'), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto(url());
+  }
+
+  // @todo This need to be removed when the P4ALL IAM component is updated to
+  // include the state parameter in responses.
+  $_GET['state'] = $_SESSION['gpii_oauth2']['state'];
+
+  if (empty($_GET['state']) || empty($_GET['code'])) {
+    watchdog('gpii_oauth2', t('State or code not set in the login callback request.'), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto(url());
+  }
+
+  $known_state = $_SESSION['gpii_oauth2']['state'];
+  $destination = $_SESSION['gpii_oauth2']['destination'];
+  $state = $_GET['state'];
+  $code = $_GET['code'];
+
+  if (!hash_equals($known_state, $state)) {
+    watchdog('gpii_oauth2', t('Known state and callback state don\'t match.'), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  try {
+    gpii_oauth2_load_libraries();
+  }
+  catch (Exception $exception) {
+    watchdog('gpii_oauth2', $exception->getMessage(), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  $client = new \GuzzleHttp\Client();
+  $endpoint = variable_get('gpii_oauth2_token_endpoint');
+  $auth_token = variable_get('gpii_oauth2_client_id') . ':' . variable_get('gpii_oauth2_client_secret');
+  $encoded_auth_token = \ParagonIE\ConstantTime\Encoding::base64Encode($auth_token);
+  $request_options['allow_redirects'] = FALSE;
+  $request_options['headers']['Accept'] = 'application/json';
+  $request_options['headers']['Authorization'] = 'Basic ' . $encoded_auth_token;
+  $request_options['form_params']['grant_type'] = 'authorization_code';
+  $request_options['form_params']['code'] = $code;
+  $request_options['form_params']['redirect_uri'] = url('gpii-oauth2/authorized', array('absolute' => TRUE));
+
+  try {
+    $response = $client->request('POST', $endpoint, $request_options);
+  }
+  catch (Exception $exception) {
+    watchdog('gpii_oauth2', $exception->getMessage(), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  $json = json_decode(strval($response->getBody()), TRUE);
+
+  if (empty($json)) {
+    watchdog('gpii_oauth2', t('Access token response body was not JSON.'), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  if ($response->getStatusCode() != 200) {
+    watchdog('gpii_oauth2', $json['error_description'], NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  $client = new \GuzzleHttp\Client();
+  $access_token = $json['access_token'];
+  $endpoint = variable_get('gpii_oauth2_userinfo_endpoint');
+  $request_options['allow_redirects'] = FALSE;
+  $request_options['headers']['Accept'] = 'application/json';
+  $request_options['headers']['Content-Type'] = 'application/json';
+  $request_options['headers']['Authorization'] = 'Bearer ' . $access_token;
+
+  try {
+    $response = $client->request('GET', $endpoint, $request_options);
+  }
+  catch (Exception $exception) {
+    watchdog('gpii_oauth2', $exception->getMessage(), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  $json = json_decode(strval($response->getBody()), TRUE);
+
+  if (empty($json)) {
+    watchdog('gpii_oauth2', t('User info response body was not JSON.'), NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  if ($response->getStatusCode() != 200) {
+    watchdog('gpii_oauth2', $json['error_description'], NULL, WATCHDOG_ERROR);
+    drupal_set_message($user_error_message, 'error');
+    gpii_oauth2_goto($destination);
+  }
+
+  // Once everything looks okay, remove the session variables before other
+  // actions so that the session variables won't be in an awkward state if
+  // something goes wrong below.
+  unset($_SESSION['gpii_oauth2']);
+
+  $account_name = $json['name'];
+  $account_email = $json['email'];
+  $existing_authmaps = user_get_authmaps($account_name);
+
+	// Try to link to an account if not already linked.
+  if (!isset($existing_authmaps['gpii_oauth2'])) {
+    $existing_account_by_name = user_load_by_name($account_name);
+    $existing_account_by_email = user_load_by_mail($account_email);
+
+    if (!empty($existing_account_by_name) && !empty($existing_account_by_email)) {
+      if ($existing_account_by_name->uid == $existing_account_by_email->uid) {
+        // Link an account from the IAM component when the user name and email
+        // address match. Login will still occur below in
+        // user_external_login_register().
+        user_set_authmaps($existing_account_by_name, array("authname_gpii_oauth2" => $account_name));
+      }
+      else {
+        // The information from the IAM component matches two different accounts
+        // on the site. Inform the user and log the error.
+
+        $existing_uid_by_name = $existing_account_by_name->uid;
+        $existing_uid_by_email = $existing_account_by_email->uid;
+
+        watchdog('gpii_oauth2', t('User tried to log in using a single sign-on account that has user information which matches multiple existing accounts. Fixing this will require manual intervention. Matching name UID: %existing_uid_by_name. Matching email address UID: %existing_uid_by_email.', array('%existing_uid_by_name' => $existing_uid_by_name, '%existing_uid_by_email' => $existing_uid_by_email)), NULL, WATCHDOG_ERROR);
+        drupal_set_message(t('You tried to log in using a single sign-on account that has user information which matches multiple existing accounts on this site. To avoid problems, your single sign-on account can\'t be used to log in at this time. Please contact the administrator to have this resolved.'), 'error');
+        gpii_oauth2_goto($destination);
+      }
+    }
+    elseif (!empty($existing_account_by_name) || !empty($existing_account_by_email)) {
+      // Here, either the user name or email address matched but not both. This
+      // should definitely be an error if only the user name matches to prevent
+      // malicious users from taking over accounts by taking advantage of the IAM
+      // component. This falls more on the side of being an error if only the
+      // email address matches to prevent similar issues, though it's less of a
+      // problem if the IAM component is validating email address ownership.
+
+      $existing_uid_by_name = isset($existing_account_by_name->uid) ? $existing_account_by_name->uid : t('none');
+      $existing_uid_by_email = isset($existing_account_by_email->uid) ? $existing_account_by_email->uid : t('none');
+
+      watchdog('gpii_oauth2', t('User tried to log in using a single sign-on account that has user information which only partially matches an existing account. Fixing this will require manual intervention. Matching name UID: %existing_uid_by_name. Matching email address UID: %existing_uid_by_email.', array('%existing_uid_by_name' => $existing_uid_by_name, '%existing_uid_by_email' => $existing_uid_by_email)), NULL, WATCHDOG_ERROR);
+      drupal_set_message(t('You tried to log in using a single sign-on account that has user information which only partially matches an existing account on this site. To avoid problems, your single sign-on account can\'t be used to log in at this time. Please contact the administrator to have this resolved.'), 'error');
+      gpii_oauth2_goto($destination);
+    }
+  }
+
+  user_external_login_register($account_name, 'gpii_oauth2');
+  $account = user_external_load($account_name);
+
+  if (empty($account)) {
+    // Drupal already notifies the user in user_external_login_register() if
+    // registration fails, so there's no need to use drupal_set_message() here.
+    watchdog('gpii_oauth2', t('Couldn\'t register user %user_name.', array('%user_name' => $account_name)), NULL, WATCHDOG_ERROR);
+    gpii_oauth2_goto($destination);
+  }
+
+  // Save the email address manually since user_external_login_register()
+  // doesn't provide a way save email addresses.
+  user_save($account, array('mail' => $account_email));
+
+  gpii_oauth2_goto($destination);
+}
+
+/**
+ * Log out the given user.
+ *
+ * @param $account
+ *   The user to log out.
+ */
+function gpii_oauth2_log_out($account) {
+  // This intentionally doesn't do anything at the moment, but it's here and
+  // used elsewhere in case the act of logging out of Drupal should also log
+  // users out of the SSO. Note that logging out of the SSO would require saving
+  // the tokens when authenticating.
+}
+
+/**
+ * Determine if the library dependencies for module are installed.
+ *
+ * @return
+ *   TRUE if the dependencies are installed and FALSE otherwise.
+ */
+function gpii_oauth2_are_libraries_installed() {
+  $installed = &drupal_static(__FUNCTION__, NULL);
+
+  if ($installed !== NULL) {
+    return $installed;
+  }
+
+  $guzzle = libraries_detect('guzzle');
+  $constant_time_encoding = libraries_detect('constant_time_encoding');
+  $hash_compat = libraries_detect('hash-compat');
+
+  $installed = $guzzle && !empty($guzzle['installed']);
+  $installed = $installed && $constant_time_encoding && !empty($constant_time_encoding['installed']);
+  $installed = $installed && $hash_compat && !empty($hash_compat['installed']);
+
+  return $installed;
+}
+
+/**
+ * Load the library dependencies for the module.
+ *
+ * @return
+ *   TRUE if the dependencies were successfully loaded and FALSE otherwise.
+ *
+ * @throw Exception
+ */
+function gpii_oauth2_load_libraries() {
+  $loaded = &drupal_static(__FUNCTION__);
+
+  if (!empty($loaded)) {
+    return;
+  }
+
+  $guzzle = libraries_load('guzzle');
+  $constant_time_encoding = libraries_load('constant_time_encoding');
+  $hash_compat = libraries_load('hash-compat');
+
+  $loaded = $guzzle && !empty($guzzle);
+  $loaded = $loaded && $constant_time_encoding && !empty($constant_time_encoding);
+  $loaded = $loaded && $hash_compat && !empty($hash_compat);
+
+  if (!$loaded) {
+    throw new Exception(t('The dependencies for the GPII OAuth2 Authentication module are not installed and loaded.'));
+  }
+}
+
+/**
+ * Redirect the user to the given destination. This differs from drupal_goto()
+ * in that it doesn't allow $_GET['destination'] to override the given
+ * destination.
+ *
+ * @param $path
+ *   An optional Drupal path or a full URL, which will be passed to url() to
+ *   compute the redirect for the URL.
+ * @param $options
+ *   An optional associative array of additional URL options to pass to url().
+ * @param $http_response_code
+ *   An optional HTTP status code to use for the redirection, defaults to 302.
+ */
+function gpii_oauth2_goto($path = '', array $options = array(), $http_response_code = 302) {
+  // Unset $_GET['destination'] so that the destination can't be overridden.
+  unset($_GET['destination']);
+  drupal_goto($path, $options, $http_response_code);
+}
+
+/**
+ * Return TRUE. This is used to overcome a limitation in the Libraries API in
+ * which it requires a version number even when the library doesn't include one.
+ *
+ * @return
+ *   TRUE
+ */
+function gpii_oauth2_return_true() {
+  return TRUE;
+}
+
+// -----------------------------------------------------------------------------
+// Forms
+
+/**
+ * Create a form for the admin settings for the module.
+ *
+ * @return
+ *   Admin settings form.
+ *
+ * @see drupal_get_form()
+ */
+function gpii_oauth2_form_admin_settings() {
+  $can_update_fields = gpii_oauth2_are_libraries_installed();
+
+  $form['authorization'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Authorization settings'),
+    '#collapsed' => FALSE);
+
+  $form['authorization']['gpii_oauth2_authorization_endpoint'] = array(
+    '#title' => t('Authorization endpoint URL'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#disabled' => !$can_update_fields,
+    '#default_value' => variable_get('gpii_oauth2_authorization_endpoint', ''),
+    '#description' => t('A valid URL from which authorization codes can be retrieved.'),
+    '#attributes' => array('placeholder' => 'https://idp.example.com/oauth2/authorize'),
+    '#element_validate' => array('gpii_oauth2_form_validate_url'));
+
+  $form['authorization']['gpii_oauth2_token_endpoint'] = array(
+    '#title' => t('Token endpoint URL'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#disabled' => !$can_update_fields,
+    '#default_value' => variable_get('gpii_oauth2_token_endpoint', ''),
+    '#description' => t('A valid URL from which access tokens can be retrieved.'),
+    '#attributes' => array('placeholder' => 'https://idp.example.com/oauth2/token'),
+    '#element_validate' => array('gpii_oauth2_form_validate_url'));
+
+  $form['authorization']['gpii_oauth2_userinfo_endpoint'] = array(
+    '#title' => t('User information endpoint URL'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#disabled' => !$can_update_fields,
+    '#default_value' => variable_get('gpii_oauth2_userinfo_endpoint', ''),
+    '#description' => t('A valid URL from which basic user information can be retrieved.'),
+    '#attributes' => array('placeholder' => 'https://idp.example.com/oauth2/userinfo'),
+    '#element_validate' => array('gpii_oauth2_form_validate_url'));
+
+  $form['authorization']['gpii_oauth2_client_id'] = array(
+    '#title' => t('Client ID'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#disabled' => !$can_update_fields,
+    '#default_value' => variable_get('gpii_oauth2_client_id', ''),
+    '#description' => t('The client ID for authenticating with the token server. You get a client ID when creating an application on the single sign-on server.'),
+    '#attributes' => array('placeholder' => '913cefa6-520a-4137-9747-b316842cace7'));
+
+  $form['authorization']['gpii_oauth2_client_secret'] = array(
+    '#title' => t('Client secret'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#disabled' => !$can_update_fields,
+    '#default_value' => variable_get('gpii_oauth2_client_secret', ''),
+    '#description' => t('The client secret for authenticating with the token server. You get a client secret when creating an application on the single sign-on server.'),
+    '#attributes' => array('placeholder' => 'e87afee9-39eb-4c55-955d-abcf34d42ace'));
+
+  $form['authorization']['gpii_oauth2_scope'] = array(
+    '#title' => t('Scope'),
+    '#type' => 'textfield',
+    '#disabled' => !$can_update_fields,
+    '#default_value' => variable_get('gpii_oauth2_scope', ''),
+    '#description' => t('The scope of the access request.'),
+    '#attributes' => array('placeholder' => 'email openid profile'));
+
+  $form['ui'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('UI settings'),
+    '#collapsed' => FALSE);
+
+  $form['ui']['gpii_oauth2_account_management_url'] = array(
+    '#title' => t('Account management URL'),
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#disabled' => !$can_update_fields,
+    '#default_value' => variable_get('gpii_oauth2_account_management_url', ''),
+    '#description' => t('A valid URL on the single sign-on server to which to direct users to manage their accounts.'),
+    '#attributes' => array('placeholder' => 'https://idp.example.com/identity-access-manager/profile'),
+    '#element_validate' => array('gpii_oauth2_form_validate_url'));
+
+  $form = system_settings_form($form);
+
+  return $form;
+}
+
+/**
+ * Validate the login form.
+ *
+ * @param $form
+ *   Form elements.
+ * @param $form_state
+ *   Form state.
+ */
+function gpii_oauth2_form_login_form_validate($form, &$form_state) {
+  if (form_get_errors() || empty($form_state['uid'])) {
+    return;
+  }
+
+  $account = user_load($form_state['uid']);
+  $authmaps = user_get_authmaps($account->name);
+  $sso_login_url = url('gpii-oauth2/login');
+
+  if (isset($authmaps['gpii_oauth2'])) {
+    form_set_error('name', t('You must use the <a href="@sso_login_url">single sign-on server</a> to log in with your account.', array('@sso_login_url' => $sso_login_url)));
+  }
+}
+
+/**
+ * Validate the password reset form.
+ *
+ * @param $form
+ *   Form elements.
+ * @param $form_state
+ *   Form state.
+ */
+function gpii_oauth2_form_user_pass_validate($form, &$form_state) {
+  if (form_get_errors()) {
+    return;
+  }
+
+  $authmaps = user_get_authmaps($form_state['values']['account']->name);
+
+  if (!isset($authmaps['gpii_oauth2'])) {
+    return;
+  }
+
+  $account_management_url = variable_get('gpii_oauth2_account_management_url');
+  $sso_login_url = url('gpii-oauth2/login');
+
+  form_set_error('name', t('New password requests for this account must be requested from the <a href="@account_management_url">single sign-on server</a>.', array('@account_management_url' => $account_management_url)));
+}
+
+/**
+ * Validate a URL field, requiring it to use HTTP or HTTPS.
+ *
+ * @param $element
+ *   Form element.
+ * @param $form_state
+ *   Form state.
+ * @param $form
+ *   Form elements.
+ */
+function gpii_oauth2_form_validate_url($element, &$form_state, $form) {
+  $endpoint_url = trim($element['#value']);
+
+  if (!valid_url($endpoint_url, TRUE)) {
+    form_error($element, t('The %title field is not a valid URL.', array('%title' => $element['#title'])));
+    return;
+  }
+
+  $scheme = parse_url($endpoint_url, PHP_URL_SCHEME);
+  $valid_schemes = array("http", "https");
+
+  if (!in_array($scheme, $valid_schemes)) {
+    form_error($element, t('The %title field must be a URL that uses HTTP or HTTPS.', array('%title' => $element['#title'])));
+    return;
+  }
+}

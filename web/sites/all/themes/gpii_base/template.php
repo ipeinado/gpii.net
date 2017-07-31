@@ -61,3 +61,23 @@ function gpii_base_theme($existing, $type, $theme, $path) {
 
   return $implementations;
 }
+
+/**
+ * Override of theme('textarea').
+ * Deprecate misc/textarea.js in favor of using the 'resize' CSS3 property.
+ */
+
+function gpii_base_textarea($variables) {
+  $element = $variables ['element'];
+  element_set_attributes($element, array('id', 'name', 'cols', 'rows'));
+  _form_set_class($element, array('form-textarea'));
+
+  $wrapper_attributes = array(
+    'class' => array('form-textarea-wrapper'),
+  );
+
+  $output = '<div' . drupal_attributes($wrapper_attributes) . '>';
+  $output .= '<textarea' . drupal_attributes($element ['#attributes']) . '>' . check_plain($element ['#value']) . '</textarea>';
+  $output .= '</div>';
+  return $output;
+}
