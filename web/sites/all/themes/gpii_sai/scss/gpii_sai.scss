@@ -1072,3 +1072,11 @@ tree-control.tree-classic li .tree-selected {
     margin-top: 0;
   }
 }
+
+div.discontinued {
+  font-weight:bold;
+  font-size: 1.2rem;
+  border-left: 4px solid $color-gpii-sai-primary;
+  padding-left: 0.6rem;
+  margin: 1rem 0;
+}
