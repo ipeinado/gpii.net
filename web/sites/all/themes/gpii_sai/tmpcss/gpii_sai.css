@@ -775,3 +775,10 @@ tree-control.tree-classic li .tree-selected {
 
 .view-editorial-status .views-exposed-form .views-exposed-widget .form-submit {
   margin-top: 0; }
+
+div.discontinued {
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-left: 4px solid #A72534;
+  padding-left: 0.6rem;
+  margin: 1rem 0; }
