@@ -19,6 +19,9 @@
 [submodule "web/sites/all/modules/google_material_icons"]
 	path = web/sites/all/modules/google_material_icons
 	url = https://git.drupal.org/sandbox/hctom/2513252.git
+[submodule "web/sites/all/modules/github"]
+	path = web/sites/all/modules/github
+	url = https://github.com/davidgreiner/github.git
 [submodule "web/sites/all/libraries/guzzle"]
 	path = web/sites/all/libraries/guzzle
 	url = https://github.com/guzzle/guzzle.git
