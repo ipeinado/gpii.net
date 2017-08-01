@@ -71,11 +71,12 @@
 @media (min-width: $screen-sm-min) {
 	.story-item {
 		max-width: 1170px;
-		margin: 0 auto;
+		margin: 0 auto 3rem;
+		overflow: hidden;
+
 		.story-content {
 			position: absolute;
-			width: 50%;
-			max-width: 480px;
+			// max-width: 512px;
 			top: 50%;
 			transform: translateY(-50%);
 
@@ -89,7 +90,6 @@
 		}
 		.story-image {
 			position: relative;
-			width: 50%;
 			overflow: hidden;
 			img {
 				display: block;
@@ -98,16 +98,16 @@
 		}
 	}
 
-	.image-on-right {
+	.views-row-even, .image-on-right {
 		.story-content {
-			padding-left: 96px;
+			padding-left: 112px;
 		}
 		.story-image {
 			left: 50%;
 		}
 	}
 
-	.image-on-left {
+	.views-row-odd, .image-on-left {
 		.story-content {
 			left: 50%;
 			padding-left: 48px;
@@ -121,12 +121,14 @@
 *
 ***************************************/
 
-.bean-hero-block {
-	padding-top: 4rem;
-	padding-bottom: 4rem;
+.hero-message {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
 
-	h2 {
-		font-size: (32px/14px)*1rem;
-		line-height: (36px/14px)*1rem;
+	h1 {
+		color: #000;
+		font-weight: 500;
+		margin: 0;
+		line-height: 44px;
 	}
 }
