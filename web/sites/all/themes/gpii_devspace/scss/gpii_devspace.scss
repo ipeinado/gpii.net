@@ -55,11 +55,19 @@ dl dt {
     padding-top: (22px/14px)*1rem;
   }
 
+  .form-group {
+    width: 50%;
+    float: left;
+    margin-right: 1rem;
+  }
+
   .input-group {
     width: 100%;
 
     input[type="text"] {
       border-radius: 3px;
+      font-size: (17px/14px)*1rem;
+      padding: (18px/14px)*1rem (12px/14px)*1rem;
     }
 
     input[type="text"]:focus {
@@ -67,13 +75,8 @@ dl dt {
     }
   }
 
-  .btn.btn-primary {
-    position:absolute;
-    left:-10000px;
-    top:auto;
-    width:1px;
-    height:1px;
-    overflow:hidden;
+  .form-submit {
+    font-size: (17px/14px)*1rem;
   }
 
   .search-stats-block {
@@ -99,6 +102,7 @@ dl dt {
   }
 }
 
+
 h2 {
   font-size: (22px/14px)*1rem;
   font-weight: 600;
@@ -112,6 +116,10 @@ h3 {
 
 h4 {
   font-size: (16px/14px)*1rem;
+}
+
+#main-container {
+  margin-top: 2rem;
 }
 
 

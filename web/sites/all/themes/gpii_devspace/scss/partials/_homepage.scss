@@ -1,6 +1,7 @@
 .front {
 	h2 {
 		font-size: (30px/14px)*1rem;
+		font-weight: normal;
 	}
 
 	.welcome-block {
@@ -8,19 +9,35 @@
 	}
 
 	.region-hero {
-		padding: 1em 0;
+		padding: 2rem 0 1rem;
 		text-align: center;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		box-shadow: 0 1px 4px rgba(0,0,0,.04);
 		overflow: hidden;
+		background: linear-gradient(0deg,rgba(24,96,107,0.5),rgba(24,96,107,0.5)), url('../images/home_hero_background.png');
+  		background-repeat: no-repeat;
+  		background-size: cover;
+  		background-position: 50% 80%;
+
+  		h1 {
+  			text-shadow: 1px 1px 1px #333;
+  			margin-bottom: (20px/14px)*1rem;
+  		}
 
 		p {
-			font-size: (16px/14px)*1rem;
+			width: 60%;
+			margin: 0 auto (18px/14px)*1rem;
+			font-size: (18px/14px)*1rem;
+			line-height: (34px/14px)*1rem;
 		}
 
-		.input-group {
-			margin-left: auto;
-			margin-right: auto;
+		p.highlight {
+			background-color: rgba(0, 0, 0, .25);
+		}
+
+		a,
+		a:visited {
+			color: #000;
 		}
 
 		@media (max-width: $screen-sm-max) {
@@ -32,40 +49,16 @@
 				line-height: 2.6rem;
 			}
 
-			.input-group, p {
-				width: 90%;
-			}
-		}
-		@media (min-width: $screen-sm-min) {
-			.input-group, p {
-				width: 60%;
+			p {
+				width: 80%;
 			}
 		}
 	}
 
-	input[type='text'] {
-		font-size: (17px/14px)*1rem;
-		height: 38px;
-		margin: 0 auto;
-		border-color: $color-gpii-dark-gray;
+	.region-featured-links {
+  		overflow: hidden;
+  		margin-bottom: 2rem;
 	}
-
-	.btn-primary {
-  	background-color: $color-gpii-gray;
-  	color: $color-gpii-dark-gray;
-  	font-weight: 600;
-
-  	&:focus, 
-  	&:active, 
-  	&:hover {
-    	background-color: darken($color-gpii-gray, 4%);
-    	color: darken($color-gpii-dark-gray, 6%);
-  	}
-  }
-
-  .main-container > section {
-	margin-bottom: 2rem;
-  }
 }
 
 .front {
@@ -127,10 +120,6 @@
 	}
 }
 
-.user-groups {
-	margin-bottom: 2rem;
-}
-
 .view-success-stories {
 	margin-top: 1em;
 	.ss-card {
@@ -179,82 +168,63 @@
 	}
 }
 
-.challenges-banner {
-	background-color: #455a64;
-	padding: 2rem;
+.upcoming-events-block {
+	padding: 0 (20px/14px*1rem);
+	background-color: #FAFAFA;
+	border: 1px solid #e5e5e5;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
 
-	.fa {
-		float: left;
-		font-size: 64px;
-		color: yellow;
+	h2 {
+		margin-bottom: 2rem;
 	}
 
-	.challenges-banner-content {
-		overflow: hidden;
-		margin-left: 60px;
-		color: #FFF;
-
-		h2 {
-			margin-top: 0;
-			color: #FFF;
-		}
-		p {
-			margin-bottom: 1rem;
-		}
+	h3 {
+		margin-top: 0;
 	}
-}
-
-.events-banner {
-	padding: 0;
 
 	img {
 		float: right;
-		width: 33%;
 		margin-left: 1rem;
 		margin-bottom: 1rem;
 	}
 
-	h2 {
-		margin-top: 0;
-	}
-
-	h3 {
-		font-size: (20px/14px)*1rem;
-	}
-
-	p {
-		margin-bottom: (5px/14px)*1rem;
+	.view-footer {
+		margin-top: (10px/14px)*1rem;
+		text-align: left;
 	}
 }
 
-#block-views-topics-block {
-	clear: both;
+.key-places-block {
+	overflow: hidden;
+	padding-bottom: 100px;
+	background-image: url('../images/8-bit-team.png');
+	background-repeat: no-repeat;
+	background-position: left bottom;
 
 	h2 {
-		text-align: center;
-		margin-bottom: 1em;
+		margin-bottom: 2rem;
 	}
 
-	ul.topic-list {
-		list-style-type: none;
-		margin: 0;
+	.user-groups-list {
+		margin: 2rem 0 0 0;
 		padding: 0;
-		background-color: yellow;
+		list-style-type: none;
 
 		li {
-			margin-bottom: 1rem;
+			display: inline-block;
+			margin-right: 0.5rem;
+			margin-bottom: (26px/14px)*1rem;
 
-			a, i {
-				font-size: 1rem;
+			a {
+				background-color: #FFF;
+				border: 1px solid #e5e5e5;
+				box-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
+				padding: (10px/14px)*1rem;
+				border-radius: 3px;
 			}
 		}
 	}
 }
-
-.region.region-user-groups {
-	margin-bottom: 3rem;
-}
-
 
 
 
