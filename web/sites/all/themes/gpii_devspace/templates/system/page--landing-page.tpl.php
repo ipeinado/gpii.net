@@ -142,6 +142,7 @@
   <div id="main-container" class="main-container container-fluid">
     <a id="main-content"></a>
     <?php print render($page['stories']); ?>
+    <?php print render($page['content']); ?>
   </div>
 </div>
 
