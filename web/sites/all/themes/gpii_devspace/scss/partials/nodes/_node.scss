@@ -67,23 +67,26 @@
 // NODE CARD
 .node-card {
 	padding: 0;
-	float: none;
-	display: inline-block;
-	vertical-align: top;
 	margin-bottom: 2rem;
-	border: 1px solid $color-gpii-gray;
-	border-radius: 5px;
-	box-shadow: 1px 1px 4px rgba(0, 0, 0, .1);
 	overflow: hidden;
 
 	.card-header {
 		overflow: hidden;
-		@include aspect-ratio(16,9);
+
+		.img-holder {
+			margin: 0 auto;
+			width: 120px;
+			height: 120px;
+			vertical-align: middle;
+			overflow: hidden;
+			border-radius: 50%;
+		}
 	}
 
 	h2 {
 		margin: .5rem 0;
 		font-size: (18px/14px)*1rem;
+		line-height: (22px/14px)*1rem;
 		font-weight: 600;
 	}
 
@@ -91,7 +94,7 @@
 		padding: 1rem;
 
 		p {
-			font-size: (13px/14px)*1rem;
+			font-size: 1rem;
 			margin: 1em 0;
 		}
 	}
