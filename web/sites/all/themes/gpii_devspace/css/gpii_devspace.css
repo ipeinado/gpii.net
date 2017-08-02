@@ -250,6 +250,7 @@
   padding-bottom: 2rem; }
   .hero-message h1 {
     color: #000;
+    font-weight: 500;
     margin: 0;
     line-height: 44px; }
 
@@ -379,37 +380,26 @@
 
 .node-card {
   padding: 0;
-  float: none;
-  display: inline-block;
-  vertical-align: top;
   margin-bottom: 2rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-          box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden; }
   .node-card .card-header {
-    overflow: hidden;
-    position: relative; }
-    .node-card .card-header:before {
-      display: block;
-      content: "";
-      width: 100%;
-      padding-top: 56.25%; }
-    .node-card .card-header > div {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0; }
+    overflow: hidden; }
+    .node-card .card-header .img-holder {
+      margin: 0 auto;
+      width: 120px;
+      height: 120px;
+      vertical-align: middle;
+      overflow: hidden;
+      border-radius: 50%; }
   .node-card h2 {
     margin: .5rem 0;
     font-size: 1.28571429rem;
+    line-height: 1.57142857rem;
     font-weight: 600; }
   .node-card .card-content {
     padding: 1rem; }
     .node-card .card-content p {
-      font-size: 0.92857143rem;
+      font-size: 1rem;
       margin: 1em 0; }
   .node-card .card-footer {
     padding: .3em 1em 1em 1em;
