@@ -6,20 +6,19 @@
 
 .bean-featured-link {
 	cursor: pointer;
-	padding-top: 1rem;
 	border-bottom: 3px solid #FFF;
-	color: #777;
+	color: #333;
 
 	img {
 		opacity: 0.9;
-		margin-bottom: (7px/14px)*1rem;
+		margin-bottom: (8px/15px)*1rem;
 	}
 
 	.internal-link {
 		display: block;
-		margin-bottom: (3px/14px)*1rem;
-		font-size: (18px/14px)*1rem;
-		font-weight: normal;
+		margin-bottom: (3px/15px)*1rem;
+		font-size: (18px/15px)*1rem;
+		font-weight: 600;
 	}
 
 	&:hover {
@@ -80,12 +79,8 @@
 			top: 50%;
 			transform: translateY(-50%);
 
-			h1 {
-				font-size: (28px/14px)*1rem;
-			}
-
 			p, a {
-				font-size: (17px/14px)*1rem;
+				font-size: (17px/15px)*1rem;
 			}
 		}
 		.story-image {
@@ -100,7 +95,7 @@
 
 	.views-row-even, .image-on-right {
 		.story-content {
-			padding-left: 112px;
+			padding-left: 96px;
 		}
 		.story-image {
 			left: 50%;
