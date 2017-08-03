@@ -1,0 +1,140 @@
+/************************************
+** NAVBAR
+************************************/
+
+.navbar.navbar-default {
+
+	// NAVBAR HEADER
+  .navbar-header {
+
+  	.logo {
+  		padding: 0 (4px/15px)*1rem 0 (15px/15px)*1rem;
+  	}
+
+    p.lead {
+      text-align: left;
+      padding-top: (3px/15px)*1rem;
+      margin-top: (15px/15px)*1rem;
+  
+      a, a:active, a:hover, a:focus {
+        color: $color-gpii-devspace-primary;
+        font-size: (28px/15px)*1rem;
+        font-weight: 600;
+      }
+    }
+
+    @media(max-width: $screen-sm-max) {
+      height: 50px;
+      border-bottom: 1px solid $color-gpii-gray;
+    
+      .navbar-btn {
+        width: 64px;
+        float: left;
+        margin: (5px/15px)*1rem 0 0 (8px/15px)*1rem;
+        padding: 0;
+      }
+      
+      p.lead {
+        margin: (5px/15px)*1rem 0 0 0;
+        a, a:active, a:hover, a:focus {
+          font-size: (22px/15px)*1rem;
+        }
+      }
+    }
+  }
+
+  // PRIMARY MENU
+	.primary.menu.nav {
+  	@media (max-width: $screen-xs-max) {
+    	li {
+      	border-bottom: 1px solid #555;  
+
+      	ul {
+        	background: #FFF;
+        	margin: 0;
+
+        	li {
+          	border-bottom: 0;
+        	}
+      	}
+    	}
+  	}
+
+  	@media (min-width: $screen-sm-min) {
+    	li > a {
+      	line-height: (22px/15px)*1rem;
+      	transition: border-top-color .3s ease,
+                  	background-color .3s ease;
+    	}
+    
+    	li > a:hover,
+    	li > a:focus {
+      	border-top-color: $color-gpii-devspace-primary;
+      	color: $color-gpii-devspace-primary;
+      	background-color: #FFF;
+    	}
+    
+    	li > a:focus {
+      	outline: 5px auto -webkit-focus-ring-color;
+      	outline-offset: -2px;
+    	}
+
+    	li.dropdown > a:hover {
+      	border-top-color: $color-gpii-devspace-primary;
+    	}
+
+    	.dropdown.active > a,
+    	.dropdown.active > a:hover,
+    	.dropdown.active > a:focus,
+    	.active > a,
+    	.active > a:hover,
+    	.active > a:focus {
+      	border-top-color: $color-gpii-devspace-primary;
+    	}
+
+    	.dropdown.open > a,
+    	.dropdown.open > a:hover,
+    	.dropdown.open > a:focus {
+      	color: $color-gpii-devspace-primary;
+      	border-top-color: $color-gpii-devspace-primary;
+    	}
+  	}
+  }
+
+  // NAVBAR-RIGHT (SEARCH BUTTON ETC.)
+	.navbar-right {
+
+  	@media (max-width: $screen-xs-max) {
+    	display: none;
+  	}
+
+  	@media (min-width: $screen-sm-min) {
+    	position: absolute;
+    	right: 0;
+
+    	li > a {
+    		padding: 0.6rem 1.2em;
+      	margin: 0;
+      	font-weight: 600;
+      	font-size: 1rem;
+      	border-top-width: 0.3rem;
+      	border-top-style: solid;
+      	border-top-color: transparent;
+      	text-decoration: none;
+      	line-height: (22px/15px)*1rem;
+    	}
+
+    	li > a > .search-text {
+      	display: none;
+    	}
+
+    	li > a:hover,
+    	li > a:focus,
+    	li > a[aria-pressed="true"] {
+      	border-top-color: $color-gpii-devspace-primary;
+      	color: $color-gpii-devspace-primary;
+      	background-color: #FFFFFF;
+    	}
+  	}
+	}
+}
