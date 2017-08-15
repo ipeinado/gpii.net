@@ -296,6 +296,35 @@ function gpii_saa_custom_child_termrefs_table($vid, $tid, $vdisplay) {
 
 }
 
+
+/**
+ * Implements hook_form_alter().
+ */
+function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id) {
+  // add a "Cancel" button to product edit forms.
+  if ($form_id == 'product_node_form') {
+    // Add a cancel button.
+    $form['actions']['cancel'] = array(
+      '#type'   => 'submit',
+      '#value'  => t('Cancel'),
+      '#access' => TRUE,
+      '#weight' => 15,
+      '#submit' => array('gpii_saa_custom_form_cancel', 'node_form_submit_build_node'),
+      '#limit_validation_errors' => array(),
+    );
+  }
+}
+
+/**
+ * Custom cancel button callback.
+ */
+function gpii_saa_custom_form_cancel($form, &$form_state) {
+  // if there's no destination parameter, return to the view published/draft tab
+  $url = $_GET['destination'] ? $_GET['destination'] : 'node/' . arg(1);
+  drupal_goto($url);
+}
+
+
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
@@ -1011,24 +1040,25 @@ function gpii_saa_custom_image_import($uid) {
         // BBC: not sure the first if statement below is needed anymore
         $filename = $value['image_id'];
 
-        if (recursive_array_search($filename, $product->field_product_image) !== false) {
-          // we already have this file, so don't do anything
-          // @@ this assumes that we don't have any updated text alternatives
-          dsm("DUPLICATE FOUND");
-        }
+        // if (recursive_array_search($filename, $product->field_product_image) !== false) {
+        //   // we already have this file, so don't do anything
+        //   // @@ this assumes that we don't have any updated text alternatives
+        //   dsm("DUPLICATE FOUND");
+        // }
 
-        else {
+        // else {
           $image = file_get_contents('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
           //dpm('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
           $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
           $file->alt = $value['description'];
           $file->title = $value['description'];
+          //$file->copyright = 'TEST';
 
           //dsm($file);
           $product->field_product_image['und'][] = (array)$file;
           dpm($product->field_product_image);
           $housekeeping[] = $filename;
-        }
+        //}
 
       }
 
