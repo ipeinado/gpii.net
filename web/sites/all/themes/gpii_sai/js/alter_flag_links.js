@@ -2,7 +2,7 @@
 
   Drupal.behaviors.alter_flag_links = {
     attach: function(context) {
-      $('[class^="flag-"]').each(function() {
+      $('[class*="flag-photo"], [class*="flag-alt"], [class*="flag-description"], [class*="flag-mfgr"], [class*="flag-tax"], [class*="flag-where"]').each(function() {
         var flag_link = $(this).children('a');
         if (flag_link.length) {
           flag_link.hide();
