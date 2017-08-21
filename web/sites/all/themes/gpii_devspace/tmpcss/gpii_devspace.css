@@ -13,7 +13,7 @@
     font-size: 1.86666667rem;
     font-weight: 600; }
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
   .navbar.navbar-default .navbar-header {
     height: 50px;
     border-bottom: 1px solid #e5e5e5; }
@@ -89,6 +89,34 @@
       border-top-color: #18606b;
       color: #18606b;
       background-color: #FFFFFF; } }
+
+.region-menu-search {
+  position: relative; }
+  .region-menu-search input[type="text"] {
+    border-radius: 4px; }
+  .region-menu-search button[type="submit"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1500;
+    background-color: transparent;
+    color: #555;
+    border: 0;
+    padding: 0.42857143rem 0.85714286rem; }
+  @media (max-width: 991px) {
+    .region-menu-search {
+      padding: 1rem; }
+      .region-menu-search .input-group {
+        width: 100%; }
+      .region-menu-search button[type="submit"] {
+        margin: 1rem 1rem 0 0; } }
+  @media (min-width: 992px) {
+    .region-menu-search {
+      position: absolute;
+      top: 6.36666667rem;
+      right: 2rem;
+      margin-top: 0.53333333rem;
+      padding: 0; } }
 
 .front .welcome-block {
   margin-top: 2.4rem;
@@ -682,7 +710,7 @@ html, body {
 
 @media (min-width: 768px) {
   html:not(.force-mobile-layout) body {
-    border-top: 10.33333333rem solid transparent; } }
+    border-top: 9.33333333rem solid transparent; } }
 
 dl dt {
   margin-bottom: 0.66666667rem; }
@@ -722,45 +750,6 @@ article .block, aside .block, .region-sidebar-first .block, .region-sidebar-seco
 .region-hero {
   clear: both;
   background-color: #FFF; }
-
-.region-search-box {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  display: none; }
-  @media (min-width: 768px) {
-    .region-search-box {
-      width: 740px; } }
-  @media (min-width: 992px) {
-    .region-search-box {
-      width: 960px; } }
-  @media (min-width: 1200px) {
-    .region-search-box {
-      width: 1160px; } }
-  .region-search-box .search-block {
-    padding: 0; }
-  .region-search-box .form-group {
-    width: 50%;
-    float: left;
-    margin-right: 1rem; }
-  .region-search-box .input-group {
-    width: 100%; }
-    .region-search-box .input-group input[type="text"] {
-      border-radius: 3px;
-      font-size: 1rem;
-      padding: 1.2rem 0.8rem; }
-    .region-search-box .input-group input[type="text"]:focus {
-      outline: 1px solid #009688; }
-  .region-search-box .form-submit {
-    font-size: 1rem; }
-  .region-search-box .search-api-stats-top-phrases {
-    list-style-type: none;
-    margin: 0;
-    padding: 0; }
-    .region-search-box .search-api-stats-top-phrases li {
-      display: inline-block;
-      margin-right: 1rem; }
 
 #main-container {
   margin-top: 1rem; }

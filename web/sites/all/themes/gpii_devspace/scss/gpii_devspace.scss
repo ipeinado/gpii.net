@@ -20,7 +20,7 @@ html, body {
 
 @media (min-width: 768px) {
   html:not(.force-mobile-layout) body {
-    border-top: (155px/15px)*1rem solid transparent;
+    border-top: (140px/15px)*1rem solid transparent;
   }
 }
 
@@ -74,64 +74,6 @@ article, aside, .region-sidebar-first, .region-sidebar-second {
 .region-hero {
   clear: both;
   background-color: #FFF;
-}
-
-.region-search-box {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  display: none;
-
-  
-  @media (min-width: 768px) {
-    width: 740px;
-  }
-  @media (min-width: 992px) {
-    width: 960px;
-  }
-  @media (min-width: 1200px) {
-    width: 1160px;
-  }
-
-  .search-block {
-    padding: 0;
-  }
-
-  .form-group {
-    width: 50%;
-    float: left;
-    margin-right: 1rem;
-  }
-
-  .input-group {
-    width: 100%;
-
-    input[type="text"] {
-      border-radius: 3px;
-      font-size: (15px/15px)*1rem;
-      padding: (18px/15px)*1rem (12px/15px)*1rem;
-    }
-
-    input[type="text"]:focus {
-      outline: 1px solid #009688;
-    }
-  }
-
-  .form-submit {
-    font-size: (15px/15px)*1rem;
-  }
-
-  .search-api-stats-top-phrases {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
-    li {
-      display: inline-block;
-      margin-right: 1rem;
-    }
-  }
 }
 
 #main-container {
