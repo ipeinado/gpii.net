@@ -96,7 +96,7 @@
 }
 
 .widget_stars #review_stars .stars{
-    font-size:30px;
+    font-size:22px;
 }
 
 .widget_stars #histogram{
@@ -369,7 +369,7 @@
 /* Stars */
 .widget_stars .widget_categorization{
 	text-align:center;
-	font-size:30px;
+	font-size: 22px;
 	margin-bottom:0px;
 }
 

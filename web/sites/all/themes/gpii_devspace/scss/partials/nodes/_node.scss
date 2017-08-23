@@ -1,12 +1,57 @@
+// ACTION LINKS
+
+.group-action-links {
+	display: block;
+	clear: both;
+	overflow: visible;
+
+	a.flag,
+	a.rate,
+	a.twitter-share,
+	a.linkedin-share,
+	a.flag:visited, {		
+		color: #777;
+
+		&:hover {
+			color: $color-gpii-devspace-primary;
+		}
+
+		.fa-bookmark {
+			color: $color-gpii-devspace-primary;
+		}
+	}
+}
+
 // FULL PAGE
 .view-mode-full {
 
-	.field {
-		margin-bottom: 1em;
-	}
+	.group-action-links {
 
-	.group-user-info {
-		margin-bottom: 1em;
+		margin-bottom: (24px/15px)*1rem;
+
+		.h1 {
+			margin: 0;
+		}
+
+		#widget_stars_rate_part.widget_stars {
+			float: left;
+		}
+
+
+		#widget_stars_rate_part.widget_stars,
+		.flag-outer.flag-outer-bookmarks,
+		.social-button {
+			display: inline-block;
+			margin-right: (24px/15px)*1rem;
+		}
+
+		a.flag,
+		a.rate,
+		a.twitter-share,
+		a.linkedin-share,
+		a.flag:visited, {		
+			font-size: (20px/15px)*1rem;
+		}
 	}
 
 	article {
@@ -56,6 +101,15 @@
 	.node-teaser-body {
 		margin-top: (10px/15px)*1rem;
 	}
+
+	.group-action-links {
+
+		.flag-outer.flag-outer-bookmarks,
+		.social-button {
+			display: inline-block;
+			margin-right: (25px/15px)*1rem;
+		}
+	}
 }
 
 // NODE CARD
@@ -68,7 +122,7 @@
 		overflow: hidden;
 
 		.img-holder {
-			margin: 0 auto;
+			margin: 0 auto 0;
 			width: 120px;
 			height: 120px;
 			vertical-align: middle;
@@ -99,30 +153,6 @@
 		div {
 			display: inline-block;
 			margin-right: (7px/15px)*1rem;
-		}
-	}
-
-	@media (min-width: 480px) and (max-width: 991px) {
-
-		border: 0;
-		border-bottom: 1px solid $color-gpii-med-gray;
-		box-shadow: none;
-		margin-bottom: 1rem;
-
-		.card-header {
-			width: 33%;
-			float: left;
-			height: 100%;
-		}
-
-		.card-content {
-			padding-top: 0;
-		}
-
-		.card-content,
-		.card-footer {
-			margin-left: 33%;
-			padding-left: 1em;
 		}
 	}
 }
@@ -204,38 +234,14 @@
 	}
 }
 
-// ACTION LINKS
-
-.group-action-links {
-	display: block;
-	clear: both;
-	overflow: visible;
-
-	div {	
-		display: inline-block;
-		margin-right: 1rem;
-	}
-
-	a.flag,
-	a.twitter-share,
-	a.linkedin-share,
-	a.flag:visited, {
-		font-size: 1rem;
-		color: #777;
-
-		&:hover {
-			color: $color-gpii-devspace-primary;
-		}
-
-		.fa-bookmark {
-			color: $color-gpii-devspace-primary;
-		}
-	}
-
-}
-
 // CALENDAR
 .view .date-nav-wrapper .date-prev {
 	left: 0;
 	right: auto;
+}
+
+// RATING
+
+.widget_stars_rate span.spanstar {
+	font-size: 50px;
 }
