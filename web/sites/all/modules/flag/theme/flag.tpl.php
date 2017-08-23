@@ -53,7 +53,7 @@
 <?php endif; ?>
 <span class="<?php print $flag_wrapper_classes; ?>">
   <?php if ($link_href): ?>
-    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></a><span class="flag-throbber">&nbsp;</span>
+    <a role="button" href="<?php print $link_href; ?>" data-toggle="tooltip" data-placement="top" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></a><span class="flag-throbber">&nbsp;</span>
   <?php else: ?>
     <span class="<?php print $flag_classes ?>"><?php print $link_text; ?></span>
   <?php endif; ?>

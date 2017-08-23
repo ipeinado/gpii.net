@@ -107,9 +107,7 @@
     .region-menu-search {
       padding: 1rem; }
       .region-menu-search .input-group {
-        width: 100%; }
-      .region-menu-search button[type="submit"] {
-        margin: 1rem 1rem 0 0; } }
+        width: 100%; } }
   @media (min-width: 992px) {
     .region-menu-search {
       position: absolute;
@@ -442,11 +440,46 @@
       #block-views-topics-block ul.topic-list li a, #block-views-topics-block ul.topic-list li i {
         font-size: 1rem; }
 
-.view-mode-full .field {
-  margin-bottom: 1em; }
+.group-action-links {
+  display: block;
+  clear: both;
+  overflow: visible; }
+  .group-action-links a.flag,
+  .group-action-links a.rate,
+  .group-action-links a.twitter-share,
+  .group-action-links a.linkedin-share,
+  .group-action-links a.flag:visited {
+    color: #777; }
+    .group-action-links a.flag:hover,
+    .group-action-links a.rate:hover,
+    .group-action-links a.twitter-share:hover,
+    .group-action-links a.linkedin-share:hover,
+    .group-action-links a.flag:visited:hover {
+      color: #18606b; }
+    .group-action-links a.flag .fa-bookmark,
+    .group-action-links a.rate .fa-bookmark,
+    .group-action-links a.twitter-share .fa-bookmark,
+    .group-action-links a.linkedin-share .fa-bookmark,
+    .group-action-links a.flag:visited .fa-bookmark {
+      color: #18606b; }
 
-.view-mode-full .group-user-info {
-  margin-bottom: 1em; }
+.view-mode-full .group-action-links {
+  margin-bottom: 1.6rem; }
+  .view-mode-full .group-action-links .h1 {
+    margin: 0; }
+  .view-mode-full .group-action-links #widget_stars_rate_part.widget_stars {
+    float: left; }
+  .view-mode-full .group-action-links #widget_stars_rate_part.widget_stars,
+  .view-mode-full .group-action-links .flag-outer.flag-outer-bookmarks,
+  .view-mode-full .group-action-links .social-button {
+    display: inline-block;
+    margin-right: 1.6rem; }
+  .view-mode-full .group-action-links a.flag,
+  .view-mode-full .group-action-links a.rate,
+  .view-mode-full .group-action-links a.twitter-share,
+  .view-mode-full .group-action-links a.linkedin-share,
+  .view-mode-full .group-action-links a.flag:visited {
+    font-size: 1.33333333rem; }
 
 .view-mode-full article img {
   float: left;
@@ -476,52 +509,10 @@
     color: #666; }
   .node-teaser .node-teaser-body {
     margin-top: 0.66666667rem; }
-
-.node-card {
-  padding: 0;
-  margin-bottom: 2rem;
-  overflow: hidden; }
-  .node-card .card-header {
-    overflow: hidden; }
-    .node-card .card-header .img-holder {
-      margin: 0 auto;
-      width: 120px;
-      height: 120px;
-      vertical-align: middle;
-      overflow: hidden;
-      border-radius: 50%; }
-  .node-card h2 {
-    margin: .5rem 0;
-    font-size: 1.2rem;
-    line-height: 1.46666667rem;
-    font-weight: 600; }
-  .node-card .card-content {
-    padding: 1rem; }
-    .node-card .card-content p {
-      font-size: 1rem;
-      margin: 1em 0; }
-  .node-card .card-footer {
-    padding: .3em 1em 1em 1em;
-    overflow: hidden; }
-    .node-card .card-footer div {
-      display: inline-block;
-      margin-right: 0.46666667rem; }
-  @media (min-width: 480px) and (max-width: 991px) {
-    .node-card {
-      border: 0;
-      border-bottom: 1px solid #b2b2b2;
-      box-shadow: none;
-      margin-bottom: 1rem; }
-      .node-card .card-header {
-        width: 33%;
-        float: left;
-        height: 100%; }
-      .node-card .card-content {
-        padding-top: 0; }
-      .node-card .card-content,
-      .node-card .card-footer {
-        margin-left: 33%;
-        padding-left: 1em; } }
+  .node-teaser .group-action-links .flag-outer.flag-outer-bookmarks,
+  .node-teaser .group-action-links .social-button {
+    display: inline-block;
+    margin-right: 1.66666667rem; }
 
 .node-overview-list {
   overflow: hidden;
@@ -576,33 +567,12 @@
   padding-bottom: .5em;
   text-indent: 1em; }
 
-.group-action-links {
-  display: block;
-  clear: both;
-  overflow: visible; }
-  .group-action-links div {
-    display: inline-block;
-    margin-right: 1rem; }
-  .group-action-links a.flag,
-  .group-action-links a.twitter-share,
-  .group-action-links a.linkedin-share,
-  .group-action-links a.flag:visited {
-    font-size: 1rem;
-    color: #777; }
-    .group-action-links a.flag:hover,
-    .group-action-links a.twitter-share:hover,
-    .group-action-links a.linkedin-share:hover,
-    .group-action-links a.flag:visited:hover {
-      color: #18606b; }
-    .group-action-links a.flag .fa-bookmark,
-    .group-action-links a.twitter-share .fa-bookmark,
-    .group-action-links a.linkedin-share .fa-bookmark,
-    .group-action-links a.flag:visited .fa-bookmark {
-      color: #18606b; }
-
 .view .date-nav-wrapper .date-prev {
   left: 0;
   right: auto; }
+
+.widget_stars_rate span.spanstar {
+  font-size: 50px; }
 
 .field-type-taxonomy-term-reference {
   margin-bottom: 1em; }
@@ -739,7 +709,7 @@ article h3, aside h3, .region-sidebar-first h3, .region-sidebar-second h3 {
   font-size: 1rem;
   font-weight: 600; }
 
-article .block, aside .block, .region-sidebar-first .block, .region-sidebar-second .block {
+article .block, article .tag-block, aside .block, aside .tag-block, .region-sidebar-first .block, .region-sidebar-first .tag-block, .region-sidebar-second .block, .region-sidebar-second .tag-block {
   margin-bottom: 2rem; }
 
 .region {
