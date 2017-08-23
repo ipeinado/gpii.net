@@ -112,6 +112,51 @@
 	}
 }
 
+// NODE CARD
+.node-card {
+	padding: 0;
+	margin-bottom: 2rem;
+	overflow: hidden;
+
+	.card-header {
+		overflow: hidden;
+
+		.img-holder {
+			margin: 0 auto 0;
+			width: 120px;
+			height: 120px;
+			vertical-align: middle;
+			overflow: hidden;
+			border-radius: 50%;
+		}
+	}
+
+	h2 {
+		margin: .5rem 0;
+		font-size: (18px/15px)*1rem;
+		line-height: (22px/15px)*1rem;
+		font-weight: 600;
+	}
+
+	.card-content {
+		padding: 1rem;
+
+		p {
+			font-size: 1rem;
+			margin: 1em 0;
+		}
+	}
+
+	.card-footer {
+		padding: .3em 1em 1em 1em;
+		overflow: hidden;
+		div {
+			display: inline-block;
+			margin-right: (7px/15px)*1rem;
+		}
+	}
+}
+
 // NODE OVERVIEW
 
 .node-overview-list {

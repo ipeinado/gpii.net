@@ -514,6 +514,36 @@
     display: inline-block;
     margin-right: 1.66666667rem; }
 
+.node-card {
+  padding: 0;
+  margin-bottom: 2rem;
+  overflow: hidden; }
+  .node-card .card-header {
+    overflow: hidden; }
+    .node-card .card-header .img-holder {
+      margin: 0 auto 0;
+      width: 120px;
+      height: 120px;
+      vertical-align: middle;
+      overflow: hidden;
+      border-radius: 50%; }
+  .node-card h2 {
+    margin: .5rem 0;
+    font-size: 1.2rem;
+    line-height: 1.46666667rem;
+    font-weight: 600; }
+  .node-card .card-content {
+    padding: 1rem; }
+    .node-card .card-content p {
+      font-size: 1rem;
+      margin: 1em 0; }
+  .node-card .card-footer {
+    padding: .3em 1em 1em 1em;
+    overflow: hidden; }
+    .node-card .card-footer div {
+      display: inline-block;
+      margin-right: 0.46666667rem; }
+
 .node-overview-list {
   overflow: hidden;
   margin: 0;
