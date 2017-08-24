@@ -727,6 +727,13 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
         }
       }
     }
+    if ($controller['view info']['view_name'] == 'deleted_records') {
+      foreach ($result as $key => $value) {
+         $result[$key]->duplicate_nid = $result[$key]->duplicate_nid['value'];
+         $result[$key]->uid = $result[$key]->uid['value'];
+         $result[$key]->status = 'deleted'; // set manually since this is a filter in the view itself
+      }
+    }
   }
 }
 
