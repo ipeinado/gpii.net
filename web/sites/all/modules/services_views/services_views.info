@@ -14,3 +14,4 @@ core = "7.x"
 project = "services_views"
 datestamp = "1502128614"
 
+patch[] = https://www.drupal.org/node/2289431 Issue 2289431, Patch #32

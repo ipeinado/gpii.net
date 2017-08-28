@@ -396,7 +396,10 @@ function services_views_field_formatter_view($entity_type, $entity, $field, $ins
           $key = count($filtered_item);
         }
 
-        $filtered_item[$key] = $val;
+        $filtered_item[$key] = array(
+          '#type' => 'markup',
+          '#markup' => $val,
+        );
       }
 
       $element[$delta] = $filtered_item;
