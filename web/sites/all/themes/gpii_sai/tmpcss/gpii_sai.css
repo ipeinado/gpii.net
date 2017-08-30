@@ -468,6 +468,11 @@ a.tree-label {
   z-index: 100;
   margin-top: -3rem; }
 
+#saa-app a {
+  color: #000; }
+  #saa-app a:not(.btn):visited {
+    color: #000; }
+
 /**
  * P4A Rating Tool and Feed3 Styles
  */

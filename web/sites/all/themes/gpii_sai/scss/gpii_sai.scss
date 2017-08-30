@@ -657,6 +657,13 @@ a.tree-label {
     z-index: 100;
     margin-top: -3rem;
   }
+
+  a {
+    color: #000;
+    &:not(.btn):visited {
+    color: #000;
+  }
+  }
 }
 
 
