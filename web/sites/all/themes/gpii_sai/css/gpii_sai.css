@@ -512,9 +512,9 @@ a.tree-label {
   z-index: 100;
   margin-top: -3rem; }
 
-#saa-app a {
+#saa-app .tree-classic a {
   color: #000; }
-  #saa-app a:not(.btn):visited {
+  #saa-app .tree-classic a:not(.btn):visited {
     color: #000; }
 
 /**

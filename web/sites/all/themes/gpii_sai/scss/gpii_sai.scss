@@ -658,12 +658,15 @@ a.tree-label {
     margin-top: -3rem;
   }
 
-  a {
-    color: #000;
-    &:not(.btn):visited {
-    color: #000;
+  .tree-classic {
+    a {
+      color: #000;
+      &:not(.btn):visited {
+        color: #000;
+      }
+    }
   }
-  }
+
 }
 
 
