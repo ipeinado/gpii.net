@@ -877,6 +877,12 @@ a.tree-label {
 
 // End Open Marketplace
 
+
+/**
+ * Product Slideshow Overrides
+ */
+
+
 .field-name-field-product-image {
   .mfp-thumbnail-tiny.img-responsive {
     max-width: 3rem;
@@ -897,6 +903,15 @@ a.tree-label {
   }
   margin-bottom: 1rem;
 }
+
+.mfp-close {
+  span {
+    pointer-events: none; // fix Chrome bug with x on magnific popup
+  }
+}
+
+
+// End Product Slideshow CSS
 
 /**
  * Editorial progress view and Curator's notes

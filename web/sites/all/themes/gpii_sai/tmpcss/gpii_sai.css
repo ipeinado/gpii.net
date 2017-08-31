@@ -612,6 +612,9 @@ a.tree-label {
       margin-bottom: auto;
       padding-top: 0; } }
 
+/**
+ * Product Slideshow Overrides
+ */
 .field-name-field-product-image {
   margin-bottom: 1rem; }
   .field-name-field-product-image .mfp-thumbnail-tiny.img-responsive {
@@ -627,6 +630,9 @@ a.tree-label {
     outline: none; }
     .field-name-field-product-image a:focus .mfp-title, .field-name-field-product-image a:focus .mfp-thumbnail {
       outline: 1px dotted #2783c6; }
+
+.mfp-close span {
+  pointer-events: none; }
 
 /**
  * Editorial progress view and Curator's notes
