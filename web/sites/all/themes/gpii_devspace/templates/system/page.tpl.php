@@ -130,10 +130,8 @@
   </header>
 
   <?php if(!empty($page['featured_links'])): ?>
-    <div class="container">
       <h2 class="element-invisible">Featured Links</h2>
       <?php print render($page['featured_links']); ?>
-    </div>
   <?php endif; ?>
 
   <?php if (!empty($page['hero'])): ?>

@@ -1,0 +1,27 @@
+.group-docs {
+	h2 > span {
+		font-size: inherit;
+	}
+}
+
+.group-code-info {
+	margin-bottom: 2rem;
+	border-bottom: 1px solid #e5e5e5;
+
+	p {
+		margin-bottom: 1rem;
+	}
+
+	.code-link {
+		display: block;
+		margin-bottom: 1rem;
+
+		.fa {
+			font-size: (18px/15px)*1rem;
+			margin-right: (10px/15px)*1rem;
+		}
+		a {
+			font-weight: 600;
+		}
+	}
+}

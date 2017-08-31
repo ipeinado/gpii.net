@@ -4,7 +4,7 @@
 *
 ***************************************/
 
-.bean-featured-link {
+.front > .bean-featured-link {
 	cursor: pointer;
 	border-bottom: 3px solid #FFF;
 	color: #333;
@@ -31,7 +31,7 @@
 	}
 }
 
-.bean-featured-link.selected {
+.front > .bean-featured-link.selected {
 	border-bottom: 3px solid $color-gpii-devspace-primary;
 	color: #000;
 	img {
@@ -42,6 +42,53 @@
 		color: #000;
 	}
 }
+
+.not-front .region-featured-links {
+	background-color: #F5F5F5;
+	padding-top: (7px/15px)*1rem;
+}
+
+.not-front .bean-featured-link {
+
+	@media (max-width: $screen-sm-max) {
+		display: none;
+	}
+
+	@media (min-width: $screen-lg-min) {
+		cursor: pointer;
+
+		img {
+			margin-bottom: (7px/15px)*1rem;
+		}
+
+		.internal-link {
+			display: block;
+			padding: 0 (8px/15px)*1rem;
+			margin-bottom: (1px/15px)*1rem;
+			font-size: 1rem;
+			font-weight: 600;
+		}
+
+		p {
+			font-size: (13px/15px)*1rem;
+			padding: 0 (8px/15px)*1rem;
+		}
+	}
+
+}
+
+.not-front .bean-featured-link:hover {
+	background-color: #FFF;
+}
+
+.not-front .bean-featured-link.selected {
+	background-color: #FFF;
+
+	.internal-link {
+		color: #000;
+	}
+}
+
 
 /***************************************
 *

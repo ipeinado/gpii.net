@@ -15,5 +15,4 @@ function gpii_devspace_form_alter(&$form, &$form_state, $form_id) {
 			$form['submit_1']['#value'] = '<i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Search</span>';
 			break;	
 	}
-	
 }

@@ -40,6 +40,7 @@
 
 		#widget_stars_rate_part.widget_stars,
 		.flag-outer.flag-outer-bookmarks,
+		.flag-outer.flag-outer-upvote-challenge,
 		.social-button {
 			display: inline-block;
 			margin-right: (24px/15px)*1rem;
@@ -77,8 +78,16 @@
 }
 
 
+// COMMENTS
+.comment-wrapper {
+	margin-top: 2rem;
+}
+
+
 // TEASER
 .node-teaser {
+	display: block;
+	clear: both;
 	padding-top: 1em;
 	padding-bottom: 1em;
 	border-top: 1px solid rgb(226, 226, 226);

@@ -45,8 +45,7 @@
   .navbar.navbar-default .primary.menu.nav li > a:hover,
   .navbar.navbar-default .primary.menu.nav li > a:focus {
     border-top-color: #18606b;
-    color: #18606b;
-    background-color: #FFF; }
+    color: #18606b; }
   .navbar.navbar-default .primary.menu.nav li > a:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
@@ -275,35 +274,72 @@
         padding: 0.71428571rem;
         border-radius: 3px; }
 
+.hero-logo {
+  width: 100px;
+  position: absolute;
+  top: 0;
+  right: 0; }
+
 /***************************************
 *
 * FEATURED LINKS
 *
 ***************************************/
-.bean-featured-link {
+.front > .bean-featured-link {
   cursor: pointer;
   border-bottom: 3px solid #FFF;
   color: #333; }
-  .bean-featured-link img {
+  .front > .bean-featured-link img {
     opacity: 0.9;
     margin-bottom: 0.53333333rem; }
-  .bean-featured-link .internal-link {
+  .front > .bean-featured-link .internal-link {
     display: block;
     margin-bottom: 0.2rem;
     font-size: 1.2rem;
     font-weight: 600; }
-  .bean-featured-link:hover {
+  .front > .bean-featured-link:hover {
     color: #000;
     border-bottom: 3px solid #E5E5E5; }
-    .bean-featured-link:hover img {
+    .front > .bean-featured-link:hover img {
       opacity: 1; }
 
-.bean-featured-link.selected {
+.front > .bean-featured-link.selected {
   border-bottom: 3px solid #18606b;
   color: #000; }
-  .bean-featured-link.selected img {
+  .front > .bean-featured-link.selected img {
     opacity: 1; }
-  .bean-featured-link.selected .internal-link {
+  .front > .bean-featured-link.selected .internal-link {
+    color: #000; }
+
+.not-front .region-featured-links {
+  background-color: #F5F5F5;
+  padding-top: 0.46666667rem; }
+
+@media (max-width: 991px) {
+  .not-front .bean-featured-link {
+    display: none; } }
+
+@media (min-width: 1200px) {
+  .not-front .bean-featured-link {
+    cursor: pointer; }
+    .not-front .bean-featured-link img {
+      margin-bottom: 0.46666667rem; }
+    .not-front .bean-featured-link .internal-link {
+      display: block;
+      padding: 0 0.53333333rem;
+      margin-bottom: 0.06666667rem;
+      font-size: 1rem;
+      font-weight: 600; }
+    .not-front .bean-featured-link p {
+      font-size: 0.86666667rem;
+      padding: 0 0.53333333rem; } }
+
+.not-front .bean-featured-link:hover {
+  background-color: #FFF; }
+
+.not-front .bean-featured-link.selected {
+  background-color: #FFF; }
+  .not-front .bean-featured-link.selected .internal-link {
     color: #000; }
 
 /***************************************
@@ -372,88 +408,16 @@
     margin: 0;
     line-height: 44px; }
 
-.subcategories-block {
+.category-items {
+  clear: both;
   overflow: hidden;
-  clear: both;
   margin-bottom: 2rem; }
-  .subcategories-block h2 {
-    margin-bottom: 1em;
-    text-align: center; }
-  .subcategories-block .item-subcategory {
+  .category-items h2 {
     display: inline-block;
-    padding: 0.5rem 1em;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    height: 110px;
-    border: 1px solid #FFF;
-    border-radius: 5px;
-    -webkit-transition: border-color .3s ease;
-    -o-transition: border-color .3s ease;
-    transition: border-color .3s ease; }
-    .subcategories-block .item-subcategory h3 {
-      display: inline;
-      margin-top: 0;
-      margin-bottom: 0;
-      line-height: 2rem; }
-    .subcategories-block .item-subcategory h3 > a {
-      color: #18606b;
-      font-size: 1.28571429rem;
-      -webkit-transition: color .3s ease;
-      -o-transition: color .3s ease;
-      transition: color .3s ease; }
-  .subcategories-block .subcategory-icon {
-    background-color: #18606b;
-    float: left;
-    width: 42px;
-    height: 42px;
-    text-align: center;
-    border-radius: 100%;
-    margin-right: 0.71428571rem;
-    -webkit-transition: background-color .3s ease;
-    -o-transition: background-color .3s ease;
-    transition: background-color .3s ease; }
-  .subcategories-block i.fa {
-    font-size: 1.71428571rem;
-    color: white;
-    padding-top: 8px; }
-  .subcategories-block .field-content p {
-    font-size: 0.85714286rem;
-    margin-top: 0.35714286rem;
-    margin-bottom: 0;
-    margin-left: 52px;
-    white-space: pre-line;
-    display: block; }
-  .subcategories-block .item-subcategory:hover {
-    border-color: #F1EEEA; }
-    .subcategories-block .item-subcategory:hover h2 > a {
-      color: #009688; }
-    .subcategories-block .item-subcategory:hover .subcategory-icon {
-      background-color: #009688; }
-
-#block-views-topics-block {
-  clear: both;
-  margin-bottom: 2rem; }
-  #block-views-topics-block .topics-list-container {
-    margin: 0 auto; }
-    @media (max-width: 767px) {
-      #block-views-topics-block .topics-list-container {
-        width: 100%; } }
-    @media (min-width: 768px) {
-      #block-views-topics-block .topics-list-container {
-        width: 66%; } }
-  #block-views-topics-block h2 {
-    text-align: center;
-    margin-bottom: 1em; }
-  #block-views-topics-block ul.topic-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: yellow; }
-    #block-views-topics-block ul.topic-list li {
-      margin-bottom: 1.2rem; }
-      #block-views-topics-block ul.topic-list li a, #block-views-topics-block ul.topic-list li i {
-        font-size: 1rem; }
+    margin-top: 0; }
+  .category-items .browse-link {
+    float: right;
+    font-weight: 600; }
 
 .group-action-links {
   display: block;
@@ -486,6 +450,7 @@
     float: left; }
   .view-mode-full .group-action-links #widget_stars_rate_part.widget_stars,
   .view-mode-full .group-action-links .flag-outer.flag-outer-bookmarks,
+  .view-mode-full .group-action-links .flag-outer.flag-outer-upvote-challenge,
   .view-mode-full .group-action-links .social-button {
     display: inline-block;
     margin-right: 1.6rem; }
@@ -508,7 +473,18 @@
   .view-mode-full aside ul li {
     margin-bottom: 0.46666667rem; }
 
+.view-mode-full .view-header {
+  float: left; }
+
+.view-mode-full .view-filters {
+  float: right; }
+
+.comment-wrapper {
+  margin-top: 2rem; }
+
 .node-teaser {
+  display: block;
+  clear: both;
   padding-top: 1em;
   padding-bottom: 1em;
   border-top: 1px solid #e2e2e2; }
@@ -536,7 +512,7 @@
   .node-card .card-header {
     overflow: hidden; }
     .node-card .card-header .img-holder {
-      margin: 0 auto;
+      margin: 0 auto 0;
       width: 120px;
       height: 120px;
       vertical-align: middle;
@@ -674,16 +650,16 @@
   margin-bottom: 1em; }
 
 .flag-upvote-challenge {
-  background-color: red;
   border-radius: 3px;
   -webkit-box-shadow: 0 1px 1px 0 rgba(200, 200, 200, 0.2);
           box-shadow: 0 1px 1px 0 rgba(200, 200, 200, 0.2);
-  font-size: 1rem;
   font-weight: 500;
   padding: 3px 3px 4px 7px;
   text-align: center;
   background: #f1f8fb;
   border: 1px solid #bbcadc; }
+  .flag-upvote-challenge a.flag {
+    font-size: 1rem !important; }
   .flag-upvote-challenge .glyphicon {
     font-size: .9em;
     margin-right: .3em; }
@@ -725,6 +701,23 @@
 .challenge-icon.Grand-Challenges {
   background-color: DarkSlateGray; }
 
+.group-docs h2 > span {
+  font-size: inherit; }
+
+.group-code-info {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e5e5e5; }
+  .group-code-info p {
+    margin-bottom: 1rem; }
+  .group-code-info .code-link {
+    display: block;
+    margin-bottom: 1rem; }
+    .group-code-info .code-link .fa {
+      font-size: 1.2rem;
+      margin-right: 0.66666667rem; }
+    .group-code-info .code-link a {
+      font-weight: 600; }
+
 html, body {
   font-size: 15px;
   font-family: 'Open Sans', Helvetica, sans-serif; }
@@ -762,6 +755,9 @@ article h3, aside h3, .region-sidebar-first h3, .region-sidebar-second h3 {
 
 article .block, article .tag-block, aside .block, aside .tag-block, .region-sidebar-first .block, .region-sidebar-first .tag-block, .region-sidebar-second .block, .region-sidebar-second .tag-block {
   margin-bottom: 2rem; }
+
+#views-exposed-form-taxonomy-term-pages-block .views-exposed-form .views-exposed-widget .form-submit {
+  margin-top: 0; }
 
 .region {
   display: block;
@@ -807,9 +803,6 @@ a {
     color: #124a52; }
   a:visited {
     color: #1e7684; }
-
-.view .view-header {
-  padding: .5em 0; }
 
 @media (min-width: 768px) {
   #footer-wrap {

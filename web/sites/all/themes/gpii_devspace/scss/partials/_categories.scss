@@ -1,114 +1,15 @@
-// CATEGORIES & SUBCATEGORIES
-
-.subcategories-block {
+.category-items {
+	clear: both;
 	overflow: hidden;
-
-	clear: both;
 	margin-bottom: 2rem;
 
 	h2 {
-		margin-bottom: 1em;
-		text-align: center;
-	}
-
-	.item-subcategory {
 		display: inline-block;
-		padding: (7px/14px)*1rem 1em;
-		box-sizing: border-box;
-		height: 110px;
-		border: 1px solid #FFF;
-		border-radius: 5px;
-		transition: border-color .3s ease;
-
-		h3 {
-			display: inline;
-			margin-top: 0;
-			margin-bottom: 0;
-			line-height: (28px/14px)*1rem;
-		}
-
-		h3 > a {
-			color: #18606b;
-			font-size: (18px/14px)*1rem;
-			transition: color .3s ease;
-		}
+		margin-top: 0;
 	}
 
-	.subcategory-icon {
-		background-color: #18606b;
-		float: left;
-		width: 42px;
-		height: 42px;
-		text-align: center;
-		border-radius: 100%;
-		margin-right: (10px/14px)*1rem;
-		transition: background-color .3s ease;
-	}
-
-	i.fa {
-		font-size: (24px/14px)*1rem;
-		color: white;
-		padding-top: 8px;
-	}
-
-	.field-content {
-
-		p {
-			font-size: (12px/14px)*1rem;
-			margin-top: (5px/14px)*1rem;
-			margin-bottom: 0;
-			margin-left	: 52px;
-			white-space: pre-line;
-			display: block;
-		}
-	}
-
-	.item-subcategory:hover {
-		border-color: #F1EEEA;
-
-		h2 > a {
-			color: #009688;
-		}
-		.subcategory-icon {
-			background-color: #009688;
-		}
-	}
-}
-
-// TOPICS
-#block-views-topics-block {
-	clear: both;
-	margin-bottom: 2rem;
-
-	.topics-list-container {
-		margin: 0 auto;
-
-		@media (max-width: $screen-xs-max) {
-			width: 100%;
-		}
-
-		@media (min-width: $screen-sm-min) {
-			width: 66%;
-		}
-	}
-	
-	h2 {
-		text-align: center;
-		margin-bottom: 1em;
-	}
-
-	ul.topic-list {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		background-color: yellow;
-
-		li {
-			margin-bottom: 1.2rem;
-
-			a, i {
-				font-size: 1rem;
-			}
-		}
+	.browse-link {
+		float: right;
+		font-weight: 600;
 	}
 }

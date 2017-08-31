@@ -6,6 +6,7 @@
 @import "partials/categories.scss";
 @import "partials/nodes/node.scss";
 @import "partials/nodes/challenges.scss";
+@import "partials/nodes/develop.scss";
 
 // #############################################################################
 // Color Changes
@@ -64,6 +65,13 @@ article, aside, .region-sidebar-first, .region-sidebar-second {
     margin-bottom: 2rem;
   }
 }
+
+#views-exposed-form-taxonomy-term-pages-block {
+    .views-exposed-form .views-exposed-widget .form-submit {
+      margin-top: 0;
+    }
+}
+
 
 .region {
   display: block;
@@ -127,10 +135,6 @@ a {
   &:visited {
     color: lighten($color-gpii-devspace-primary, 6%);
   }
-}
-
-.view .view-header {
-  padding: .5em 0;
 }
 
 @media (min-width: 768px) {
