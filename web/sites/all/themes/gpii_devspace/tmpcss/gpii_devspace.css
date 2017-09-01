@@ -244,6 +244,8 @@
     float: right;
     margin-left: 1rem;
     margin-bottom: 1rem; }
+  .upcoming-events-block .view {
+    margin-bottom: 1rem; }
   .upcoming-events-block .view-footer {
     margin-top: 0.71428571rem;
     text-align: left; }
@@ -275,37 +277,31 @@
   position: absolute;
   top: 0;
   right: 0; }
+  .hero-logo img {
+    max-width: 100%; }
 
 /***************************************
 *
 * FEATURED LINKS
 *
 ***************************************/
-.front > .bean-featured-link {
+.front .bean-featured-link {
   cursor: pointer;
   border-bottom: 3px solid #FFF;
   color: #333; }
-  .front > .bean-featured-link img {
+  .front .bean-featured-link img {
     opacity: 0.9;
     margin-bottom: 0.53333333rem; }
-  .front > .bean-featured-link .internal-link {
+  .front .bean-featured-link .internal-link {
     display: block;
     margin-bottom: 0.2rem;
     font-size: 1.2rem;
     font-weight: 600; }
-  .front > .bean-featured-link:hover {
+  .front .bean-featured-link:hover {
     color: #000;
     border-bottom: 3px solid #E5E5E5; }
-    .front > .bean-featured-link:hover img {
+    .front .bean-featured-link:hover img {
       opacity: 1; }
-
-.front > .bean-featured-link.selected {
-  border-bottom: 3px solid #18606b;
-  color: #000; }
-  .front > .bean-featured-link.selected img {
-    opacity: 1; }
-  .front > .bean-featured-link.selected .internal-link {
-    color: #000; }
 
 .not-front .region-featured-links {
   background-color: #F5F5F5;
@@ -323,11 +319,11 @@
     .not-front .bean-featured-link .internal-link {
       display: block;
       padding: 0 0.53333333rem;
-      margin-bottom: 0.06666667rem;
+      margin-bottom: 0.13333333rem;
       font-size: 1rem;
       font-weight: 600; }
     .not-front .bean-featured-link p {
-      font-size: 0.86666667rem;
+      font-size: 0.93333333rem;
       padding: 0 0.53333333rem; } }
 
 .not-front .bean-featured-link:hover {
@@ -447,6 +443,11 @@
   .view-mode-full .group-action-links .social-button {
     display: inline-block;
     margin-right: 1.6rem; }
+    .view-mode-full .group-action-links #widget_stars_rate_part.widget_stars .ext,
+    .view-mode-full .group-action-links .flag-outer.flag-outer-bookmarks .ext,
+    .view-mode-full .group-action-links .flag-outer.flag-outer-upvote-challenge .ext,
+    .view-mode-full .group-action-links .social-button .ext {
+      display: none; }
   .view-mode-full .group-action-links a.flag,
   .view-mode-full .group-action-links a.rate,
   .view-mode-full .group-action-links a.twitter-share,
@@ -574,6 +575,36 @@
 .node-type-list dd {
   padding-bottom: .5em;
   text-indent: 1em; }
+
+.view-bibliography .view-header,
+.view-parts-and-tools .view-header,
+.view-questions .view-header {
+  display: block;
+  padding: 0.66666667rem 0;
+  float: left; }
+
+.view-bibliography .view-filters,
+.view-parts-and-tools .view-filters,
+.view-questions .view-filters {
+  float: right; }
+
+.view-bibliography .views-exposed-form .views-exposed-widget,
+.view-parts-and-tools .views-exposed-form .views-exposed-widget,
+.view-questions .views-exposed-form .views-exposed-widget {
+  float: right;
+  padding: 0; }
+
+.view-bibliography .views-exposed-form .control-label,
+.view-parts-and-tools .views-exposed-form .control-label,
+.view-questions .views-exposed-form .control-label {
+  display: inline-block;
+  margin-right: 0.46666667rem; }
+
+.view-bibliography .views-exposed-form .form-control,
+.view-parts-and-tools .views-exposed-form .form-control,
+.view-questions .views-exposed-form .form-control {
+  display: inline-block;
+  width: auto; }
 
 .view .date-nav-wrapper .date-prev {
   left: 0;
