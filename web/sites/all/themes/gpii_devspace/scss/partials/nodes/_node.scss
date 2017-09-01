@@ -44,6 +44,10 @@
 		.social-button {
 			display: inline-block;
 			margin-right: (24px/15px)*1rem;
+
+			.ext {
+				display: none;
+			}
 		}
 
 		a.flag,
@@ -240,6 +244,38 @@
 	dd {
 		padding-bottom: .5em;
 		text-indent: 1em;
+	}
+}
+
+.view-bibliography,
+.view-parts-and-tools,
+.view-questions {
+
+	.view-header {
+		display: block;
+		padding: (10px/15px)*1rem 0;
+		float: left;
+	}
+
+	.view-filters {
+		float: right;
+	}
+
+	.views-exposed-form {
+		.views-exposed-widget {
+			float: right;
+			padding: 0;
+		}
+
+		.control-label {
+			display: inline-block;
+			margin-right: (7px/15px)*1rem;
+		}
+
+		.form-control {
+			display: inline-block;
+			width: auto;
+		}
 	}
 }
 

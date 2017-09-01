@@ -186,6 +186,10 @@
 		margin-bottom: 1rem;
 	}
 
+	.view {
+		margin-bottom: 1rem;
+	}
+
 	.view-footer {
 		margin-top: (10px/14px)*1rem;
 		text-align: left;
@@ -226,6 +230,10 @@
 	position: absolute;
 	top: 0;
 	right: 0;
+
+	img {
+		max-width: 100%;
+	}
 }
 
 
