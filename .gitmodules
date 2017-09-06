@@ -10,9 +10,6 @@
 [submodule "web/sites/all/modules/saa_advanced_search"]
 	path = web/sites/all/modules/saa_advanced_search
 	url = git@git.qualtim.com:GPII/saa-advanced-search.git
-[submodule "web/sites/all/modules/rating-tool"]
-	path = web/sites/all/modules/rating-tool
-	url = https://github.com/thegurf/rating-tool
 [submodule "web/sites/all/modules/google_material_icons"]
 	path = web/sites/all/modules/google_material_icons
 	url = https://git.drupal.org/sandbox/hctom/2513252.git
