@@ -25,3 +25,6 @@
 [submodule "web/sites/all/libraries/hash-compat"]
 	path = web/sites/all/libraries/hash-compat
 	url = https://github.com/indigophp/hash-compat.git
+[submodule "web/sites/all/modules/rating-tool"]
+	path = web/sites/all/modules/rating-tool
+	url = https://github.com/thegurf/rating-tool.git

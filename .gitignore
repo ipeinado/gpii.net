@@ -5,6 +5,7 @@ web/sites/*/settings*.php
 web/stats
 php_errors.log
 
+
 # Ignore paths that contain user-generated content.
 web/sites/vendor/*
 web/sites/*/files
@@ -20,5 +21,6 @@ web/sites/default
 # Ignore cache and development files created when generating Sass files.
 .sass-cache
 *.css.map
+prepros-*.config
 
 
