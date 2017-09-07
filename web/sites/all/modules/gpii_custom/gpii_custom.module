@@ -82,6 +82,5 @@ function gpii_custom_init() {
   $isTranslator = in_array('Translator', $user->roles);
   $path = drupal_get_path('module', 'gpii_custom');
   drupal_add_js(array('isTranslator' => $isTranslator), 'setting');
-  drupal_add_js($path . '/js/cookie.min.js');
-  drupal_add_js($path . '/js/switcher.min.js');
+  drupal_add_js($path . '/js/bundle.js');
 }
