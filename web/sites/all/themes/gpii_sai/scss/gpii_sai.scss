@@ -1,11 +1,85 @@
 @import "../../gpii_base/scss/variables";
 
 // #############################################################################
+// Blocks
+// #############################################################################
+#block-bean-search-method-button-standard {
+    .container {
+        border: 1px solid #cccccc;
+        box-shadow: 3px 3px 10px #cccccc;
+    }
+    h3 {
+        font-family: 'Roboto Slab', 'Open Sans', sans-serif;
+        font-weight: 600;
+    }
+    .search-method {
+        text-align: center;
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    img {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .search-method-input {
+        margin-top: 10px;
+        border-left: solid 2px #cccccc;
+        padding: 25px 10px 18px 20px;
+        @media (min-width: $screen-sm-min) {
+            border-left: none;
+            text-align: center;
+            padding: 0px 10px 18px 20px;
+        }
+        .form-control {
+            width: 85%;
+            height: 4rem;
+            display: inline-block!important;
+        }
+        .btn {
+            height: 4rem;
+            vertical-align: top;
+            line-height: normal;
+            background-color: $color-gpii-sai-primary;
+            color: #fff;
+        }
+    }
+}
+#block-bean-why-love-saa, #block-bean-saa-testimonials {
+    text-align: center;
+    margin-top: 50px;
+}
+#block-bean-saa-social-media {
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+    margin-top: 40px;
+    padding: 10px 30px;
+    .img-responsive {
+        display: inline;
+        margin-right: 15px;
+    }
+}
+// #############################################################################
 // Color Changes
 // #############################################################################
 
 .region-hero {
   background-color: $color-gpii-sai-primary;
+  background-image: url('http://dev.saa.gpii.net/sites/saa.gpii.net/files/uploads/images/ulheroimage1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 40%;
+  text-align: center;
+  padding: 50px 0px;
+}
+.jumbotron {
+    background-color: #fff;
+    p {
+        font-size: 1rem;
+    }
+    padding: 0px!important;
 }
 
 .navbar-nav.primary.menu.nav {
@@ -41,6 +115,18 @@
   }
 }
 
+#footer {
+    padding: 0px;
+    ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+    li {
+    display: inline;
+        margin-right: 30px;
+  }
+}
 #footer-wrap {
   border-color: $color-gpii-sai-primary;
 }
@@ -51,7 +137,9 @@
       color: $color-gpii-sai-primary;
       text-align: left;
       padding-top: 0.35rem;
-      margin-top: 1rem;
+      margin-top: .75rem;
+        font-size: 1.8666rem;
+        font-weight: 600;
       a, a:active, a:hover, a:focus {
         color: $color-gpii-sai-primary;
         font-size: inherit;
@@ -250,7 +338,6 @@ body.page-search {
 
 body.front {
   .highlighted.jumbotron {
-    background-color: $gray-lighter;
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 2em;
@@ -260,71 +347,43 @@ body.front {
       margin-right: 0;
     }
     #block-bean-shopping-options {
-      h2 {
+      h3 {
         text-align: center;
-        margin-top: 0;
       }
 
       margin-bottom: 1em;
     }
 
     .searchtype {
-        border: 2px solid #ddd;
-        border: 2px solid rgba(86,61,124,.2);
-        padding: 1.5em 1.5em;
+        border-bottom: 4px solid #cccccc;
         margin-bottom: 1.5em;
-        border-radius: 20px;
+        padding-top: 1.5em;
         &:hover, &:focus, &:active {
           background-color: lighten($gray-lighter, 2%);
      }
       p {
         text-align: center;
       }
-      h2 {
+      h3 {
         text-align: center;
+          font-family: 'Roboto Slab';
+          font-weight: 600;
       }
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
     }
   /**
    * Equal Height for search blocks in the home jumbotron
    */
-    @media (min-width: $screen-md) {
-      .row-flex, .row-flex > div[class*='col-'] {
-          display: -webkit-box;
-          display: -moz-box;
-          display: -ms-flexbox;
-          display: -webkit-flex;
-          display: flex;
-          flex:1 1 auto;
-      }
 
-      .row-flex-wrap {
-        -webkit-flex-flow: row wrap;
-          align-content: flex-start;
-          flex:0;
-      }
 
-      .row-flex > div[class*='col-'], .container-flex > div[class*='col-'] {
-         margin:-.2px; /* hack adjust for wrapping */
-      }
 
-      .container-flex > div[class*='col-'] div,.row-flex > div[class*='col-'] div:not(.contextual-links-wrapper) {
-        width:100%;
-      }
 
-      .flex-col {
-          display: flex;
-          display: -webkit-flex;
-          flex: 1 100%;
-        flex-flow: column nowrap;
-      }
 
-      .flex-grow {
-        display: flex;
-          -webkit-flex: 2;
-          flex: 2;
-      }
-    }
-  }
   /*
  * Row with equal height columns
  * --------------------------------------------------
@@ -362,7 +421,6 @@ body.front {
     font-size: 1em;
     font-family: 'Montserrat-Bold', sans-serif;
     line-height: 1em;
-    text-transform: uppercase;
     transition: .25s;
     text-decoration: none;
 }
@@ -725,13 +783,9 @@ a.tree-label {
 
 #bootstrap-fieldgroup-accordion--product-info {
   .panel {
-    box-shadow: none;
+    box-shadow: 3px 3px 10px #cccccc;
   }
   .panel-heading {
-    border-top-right-radius: 2px;
-    border-top-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px;
     h2 {
       a::before {
         content: '\f078';
@@ -861,11 +915,9 @@ a.tree-label {
   .region-hero {
     background-color: transparent !important;
     overflow: visible;
-    position: fixed;
     top: 10rem;
     left: 0;
     float: none;
-    width: 16rem;
     #OMicon {
       width: 12rem;
       margin-bottom: auto;

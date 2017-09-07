@@ -136,40 +136,30 @@
         <?php if ($is_front == TRUE): ?>
           <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?>
             <div class="row row-flex row-flex-wrap">
-              <div class="col-sm-12 col-md-6">
+              <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'browse-virtual-stores');
+                    $blockObject = block_load('bean', 'search-method-button-virtual-sto');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
                   ?>
                  </div>
               </div>
-            <div class="col-sm-12 col-md-6">
+            <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'question-and-answer-search');
+                    $blockObject = block_load('bean', 'search-method-button-qanda');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
                   ?>
                 </div>
               </div>
-              <div class="col-sm-12 col-md-6">
+              <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'simple-search');
-                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-                    $output = drupal_render($block);
-                    print $output;
-                  ?>
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-6">
-                <div class="panel searchtype">
-                  <?php
-                    $blockObject = block_load('bean', 'advanced-search');
+                    $blockObject = block_load('bean', 'search-method-button-advanced');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
@@ -247,11 +237,11 @@
       <?php if ($region_info['footer']['has_columns']): ?>
         <?php
           $widths = array(
-            'first' => '4',
-            'second' => '5',
-            'third' => '5',
-            'fourth' => '5',
-            'fifth' => '5',
+            'first' => '24',
+//            'second' => '5',
+//            'third' => '5',
+//            'fourth' => '5',
+//            'fifth' => '5',
             );
           print gpii_base_variable_width_column_regions($page, $region_info, 'footer', $widths);
         ?>

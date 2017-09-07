@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
 /**
 * Use em or rem font-size in Bootstrap 3
 * Based on Less version here: https://gist.github.com/jasny/9731895
@@ -6386,7 +6387,7 @@ html.force-mobile-layout .container, html.force-mobile-layout .container-fluid {
 
 html,
 body {
-  font-size: 14px; }
+  font-size: 15px; }
   html div,
   html p,
   html label,
@@ -6399,7 +6400,8 @@ body {
   body li,
   body select,
   body span {
-    font-size: 1rem; }
+    font-size: 1rem;
+    line-height: 1.5rem; }
 
 body {
   top: 0 !important;
@@ -6415,6 +6417,25 @@ body {
 
 pre {
   font-size: 0.9rem; }
+
+h1 {
+  font-family: 'Roboto Slab', 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 2.75rem;
+  line-height: 2.75rem; }
+
+h2 {
+  font-weight: 600;
+  font-size: 2.15rem;
+  line-height: 2.15rem; }
+
+h3 {
+  font-size: 1.75rem;
+  line-height: 1.75rem; }
+
+h4 {
+  font-size: 1.125rem;
+  line-height: 1.222rem; }
 
 body.navbar-administration.navbar-is-fixed-top {
   border-top: 6rem solid transparent; }
