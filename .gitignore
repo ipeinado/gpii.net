@@ -22,5 +22,4 @@ web/sites/default
 .sass-cache
 *.css.map
 prepros-*.config
-
-
+/web/sites/all/themes/gpii_sai/prepros-6.config
