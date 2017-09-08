@@ -2,7 +2,7 @@
 #block-bean-search-method-button-standard .container {
   border: 1px solid #cccccc;
   -webkit-box-shadow: 3px 3px 10px #cccccc;
-  box-shadow: 3px 3px 10px #cccccc; }
+          box-shadow: 3px 3px 10px #cccccc; }
 
 #block-bean-search-method-button-standard h3 {
   font-family: 'Roboto Slab', 'Open Sans', sans-serif;
@@ -20,13 +20,13 @@
   padding-bottom: 10px; }
 
 #block-bean-search-method-button-standard .search-method-input {
-  margin-top: 10px;
-  border-left: solid 2px #cccccc;
-  padding: 25px 10px 18px 20px; }
-  @media (min-width: 768px) {
+  text-align: center;
+  padding: 0px 10px 18px 20px; }
+  @media (min-width: 992px) {
     #block-bean-search-method-button-standard .search-method-input {
-      text-align: center;
-      padding: 0px 10px 18px 20px; } }
+      margin-top: 10px;
+      border-left: solid 2px #cccccc;
+      padding: 25px 10px 18px 20px; } }
   #block-bean-search-method-button-standard .search-method-input .form-control {
     width: 85%;
     height: 4rem;
@@ -55,11 +55,32 @@
   margin-top: 40px;
   padding-right: 50px; }
 
+.searchtype {
+  border-bottom: 4px solid #cccccc;
+  margin-bottom: 1.5em;
+  padding-top: 1.5em; }
+  .searchtype:hover, .searchtype:focus, .searchtype:active {
+    background-color: #f4f4f4; }
+  .searchtype p {
+    text-align: center; }
+  .searchtype h3 {
+    text-align: center;
+    font-family: 'Roboto Slab';
+    font-weight: 600; }
+  .searchtype img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+
+.shop-options {
+  text-align: center; }
+
 .region-hero {
   background-color: #A72534;
   background-image: url("http://dev.saa.gpii.net/sites/saa.gpii.net/files/uploads/images/ulheroimage1.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  -webkit-background-size: cover;
+          background-size: cover;
   background-position: 50% 40%;
   text-align: center;
   padding: 50px 0px; }
@@ -170,6 +191,7 @@ body.page-search .view-search {
   line-height: 1.3em; }
 
 #block-views-exp-search-page #edit-search-api-views-fulltext-wrapper {
+  width: -webkit-calc(82% - 10rem);
   width: calc(82% - 10rem);
   padding: .5em 0 0; }
 
@@ -283,8 +305,8 @@ body.front {
   -o-transition: .25s;
   transition: .25s;
   -webkit-transition-delay: .25s;
-  -o-transition-delay: .25s;
-  transition-delay: .25s; }
+       -o-transition-delay: .25s;
+          transition-delay: .25s; }
 
 .gpii-button {
   position: relative;
@@ -316,8 +338,8 @@ body.front {
   -o-transition: .25s;
   transition: .25s;
   -webkit-transition-delay: .25s;
-  -o-transition-delay: .25s;
-  transition-delay: .25s;
+       -o-transition-delay: .25s;
+          transition-delay: .25s;
   text-decoration: none; }
 
 .gpii-button:hover::before {
@@ -340,8 +362,8 @@ body.front {
   -o-transition: .25s;
   transition: .25s;
   -webkit-transition-delay: .25s;
-  -o-transition-delay: .25s;
-  transition-delay: .25s; }
+       -o-transition-delay: .25s;
+          transition-delay: .25s; }
 
 .gpii-button:hover::after {
   right: 0;
@@ -363,8 +385,8 @@ body.front {
   -o-transition: .25s;
   transition: .25s;
   -webkit-transition-delay: .25s;
-  -o-transition-delay: .25s;
-  transition-delay: .25s; }
+       -o-transition-delay: .25s;
+          transition-delay: .25s; }
 
 #provideoyourrate .widget_label, #provideoyourrate .spanstar {
   font-size: 2.5rem; }
@@ -576,12 +598,14 @@ a.tree-label {
   -webkit-transition: all 1s ease-in-out; }
 
 .group-feed3 textarea:focus, .group-feed3 textarea:active {
+  height: -webkit-calc(100% - 2.5rem);
   height: calc(100% - 2.5rem);
   -webkit-transition: all 1s ease-in-out; }
 
 .group-feed3 .webform-client-form:focus > div, .group-feed3 .webform-client-form:active > div {
   height: 20rem; }
   .group-feed3 .webform-client-form:focus > div textarea, .group-feed3 .webform-client-form:active > div textarea {
+    height: -webkit-calc(100% - 2.5rem);
     height: calc(100% - 2.5rem);
     -webkit-transition: all 1s ease-in-out; }
 
@@ -590,7 +614,7 @@ a.tree-label {
  */
 #bootstrap-fieldgroup-accordion--product-info .panel {
   -webkit-box-shadow: 3px 3px 10px #cccccc;
-  box-shadow: 3px 3px 10px #cccccc; }
+          box-shadow: 3px 3px 10px #cccccc; }
 
 #bootstrap-fieldgroup-accordion--product-info .panel-heading h2 a::before {
   content: '\f078';
@@ -805,3 +829,5 @@ div.discontinued {
   border-left: 4px solid #A72534;
   padding-left: 0.6rem;
   margin: 1rem 0; }
+
+/*# sourceMappingURL=gpii_sai.css.map */

@@ -19,14 +19,13 @@
   padding-bottom: 10px; }
 
 #block-bean-search-method-button-standard .search-method-input {
-  margin-top: 10px;
-  border-left: solid 2px #cccccc;
-  padding: 25px 10px 18px 20px; }
-  @media (min-width: 768px) {
+  text-align: center;
+  padding: 0px 10px 18px 20px; }
+  @media (min-width: 992px) {
     #block-bean-search-method-button-standard .search-method-input {
-      border-left: none;
-      text-align: center;
-      padding: 0px 10px 18px 20px; } }
+      margin-top: 10px;
+      border-left: solid 2px #cccccc;
+      padding: 25px 10px 18px 20px; } }
   #block-bean-search-method-button-standard .search-method-input .form-control {
     width: 85%;
     height: 4rem;
@@ -50,6 +49,30 @@
   #block-bean-saa-social-media .img-responsive {
     display: inline;
     margin-right: 15px; }
+
+#block-block-6 {
+  margin-top: 40px;
+  padding-right: 50px; }
+
+.searchtype {
+  border-bottom: 4px solid #cccccc;
+  margin-bottom: 1.5em;
+  padding-top: 1.5em; }
+  .searchtype:hover, .searchtype:focus, .searchtype:active {
+    background-color: #f4f4f4; }
+  .searchtype p {
+    text-align: center; }
+  .searchtype h3 {
+    text-align: center;
+    font-family: 'Roboto Slab';
+    font-weight: 600; }
+  .searchtype img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+
+.shop-options {
+  text-align: center; }
 
 .region-hero {
   background-color: #A72534;
