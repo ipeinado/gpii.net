@@ -93,6 +93,22 @@
     text-align: center;
 }
 
+#block-bean-search-method-button-virtual-sto, #block-bean-search-method-button-qanda {
+//    .construction {
+//   border: 1px solid #DDDDDD;
+//   width: 200px;
+//   height: 200px;
+//   position: relative;
+//    }
+    .sticker {
+   float: left;
+   position: absolute;
+   left: -30px;
+   top: 30px;
+   z-index: 1000;
+    }
+}
+
 // #############################################################################
 // Color Changes
 // #############################################################################
@@ -105,7 +121,14 @@
   background-position: 50% 40%;
   text-align: center;
   padding: 50px 0px;
+    h3.highlight {
+            font-size: 1.5rem;
+        }
+    .highlight, h1 {
+        text-shadow: 1px 1px 1px #333;
+    }
 }
+
 .jumbotron {
     background-color: #fff;
     p {
