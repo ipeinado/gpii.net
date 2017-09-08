@@ -178,14 +178,14 @@
 
       <?php if (!empty($page['sidebar_first'])): ?>
         <aside id="sidebar_first" class="<?php print $sidebar_first_column_class; ?>" role="complementary">
-          <h1 class="element-invisible">Filters</h1>
+          <h2 class="element-invisible">Filters</h2>
           <?php print render($page['sidebar_first']); ?>
         </aside>  <!-- /#sidebar-first -->
       <?php endif; ?>
 
       <?php if (!empty($page['sidebar_second'])): ?>
         <aside id="sidebar_second" class="<?php print $sidebar_second_column_class; ?>" role="complementary">
-          <h1 class="element-invisible">Complementary Information</h1>
+          <h2 class="element-invisible">Complementary Information</h2>
           <?php print render($page['sidebar_second']); ?>
         </aside>  <!-- /#sidebar-second -->
       <?php endif; ?>
@@ -211,7 +211,7 @@
   <div id="footer-wrap">
     <footer id="footer" class="footer container-fluid">
       <section class="footer-section">
-        <h1 class="element-invisible">Footer Navigation</h1>
+        <h2 class="element-invisible">Footer Navigation</h2>
         <?php if ($region_info['footer']['has_columns']): ?>
           <?php
             $widths = array(
