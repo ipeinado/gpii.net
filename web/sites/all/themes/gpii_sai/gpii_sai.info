@@ -53,3 +53,4 @@ stylesheets[all][] = css/gpii_sai.css
 ;;;;;;;;;;;;;;;;;;;;;
 
 scripts[] = 'js/alter_flag_links.js'
+scripts[] = 'js/sai_custom.js'

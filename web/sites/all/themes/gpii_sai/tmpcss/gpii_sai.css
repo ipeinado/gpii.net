@@ -74,14 +74,29 @@
 .shop-options {
   text-align: center; }
 
+#block-bean-search-method-button-virtual-sto .sticker, #block-bean-search-method-button-qanda .sticker {
+  position: absolute;
+  left: 15px;
+  bottom: 0;
+  z-index: 400;
+  width: 100px;
+  height: auto; }
+  #block-bean-search-method-button-virtual-sto .sticker > img, #block-bean-search-method-button-qanda .sticker > img {
+    max-width: 100%;
+    height: auto; }
+
 .region-hero {
   background-color: #A72534;
-  background-image: url("http://dev.saa.gpii.net/sites/saa.gpii.net/files/uploads/images/ulheroimage1.png");
+  background-image: url("../images/ulheroimage.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 40%;
   text-align: center;
   padding: 50px 0px; }
+  .region-hero h3.highlight {
+    font-size: 1.5rem; }
+  .region-hero .highlight, .region-hero h1 {
+    text-shadow: 1px 1px 1px #333; }
 
 .jumbotron {
   background-color: #fff;
@@ -278,7 +293,7 @@ body.front {
       margin-bottom: 1.5em;
       padding-top: 1.5em; }
       body.front .highlighted.jumbotron .searchtype:hover, body.front .highlighted.jumbotron .searchtype:focus, body.front .highlighted.jumbotron .searchtype:active {
-        background-color: #f4f4f4; }
+        background-color: #e9e9e9; }
       body.front .highlighted.jumbotron .searchtype p {
         text-align: center; }
       body.front .highlighted.jumbotron .searchtype h3 {
@@ -289,6 +304,17 @@ body.front {
         display: block;
         margin-left: auto;
         margin-right: auto; }
+    @media (min-width: 992px) {
+      body.front .highlighted.jumbotron .row-flex {
+        display: flex; }
+        body.front .highlighted.jumbotron .row-flex > div {
+          display: flex;
+          flex-direction: column; }
+          body.front .highlighted.jumbotron .row-flex > div .panel {
+            cursor: pointer;
+            flex-grow: 1; }
+            body.front .highlighted.jumbotron .row-flex > div .panel a {
+              color: #000; } }
   body.front h1.page-header {
     display: none; }
 

@@ -118,7 +118,7 @@
     });
   });
 
-  // BBC: attempting to resurrcet code from Ignacio's toggle search
+  // BBC: attempting to resurrcect code from Ignacio's toggle search
   $(document).ready(function() {
       var title = $('.page-header').text();
       $('[data-title="' +  title + '"]').addClass('selected');
