@@ -35,3 +35,5 @@ core = "7.x"
 project = "flag"
 datestamp = "1474619065"
 
+patch[] = http://git.qualtim.com/GPII/gpii.net/commit/daf3b8e1e35a4b3deb0efbf0a341c7a3da6890f3 Commit daf3b8e1e35a4b3deb0efbf0a341c7a3da6890f3, This should be moved to gpii_base template override.
+
