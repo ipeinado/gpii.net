@@ -32,8 +32,14 @@
 }
 
 .not-front .region-featured-links {
-	background-color: #F5F5F5;
-	padding-top: (7px/15px)*1rem;
+	@media (max-width: $screen-sm-max) {
+		display: none;
+	}
+
+	@media (min-width: $screen-lg-min) {
+		background-color: #F5F5F5;
+		padding-top: (7px/15px)*1rem;	
+	}
 }
 
 .not-front .bean-featured-link {

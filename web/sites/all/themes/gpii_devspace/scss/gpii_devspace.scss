@@ -66,6 +66,15 @@ article, aside, .region-sidebar-first, .region-sidebar-second {
   }
 }
 
+@media (min-width: 992px) {
+  .page-taxonomy-term section.col-sm-24,
+  .page-challenges section.col-sm-24,
+  .not-front.node-type-page section.col-sm-24 {
+    width: 70%;
+    margin: 0 15%; 
+  } 
+}
+
 #views-exposed-form-taxonomy-term-pages-block {
     .views-exposed-form .views-exposed-widget .form-submit {
       margin-top: 0;
@@ -85,7 +94,7 @@ article, aside, .region-sidebar-first, .region-sidebar-second {
 }
 
 #main-container {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 
