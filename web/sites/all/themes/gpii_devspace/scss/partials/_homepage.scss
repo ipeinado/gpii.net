@@ -6,7 +6,7 @@
 	}
 
 	.region-hero {
-		padding: (35px/15px) 0 0;
+		padding: (35px/15px)*1rem 0;
 		text-align: center;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		overflow: hidden;
@@ -54,13 +54,15 @@
 		}
 	}
 
+	#main-container {
+		margin-top: 1rem;
+	}
+
 	.region-featured-links {
   		overflow: hidden;
   		margin-bottom: 2rem;
 	}
-}
 
-.front {
 	.view {
 		clear: both;
 		overflow: hidden;

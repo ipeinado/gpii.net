@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
 /************************************
 ** NAVBAR
 ************************************/
@@ -122,7 +123,7 @@
   margin-bottom: 1.86666667rem; }
 
 .front .region-hero {
-  padding: 2.33333333 0 0;
+  padding: 2.33333333rem 0;
   text-align: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -156,6 +157,9 @@
         line-height: 2.6rem; }
       .front .region-hero p {
         width: 80%; } }
+
+.front #main-container {
+  margin-top: 1rem; }
 
 .front .region-featured-links {
   overflow: hidden;
@@ -307,9 +311,14 @@
     .front .bean-featured-link:hover img {
       opacity: 1; }
 
-.not-front .region-featured-links {
-  background-color: #F5F5F5;
-  padding-top: 0.46666667rem; }
+@media (max-width: 991px) {
+  .not-front .region-featured-links {
+    display: none; } }
+
+@media (min-width: 1200px) {
+  .not-front .region-featured-links {
+    background-color: #F5F5F5;
+    padding-top: 0.46666667rem; } }
 
 @media (max-width: 991px) {
   .not-front .bean-featured-link {
@@ -588,23 +597,33 @@
   padding-bottom: .5em;
   text-indent: 1em; }
 
-.view-display-id-page:not(.view-challenges-page) .view-header {
+.view-bibliography .view-header,
+.view-parts-and-tools .view-header,
+.view-questions .view-header {
   display: block;
   padding: 0.66666667rem 0;
   float: left; }
 
-.view-display-id-page:not(.view-challenges-page) .view-filters {
+.view-bibliography .view-filters,
+.view-parts-and-tools .view-filters,
+.view-questions .view-filters {
   float: right; }
 
-.view-display-id-page:not(.view-challenges-page) .views-exposed-form .views-exposed-widget {
+.view-bibliography .views-exposed-form .views-exposed-widget,
+.view-parts-and-tools .views-exposed-form .views-exposed-widget,
+.view-questions .views-exposed-form .views-exposed-widget {
   float: right;
   padding: 0; }
 
-.view-display-id-page:not(.view-challenges-page) .views-exposed-form .control-label {
+.view-bibliography .views-exposed-form .control-label,
+.view-parts-and-tools .views-exposed-form .control-label,
+.view-questions .views-exposed-form .control-label {
   display: inline-block;
   margin-right: 0.46666667rem; }
 
-.view-display-id-page:not(.view-challenges-page) .views-exposed-form .form-control {
+.view-bibliography .views-exposed-form .form-control,
+.view-parts-and-tools .views-exposed-form .form-control,
+.view-questions .views-exposed-form .form-control {
   display: inline-block;
   width: auto; }
 
@@ -771,6 +790,13 @@ article h3, aside h3, .region-sidebar-first h3, .region-sidebar-second h3 {
 article .block, article .tag-block, aside .block, aside .tag-block, .region-sidebar-first .block, .region-sidebar-first .tag-block, .region-sidebar-second .block, .region-sidebar-second .tag-block {
   margin-bottom: 2rem; }
 
+@media (min-width: 992px) {
+  .page-taxonomy-term section.col-sm-24,
+  .page-challenges section.col-sm-24,
+  .not-front.node-type-page section.col-sm-24 {
+    width: 70%;
+    margin: 0 15%; } }
+
 #views-exposed-form-taxonomy-term-pages-block .views-exposed-form .views-exposed-widget .form-submit {
   margin-top: 0; }
 
@@ -784,7 +810,7 @@ article .block, article .tag-block, aside .block, aside .tag-block, .region-side
   background-color: #FFF; }
 
 #main-container {
-  margin-top: 1rem; }
+  margin-top: 2rem; }
 
 #footer-wrap {
   border-color: #18606b; }
