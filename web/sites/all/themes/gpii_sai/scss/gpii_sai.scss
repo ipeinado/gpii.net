@@ -25,14 +25,14 @@
         padding-bottom: 10px;
     }
     .search-method-input {
-        margin-top: 10px;
-        border-left: solid 2px #cccccc;
-        padding: 25px 10px 18px 20px;
-        @media (min-width: $screen-sm-min) {
-//            border-left: none;
-            text-align: center;
-            padding: 0px 10px 18px 20px;
+        text-align: center;
+        padding: 0px 10px 18px 20px;
+        @media (min-width: $screen-md-min) {
+            margin-top: 10px;
+            border-left: solid 2px #cccccc;
+            padding: 25px 10px 18px 20px;
         }
+
         .form-control {
             width: 85%;
             height: 4rem;
@@ -66,6 +66,33 @@
     margin-top: 40px;
     padding-right: 50px;
 }
+
+.searchtype {
+        border-bottom: 4px solid #cccccc;
+        margin-bottom: 1.5em;
+        padding-top: 1.5em;
+        &:hover, &:focus, &:active {
+          background-color: lighten($gray-lighter, 2%);
+     }
+      p {
+        text-align: center;
+      }
+      h3 {
+        text-align: center;
+          font-family: 'Roboto Slab';
+          font-weight: 600;
+      }
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+.shop-options {
+    text-align: center;
+}
+
 // #############################################################################
 // Color Changes
 // #############################################################################

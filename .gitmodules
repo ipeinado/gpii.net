@@ -15,8 +15,7 @@
 	url = https://git.drupal.org/sandbox/hctom/2513252.git
 [submodule "web/sites/all/modules/github"]
 	path = web/sites/all/modules/github
-	url = https://github.com/teco-kit/github.git
-	branch = 7.x-1.x-dev
+	url = https://github.com/davidgreiner/github.git
 [submodule "web/sites/all/libraries/guzzle"]
 	path = web/sites/all/libraries/guzzle
 	url = https://github.com/guzzle/guzzle.git
