@@ -59,6 +59,9 @@
   width: -webkit-calc(100% - 2rem);
   width: calc(100% - 2rem); }
 
+#block-bean-search-method-button-standard #block-views-exp-search-page {
+  width: 100%; }
+
 #block-bean-why-love-saa, #block-bean-saa-testimonials {
   text-align: center;
   margin-top: 50px; }
