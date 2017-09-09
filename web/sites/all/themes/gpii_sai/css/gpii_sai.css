@@ -494,7 +494,7 @@ body.node-type-product .term-tree-list .selected {
 .text-right .taxonomy-label::before {
   content: " ";
   border-style: solid;
-  border-width: 11px 0 11px 11px;
+  border-width: 11.5px 0 11px 11px;
   border-color: transparent transparent transparent #000;
   position: absolute;
   right: -.78rem; }
@@ -502,20 +502,20 @@ body.node-type-product .term-tree-list .selected {
 .text-left .taxonomy-label::before {
   content: " ";
   border-style: solid;
-  border-width: 11px 11px 11px 0;
+  border-width: 11px 11px 11.5px 0;
   border-color: transparent #A72534 transparent transparent;
   position: absolute;
-  left: -.78rem; }
+  left: -.775rem; }
 
 .label.taxonomy-label {
   margin: 0 1rem 0.25rem;
   display: inline-block;
-  white-space: normal;
+  white-space: nowrap;
   text-align: left;
-  padding: 4px 1.5rem 4px 0.5rem; }
+  padding: 0.1rem 1.5rem 0 0.5rem; }
   .label.taxonomy-label .fa.fa-close {
     position: absolute;
-    top: 0.25rem;
+    top: 0.34rem;
     right: 0.25rem; }
 
 .taxonomy-label.label-default {

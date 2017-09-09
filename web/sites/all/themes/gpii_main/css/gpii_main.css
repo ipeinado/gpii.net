@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
 .region-hero {
   background-color: #3391d8; }
 
@@ -7,4 +8,12 @@
 #block-book-navigation ul {
   margin-left: 1rem; }
 
-/*# sourceMappingURL=gpii_main.css.map */
+#footer {
+  padding: 0px; }
+  #footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+  #footer li {
+    display: inline;
+    margin-right: 30px; }
