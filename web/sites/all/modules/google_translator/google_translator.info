@@ -1,0 +1,12 @@
+name = Google Translator
+description = Provides a block with configurable languages to translate the current page into
+core = 7.x
+dependencies[] = libraries
+project = "google_translator"
+
+; Information added by Drupal.org packaging script on 2017-03-30
+version = "7.x-1.0"
+core = "7.x"
+project = "google_translator"
+datestamp = "1490842687"
+
