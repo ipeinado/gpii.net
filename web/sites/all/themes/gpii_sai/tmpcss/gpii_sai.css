@@ -109,6 +109,10 @@
     max-width: 100%;
     height: auto; }
 
+.field-name-database-sources-code ul {
+  margin-left: 0;
+  padding-left: 2rem; }
+
 .region-hero {
   background-color: #A72534;
   background-image: url("../images/ulheroimage.png");

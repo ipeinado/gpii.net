@@ -382,10 +382,220 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page arguments' => array(3),
         'access arguments' => array('access terminal taxonomy report'),
       );
+      $items['sources/%'] = array(
+        'title' => 'Database Sources',
+        'page callback' => 'gpii_saa_custom_list_sources',
+        'page arguments' => array(1),
+        'access arguments' => array('access advanced search data'),
+      );
 
       return $items;
     }
 
+
+    /**
+     * This callback is used to view a list of database source records that are related
+     * to a particular UID. It calls the api.ul.gpii.net API to retrieve a list of
+     * database sources for a given record and returns a list of results. If there is only
+     * one source and URL assoicated with the record, users are redirected automatically.
+     */
+
+    function gpii_saa_custom_list_sources($uid) {
+
+      $query = new EntityFieldQuery();
+
+      $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'product')
+      ->fieldCondition('field_uid', 'value', $uid, '=')
+      ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+      $result = $query->execute();
+
+      //dsm('NID: ' . key($result['node']));
+
+      $product = node_load(key($result['node']), NULL, true);
+      //dsm($product);
+
+      $source = filter_xss(arg(2));
+
+      // BBC: This needs some work. Basically, it adds a timestamp to the UL_API_LOGGEDIN variable and checks to see if it's less than three hours old so that we can avoid repeat logins.
+
+      if (variable_get('UL_API_LOGGEDIN') < (time() + 10800)) {
+        //dpm('LOGGED IN ALREADY ' . variable_get('UL_API_LOGGEDIN'));
+      }
+
+      else {
+        // log into the API
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://api.ul.gpii.net/api/user/login",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "username=" . variable_get('UL_API_USERNAME') . "&password=" . variable_get('UL_API_PASSWORD'),
+          CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
+          CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
+          CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+
+          CURLOPT_HTTPHEADER => array(
+            "accept: application/json",
+            "content-type: application/x-www-form-urlencoded"
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+          //dpm("cURL Error #:" . $err);
+        } else {
+          //dpm($response);
+          variable_set('UL_API_LOGGEDIN', time());
+        }
+      }
+
+
+      if ($source) {
+        //$markup =  '<p>We have a source specified.</p>';
+      }
+      else {
+        $markup = '<p>';
+
+          if (arg(0) == 'node') {
+            $markup .= 'This product ';
+          }
+
+          else {
+            $markup .= '<a href="/node/' . $product->nid . '">' . $product->title . '</a>';
+          }
+
+          $markup .= ' is listed in the following federated databases:</p>';
+      }
+
+
+      $markup .= '<ul>';
+      if (variable_get('UL_API_LOGGEDIN') < (time())) {
+
+
+          // Get the UID from the UL source record
+
+          $curl = curl_init();
+
+          curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.ul.gpii.net/api/product/unified/" . $uid . "?includeSources=true",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
+            CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
+            CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+
+            CURLOPT_HTTPHEADER => array(
+              "accept: application/json"
+            ),
+          ));
+
+          $response = curl_exec($curl);
+          $err = curl_error($curl);
+
+          curl_close($curl);
+
+          if ($err) {
+            //dpm("cURL Error #:" . $err);
+          } else {
+            //dpm($response);
+          }
+
+        $response = json_decode($response);
+        //dpm($response->sources);
+
+        $sources = $response->sources;
+
+
+        // if a source is specified
+        if ($source) {
+          $markup =  '<p><a href="/node/' . $product->nid . '">' . $product->title . '</a> is a consolidation of the follwing <strong>' . check_url($source) . '</strong> source records:</p>';
+          $links = array();
+          foreach ($sources as $key => $value) {
+            // need to add code that counts records and redirects automatically here
+
+            if ($value->source == $source) {
+              //dpm($value);
+              $links[] = array(
+                'lang' => $value->language,
+                'OriginalUrl' => $value->sourceData->OriginalUrl,
+                'EnglishUrl' => $value->sourceData->EnglishUrl,
+                'name' => $value->name
+                );
+            }
+          }
+
+          //dpm($links);
+
+          // if we only have one source link, take the user right to it
+
+          if (count($links) == 1) {
+
+            //validate the URLs
+            if (isset($links[0]['OriginalUrl'])) {
+              $OriginalUrl = filter_var($links[0]['OriginalUrl'], FILTER_VALIDATE_URL);
+            }
+            if (isset($links[0]['EnglishUrl'])) {
+              $EnglishUrl =  filter_var($links[0]['EnglishUrl'], FILTER_VALIDATE_URL);
+            }
+
+            if (isset($OriginalUrl)) {
+              drupal_goto($OriginalUrl, array('external' => TRUE), 303);
+            }
+
+            elseif (isset($EnglishUrl)) {
+               drupal_goto($EnglishUrl, array('external' => TRUE), 303);
+            }
+
+            else {
+              drupal_set_message(t('Error: Invalid Link. Please return to the previous page.'), 'error', FALSE);
+            }
+
+          }
+
+          // Print the list of Source Records from the same database when we have more than one.
+          // We don't actually get here if there's only one and the redirect above kicks in.
+
+          foreach ($links as $key => $value) {
+            $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a> (' . strtoupper(substr($value->language, 0, 2)) . ')</li>';
+          }
+        }
+
+        // end source specified
+
+        // if we're listing all sources
+        else {
+          foreach ($sources as $key => $value) {
+            if ($value->source != 'sai') {
+              $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a> (' . strtoupper(substr($value->language, 0, 2)) . ')</li>';
+            }
+          }
+        }
+      }
+
+
+      else {
+        watchdog('gpii_saa_custom', 'Unable to reach UL API.', array(), WATCHDOG_NOTICE, current_path());
+        $markup .= '<li>None found</li>';
+      }
+      $markup .= '</ul>';
+
+      return $markup;
+    }
 
     /**
     * This callback is used to view a list of product records where a given taxonomy
@@ -661,7 +871,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               //'experiment' => $value->experiment
               );
 
-              // Set the status based on numerical values
+              // Set the status based on numerical values that the query returns
               if (isset($value->ul_status)) {
                 $statuses = array(
                   '0' => 'new',
@@ -801,7 +1011,7 @@ function gpii_saa_custom_image_import_vbo(&$entity) {
 
     // find out if there are any new images in the UL
 
-    $url = 'https://ul.gpii.net/api/images/metadata/' . $entity->field_uid['und'][0]['value'];
+    $url = 'https://api.ul.gpii.net/api/images/metadata/' . $entity->field_uid['und'][0]['value'];
     $result = file_get_contents($url);
     //dsm($result);
     $result = drupal_json_decode($result, true);
@@ -821,7 +1031,7 @@ function gpii_saa_custom_image_import_vbo(&$entity) {
 
     if ($result) {
       foreach ($result as $key => $value) {
-        $imported_file_hashes[$key] = md5_file('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+        $imported_file_hashes[$key] = md5_file('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
       }
     }
 
@@ -839,8 +1049,8 @@ function gpii_saa_custom_image_import_vbo(&$entity) {
 
           $filename = $value['image_id'];
 
-          $image = file_get_contents('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
-          //dpm('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          $image = file_get_contents('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          //dpm('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
           $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
           $file->alt = $value['description'];
           $file->title = $value['description'];
@@ -928,7 +1138,7 @@ function gpii_saa_custom_uid_import($nid) {
   $curl = curl_init();
 
   curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://ul.gpii.net/api/user/login",
+    CURLOPT_URL => "https://api.ul.gpii.net/api/user/login",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -962,7 +1172,7 @@ function gpii_saa_custom_uid_import($nid) {
   $curl2 = curl_init();
 
   curl_setopt_array($curl2, array(
-    CURLOPT_URL => "https://ul.gpii.net/api/product/sai/" . $nid . "?includeSources=true",
+    CURLOPT_URL => "https://api.ul.gpii.net/api/product/sai/" . $nid . "?includeSources=true",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -1029,7 +1239,7 @@ function gpii_saa_custom_image_import($uid) {
 
     // find out if there are any new images in the UL
 
-    $url = 'https://ul.gpii.net/api/images/metadata/' . $uid;
+    $url = 'https://api.ul.gpii.net/api/images/metadata/' . $uid;
     $result = file_get_contents($url);
     $result = json_decode($result, true);
     //dsm($result);
@@ -1047,7 +1257,7 @@ function gpii_saa_custom_image_import($uid) {
     $imported_file_hashes = array();
 
     foreach ($result as $key => $value) {
-      $imported_file_hashes[$key] = md5_file('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+      $imported_file_hashes[$key] = md5_file('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
     }
 
     dsm('Imported Images: ' . implode(', ', $imported_file_hashes));
@@ -1073,8 +1283,8 @@ function gpii_saa_custom_image_import($uid) {
         // }
 
         // else {
-          $image = file_get_contents('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
-          //dpm('https://ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          $image = file_get_contents('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+          //dpm('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
           $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
           $file->alt = $value['description'];
           $file->title = $value['description'];
