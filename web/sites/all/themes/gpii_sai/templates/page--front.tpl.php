@@ -238,10 +238,10 @@
         <?php
           $widths = array(
             'first' => '24',
-//            'second' => '5',
-//            'third' => '5',
-//            'fourth' => '5',
-//            'fifth' => '5',
+           'second' => '24',
+           'third' => '24',
+           'fourth' => '24',
+           'fifth' => '24',
             );
           print gpii_base_variable_width_column_regions($page, $region_info, 'footer', $widths);
         ?>
