@@ -56,7 +56,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-24 search-method">
-  <a href="/search/"><img alt="Standard Search" src="http://dev.saa.gpii.net/sites/saa.gpii.net/files/uploads/images/standardsearchcircle.png" /></a></div>
+  <a href="/search/"><img alt="Standard Search" src="/sites/saa.gpii.net/files/uploads/images/standardsearchcircle.png" /></a></div>
 
 <div class="col-lg-4 col-md-4 col-sm-24 search-method text-adjust">
   <h3>
