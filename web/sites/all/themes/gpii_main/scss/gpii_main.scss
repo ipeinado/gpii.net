@@ -4,7 +4,8 @@
 // Color Changes
 // #############################################################################
 
-.region-hero {
+body.front {
+    .region-hero {
   background-color: $color-gpii-dark-blue;
   background-image: url('/sites/gpii.net/files/uploads/images/gpiihero.png');
   background-repeat: no-repeat;
@@ -17,6 +18,27 @@
         line-height: 1.95rem;
         text-shadow: 1px 1px 1px #333;
         }
+}
+}
+
+body.page-node-43 {
+    .region-hero {
+  background-color: $color-gpii-dark-blue;
+  background-image: url('/sites/gpii.net/files/uploads/images/applaceholder.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 40%;
+  text-align: center;
+  padding: 50px 0px;
+    h3 {
+        font-size: 1.5rem;
+        line-height: 1.95rem;
+        text-shadow: 1px 1px 1px #333;
+        }
+}
+    .page-header {
+        display: none;
+    }
 }
 
 #main-container {
