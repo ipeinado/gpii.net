@@ -1,4 +1,4 @@
-<h1><span class="widgetStrings">TITLE</span></h1>
+<h1><span class="widgetStrings">Rating</span></h1>
 <div class="widget_stars" id="widget_stars_comments_part">
     <p id="review_stars"></p>
     <div id="histogram" class="">
