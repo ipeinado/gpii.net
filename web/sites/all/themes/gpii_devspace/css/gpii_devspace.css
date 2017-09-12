@@ -509,6 +509,10 @@
     display: inline-block;
     margin-right: 1.66666667rem; }
 
+.node-bb.node-teaser h2 {
+  display: inline-block;
+  margin-right: 0.5rem; }
+
 .node-card {
   padding: 0;
   margin-bottom: 2rem;
@@ -598,34 +602,41 @@
   text-indent: 1em; }
 
 .view-bibliography .view-header,
-.view-parts-and-tools .view-header,
 .view-questions .view-header {
   display: block;
   padding: 0.66666667rem 0;
   float: left; }
 
 .view-bibliography .view-filters,
-.view-parts-and-tools .view-filters,
 .view-questions .view-filters {
   float: right; }
 
 .view-bibliography .views-exposed-form .views-exposed-widget,
-.view-parts-and-tools .views-exposed-form .views-exposed-widget,
 .view-questions .views-exposed-form .views-exposed-widget {
   float: right;
   padding: 0; }
 
 .view-bibliography .views-exposed-form .control-label,
-.view-parts-and-tools .views-exposed-form .control-label,
 .view-questions .views-exposed-form .control-label {
   display: inline-block;
   margin-right: 0.46666667rem; }
 
 .view-bibliography .views-exposed-form .form-control,
-.view-parts-and-tools .views-exposed-form .form-control,
 .view-questions .views-exposed-form .form-control {
   display: inline-block;
   width: auto; }
+
+.view-parts-and-tools .view-header {
+  display: block;
+  padding-top: 2.13333333rem;
+  float: left; }
+
+.view-parts-and-tools .view-filters {
+  float: right; }
+
+.view-parts-and-tools .views-exposed-widget {
+  padding: 0 0 0 0.5rem;
+  display: inline-block; }
 
 .view .date-nav-wrapper .date-prev {
   left: 0;

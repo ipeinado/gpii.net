@@ -125,6 +125,13 @@
 	}
 }
 
+.node-bb.node-teaser {
+	h2 {
+		display: inline-block;
+		margin-right: 0.5rem;
+	}
+}
+
 // NODE CARD
 .node-card {
 	padding: 0;
@@ -248,7 +255,6 @@
 }
 
 .view-bibliography,
-.view-parts-and-tools,
 .view-questions {
 
 	.view-header {
@@ -276,6 +282,23 @@
 			display: inline-block;
 			width: auto;
 		}
+	}
+}
+
+.view-parts-and-tools {
+	.view-header {
+		display: block;
+		padding-top: (32px/15px)*1rem;
+		float: left;
+	}
+
+	.view-filters {
+		float: right;
+	}
+
+	.views-exposed-widget {
+		padding: 0 0 0 0.5rem;
+		display: inline-block;
 	}
 }
 
