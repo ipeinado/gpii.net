@@ -125,6 +125,13 @@
 	}
 }
 
+.node-bb.node-teaser {
+	h2 {
+		display: inline-block;
+		margin-right: 0.5rem;
+	}
+}
+
 // NODE CARD
 .node-card {
 	padding: 0;
@@ -248,7 +255,6 @@
 }
 
 .view-bibliography,
-.view-parts-and-tools,
 .view-questions {
 
 	.view-header {
@@ -279,6 +285,23 @@
 	}
 }
 
+.view-parts-and-tools {
+	.view-header {
+		display: block;
+		padding-top: (34px/15px)*1rem;
+		float: left;
+	}
+
+	.view-filters {
+		float: right;
+	}
+
+	.views-exposed-widget {
+		padding: 0 0 0 0.5rem;
+		display: inline-block;
+	}
+}
+
 // CALENDAR
 .view .date-nav-wrapper .date-prev {
 	left: 0;
@@ -289,4 +312,13 @@
 
 .widget_stars_rate span.spanstar {
 	font-size: 50px;
+}
+
+.markdown-body {
+	h1 {
+		font-size: (26px/15px)*1rem;
+	}
+	img {
+		float: none;
+	}
 }
