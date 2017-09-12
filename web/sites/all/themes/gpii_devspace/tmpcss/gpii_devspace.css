@@ -616,7 +616,7 @@
 
 .view-parts-and-tools .view-header {
   display: block;
-  padding-top: 2.13333333rem;
+  padding-top: 2.26666667rem;
   float: left; }
 
 .view-parts-and-tools .view-filters {
@@ -632,6 +632,12 @@
 
 .widget_stars_rate span.spanstar {
   font-size: 50px; }
+
+.markdown-body h1 {
+  font-size: 1.73333333rem; }
+
+.markdown-body img {
+  float: none; }
 
 .field-type-taxonomy-term-reference {
   margin-bottom: 1em; }
