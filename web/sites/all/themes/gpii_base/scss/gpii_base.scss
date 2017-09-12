@@ -29,7 +29,7 @@ body {
   font-family: $typeface-default;
   @media (min-width: $screen-sm-min) {
     html:not(.force-mobile-layout) & {
-      border-top: 9rem solid transparent;
+      border-top: 7rem solid transparent;
     }
   }
 }
