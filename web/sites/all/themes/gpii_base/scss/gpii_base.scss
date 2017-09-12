@@ -554,10 +554,11 @@ body.i18n-de {
     }
   }
   .webform-component-email {
+    max-width: 1120px;
     position: relative;
     display: block;
     label {
-      width: 8em;
+      width: 10em;
       text-align: right;
       position: relative;
       display: inline-block;
@@ -565,13 +566,14 @@ body.i18n-de {
 
     }
     .help-block {
+      color: #000;
       position: relative;
-      left: 0.8rem;
+      left: 0.7rem;
       top: -1rem;
     }
     input {
       position: relative;
-      left: 4.5em;
+      left: 5.4em;
       top: -2rem;
       width: 35em;
 

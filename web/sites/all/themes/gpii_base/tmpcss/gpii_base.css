@@ -6821,21 +6821,23 @@ body.i18n-de #gpii-translate-toggle_container {
   #feedback-wrap .webform-component--comments .form-textarea-wrapper, #feedback-wrap .webform-component--comments textarea {
     width: 35em; }
   #feedback-wrap .webform-component-email {
+    max-width: 1120px;
     position: relative;
     display: block; }
     #feedback-wrap .webform-component-email label {
-      width: 8em;
+      width: 10em;
       text-align: right;
       position: relative;
       display: inline-block;
       padding-top: 2em; }
     #feedback-wrap .webform-component-email .help-block {
+      color: #000;
       position: relative;
-      left: 0.8rem;
+      left: 0.7rem;
       top: -1rem; }
     #feedback-wrap .webform-component-email input {
       position: relative;
-      left: 4.5em;
+      left: 5.4em;
       top: -2rem;
       width: 35em; }
 

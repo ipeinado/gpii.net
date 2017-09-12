@@ -193,12 +193,17 @@
 <div id="push"></div>
 
 
-
 <?php if ($has_footer_regions): ?>
   <div id="footer-wrap">
     <div id="feedback-wrap">
     <?php
-      $blockObject = block_load('webform', 'client-block-6435');
+    if ($_SERVER['HTTP_HOST'] == 'dev.saa.gpii.net') {
+      $webform_id = '6435';
+    }
+    elseif ($_SERVER['HTTP_HOST'] == 'staging.saa.gpii.net' || $_SERVER['HTTP_HOST'] == 'staging.ul.gpii.net') {
+      $webform_id = '4367';
+    }
+      $blockObject = block_load('webform', 'client-block-' . $webform_id);
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
       $output = drupal_render($block);
       print $output;
