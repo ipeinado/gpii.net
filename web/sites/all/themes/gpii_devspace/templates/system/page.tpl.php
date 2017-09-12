@@ -209,6 +209,20 @@
 
 <?php if ($has_footer_regions): ?>
   <div id="footer-wrap">
+      <div id="feedback-wrap">
+    <?php
+    if ($_SERVER['HTTP_HOST'] == 'dev.developerspace.gpii.net') {
+      $webform_id = '4309';
+    }
+    elseif ($_SERVER['HTTP_HOST'] == 'staging.developerspace.gpii.net') {
+      $webform_id = '4309';
+    }
+      $blockObject = block_load('webform', 'client-block-' . $webform_id);
+      $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+      $output = drupal_render($block);
+      print $output;
+    ?>
+    </div>
     <footer id="footer" class="footer container-fluid">
       <section class="footer-section">
         <h2 class="element-invisible">Footer Navigation</h2>

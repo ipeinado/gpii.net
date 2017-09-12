@@ -197,11 +197,22 @@
   <div id="footer-wrap">
     <div id="feedback-wrap">
     <?php
-    if ($_SERVER['HTTP_HOST'] == 'dev.saa.gpii.net') {
-      $webform_id = '6435';
-    }
-    elseif ($_SERVER['HTTP_HOST'] == 'staging.saa.gpii.net' || $_SERVER['HTTP_HOST'] == 'staging.ul.gpii.net') {
-      $webform_id = '4367';
+    switch ($_SERVER['HTTP_HOST']) {
+        case 'dev.saa.gpii.net':
+            $webform_id = '6435';
+            break;
+        case 'dev.developerspace.gpii.net':
+        case 'staging.developerspace.gpii.net':
+            $webform_id = '4309';
+            break;
+        case 'dev.gpii.net':
+        case 'staging.gpii.net':
+            $webform_id = '65';
+            break;
+        case 'staging.saa.gpii.net':
+        case 'staging.ul.gpii.net':
+            $webform_id = '4367';
+            break;
     }
       $blockObject = block_load('webform', 'client-block-' . $webform_id);
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
