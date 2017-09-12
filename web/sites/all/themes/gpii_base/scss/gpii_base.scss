@@ -458,9 +458,9 @@ body.i18n-de {
 }
 
 #footer {
+  border-bottom: 0.85rem solid #2783c6;
   margin: 0;
   clear: both;
-  padding: 3rem 0 3rem 0;
   //background-color: #000;
   background: #000 url('../../gpii_base/footer-gradient.png') no-repeat center 0;
   color: #ffffff;
@@ -483,13 +483,100 @@ body.i18n-de {
   h2 {
     margin-top: 0;
   }
+  .bean-basic-block {
+    .container {
+      margin: 0;
+    }
+  }
 }
 
 .gpii-region_row-fine_print {
   margin-top: 2.4rem;
   padding-top: 1.2rem;
   padding-bottom: 4rem;
-  border-top: 0.1rem solid #ffffff;
+}
+
+
+#feedback-wrap {
+  background-color: #fff;
+  margin-bottom: -5.5rem;
+  z-index: 10;
+
+  .contextual-links-region {
+    position: unset;
+  }
+
+  & > p { // button for feedback forms
+    text-align: center;
+    margin-bottom: 0;
+    .btn {
+      border: none;
+      color: $color-gpii-dark-gray;
+      &:hover, &:focus, &:active {
+        outline: dotted 1px $color-gpii-dark-gray;
+        border-radius: 4px;
+        background-color: transparent;
+        //text-shadow: 0 0 0.2px #000;
+        color: #000;
+      }
+
+      &:before {
+        font-family: FontAwesome;
+        content: "\f078";
+        padding-right: 0.25rem;
+        color: #000;
+      }
+
+      &.collapsed:before {
+        content: "\f054";
+      }
+    }
+  }
+
+  #feedback-collapsible {
+    margin-bottom: 2.5rem;
+  }
+
+  .block-webform {
+    padding: 1.5rem 2rem 4rem;
+    background-color: $color-gpii-light-gray;
+    text-align: center;
+  }
+
+  .webform-component--comments {
+    label {
+      width: 8em;
+      text-align: right;
+      display: inline-block;
+    }
+    .form-textarea-wrapper, textarea {
+      width: 35em;
+    }
+  }
+  .webform-component-email {
+    position: relative;
+    display: block;
+    label {
+      width: 8em;
+      text-align: right;
+      position: relative;
+      display: inline-block;
+      padding-top: 4em;
+
+    }
+    .help-block {
+      position: relative;
+      left: 0.8rem;
+    }
+    input {
+      position: relative;
+      left: 4.5em;
+      top: -2rem;
+      width: 35em;
+
+    }
+  }
+
 }
 
 // Sticky Footer
@@ -499,7 +586,6 @@ html {
 }
 
 #footer-wrap {
-  border-top: 0.85rem solid #2783c6;
   width: 100%;
 }
 
