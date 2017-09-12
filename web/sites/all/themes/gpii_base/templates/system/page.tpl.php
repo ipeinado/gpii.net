@@ -192,17 +192,27 @@
 
 <div id="push"></div>
 
+
+
 <?php if ($has_footer_regions): ?>
   <div id="footer-wrap">
+    <div id="feedback-wrap">
+    <?php
+      $blockObject = block_load('webform', 'client-block-6435');
+      $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+      $output = drupal_render($block);
+      print $output;
+    ?>
+    </div>
     <footer id="footer" class="footer container-fluid">
       <?php if ($region_info['footer']['has_columns']): ?>
         <?php
           $widths = array(
-            'first' => '4',
-            'second' => '5',
-            'third' => '5',
-            'fourth' => '5',
-            'fifth' => '5',
+            'first' => '24',
+            'second' => '24',
+            'third' => '24',
+            'fourth' => '24',
+            'fifth' => '24',
             );
           print gpii_base_variable_width_column_regions($page, $region_info, 'footer', $widths);
         ?>

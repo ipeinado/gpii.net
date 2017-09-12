@@ -1,9 +1,44 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
-.region-hero {
-  background-color: #3391d8; }
+body.front .region-hero {
+  background-color: #3391d8;
+  background-image: url("/sites/gpii.net/files/uploads/images/gpiihero.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 40%;
+  text-align: center;
+  padding: 50px 0px; }
+  body.front .region-hero h3 {
+    font-size: 1.5rem;
+    line-height: 1.95rem;
+    text-shadow: 1px 1px 1px #333; }
+
+body.page-node-43 .region-hero {
+  background-color: #3391d8;
+  background-image: url("/sites/gpii.net/files/uploads/images/applaceholder.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 40%;
+  text-align: center;
+  padding: 50px 0px; }
+  body.page-node-43 .region-hero h3 {
+    font-size: 1.5rem;
+    line-height: 1.95rem;
+    text-shadow: 1px 1px 1px #333; }
+
+body.page-node-43 .page-header {
+  display: none; }
+
+#main-container {
+  margin-top: 0rem; }
+
+#block-bean-home-developerspace h3, #block-bean-home-unified-listing h3, #block-bean-home-auto-personalization h3 {
+  font-size: 1.4rem; }
+
+#block-bean-home-developerspace p, #block-bean-home-unified-listing p, #block-bean-home-auto-personalization p {
+  font-size: 1rem; }
 
 .region-content {
-  margin-bottom: 2rem; }
+  margin-bottom: 1rem; }
 
 #block-book-navigation ul {
   margin-left: 1rem; }
@@ -17,3 +52,34 @@
   #footer li {
     display: inline;
     margin-right: 30px; }
+
+body.front .highlighted.jumbotron {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 2em;
+  margin-top: 0; }
+  body.front .highlighted.jumbotron .row {
+    margin-left: 0;
+    margin-right: 0; }
+  body.front .highlighted.jumbotron .searchtype {
+    border-bottom: 4px solid #cccccc;
+    margin-bottom: 1.5em;
+    padding-top: 1.5em; }
+    body.front .highlighted.jumbotron .searchtype:hover, body.front .highlighted.jumbotron .searchtype:focus, body.front .highlighted.jumbotron .searchtype:active {
+      background-color: #f4f4f4; }
+    body.front .highlighted.jumbotron .searchtype p {
+      text-align: center; }
+    body.front .highlighted.jumbotron .searchtype h3 {
+      text-align: center;
+      font-family: 'Roboto Slab';
+      font-weight: 600; }
+    body.front .highlighted.jumbotron .searchtype img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; }
+
+body.front h1.page-header {
+  display: none; }
+
+.jumbotron {
+  background-color: #fff; }
