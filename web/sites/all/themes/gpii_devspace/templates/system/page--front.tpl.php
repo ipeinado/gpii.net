@@ -207,7 +207,7 @@
   <div id="footer-wrap">
     <footer id="footer" class="footer container-fluid">
       <section>
-        <h1 class="element-invisible">Footer</h1>
+        <h1 class="element-invisible">Footer Navigation</h1>
         <?php if ($region_info['footer']['has_columns']): ?>
           <?php
             $widths = array(
