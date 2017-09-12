@@ -146,7 +146,7 @@
             <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'block-bean-home-auto-personalization');
+                    $blockObject = block_load('bean', 'home-auto-personalization');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
@@ -156,7 +156,7 @@
               <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'block-bean-home-unified-listing');
+                    $blockObject = block_load('bean', 'home-unified-listing');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
