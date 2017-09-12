@@ -6834,16 +6834,17 @@ body.i18n-de #gpii-translate-toggle_container {
 
 #feedback-wrap {
   background-color: #fff;
-  margin-bottom: -5.5rem;
+  margin-bottom: -5rem;
   z-index: 10; }
   #feedback-wrap .contextual-links-region {
     position: unset; }
   #feedback-wrap > p {
     text-align: center;
-    margin-bottom: 0; }
+    margin-bottom: auto; }
     #feedback-wrap > p .btn {
       border: none;
-      color: #2c3849; }
+      color: #2c3849;
+      margin-bottom: 1rem; }
       #feedback-wrap > p .btn:hover, #feedback-wrap > p .btn:focus, #feedback-wrap > p .btn:active {
         outline: dotted 1px #2c3849;
         border-radius: 4px;
@@ -6859,15 +6860,19 @@ body.i18n-de #gpii-translate-toggle_container {
   #feedback-wrap #feedback-collapsible {
     margin-bottom: 2.5rem; }
   #feedback-wrap .block-webform {
-    padding: 1.5rem 2rem 4rem;
+    padding-bottom: 4rem;
     background-color: #eceeec;
     text-align: center; }
-  #feedback-wrap .webform-component--comments label {
-    width: 8em;
-    text-align: right;
-    display: inline-block; }
-  #feedback-wrap .webform-component--comments .form-textarea-wrapper, #feedback-wrap .webform-component--comments textarea {
-    width: 35em; }
+    #feedback-wrap .block-webform .container {
+      margin-top: 0; }
+  #feedback-wrap .webform-component--comments {
+    padding-top: 1.5rem; }
+    #feedback-wrap .webform-component--comments label {
+      width: 8em;
+      text-align: right;
+      display: inline-block; }
+    #feedback-wrap .webform-component--comments .form-textarea-wrapper, #feedback-wrap .webform-component--comments textarea {
+      width: 35em; }
   #feedback-wrap .webform-component-email {
     max-width: 1120px;
     position: relative;
