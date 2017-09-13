@@ -230,13 +230,7 @@
   <div id="footer-wrap">
       <div id="feedback-wrap">
     <?php
-    if ($_SERVER['HTTP_HOST'] == 'dev.gpii.net') {
-      $webform_id = '65';
-    }
-    elseif ($_SERVER['HTTP_HOST'] == 'staging.gpii.net') {
-      $webform_id = '65';
-    }
-      $blockObject = block_load('webform', 'client-block-' . $webform_id);
+      $blockObject = block_load('webform', 'client-block-65' . $webform_id);
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
       $output = drupal_render($block);
       print $output;
