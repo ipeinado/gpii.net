@@ -45,20 +45,24 @@
     background-color: #A72534;
     color: #fff; }
 
-#block-bean-search-method-button-standard #block-views-exp-search-page .form-submit {
-  position: absolute;
-  bottom: 0.5rem;
-  right: 1.6rem;
-  z-index: 200;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border: 1px solid #A72534; }
-
-#block-bean-search-method-button-standard #block-views-exp-search-page #edit-search-api-views-fulltext-wrapper {
-  width: calc(100% - 2rem); }
+#block-bean-search-method-button-standard #block-views-exp-search-page {
+  position: relative; }
+  #block-bean-search-method-button-standard #block-views-exp-search-page .form-submit {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 1.6rem;
+    z-index: 200;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border: 1px solid #A72534; }
+  #block-bean-search-method-button-standard #block-views-exp-search-page #edit-search-api-views-fulltext-wrapper {
+    width: calc(100% - 2rem); }
 
 #block-bean-search-method-button-standard #block-views-exp-search-page {
   width: 100%; }
+
+#block-views-exp-search-page {
+  position: relative; }
 
 #block-bean-why-love-saa, #block-bean-saa-testimonials {
   text-align: center;
@@ -305,7 +309,7 @@ body.page-search .view-search {
 /**
  * Home Page Specific Styles
  */
-body.front {
+body.front, body.page-node-1903 {
   /**
    * Equal Height for search blocks in the home jumbotron
    */
@@ -313,46 +317,48 @@ body.front {
  * Row with equal height columns
  * --------------------------------------------------
  */ }
-  body.front .highlighted.jumbotron {
+  body.front .highlighted.jumbotron, body.page-node-1903 .highlighted.jumbotron {
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 2em;
     margin-top: 0; }
-    body.front .highlighted.jumbotron .row {
+    body.front .highlighted.jumbotron .row, body.page-node-1903 .highlighted.jumbotron .row {
       margin-left: 0;
       margin-right: 0; }
-    body.front .highlighted.jumbotron #block-bean-shopping-options {
+    body.front .highlighted.jumbotron a, body.page-node-1903 .highlighted.jumbotron a {
+      color: #000; }
+    body.front .highlighted.jumbotron #block-bean-shopping-options, body.page-node-1903 .highlighted.jumbotron #block-bean-shopping-options {
       margin-bottom: 1em; }
-      body.front .highlighted.jumbotron #block-bean-shopping-options h3 {
+      body.front .highlighted.jumbotron #block-bean-shopping-options h3, body.page-node-1903 .highlighted.jumbotron #block-bean-shopping-options h3 {
         text-align: center; }
-    body.front .highlighted.jumbotron .searchtype {
+    body.front .highlighted.jumbotron .searchtype, body.page-node-1903 .highlighted.jumbotron .searchtype {
       border-bottom: 4px solid #cccccc;
       margin-bottom: 1.5em;
       padding-top: 1.5em; }
-      body.front .highlighted.jumbotron .searchtype:hover, body.front .highlighted.jumbotron .searchtype:focus, body.front .highlighted.jumbotron .searchtype:active {
+      body.front .highlighted.jumbotron .searchtype:hover, body.front .highlighted.jumbotron .searchtype:focus, body.front .highlighted.jumbotron .searchtype:active, body.page-node-1903 .highlighted.jumbotron .searchtype:hover, body.page-node-1903 .highlighted.jumbotron .searchtype:focus, body.page-node-1903 .highlighted.jumbotron .searchtype:active {
         background-color: #e9e9e9; }
-      body.front .highlighted.jumbotron .searchtype p {
+      body.front .highlighted.jumbotron .searchtype p, body.page-node-1903 .highlighted.jumbotron .searchtype p {
         text-align: center; }
-      body.front .highlighted.jumbotron .searchtype h3 {
+      body.front .highlighted.jumbotron .searchtype h3, body.page-node-1903 .highlighted.jumbotron .searchtype h3 {
         text-align: center;
         font-family: 'Roboto Slab';
         font-weight: 600; }
-      body.front .highlighted.jumbotron .searchtype img {
+      body.front .highlighted.jumbotron .searchtype img, body.page-node-1903 .highlighted.jumbotron .searchtype img {
         display: block;
         margin-left: auto;
         margin-right: auto; }
     @media (min-width: 992px) {
-      body.front .highlighted.jumbotron .row-flex {
+      body.front .highlighted.jumbotron .row-flex, body.page-node-1903 .highlighted.jumbotron .row-flex {
         display: flex; }
-        body.front .highlighted.jumbotron .row-flex > div {
+        body.front .highlighted.jumbotron .row-flex > div, body.page-node-1903 .highlighted.jumbotron .row-flex > div {
           display: flex;
           flex-direction: column; }
-          body.front .highlighted.jumbotron .row-flex > div .panel {
+          body.front .highlighted.jumbotron .row-flex > div .panel, body.page-node-1903 .highlighted.jumbotron .row-flex > div .panel {
             cursor: pointer;
             flex-grow: 1; }
-            body.front .highlighted.jumbotron .row-flex > div .panel a {
+            body.front .highlighted.jumbotron .row-flex > div .panel a, body.page-node-1903 .highlighted.jumbotron .row-flex > div .panel a {
               color: #000; } }
-  body.front h1.page-header {
+  body.front h1.page-header, body.page-node-1903 h1.page-header {
     display: none; }
 
 /**

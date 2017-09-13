@@ -58,6 +58,7 @@
     }
 
     #block-views-exp-search-page {
+      position: relative;
       .form-submit {
         position: absolute;
         bottom: 0.5rem;
@@ -74,6 +75,10 @@
     #block-views-exp-search-page {
       width: 100%;
     }
+}
+
+#block-views-exp-search-page {
+  position: relative;
 }
 #block-bean-why-love-saa, #block-bean-saa-testimonials {
     text-align: center;
