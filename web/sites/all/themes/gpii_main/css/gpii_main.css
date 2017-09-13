@@ -30,8 +30,8 @@ body.page-node-43 .region-hero {
 body.page-node-43 .page-header {
   display: none; }
 
-#main-container {
-  margin-top: 2rem; }
+body:not(.front) #main-container {
+  margin-top: 4rem; }
 
 #block-bean-home-developerspace h3, #block-bean-home-unified-listing h3, #block-bean-home-auto-personalization h3, #block-bean-footer-gpii-web-sites h3 {
   font-size: 1.4rem; }

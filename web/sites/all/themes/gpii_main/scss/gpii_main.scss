@@ -41,9 +41,12 @@ body.page-node-43 {
     }
 }
 
-#main-container {
-    margin-top: 2rem;
+body:not(.front) {
+  #main-container {
+      margin-top: 4rem;
+  }
 }
+
 
 #block-bean-home-developerspace, #block-bean-home-unified-listing, #block-bean-home-auto-personalization, #block-bean-footer-gpii-web-sites {
     h3 {
