@@ -210,7 +210,7 @@
             $webform_id = '65';
             break;
         case 'staging.saa.gpii.net':
-        case 'staging.ul.gpii.net':
+        case 'ul.gpii.net':
             $webform_id = '4367';
             break;
     }
