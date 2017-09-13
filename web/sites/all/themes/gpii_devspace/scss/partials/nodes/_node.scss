@@ -60,11 +60,27 @@
 	}
 
 	article {
+
+		.featured-image,
+		.field-name-field-image {
+
+			margin-bottom: 1rem;
+
+			@media (max-width: $screen-xs-max) {
+				max-width: 100%;
+				float: none;
+			}
+			@media (min-width: $screen-sm-min) {
+				max-width: 50%;
+				float: left;
+				margin-right: 1rem;
+			}
+		}
+
 		img {
-			float: left;
-			max-width: 50%;
-			margin-right: 1em;
-			margin-bottom: 1em;
+			max-width: 100%;
+			margin-right: 1rem;
+			margin-bottom: 1rem;
 		}
 	}
 
