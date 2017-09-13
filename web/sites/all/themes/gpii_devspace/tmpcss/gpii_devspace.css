@@ -314,7 +314,7 @@
 @media (min-width: 1200px) {
   .not-front .region-featured-links {
     background-color: #F5F5F5;
-    padding-top: 0.46666667rem; } }
+    padding-top: 1rem; } }
 
 @media (max-width: 991px) {
   .not-front .bean-featured-link {
@@ -464,11 +464,25 @@
   .view-mode-full .group-action-links a.flag:visited {
     font-size: 1.33333333rem; }
 
+.view-mode-full article .featured-image,
+.view-mode-full article .field-name-field-image {
+  margin-bottom: 1rem; }
+  @media (max-width: 767px) {
+    .view-mode-full article .featured-image,
+    .view-mode-full article .field-name-field-image {
+      max-width: 100%;
+      float: none; } }
+  @media (min-width: 768px) {
+    .view-mode-full article .featured-image,
+    .view-mode-full article .field-name-field-image {
+      max-width: 50%;
+      float: left;
+      margin-right: 1rem; } }
+
 .view-mode-full article img {
-  float: left;
-  max-width: 50%;
-  margin-right: 1em;
-  margin-bottom: 1em; }
+  max-width: 100%;
+  margin-right: 1rem;
+  margin-bottom: 1rem; }
 
 .view-mode-full aside ul {
   list-style-type: none;
