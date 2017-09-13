@@ -31,10 +31,10 @@ body.page-node-43 .page-header {
 #main-container {
   margin-top: 0rem; }
 
-#block-bean-home-developerspace h3, #block-bean-home-unified-listing h3, #block-bean-home-auto-personalization h3 {
+#block-bean-home-developerspace h3, #block-bean-home-unified-listing h3, #block-bean-home-auto-personalization h3, #block-bean-footer-gpii-web-sites h3 {
   font-size: 1.4rem; }
 
-#block-bean-home-developerspace p, #block-bean-home-unified-listing p, #block-bean-home-auto-personalization p {
+#block-bean-home-developerspace p, #block-bean-home-unified-listing p, #block-bean-home-auto-personalization p, #block-bean-footer-gpii-web-sites p {
   font-size: 1rem; }
 
 .region-content {
@@ -61,6 +61,8 @@ body.front .highlighted.jumbotron {
   body.front .highlighted.jumbotron .row {
     margin-left: 0;
     margin-right: 0; }
+  body.front .highlighted.jumbotron a {
+    color: #000; }
   body.front .highlighted.jumbotron .searchtype {
     border-bottom: 4px solid #cccccc;
     margin-bottom: 1.5em;
@@ -77,6 +79,17 @@ body.front .highlighted.jumbotron {
       display: block;
       margin-left: auto;
       margin-right: auto; }
+  @media (min-width: 992px) {
+    body.front .highlighted.jumbotron .row-flex {
+      display: flex; }
+      body.front .highlighted.jumbotron .row-flex > div {
+        display: flex;
+        flex-direction: column; }
+        body.front .highlighted.jumbotron .row-flex > div .panel {
+          cursor: pointer;
+          flex-grow: 1; }
+          body.front .highlighted.jumbotron .row-flex > div .panel a {
+            color: #000; } }
 
 body.front h1.page-header {
   display: none; }

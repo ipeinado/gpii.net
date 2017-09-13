@@ -26,7 +26,7 @@ var gulp = require('gulp'),
     });
 
     gulp.task('watch', function() {
-      livereload.listen();
+      //livereload.listen();
       return gulp
         // Watch the input folder for change,
         // and run `sass` task when something happens
