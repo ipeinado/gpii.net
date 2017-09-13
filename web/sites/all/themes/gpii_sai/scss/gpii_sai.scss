@@ -441,7 +441,7 @@ body.page-search {
  * Home Page Specific Styles
  */
 
-body.front {
+body.front, body.page-node-1903 {
   .highlighted.jumbotron {
     margin-left: 0;
     margin-right: 0;
@@ -451,6 +451,9 @@ body.front {
       margin-left: 0;
       margin-right: 0;
     }
+      a {
+          color: #000;
+      }
     #block-bean-shopping-options {
       h3 {
         text-align: center;
@@ -458,7 +461,6 @@ body.front {
 
       margin-bottom: 1em;
     }
-
     .searchtype {
         border-bottom: 4px solid #cccccc;
         margin-bottom: 1.5em;

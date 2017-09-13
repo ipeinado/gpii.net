@@ -130,7 +130,6 @@
   <div id="main-container" class="main-container <?php print $container_class; ?>">
     <div class="row">
       <section<?php print $content_column_class; ?>>
-
           <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?>
             <div class="row row-flex">
               <div class="col-sm-24 col-md-8">
@@ -146,7 +145,7 @@
             <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'home-auto-personalization');
+                    $blockObject = block_load('bean', 'home-unified-listing');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
@@ -156,7 +155,7 @@
               <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'home-unified-listing');
+                    $blockObject = block_load('bean', 'home-auto-personalization');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
@@ -229,15 +228,29 @@
 
 <?php if ($has_footer_regions): ?>
   <div id="footer-wrap">
+      <div id="feedback-wrap">
+    <?php
+    if ($_SERVER['HTTP_HOST'] == 'dev.gpii.net') {
+      $webform_id = '65';
+    }
+    elseif ($_SERVER['HTTP_HOST'] == 'staging.gpii.net') {
+      $webform_id = '65';
+    }
+      $blockObject = block_load('webform', 'client-block-' . $webform_id);
+      $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+      $output = drupal_render($block);
+      print $output;
+    ?>
+    </div>
     <footer id="footer" class="footer container-fluid">
       <?php if ($region_info['footer']['has_columns']): ?>
         <?php
           $widths = array(
             'first' => '24',
-            'second' => '24',
-            'third' => '24',
-            'fourth' => '24',
-            'fifth' => '24',
+//            'second' => '24',
+//            'third' => '24',
+//            'fourth' => '24',
+//            'fifth' => '24',
             );
           print gpii_base_variable_width_column_regions($page, $region_info, 'footer', $widths);
         ?>

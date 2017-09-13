@@ -87,6 +87,9 @@ body.front {
       margin-left: 0;
       margin-right: 0;
     }
+      a {
+          color: #000;
+      }
     .searchtype {
         border-bottom: 4px solid #cccccc;
         margin-bottom: 1.5em;
@@ -107,6 +110,23 @@ body.front {
             margin-left: auto;
             margin-right: auto;
         }
+    }
+// equal heights for triple beans on home page
+@media (min-width: $screen-md) {
+      .row-flex {
+        display: flex;
+        & > div {
+          display: flex;
+          flex-direction: column;
+          & .panel {
+            cursor: pointer;
+            flex-grow: 1;
+            a {
+              color: #000;
+            }
+          }
+        }
+      }
     }
     }
  h1.page-header {
