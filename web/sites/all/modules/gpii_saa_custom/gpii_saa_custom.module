@@ -629,10 +629,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
 
       $headers = array(
-          'user' => array('data' => t('NID'), 'field' => 'nid'),
+          'nid' => array('data' => t('NID'), 'field' => 'nid'),
           'title' => array('data' => t('Title'), 'field' => 'title'),
           'prod_categories' => array('data' => t('Product Categories'), 'field' => 'prod_categories'),
           'prod_features' => array('data' => t('Needs and Wants'), 'field' => 'prod_features'),
+          'published' => array('data' => t('Status'), 'field' => 'published'),
           'ops' => array('data' => t('Operations'))
       );
 
@@ -645,12 +646,20 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           $features = '';
         }
 
+        if ($terminal_nodes->_field_data['nid']['entity']->status == '1') {
+          $published = 'Yes';
+        }
+        else {
+          $published = 'No';
+        }
+
       $rows[$terminal_nodes->nid] = array(
-      'nid' => $terminal_nodes->_field_data['nid']['entity']->nid,
+       'nid' => $terminal_nodes->_field_data['nid']['entity']->nid,
        'title' => l($terminal_nodes->_field_data['nid']['entity']->title, 'node/' . $terminal_nodes->_field_data['nid']['entity']->nid),
        'prod_categories' => $terminal_nodes->field_field_product_categories1[0]['rendered']['#markup'],
        'prod_features' => $features,
        // 'terms' => implode(", ", gpii_saa_custom_get_terms($terminal_nodes->_field_data['nid']['entity'])), // allows for all terms defined below
+       'published' => $published,
        'ops' => l(t('edit'), '/node/' . $terminal_nodes->_field_data['nid']['entity']->nid . '/edit', array('query' => array('destination' => current_path()),'attributes' => array('class' => array('btn', 'btn-success'))))
       );
       }
