@@ -880,32 +880,33 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               //'experiment' => $value->experiment
               );
 
-              // Set the status based on numerical values that the query returns
-              if (isset($value->ul_status)) {
-                $statuses = array(
-                  '0' => 'new',
-                  '1' => 'active',
-                  '2' => 'discontinued',
-                  '3' => 'deleted'
-                );
-                $value->ul_status = $statuses[$value->ul_status];
-              }
-              else {
-                $value->ul_status = "new";
-              }
-
-
-            // unset variables used above
-            unset($value->fid);
-            unset($value->filename);
-            unset($value->alt);
-            unset($value->filemime);
-            unset($value->filesize);
-            unset($value->status);
-            unset($value->timestamp);
-            unset($value->origname);
 
           }
+
+          // Set the status based on numerical values that the query returns
+          if (isset($value->ul_status)) {
+            $statuses = array(
+              '0' => 'new',
+              '1' => 'active',
+              '2' => 'discontinued',
+              '3' => 'deleted'
+            );
+            $value->ul_status = $statuses[$value->ul_status];
+          }
+          else {
+            $value->ul_status = "new";
+          }
+
+          // unset variables used above
+          unset($value->fid);
+          unset($value->filename);
+          unset($value->alt);
+          unset($value->filemime);
+          unset($value->filesize);
+          unset($value->status);
+          unset($value->timestamp);
+          unset($value->origname);
+
         }
 
         // convert the object to JSON
