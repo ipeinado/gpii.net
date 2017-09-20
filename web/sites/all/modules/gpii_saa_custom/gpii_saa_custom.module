@@ -633,7 +633,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           'title' => array('data' => t('Title'), 'field' => 'title'),
           'prod_categories' => array('data' => t('Product Categories'), 'field' => 'prod_categories'),
           'prod_features' => array('data' => t('Needs and Wants'), 'field' => 'prod_features'),
-          'published' => array('data' => t('Status'), 'field' => 'published'),
+          'published' => array('data' => t('Published'), 'field' => 'published'),
           'ops' => array('data' => t('Operations'))
       );
 
