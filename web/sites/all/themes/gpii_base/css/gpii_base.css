@@ -6834,7 +6834,7 @@ body.i18n-de #gpii-translate-toggle_container {
 
 #feedback-wrap {
   background-color: #fff;
-  margin-bottom: -5rem;
+  margin-bottom: -4em;
   z-index: 10; }
   #feedback-wrap .contextual-links-region {
     position: unset; }
@@ -6843,6 +6843,7 @@ body.i18n-de #gpii-translate-toggle_container {
     margin-bottom: auto; }
     #feedback-wrap > p .btn {
       border: none;
+      white-space: inherit;
       color: #2c3849;
       margin-bottom: 1rem; }
       #feedback-wrap > p .btn:hover, #feedback-wrap > p .btn:focus, #feedback-wrap > p .btn:active {

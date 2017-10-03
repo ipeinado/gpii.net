@@ -115,9 +115,15 @@
     max-width: 100%;
     height: auto; }
 
-.field-name-database-sources-code ul {
-  margin-left: 0;
-  padding-left: 2rem; }
+.field-name-database-sources-code {
+  border: 1px solid #b2b2b2;
+  padding: 0 1.5rem 0.5rem;
+  border-radius: 4px; }
+  .field-name-database-sources-code h2 {
+    margin-top: 1rem; }
+  .field-name-database-sources-code ul {
+    margin-left: 0;
+    padding-left: 2rem; }
 
 .region-hero {
   background-color: #A72534;
