@@ -1,7 +1,4 @@
 <?php
-
-
-
 /**
  * hook_search_api_solr_query_alter
  *
@@ -579,10 +576,16 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
         // if we're listing all sources
         else {
+          // set an array that tracks whether we've already written a source link for this record
+          $sourceDBs = array();
           foreach ($sources as $key => $value) {
-            if ($value->source != 'sai') {
+
+            if (($value->source != 'sai') && (in_array($value->source, $sourceDBs) != 1)) {
               $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a> (' . strtoupper(substr($value->language, 0, 2)) . ')</li>';
             }
+
+            // add the source to the $sourceDBs array
+            $sourceDBs[] = $value->source;
           }
         }
       }
