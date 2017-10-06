@@ -1001,6 +1001,14 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    'gpii_saa_custom_remove_deleted_records' => array(
+      'type' => 'entity',
+      'label' => t('Check the UL API and delete record if status is deleted in both systems.'),
+      'behavior' => array(''),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
   );
 }
 
@@ -1346,4 +1354,97 @@ function recursive_array_search($needle,$haystack) {
         }
     }
     return false;
+}
+
+
+
+/**
+ * This function checks with the UL API to see if it also has a status
+ * of deleted. If it does, the node is deleted.
+ */
+
+function gpii_saa_custom_remove_deleted_records(&$entity) {
+  // be sure that we have a UID and that the current status for the node is 'deleted'
+  if ($entity->field_status['und'][0]['value'] == '3' && isset($entity->field_uid['und'][0]['value'])) {
+
+    // call gpii_saa_custom_delete_records_vbo() to find out if the UL API agrees that the
+    // record is ready for deletion
+    $apiStatus = gpii_saa_custom_delete_records_vbo($entity->field_uid['und'][0]['value']);
+    //dpm($apiStatus);
+    if ($apiStatus == 'deleted') {
+      // log the deltion before we lose access to the variables we need to create the log.
+      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' (UID: ' . $entity->field_uid['und'][0]['value'] . ') has been deleted.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+      // go ahead and delete the node
+      node_delete($entity->nid);
+    }
+
+    elseif ($apiStatus == false) {
+      // log a failure to get a response from the API.
+      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' got no response from the UL API.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+    }
+
+    else {
+      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' is not marked for deltion in the UL API.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+    }
+
+    // return the modified entity to VBO for processing
+    return;
+  }
+
+  return;
+
+}
+
+
+function gpii_saa_custom_delete_records_vbo($uid) {
+  //dsm("https://api.ul.gpii.net/api/product/unified/" . $uid);
+
+  // Get the status for this record from the UL API
+
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://api.ul.gpii.net/api/product/unified/" . $uid,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_FOLLOWLOCATION => true, // follow 301 redirects!!!!
+    CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
+    CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
+    CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+    CURLOPT_HTTPHEADER => array(
+      "accept: application/json"
+    ),
+  ));
+
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
+
+  curl_close($curl);
+
+  if ($err) {
+    watchdog('gpii_saa_custom', $err , array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+    // dpm("cURL Error #:" . $err);
+  } else {
+    //dpm($response);
+  }
+
+  $response = json_decode($response);
+
+  //dsm($response->status);
+
+  if (isset($response)) {
+    return $response->status;
+  }
+
+  else {
+    return false;
+  }
+
+
+
+
 }
