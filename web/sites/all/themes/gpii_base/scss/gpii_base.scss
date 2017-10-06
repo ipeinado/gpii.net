@@ -517,18 +517,18 @@ body.i18n-de {
         outline: dotted 1px $color-gpii-dark-gray;
         border-radius: 4px;
         background-color: transparent;
-        //text-shadow: 0 0 0.2px #000;
+        font-weight: bold;
         color: #000;
       }
 
-      &:before {
+      &.btn.btn-default:before {
         font-family: FontAwesome;
         content: "\f078";
         padding-right: 0.25rem;
         color: #000;
       }
 
-      &.collapsed:before {
+      &.btn.btn-default.collapsed:before {
         content: "\f054";
       }
     }
@@ -775,4 +775,12 @@ html {
     }
   }
 
+}
+
+
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #464646;
 }

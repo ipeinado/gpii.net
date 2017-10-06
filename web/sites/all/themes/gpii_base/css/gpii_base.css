@@ -6850,13 +6850,14 @@ body.i18n-de #gpii-translate-toggle_container {
         outline: dotted 1px #2c3849;
         border-radius: 4px;
         background-color: transparent;
+        font-weight: bold;
         color: #000; }
-      #feedback-wrap > p .btn:before {
+      #feedback-wrap > p .btn.btn.btn-default:before {
         font-family: FontAwesome;
         content: "\f078";
         padding-right: 0.25rem;
         color: #000; }
-      #feedback-wrap > p .btn.collapsed:before {
+      #feedback-wrap > p .btn.btn.btn-default.collapsed:before {
         content: "\f054"; }
   #feedback-wrap #feedback-collapsible {
     margin-bottom: 2.5rem; }
@@ -7019,5 +7020,11 @@ body.not-logged-in .navbar-nav.secondary > li.last > a {
       font-size: 1.5rem; }
     #sliding-popup .popup-content #popup-text p {
       font-size: 0.9rem; }
+
+.help-block {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #464646; }
 
 /*# sourceMappingURL=gpii_base.css.map */

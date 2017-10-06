@@ -232,17 +232,18 @@
     <div id="feedback-wrap">
     <?php
     switch ($_SERVER['HTTP_HOST']) {
-        case 'dev.saa.gpii.net':
-            $webform_id = '6435';
-            break;
         case 'dev.developerspace.gpii.net':
         case 'staging.developerspace.gpii.net':
+        case 'ds.gpii.net':
             $webform_id = '4309';
             break;
+        case 'gpii.net':
+        case 'www.gpii.net':
         case 'dev.gpii.net':
         case 'staging.gpii.net':
             $webform_id = '65';
             break;
+        case 'dev.saa.gpii.net':
         case 'staging.saa.gpii.net':
         case 'ul.gpii.net':
             $webform_id = '4367';
