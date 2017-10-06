@@ -6901,7 +6901,8 @@ html {
   min-height: 100%; }
 
 #footer-wrap {
-  width: 100%; }
+  width: 100%;
+  z-index: 3; }
 
 #push {
   height: 4rem; }
