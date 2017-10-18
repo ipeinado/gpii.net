@@ -65,7 +65,7 @@
  */
 ?>
 <div id="wrap" class="wrapper">
-  <header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
+  <header id="navbar" class="<?php print $navbar_classes; ?>">
     <div class="container-fluid">
       <?php if ($region_info['topbar']['has_columns']): ?>
         <?php print gpii_base_equal_width_column_regions($page, $region_info, 'topbar'); ?>
@@ -104,7 +104,7 @@
             <?php print gpii_base_equal_width_column_regions($page, $region_info, 'header'); ?>
           <?php endif; ?>
 
-          <nav role="navigation">
+          <nav>
             <h1 class="element-invisible">Main Navigation</h1>
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
