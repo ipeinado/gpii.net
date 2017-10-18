@@ -15,7 +15,7 @@ body {
   select,
   span {
     font-size: 1rem;
-    line-height: 1.5rem;
+    // Leave this out as it breaks Fluid UI -- line-height: 1.5rem;
   }
 }
 
@@ -240,6 +240,8 @@ body.admin-menu {
 .fl-font-prefsEditor-verdana *:not(.fa):not(.fl-icon-undo) {
   font-family: 'Verdana', sans-serif !important;
 }
+
+
 
 // #############################################################################
 // Google Translate
@@ -786,6 +788,8 @@ html {
     color: #464646;
 }
 
+
+// This is redundant with what honeypot is already supposed to be doing. For some reason, the UL home page wasn't getting this CSS (anonymous users only, so adding duplicate here as workaround)
 .form-item-homemail {
   display: none !important;
 }

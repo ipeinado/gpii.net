@@ -6400,8 +6400,7 @@ body {
   body li,
   body select,
   body span {
-    font-size: 1rem;
-    line-height: 1.5rem; }
+    font-size: 1rem; }
 
 body {
   top: 0 !important;

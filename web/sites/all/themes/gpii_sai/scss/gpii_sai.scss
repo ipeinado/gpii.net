@@ -732,10 +732,10 @@ body.node-type-product {
 .label.taxonomy-label {
   margin: 0 1rem 0.25rem;
   display: inline-block;
-  // white-space: nowrap; This allows labels to wrap to a second line, but is very inconsistent between Chrome and FF
+  white-space: normal; //This allows labels to wrap to a second line, but is very inconsistent between Chrome and FF
   text-align: left;
   padding: 0.1rem 1.5rem 0 0.5rem;
-
+  line-height: 1.5rem;
 
   .fa.fa-close {
     position: absolute;
@@ -748,7 +748,6 @@ body.node-type-product {
   background-color: #111;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-
 }
 
 .taxonomy-label.label-danger {
@@ -1240,4 +1239,72 @@ div.discontinued {
   border-left: 4px solid $color-gpii-sai-primary;
   padding-left: 0.6rem;
   margin: 1rem 0;
+}
+
+.view-browse-shelf {
+  // transform: rotate(-90deg);
+  // transform-origin: right top;
+  // background: #cccccc;
+  // height: 400px;
+  // width: 960px;
+  // overflow-y: auto;
+  // overflow-x: hidden;
+
+
+   .views-field {
+      padding: 5px;
+
+      height: 20em;
+      transform: rotate(90deg);
+    }
+
+
+
+
+  $finalHeight: 250px;
+  $finalWidth: 3.5 * $finalHeight;
+  $scrollBarHeight: 20px;
+
+  ::-webkit-scrollbar {
+    width: $scrollBarHeight;
+    height: $scrollBarHeight;
+  }
+
+  ::-webkit-scrollbar-button {
+    width: $scrollBarHeight;
+    height: $scrollBarHeight;
+  }
+
+  .view-browse-shelf {
+    position: absolute;
+    display: block;
+    top: 10em;
+    left: 0;
+    width: calc(#{$finalHeight} + #{$scrollBarHeight});
+    max-height: $finalWidth;
+    margin: 0;
+    padding-top: $scrollBarHeight;
+    background: #fff;
+    overflow-y: auto;
+    overflow-x: none;
+    transform: rotate(-90deg) translateY(-$finalHeight );
+    transform-origin: right top;
+    div.views-field {
+      display: block;
+      padding: 5px;
+      background: #000;
+      transform: rotate(90deg);
+      transform-origin: right top;
+    }
+  }
+
+  .views-field > span {
+    padding: 0;
+    & > span {
+      width: $finalHeight;
+      height: $finalHeight;
+      margin: 10px 0;
+      display: inline-block;
+    }
+  }
 }

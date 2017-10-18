@@ -462,3 +462,24 @@
 .fl-theme-lgdg .fl-prefsEditor .fl-choice input:focus ~ label {
     outline: 0.2em solid #bdbdbb;
 }
+
+
+/* GPII Customizations */
+.key {
+    background: #F5F2EC;
+    border: 1px solid #766d68;
+    margin: 0 0.25rem;
+    padding: 0 0.5rem;
+    border-radius: 2px;
+}
+
+
+div.instructions {
+  margin-top: -1em;
+  line-height: 1.8;
+}
+
+div.instructions ul {
+    margin: 0;
+}
+

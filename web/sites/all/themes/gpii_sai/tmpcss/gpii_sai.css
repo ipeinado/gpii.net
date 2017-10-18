@@ -520,8 +520,10 @@ body.node-type-product .term-tree-list .selected {
 .label.taxonomy-label {
   margin: 0 1rem 0.25rem;
   display: inline-block;
+  white-space: normal;
   text-align: left;
-  padding: 0.1rem 1.5rem 0 0.5rem; }
+  padding: 0.1rem 1.5rem 0 0.5rem;
+  line-height: 1.5rem; }
   .label.taxonomy-label .fa.fa-close {
     position: absolute;
     top: 0.34rem;
@@ -874,3 +876,45 @@ div.discontinued {
   border-left: 4px solid #A72534;
   padding-left: 0.6rem;
   margin: 1rem 0; }
+
+.view-browse-shelf .views-field {
+  padding: 5px;
+  height: 20em;
+  transform: rotate(90deg); }
+
+.view-browse-shelf ::-webkit-scrollbar {
+  width: 20px;
+  height: 20px; }
+
+.view-browse-shelf ::-webkit-scrollbar-button {
+  width: 20px;
+  height: 20px; }
+
+.view-browse-shelf .view-browse-shelf {
+  position: absolute;
+  display: block;
+  top: 10em;
+  left: 0;
+  width: calc(250px + 20px);
+  max-height: 875px;
+  margin: 0;
+  padding-top: 20px;
+  background: #fff;
+  overflow-y: auto;
+  overflow-x: none;
+  transform: rotate(-90deg) translateY(-250px);
+  transform-origin: right top; }
+  .view-browse-shelf .view-browse-shelf div.views-field {
+    display: block;
+    padding: 5px;
+    background: #000;
+    transform: rotate(90deg);
+    transform-origin: right top; }
+
+.view-browse-shelf .views-field > span {
+  padding: 0; }
+  .view-browse-shelf .views-field > span > span {
+    width: 250px;
+    height: 250px;
+    margin: 10px 0;
+    display: inline-block; }
