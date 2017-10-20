@@ -27,7 +27,7 @@ html, body {
   #push {
     clear: both;
     height: 8rem !important;
-  } 
+  }
 }
 
 dl dt {
@@ -75,8 +75,8 @@ article, aside, .region-sidebar-first, .region-sidebar-second {
   .page-challenges section.col-sm-24,
   .not-front.node-type-page section.col-sm-24 {
     width: 70%;
-    margin: 0 15%; 
-  } 
+    margin: 0 15%;
+  }
 }
 
 .video-container {
@@ -131,11 +131,11 @@ article, aside, .region-sidebar-first, .region-sidebar-second {
 
 // Pagination highlight color
 
-.pagination > .active > a, 
-.pagination > .active > a:hover, 
-.pagination > .active > a:focus, 
-.pagination > .active > span, 
-.pagination > .active > span:hover, 
+.pagination > .active > a,
+.pagination > .active > a:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span,
+.pagination > .active > span:hover,
 .pagination > .active > span:focus {
     background-color: $color-gpii-devspace-primary;
 }
