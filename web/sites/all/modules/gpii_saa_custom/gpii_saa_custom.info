@@ -6,5 +6,6 @@ package = Other
 version = "7.x-1.0"
 core = "7.x"
 project = "gpii_saa_custom"
+files[] = gpii_saa_browse_virtual_stores.inc
 datestamp = "1606306728"
 

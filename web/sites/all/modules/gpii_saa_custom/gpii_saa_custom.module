@@ -361,6 +361,12 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_products_ulisting',
         'access arguments' => array('access advanced search data'),
       );
+      $items['search/virtual/shelf/%'] = array(
+        'title' => 'Virtual Store Shelf',
+        'page callback' => 'gpii_saa_custom_virtual_shelf',
+        'page arguments' => array(3),
+        'access arguments' => array('access content'),
+      );
       $items['reports/taxonomy/terminal/%'] = array(
         'title' => 'Terminal Taxonomy Report',
         'page callback' => 'gpii_saa_custom_term_terminal',
@@ -845,7 +851,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             unset($tid);
           }
 
-          // make needs into an object that matches the original format
+          // make product_categories into an object that matches the original format
           if (isset($value->product_category)) {
             $tids = explode(',', $value->product_category);
 
@@ -853,6 +859,18 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               $tid[] = (object) array('tid' => $id);
             }
             $value->product_category = $tid;
+            // clear this after each loop
+            unset($tid);
+          }
+
+          // make trouble taxonomy into an object that matches the original format
+          if (isset($value->trouble)) {
+            $tids = explode(',', $value->trouble);
+
+            foreach ($tids as $num => $id) {
+              $tid[] = (object) array('tid' => $id);
+            }
+            $value->trouble = $tid;
             // clear this after each loop
             unset($tid);
           }
@@ -1003,8 +1021,16 @@ function gpii_saa_custom_action_info() {
     ),
     'gpii_saa_custom_remove_deleted_records' => array(
       'type' => 'entity',
-      'label' => t('Check the UL API and delete record if status is deleted in both systems.'),
+      'label' => t('Check the UL API and delete record if status is deleted'),
       'behavior' => array(''),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
+    'gpii_saa_custom_sync_needs_to_trouble' => array(
+      'type' => 'entity',
+      'label' => t('Update and sync trouble taxonomy terms'),
+      'behavior' => array('changes_property'),
       'configurable' => FALSE,
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
@@ -1153,6 +1179,17 @@ function gpii_saa_custom_uid_import($nid) {
 
   // find out if the UL has a UID for this record
 
+
+
+
+$vdisplay = 'default';
+$viewresult = views_get_view_result('trouble', $vdisplay, '957');
+
+foreach ($viewresult as $key => $value) {
+  $trouble_terms[] = $value->tid;
+}
+print_r($trouble_terms);
+exit;
 
   // log into the API
 
@@ -1368,11 +1405,11 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
   if ($entity->field_status['und'][0]['value'] == '3' && isset($entity->field_uid['und'][0]['value'])) {
 
     // call gpii_saa_custom_delete_records_vbo() to find out if the UL API agrees that the
-    // record is ready for deletion
+    // status is 'deleted'
     $apiStatus = gpii_saa_custom_delete_records_vbo($entity->field_uid['und'][0]['value']);
     //dpm($apiStatus);
     if ($apiStatus == 'deleted') {
-      // log the deltion before we lose access to the variables we need to create the log.
+      // log the deletion before we lose access to the variables we need to create the log entry.
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' (UID: ' . $entity->field_uid['und'][0]['value'] . ') has been deleted.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
       // go ahead and delete the node
       node_delete($entity->nid);
@@ -1384,7 +1421,7 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
     }
 
     else {
-      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' is not marked for deltion in the UL API.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' is not marked for deletion in the UL API.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
     }
 
     // return the modified entity to VBO for processing
@@ -1443,8 +1480,68 @@ function gpii_saa_custom_delete_records_vbo($uid) {
   else {
     return false;
   }
+}
 
 
+/**
+ * This function looks at the needs and wants (features) associated with a node and
+ * sets values for the "things I have trouble with" taxonomy
+ */
+
+function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
+  // be sure that the record has some terms from the needs and wants tree associated with it before proceeding
+  //dpm('Needs Count: ' . count($entity->field_features['und']));
+  if (count($entity->field_features['und']) > 0) {
+
+    // call gpii_saa_custom_sync_needs_to_trouble() with the entity's nid to handle the updates
+    $trouble_terms = gpii_saa_custom_sync_needs_to_trouble_vbo($entity->field_features['und']);
+
+    //dpm(implode(', ', $trouble_terms));
+
+    // if we get an array of trouble taxonomy terms back, go through and each of them to the entity and save
+    if (isset($trouble_terms)) {
+      // remove any old trouble taxonomy refs
+      unset($entity->field_trouble_with['und']);
 
 
+      foreach ($trouble_terms as $key => $value) {
+        //dpm($key . '-' . $value);
+        $entity->field_trouble_with['und'][] = array('tid' => $value);
+      }
+
+      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been updated.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+    }
+
+    // return the modified entity to VBO for processing
+    return $entity;
+  }
+
+  return;
+
+}
+
+
+function gpii_saa_custom_sync_needs_to_trouble_vbo($features) {
+
+  foreach ($features as $key => $value) {
+    // query the trouble view with the term ID to find out which terms from the
+    // trouble taxonomy reference this term
+    $results = views_get_view_result('trouble', 'default', $value['tid']);
+
+    foreach ($results as $key => $value) {
+      $trouble_terms[] = $value->tid;
+    }
+  }
+
+  return $trouble_terms;
+}
+
+
+function gpii_saa_custom_virtual_shelf($tid) {
+
+  // include browse virtual store functions
+  module_load_include('inc', 'gpii_saa_custom', 'browse_virtual_stores');
+
+
+  return virtual_shelf($tid);
 }

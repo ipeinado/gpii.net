@@ -108,21 +108,15 @@
       } else {
         setTimeout(function(){ $fluidUiPanel.css('width', 'auto'); }, 1000);
       }
-      console.log(document.getElementById('iframe-focus'));
+      //console.log(document.getElementById('iframe-focus'));
       if (document.getElementById('iframe-focus')) {
         $('#iframe-focus').focus();
       } else {
         $('.flc-prefsEditor-iframe').before('<a id="iframe-focus" href></a>');
         $('#iframe-focus').focus();
       }
+
     });
   });
-
-  // BBC: attempting to resurrcect code from Ignacio's toggle search
-  $(document).ready(function() {
-      var title = $('.page-header').text();
-      $('[data-title="' +  title + '"]').addClass('selected');
-  });
-
 
 }(jQuery));
