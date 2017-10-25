@@ -15,9 +15,9 @@
     });
     $('.panel').children().focus(function() {
     $(this).parent().css("background-color", "orange");
-}).blur(function() {
-    $(this).parent().css("background-color","yellow");
-});
+    }).blur(function() {
+        $(this).parent().css("background-color","yellow");
+    });
   });
 
 }(jQuery));

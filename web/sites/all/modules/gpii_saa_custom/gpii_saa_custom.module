@@ -1179,18 +1179,6 @@ function gpii_saa_custom_uid_import($nid) {
 
   // find out if the UL has a UID for this record
 
-
-
-
-$vdisplay = 'default';
-$viewresult = views_get_view_result('trouble', $vdisplay, '957');
-
-foreach ($viewresult as $key => $value) {
-  $trouble_terms[] = $value->tid;
-}
-print_r($trouble_terms);
-exit;
-
   // log into the API
 
   $curl = curl_init();

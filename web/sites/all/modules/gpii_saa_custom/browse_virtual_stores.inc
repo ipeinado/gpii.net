@@ -32,77 +32,68 @@ function virtual_shelf($tid) {
     // Generate the markup from a view
     // Note that tooltip text will need to be duplicated in a .sr-only
     // Demo Page http://dev.saa.gpii.net/search/virtual/shelf/3993
+    // View Source Ref http://dev.saa.gpii.net/admin/browse/shelf/3698
+    //
+    // Demo: http://dev.saa.gpii.net/search/virtual/shelf/3698
 
-    $markup .= <<<END
-    <div class="container" id="flexslider-wrap">
-      <div class="row">
-        <div class="col-md-1 flex-preface"><p class="sr-only">Start Shelf</p></div>
-        <div class="flexslider col-md-22">
-          <ul class="slides">
-            <li class="first">
-              <div>
-              <h3>Example Title</h3>
-              <p class="text-center"><img src="/sites/saa.gpii.net/files/uploads/products/images/node/230/victorreaderstream.jpg" alt="Image 1" /></p>
-              </div>
-            </li>
-            <li>
-              <div>
-                <h3><a href="http://google.com">Smart Beetle</a></h3>
-                <p class="text-center"><img src="/sites/saa.gpii.net/files/uploads/products/images/node/3572/smart-beetle.jpg"  alt="Image 2" /></p>
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>. A short description of the product goes here and is no more than a sentence or two. The reason is that we have to pick a sensible height to cap these things at so that products can "sit" on the shelf. ">
-  (i)
-</button>
 
-              </div>
-            </li>
-            <li>
-              <div>
-                <h3>ElBraille Notetaker</h3>
-                <p class="text-center"><img src="/sites/saa.gpii.net/files/uploads/products/images/node/3664/elbraillenotetaker.jpg" alt="Image 3" /></p>
-              </div>
-            </li>
-            <li>
-              <div>
-                <h3>VIEWPLUS TECHNOLOGIES - IVEO TOUCHPAD COMPLETO</h3>
-                <p class="text-center"><img src="/sites/saa.gpii.net/files/uploads/products/images/node/1384/i4.png" alt="Image 4" /></p>
-              </div>
-            </li>
-            <!-- items mirrored twice, total of 12 -->
-            <li>
-              <div><img src="/sites/saa.gpii.net/files/uploads/products/images/node/230/victorreaderstream.jpg" alt="Image 5" /></div>
-            </li>
-            <li>
-              <div><img src="/sites/saa.gpii.net/files/uploads/products/images/node/3572/smart-beetle.jpg" alt="Image 6" /></div>
-            </li>
-            <li>
-              <div><img src="/sites/saa.gpii.net/files/uploads/products/images/node/3664/elbraillenotetaker.jpg" alt="Image 7" /></div>
-            </li>
-            <li>
-              <div>
-              <h3><a href="http://google.com">Smart Beetle</a></h3>
-              <p><img src="/sites/saa.gpii.net/files/uploads/products/images/node/1384/i4.png" alt="Image 8" /></p></div>
-            </li>
-            <li>
-              <div><img src="/sites/saa.gpii.net/files/uploads/products/images/node/230/victorreaderstream.jpg" alt="Image 9" /></div>
-            </li>
-            <li>
-              <div><img src="/sites/saa.gpii.net/files/uploads/products/images/node/3572/smart-beetle.jpg" alt="Image 10" /></div>
-            </li>
-            <li>
-              <div><img src="/sites/saa.gpii.net/files/uploads/products/images/node/3664/elbraillenotetaker.jpg" alt="Image 11" /></div>
-            </li>
-            <li class="last">
-              <div class="image-container"><img src"" data-src="/sites/saa.gpii.net/files/styles/magnific_popup_thumbnail/public/uploads/products/images/node/3453/proslate.gif" alt="Test Image" /></div>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-1 flex-suffix"><p class="sr-only">End Shelf</p></div>
-      </div>
-    </div>
+    $results = views_get_view_result('browse_shelf', 'page_1', $tid);
+
+    //dpm($results);
+
+    $resultCount = count($results);
+
+
+    if ($resultCount > 0) {
+      $markup .= <<<END
+      <div class="container" id="flexslider-wrap">
+        <div class="row">
+          <div class="col-md-1 flex-preface"><p class="sr-only">Start Shelf</p></div>
+          <div class="flexslider col-md-22">
+            <ul class="slides">
 
 END;
 
-    return '<strong>Shelf Label: </strong>' . $termObj->name . '<br />' . $markup;
+      foreach ($results as $key => $value) {
+        if ($key === 0) {
+          $markup .= '<li class="first">';
+        }
+        elseif ($key ===  ($resultCount - 1)) {
+          $markup .= '<li class="last">';
+        }
+        else {
+          $markup .= '<li>';
+        }
+        // consider target="_blank" so that users don't lose their place on the shelf. Other option is to add a modal
+
+        $markup .= '<div><h3><a href="/node/' . $value->nid . '">' . $value->node_title . '</a></h3>';
+
+// @@ Add missing alt text
+
+        $markup .= '<p class="text-center">' . theme('image_style',array('style_name' => 'medium', 'path' => $value->field_field_product_image[0]['rendered']['#item']['uri'])) . '</p></div>';
+
+        $markup .= '<div class="description"><p>' . strip_tags($value->field_body[0]['rendered']['#markup']) . '</p></div>';
+
+        $markup .= '</li>';
+      }
+
+      $markup .= <<<END
+            </ul>
+          </div>
+          <div class="col-md-1 flex-suffix"><p class="sr-only">End Shelf</p></div>
+        </div>
+      </div>
+
+END;
+
+// @@ consider lazy loading some of these (code example follows)
+// <div class="image-container"><img src"" data-src="/sites/saa.gpii.net/files/styles/magnific_popup_thumbnail/public/uploads/products/images/node/3453/proslate.gif" alt="Test Image" /></div>
+
+    }
+
+    drupal_set_title($title = $termObj->name, $output = CHECK_PLAIN);
+
+    return $markup;
 
   }
 

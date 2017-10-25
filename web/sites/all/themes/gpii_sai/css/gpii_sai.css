@@ -650,11 +650,14 @@ a.tree-label {
     background-color: #f4f4f4;
     border-color: #000; }
 
+#saa-app h2 {
+  padding-top: 0.6rem; }
+
 #saa-app button.reset {
   padding: 0.5rem 4rem;
   float: right;
   position: relative;
-  z-index: 500;
+  z-index: 400;
   margin-top: 2px; }
 
 #saa-app .filters {
@@ -978,5 +981,173 @@ div.discontinued {
     height: 250px;
     margin: 10px 0;
     display: inline-block; }
+
+/**
+ * Virtual Store Shelf and flexslider overrides
+ */
+.page-search-virtual-shelf .container {
+  width: 100%; }
+
+.page-search-virtual-shelf .slides li {
+  padding: 0 2rem; }
+
+.page-search-virtual-shelf div.description {
+  background: #000;
+  color: #fff;
+  height: 14rem;
+  padding: 1rem; }
+  .page-search-virtual-shelf div.description p {
+    /* hide text if it more than N lines  */
+    overflow: hidden;
+    /* for set '...' in absolute position */
+    position: relative;
+    /* use this value to count block height */
+    line-height: 1.2em;
+    font-size: 90%;
+    /* max-height = line-height (1.2) * lines max number (4) */
+    max-height: 10.4em;
+    /* fix problem when last visible word doesn't adjoin right side  */
+    text-align: left;
+    /* place for '...' */
+    margin-right: -1em;
+    padding-right: 1em; }
+    .page-search-virtual-shelf div.description p:before {
+      /* points in the end */
+      content: '...';
+      /* absolute position */
+      position: absolute;
+      /* set position to right bottom corner of block */
+      right: 0;
+      bottom: 0; }
+    .page-search-virtual-shelf div.description p:after {
+      /* points in the end */
+      content: '';
+      /* absolute position */
+      position: absolute;
+      /* set position to right bottom corner of text */
+      right: 0;
+      /* set width and height */
+      width: 1em;
+      height: 1em;
+      margin-top: 0.2em;
+      /* bg color = bg color under block */
+      background: #000; }
+
+@media (min-width: 991px) {
+  .page-search-virtual-shelf #flexslider-wrap > .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+  .page-search-virtual-shelf .flex-preface {
+    background: transparent url("../images/left-end.png") no-repeat left bottom;
+    margin-bottom: 4.6rem; }
+  .page-search-virtual-shelf .flexslider {
+    background: transparent url("../images/middle.png") repeat-x center bottom;
+    border-left: 0;
+    border-right: 0;
+    margin-bottom: 4.3rem; }
+  .page-search-virtual-shelf .flex-suffix {
+    background: transparent url("../images/right-end.png") no-repeat right bottom;
+    margin-bottom: 4.6rem; }
+  .page-search-virtual-shelf .slides {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding-bottom: 6rem;
+    margin-top: 22rem; }
+    .page-search-virtual-shelf .slides li {
+      position: relative;
+      margin: 0 0 7.5rem; }
+      .page-search-virtual-shelf .slides li div {
+        background: #fff;
+        margin: 10rem 1rem 0;
+        border: 1px solid #000;
+        -webkit-box-shadow: -1px 1px 5px -1px #ccc;
+                box-shadow: -1px 1px 5px -1px #ccc;
+        padding: 1rem;
+        width: 90%;
+        position: absolute;
+        bottom: 0; }
+        .page-search-virtual-shelf .slides li div h3 {
+          margin-top: 0;
+          margin-bottom: 1rem;
+          font-size: 115%;
+          font-weight: bold; }
+        .page-search-virtual-shelf .slides li div img {
+          max-width: 90%;
+          margin: 0 auto;
+          max-height: 12rem; }
+      .page-search-virtual-shelf .slides li div.description {
+        bottom: -11rem;
+        background: #000;
+        color: #fff;
+        width: 90%;
+        height: 7rem;
+        position: absolute; }
+        .page-search-virtual-shelf .slides li div.description p {
+          /* hide text if it more than N lines  */
+          overflow: hidden;
+          /* for set '...' in absolute position */
+          position: relative;
+          /* use this value to count block height */
+          line-height: 1.2em;
+          /* max-height = line-height (1.2) * lines max number (4) */
+          max-height: 4.7em;
+          /* fix problem when last visible word doesn't adjoin right side  */
+          text-align: left;
+          /* place for '...' */
+          margin-right: -1em;
+          padding-right: 1em; }
+          .page-search-virtual-shelf .slides li div.description p:before {
+            /* points in the end */
+            content: '...';
+            /* absolute position */
+            position: absolute;
+            /* set position to right bottom corner of block */
+            right: 0;
+            bottom: 0; }
+          .page-search-virtual-shelf .slides li div.description p:after {
+            /* points in the end */
+            content: '';
+            /* absolute position */
+            position: absolute;
+            /* set position to right bottom corner of text */
+            right: 0;
+            /* set width and height */
+            width: 1em;
+            height: 1em;
+            margin-top: 0.2em;
+            /* bg color = bg color under block */
+            background: #000; } }
+
+.flex-direction-nav li {
+  background: #fff; }
+
+.flex-direction-nav a {
+  overflow: visible;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #b2b2b2;
+  margin: -80px 0 0;
+  width: auto;
+  height: auto;
+  padding: 0.5rem;
+  text-decoration: none;
+  text-align: center;
+  width: 5.5rem; }
+
+.flex-direction-nav a.flex-next {
+  text-align: center; }
+  .flex-direction-nav a.flex-next:before {
+    content: '\f002 \A';
+    display: block; }
+
+.flex-direction-nav a.flex-prev {
+  text-align: center; }
+  .flex-direction-nav a.flex-prev:before {
+    content: '\f001 \A';
+    display: block; }
 
 /*# sourceMappingURL=gpii_sai.css.map */
