@@ -1329,7 +1329,7 @@ div.discontinued {
 
     .slides {
       li {
-        padding: 0 2rem;
+        padding: 0 1rem;
       }
     }
 
@@ -1348,7 +1348,7 @@ div.discontinued {
         line-height: 1.2em;
         font-size: 90%;
         /* max-height = line-height (1.2) * lines max number (4) */
-        max-height: 10.4em;
+        max-height: 12.6em;
         /* fix problem when last visible word doesn't adjoin right side  */
         text-align: left;
         /* place for '...' */
@@ -1360,7 +1360,7 @@ div.discontinued {
           /* absolute position */
           position: absolute;
           /* set position to right bottom corner of block */
-          right: 0;
+          right: 0.5em;
           bottom: 0;
         }
         &:after {
@@ -1369,7 +1369,7 @@ div.discontinued {
             /* absolute position */
             position: absolute;
             /* set position to right bottom corner of text */
-            right: 0;
+            right: 0.5em;
             /* set width and height */
             width: 1em;
             height: 1em;
@@ -1386,7 +1386,6 @@ div.discontinued {
     #flexslider-wrap > .row {
       display: flex;
     }
-
     .flex-preface {
       background: transparent url("../images/left-end.png") no-repeat left bottom;
       margin-bottom: 4.6rem;
@@ -1409,6 +1408,7 @@ div.discontinued {
       li {
         position: relative;
         margin:0 0 7.5rem;
+        padding: 0 0;
         div {
           background: #fff;
           margin: 10rem 1rem 0;
@@ -1432,11 +1432,11 @@ div.discontinued {
           }
         }
         div.description {
-          bottom: -11rem;
+          bottom: -12.5rem;
           background: #000;
           color: #fff;
           width: 90%;
-          height: 7rem;
+          height: 9rem;
           position: absolute;
           p {
               /* hide text if it more than N lines  */
@@ -1446,7 +1446,7 @@ div.discontinued {
             /* use this value to count block height */
             line-height: 1.2em;
             /* max-height = line-height (1.2) * lines max number (4) */
-            max-height: 4.7em;
+            max-height: 7.2em;
             /* fix problem when last visible word doesn't adjoin right side  */
             text-align: left;
             /* place for '...' */
@@ -1458,7 +1458,7 @@ div.discontinued {
               /* absolute position */
               position: absolute;
               /* set position to right bottom corner of block */
-              right: 0;
+              right: .6em;
               bottom: 0;
             }
             &:after {
@@ -1467,7 +1467,7 @@ div.discontinued {
                 /* absolute position */
                 position: absolute;
                 /* set position to right bottom corner of text */
-                right: 0;
+                right: .5rem;
                 /* set width and height */
                 width: 1em;
                 height: 1em;
