@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Virtual Stores feature.
+ */
+
+include_once 'virtual_stores.features.inc';
