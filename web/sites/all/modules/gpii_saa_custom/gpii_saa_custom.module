@@ -1508,10 +1508,12 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
 
       // add the parent terms
       $parents = array_unique($parents);
-
-      foreach ($parents as $key => $value) {
-        $entity->field_trouble_with['und'][] = array('tid' => $value);
+      if (count($parents) > 0) {
+        foreach ($parents as $key => $value) {
+          $entity->field_trouble_with['und'][] = array('tid' => $value);
+        }
       }
+
 
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been updated.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
     }
