@@ -1510,7 +1510,9 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
       $parents = array_unique($parents);
       if (count($parents) > 0) {
         foreach ($parents as $key => $value) {
-          $entity->field_trouble_with['und'][] = array('tid' => $value);
+          if ($value != NULL) {
+            $entity->field_trouble_with['und'][] = array('tid' => $value);
+          }
         }
       }
 
