@@ -29,18 +29,18 @@ var fluid_1_5 = fluid_1_5 || {};
             "template": "%prefix/SeparatedPanelPrefsEditor.html",
             "messagePrefix": "../../framework/preferences/messages/",  // The common path to settings panel templates. The template defined in "panels" element will take precedence over this definition.
             "message": "%prefix/prefsEditor.json",
-            "textSize": {
-                "type": "fluid.prefs.textSize",
-                "enactor": {
-                    "type": "fluid.prefs.enactor.textSize"
-                },
-                "panel": {
-                    "type": "fluid.prefs.panel.textSize",
-                    "container": ".flc-prefsEditor-text-size",  // the css selector in the template where the panel is rendered
-                    "template": "%prefix/PrefsEditorTemplate-textSize.html",
-                    "message": "%prefix/textSize.json"
-                }
-            },
+            // "textSize": {
+            //     "type": "fluid.prefs.textSize",
+            //     "enactor": {
+            //         "type": "fluid.prefs.enactor.textSize"
+            //     },
+            //     "panel": {
+            //         "type": "fluid.prefs.panel.textSize",
+            //         "container": ".flc-prefsEditor-text-size",  // the css selector in the template where the panel is rendered
+            //         "template": "%prefix/PrefsEditorTemplate-textSize.html",
+            //         "message": "%prefix/textSize.json"
+            //     }
+            // },
             "lineSpace": {
                 "type": "fluid.prefs.lineSpace",
                 "enactor": {

@@ -475,11 +475,11 @@
 
 
 div.instructions {
-  margin-top: -1em;
-  line-height: 1.8;
+    line-height: 2.2;
+    font-size: 140%;
+    color: #000;
 }
 
 div.instructions ul {
     margin: 0;
 }
-

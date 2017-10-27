@@ -39,12 +39,52 @@
         <script type="text/javascript" src="../../../lib/jquery/ui/js/jquery.ui.slider.js"></script>
         <script type="text/javascript" src="../../../lib/jquery/plugins/touchPunch/js/jquery.ui.touch-punch.js"></script>
         <script type="text/javascript" src="../../../lib/json/js/json2.js"></script>
+
+
      </head>
 
     <body class="fl-prefsEditor-separatedPanel fl-focus">
         <div class="fl-hidden">
             <div class="flc-toc-tocContainer"></div>
         </div>
+        <script type="text/javascript">
+              $(document).ready(function(){
+
+                  // Detect the OS so that we can provide improved keyboard instructions for text size changes.
+
+                  function waitForElementToDisplay(selector, time) {
+                    if(document.querySelector(selector)!=null) {
+                        //alert("The selector is available.");
+                        //console.log($(selector));
+                        $(selector).hide();
+                        $('.slash').hide();
+                        return;
+                    }
+                    else {
+                      console.log(selector);
+                        setTimeout(function() {
+                            waitForElementToDisplay(selector, time);
+                        }, time);
+                    }
+                }
+                  var OSName = "Unknown OS";
+                  if (navigator.appVersion.indexOf("Win")   != -1) OSName = "Windows";
+                  if (navigator.appVersion.indexOf("Mac")   != -1) OSName = "MacOS";
+                  if (navigator.appVersion.indexOf("X11")   != -1) OSName = "UNIX";
+                  if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
+
+                  if (OSName == "MacOS") {
+                    waitForElementToDisplay('.win', 500);
+                    return;
+
+                  }
+                  else {
+                    waitForElementToDisplay('.mac', 500);
+                    return;
+                  }
+              });
+
+        </script>
     </body>
 
 </html>
