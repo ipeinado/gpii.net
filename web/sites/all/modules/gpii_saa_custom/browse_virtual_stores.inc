@@ -4,7 +4,6 @@
  */
 
 function virtual_shelf($tid) {
-
   // sanitize and verify that we have a valid term id
   check_plain($tid);
   $termObj = taxonomy_term_load($tid);
@@ -96,10 +95,5 @@ END;
     return $markup;
 
   }
-
-
-
-
 }
-
- ?>
+?>

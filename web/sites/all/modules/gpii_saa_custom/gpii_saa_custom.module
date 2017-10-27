@@ -361,10 +361,10 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_products_ulisting',
         'access arguments' => array('access advanced search data'),
       );
-      $items['search/virtual/shelf/%'] = array(
+      $items['browse/shelf/%'] = array(
         'title' => 'Virtual Store Shelf',
         'page callback' => 'gpii_saa_custom_virtual_shelf',
-        'page arguments' => array(3),
+        'page arguments' => array(2),
         'access arguments' => array('access content'),
       );
       $items['reports/taxonomy/terminal/%'] = array(
@@ -1491,9 +1491,25 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
       // remove any old trouble taxonomy refs
       unset($entity->field_trouble_with['und']);
 
-
+      // create an empty array to hold parents of terms referenced
+      $parents = array();
       foreach ($trouble_terms as $key => $value) {
         //dpm($key . '-' . $value);
+        // Set lineage no longer works because virutal stores need to reference only some children
+        // Therefore, check to see if the trouble term has parents and set those too. We only have to check once because this tree is only 2 levels deep.
+        $parent = taxonomy_get_parents($value);
+
+        // add the parent key to an array by getting the key of the array of objects returned by taxonomy_get_parents
+        $parents[] = key($parent);
+
+        $entity->field_trouble_with['und'][] = array('tid' => $value);
+      }
+
+
+      // add the parent terms
+      $parents = array_unique($parents);
+
+      foreach ($parents as $key => $value) {
         $entity->field_trouble_with['und'][] = array('tid' => $value);
       }
 
