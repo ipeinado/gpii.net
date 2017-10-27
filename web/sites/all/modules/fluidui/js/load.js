@@ -14,13 +14,13 @@
 
 
       var path = window.location.pathname;
-      console.log(path);
+      //console.log(path);
 
       if (path.lastIndexOf('/el/', 0) === 0) {
         fluid.uiOptions.prefsEditor(".flc-prefsEditor-separatedPanel", {
           "templatePrefix": libraryPath + "/framework/preferences/html/",
           "messagePrefix": origin + modulePath + "/messages/el/",
-          "tocTemplate": libraryPath + "/components/tableOfContents/html/TableOfContentsEL.html" // @@ figure out why this doesn't seem to work
+          "tocTemplate": libraryPath + "/components/tableOfContents/html/TableOfContentsEL.html"
         });
       }
       else {
@@ -30,8 +30,6 @@
           "tocTemplate": libraryPath + "/components/tableOfContents/html/TableOfContents.html"
         });
       }
-
-
       }
   };
 }(jQuery));
