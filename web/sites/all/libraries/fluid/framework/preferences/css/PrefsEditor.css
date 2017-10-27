@@ -475,6 +475,7 @@
 
 
 div.instructions {
+    margin-top: -1em;
     line-height: 2.2;
     font-size: 140%;
     color: #000;
