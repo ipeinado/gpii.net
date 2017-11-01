@@ -17,7 +17,7 @@ function virtual_stores() {
       $gridClasses = 'col-sm-12 col-md-8';
     }
     elseif (count($stores) == 2) {
-      $gridClasses = 'col-sm-24 col-md-6';
+      $gridClasses = 'col-sm-24 col-md-12';
     }
     else {
       $gridClasses = 'col-sm-24';
