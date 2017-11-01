@@ -922,21 +922,72 @@ div.discontinued {
     margin: 10px 0;
     display: inline-block; }
 
+.page-browse .browse-store-wrapper .browse-stores {
+  margin-bottom: 6rem; }
+
+/**
+ * Virtual Store departments
+ */
+.page-browse-category {
+  /* ---- grid ---- */
+  /* clearfix */
+  /* ---- grid-item ---- */ }
+  .page-browse-category .category-label {
+    display: block;
+    bottom: 0;
+    padding: 2rem 1rem;
+    font-weight: bold;
+    font-size: 120%;
+    overflow-wrap: break-word; }
+  .page-browse-category .grid {
+    max-width: 100%; }
+  .page-browse-category .grid:after {
+    content: '';
+    display: block;
+    clear: both; }
+  .page-browse-category .grid-sizer,
+  .page-browse-category .grid-item {
+    width: 18%; }
+  .page-browse-category .gutter-sizer {
+    width: 2%; }
+  .page-browse-category .grid-item {
+    height: 260px;
+    float: left;
+    background: #eeeeee;
+    border-radius: 0;
+    margin-bottom: 1rem;
+    border-bottom: 4px solid #cccccc;
+    box-shadow: 1px 0 1px #b2b2b2; }
+    .page-browse-category .grid-item:hover, .page-browse-category .grid-item:focus, .page-browse-category .grid-item:active {
+      background-color: #f4f4f4; }
+  .page-browse-category .grid-item--width2 {
+    width: 36%; }
+  .page-browse-category .grid-item--width3 {
+    width: 56%; }
+  .page-browse-category .grid-item--width4 {
+    width: 18%; }
+  .page-browse-category .grid-item--height2 {
+    height: 300px; }
+  .page-browse-category .grid-item--height3 {
+    height: 360px; }
+  .page-browse-category .grid-item--height4 {
+    height: 420px; }
+
 /**
  * Virtual Store Shelf and flexslider overrides
  */
-.page-search-virtual-shelf .container {
+.page-browse-shelf .container {
   width: 100%; }
 
-.page-search-virtual-shelf .slides li {
+.page-browse-shelf .slides li {
   padding: 0 1rem; }
 
-.page-search-virtual-shelf div.description {
+.page-browse-shelf div.description {
   background: #000;
   color: #fff;
   height: 14rem;
   padding: 1rem; }
-  .page-search-virtual-shelf div.description p {
+  .page-browse-shelf div.description p {
     /* hide text if it more than N lines  */
     overflow: hidden;
     /* for set '...' in absolute position */
@@ -951,7 +1002,7 @@ div.discontinued {
     /* place for '...' */
     margin-right: -1em;
     padding-right: 1em; }
-    .page-search-virtual-shelf div.description p:before {
+    .page-browse-shelf div.description p:before {
       /* points in the end */
       content: '...';
       /* absolute position */
@@ -959,7 +1010,7 @@ div.discontinued {
       /* set position to right bottom corner of block */
       right: 0.5em;
       bottom: 0; }
-    .page-search-virtual-shelf div.description p:after {
+    .page-browse-shelf div.description p:after {
       /* points in the end */
       content: '';
       /* absolute position */
@@ -974,28 +1025,28 @@ div.discontinued {
       background: #000; }
 
 @media (min-width: 991px) {
-  .page-search-virtual-shelf #flexslider-wrap > .row {
+  .page-browse-shelf #flexslider-wrap > .row {
     display: flex; }
-  .page-search-virtual-shelf .flex-preface {
+  .page-browse-shelf .flex-preface {
     background: transparent url("../images/left-end.png") no-repeat left bottom;
     margin-bottom: 4.6rem; }
-  .page-search-virtual-shelf .flexslider {
+  .page-browse-shelf .flexslider {
     background: transparent url("../images/middle.png") repeat-x center bottom;
     border-left: 0;
     border-right: 0;
     margin-bottom: 4.3rem; }
-  .page-search-virtual-shelf .flex-suffix {
+  .page-browse-shelf .flex-suffix {
     background: transparent url("../images/right-end.png") no-repeat right bottom;
     margin-bottom: 4.6rem; }
-  .page-search-virtual-shelf .slides {
+  .page-browse-shelf .slides {
     display: flex;
     padding-bottom: 6rem;
     margin-top: 22rem; }
-    .page-search-virtual-shelf .slides li {
+    .page-browse-shelf .slides li {
       position: relative;
       margin: 0 0 7.5rem;
       padding: 0 0; }
-      .page-search-virtual-shelf .slides li div {
+      .page-browse-shelf .slides li div {
         background: #fff;
         margin: 10rem 1rem 0;
         border: 1px solid #000;
@@ -1004,23 +1055,23 @@ div.discontinued {
         width: 90%;
         position: absolute;
         bottom: 0; }
-        .page-search-virtual-shelf .slides li div h3 {
+        .page-browse-shelf .slides li div h3 {
           margin-top: 0;
           margin-bottom: 1rem;
           font-size: 115%;
           font-weight: bold; }
-        .page-search-virtual-shelf .slides li div img {
+        .page-browse-shelf .slides li div img {
           max-width: 90%;
           margin: 0 auto;
           max-height: 12rem; }
-      .page-search-virtual-shelf .slides li div.description {
+      .page-browse-shelf .slides li div.description {
         bottom: -12.5rem;
         background: #000;
         color: #fff;
         width: 90%;
         height: 9rem;
         position: absolute; }
-        .page-search-virtual-shelf .slides li div.description p {
+        .page-browse-shelf .slides li div.description p {
           /* hide text if it more than N lines  */
           overflow: hidden;
           /* for set '...' in absolute position */
@@ -1034,7 +1085,7 @@ div.discontinued {
           /* place for '...' */
           margin-right: -1em;
           padding-right: 1em; }
-          .page-search-virtual-shelf .slides li div.description p:before {
+          .page-browse-shelf .slides li div.description p:before {
             /* points in the end */
             content: '...';
             /* absolute position */
@@ -1042,7 +1093,7 @@ div.discontinued {
             /* set position to right bottom corner of block */
             right: .6em;
             bottom: 0; }
-          .page-search-virtual-shelf .slides li div.description p:after {
+          .page-browse-shelf .slides li div.description p:after {
             /* points in the end */
             content: '';
             /* absolute position */

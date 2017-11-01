@@ -41,6 +41,9 @@ function gpii_saa_custom_permission() {
     ),
     'access terminal taxonomy report' => array(
       'title' => t('Access terminal taxonomy term reports.'),
+    ),
+    'access browse virtual stores' => array(
+      'title' => t('Access browse virtual stores pages.'),
     )
   );
 }
@@ -361,11 +364,22 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_products_ulisting',
         'access arguments' => array('access advanced search data'),
       );
+      $items['browse'] = array(
+        'title' => 'Browse Virtual Stores',
+        'page callback' => 'gpii_saa_custom_virtual_stores',
+        'access arguments' => array('access browse virtual stores'),
+      );
+      $items['browse/category/%'] = array(
+        'title' => 'Virtual Store Category',
+        'page callback' => 'gpii_saa_custom_virtual_category',
+        'page arguments' => array(2),
+        'access arguments' => array('access browse virtual stores'),
+      );
       $items['browse/shelf/%'] = array(
         'title' => 'Virtual Store Shelf',
         'page callback' => 'gpii_saa_custom_virtual_shelf',
         'page arguments' => array(2),
-        'access arguments' => array('access content'),
+        'access arguments' => array('access browse virtual stores'),
       );
       $items['reports/taxonomy/terminal/%'] = array(
         'title' => 'Terminal Taxonomy Report',
@@ -1510,6 +1524,7 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
       $parents = array_unique($parents);
       if (count($parents) > 0) {
         foreach ($parents as $key => $value) {
+          // be sure we're not sending a null value (else drupal integrity constraint violation 1048 column 'tid' cannot be null)
           if ($value != NULL) {
             $entity->field_trouble_with['und'][] = array('tid' => $value);
           }
@@ -1545,11 +1560,24 @@ function gpii_saa_custom_sync_needs_to_trouble_vbo($features) {
 }
 
 
-function gpii_saa_custom_virtual_shelf($tid) {
 
+
+function gpii_saa_custom_virtual_stores() {
   // include browse virtual store functions
   module_load_include('inc', 'gpii_saa_custom', 'browse_virtual_stores');
+  return virtual_stores();
+}
 
+function gpii_saa_custom_virtual_category($storeid) {
+  // include browse virtual store functions
+  module_load_include('inc', 'gpii_saa_custom', 'browse_virtual_stores');
+  return virtual_category($storeid, arg(3));
+}
 
+function gpii_saa_custom_virtual_shelf($tid) {
+  // include browse virtual store functions
+  module_load_include('inc', 'gpii_saa_custom', 'browse_virtual_stores');
   return virtual_shelf($tid);
 }
+
+

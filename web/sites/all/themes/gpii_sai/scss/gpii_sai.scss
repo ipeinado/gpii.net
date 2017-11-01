@@ -1318,11 +1318,79 @@ div.discontinued {
 // #############################################################################
 
 
+.page-browse {
+  .browse-store-wrapper {
+    .browse-stores {
+      margin-bottom: 6rem;
+    }
+  }
+}
+
+/**
+ * Virtual Store departments
+ */
+
+ .page-browse-category {
+
+  .category-label {
+    display: block;
+    bottom: 0;
+    padding: 2rem 1rem;
+    font-weight: bold;
+    font-size: 120%;
+    overflow-wrap: break-word;
+  }
+
+  /* ---- grid ---- */
+
+  .grid {
+    max-width: 100%;
+  }
+
+  /* clearfix */
+  .grid:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  /* ---- grid-item ---- */
+
+  .grid-sizer,
+  .grid-item {
+    width: 18%;
+  }
+  .gutter-sizer { width: 2%; }
+
+  .grid-item {
+    height: 260px;
+    float: left;
+    background: $gray-lighter;
+    border-radius: 0;
+    margin-bottom: 1rem;
+    border-bottom: 4px solid #cccccc;
+    &:hover, &:focus, &:active {
+      background-color: lighten($gray-lighter, 2%);
+     }
+     box-shadow: 1px 0 1px $color-gpii-med-gray;
+
+  }
+
+  .grid-item--width2 { width:  36%; }
+  .grid-item--width3 { width:  56%; }
+  .grid-item--width4 { width:  18%; }
+
+  .grid-item--height2 { height: 300px; }
+  .grid-item--height3 { height: 360px; }
+  .grid-item--height4 { height: 420px; }
+ }
+
+
 /**
  * Virtual Store Shelf and flexslider overrides
  */
 
-.page-search-virtual-shelf {
+.page-browse-shelf {
     .container {
       width: 100%;
     }
@@ -1382,7 +1450,7 @@ div.discontinued {
 }
 
 @media (min-width: $screen-sm-max) {
-  .page-search-virtual-shelf {
+  .page-browse-shelf {
     #flexslider-wrap > .row {
       display: flex;
     }
