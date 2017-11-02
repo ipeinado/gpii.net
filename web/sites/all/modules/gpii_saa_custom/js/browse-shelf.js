@@ -10,13 +10,13 @@
     $('.flexslider').flexslider({
       animation: "slide",
       animationLoop: false,
-      animationSpeed: 2000,
+      animationSpeed: 800,
       controlNav: false,
       itemWidth: 210,
       itemMargin: 0,
       minItems: 2,
       maxItems: 5,
-      mousewheel: true,
+      mousewheel: false,
       slideshow: false,
       useCSS: true
     });

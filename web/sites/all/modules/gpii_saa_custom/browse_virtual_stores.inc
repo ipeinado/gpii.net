@@ -17,13 +17,17 @@ function virtual_stores() {
       $gridClasses = 'col-sm-12 col-md-8';
     }
     elseif (count($stores) == 2) {
-      $gridClasses = 'col-sm-24 col-md-12';
+      $gridClasses = 'col-sm-24 col-md-8 col-md-offset-4';
     }
     else {
       $gridClasses = 'col-sm-24';
     }
-      $markup .= '<div class="row justify-content-center">';
-          foreach ($stores as $store) {
+      $markup .= '<div class="row">';
+          foreach ($stores as $key => $store) {
+            // adjust grid classes when we have only two in a row to offset and center below row of 3
+            if (count($stores) == 2 && $key == 1) {
+              $gridClasses = 'col-sm-24 col-md-8';
+            }
               $markup .= '<div class="' . $gridClasses . ' text-center browse-stores"><a href="/browse/category/' . $store->nid . '">';
               $markup .= theme('image_style',array(
                   'style_name' => 'medium',
@@ -82,6 +86,7 @@ function virtual_category($storeid, $category) {
 
   $_SESSION['browse_virtual_stores'] = array();
   $_SESSION['browse_virtual_stores']['crumbs'] = $crumbs;
+  $_SESSION['browse_virtual_stores']['troubleTIDs'] = $troubleTIDs;
 
 
   array_pop($crumbs);
@@ -109,6 +114,7 @@ function virtual_category($storeid, $category) {
     $units = taxonomy_get_tree($vid, $category, 1, FALSE);
     //dpm($units);
     foreach ($units as $key => $value) {
+      //dpm($args);
       $args = array($value->tid, $troubleTIDs);
       $view = views_get_view('browse_shelf');
       $view->set_display('page_1');
@@ -125,6 +131,8 @@ function virtual_category($storeid, $category) {
       elseif ($resultcount > 0) {
         $unitList[] = l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid) . ' (' . $resultcount . ')';
       }
+
+
     }
 
     //dpm($unitList);
@@ -142,7 +150,7 @@ function virtual_category($storeid, $category) {
       $children = taxonomy_get_children($category);
 
       //dpm($args);
-      //kpr($result);
+      // kpr($result);
       // kpr(array_keys($units));
       $children = array_keys($children);
       //kpr($children);
@@ -161,6 +169,10 @@ function virtual_category($storeid, $category) {
       $unitList[] = l(t('Other'), 'browse/shelf/' . $category) . ' (' . count($result) . ')';
     }
 
+    if (count($unitList) === 0) {
+        $markup .= '<p>No products are currently available in this sectioon.<p>';
+      }
+
 
     $markup .= theme('item_list', array(
       'items' => $unitList,
@@ -169,10 +181,11 @@ function virtual_category($storeid, $category) {
         )
     );
   }
-
+  // kick out the choose a department image map
   else {
 
-    drupal_add_js('sites/all/libraries/masonry/masonry.pkgd.min.js');
+    //drupal_add_js('sites/all/libraries/masonry/masonry.pkgd.min.js');
+    drupal_add_js('sites/all/libraries/rwdimagemaps/jquery.rwdImageMaps.min.js');
     drupal_add_js('sites/all/modules/gpii_saa_custom/js/browse-category.js');
 
     //dpm($store);
@@ -181,21 +194,80 @@ function virtual_category($storeid, $category) {
     $vid = 11;
     $departments = taxonomy_get_tree($vid, 0, 1, FALSE);
 
-    // create an array to get at some randomization for sizes
-    $sizeValues = array('', 1,2,3,4);
-
-    $markup .= '<div class="grid"><div class="grid-sizer"></div><div class="gutter-sizer"></div>';
+     $markup .= '<map name="storemap">';
 
     foreach ($departments as $key => $value) {
-      $width = array_rand($sizeValues, 1);
-      $height = array_rand($sizeValues, 1);
+      // set coordinates and other values related to the generated image map for each top-level item
+      switch (true) {
+        case $value->tid === '3629': // Adaptive or Assistive Products
+          $mapVars = array(
+            'coords' => '750,33,1112,359',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        case $value->tid === '3637': // Computer Access and Use
+          $mapVars = array(
+            'coords' => '25,164,329,513',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        case $value->tid === '3639': // Commmunication
+          $mapVars = array(
+            'coords' => '514,33,739,279',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        case $value->tid === '3641': // Education
+          $mapVars = array(
+            'coords' => '749,371,1079,512',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        case $value->tid === '3648': // Employment/Job
+          $mapVars = array(
+            'coords' => '566,290,739,513',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        case $value->tid === '3646': // Daily Living
+          $mapVars = array(
+            'coords' => '2,34,330,152',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        case $value->tid === '3634': // Health, Fitness and Sports
+          $mapVars = array(
+            'coords' => '341,1,501,279',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        case $value->tid === '4300': // Entertainment and Play
+          $mapVars = array(
+            'coords' => '341,290,555,544',
+            'name' => $value->name,
+            'tooltip' => $value->name
+          );
+          break;
+        default:
+          // dpm('no dice');
+          break;
+      }
 
-      $markup .= '<div class="grid-item grid-item--width' . $width. ' grid-item--height' . $height . '"><div class="category-label"><a href="/browse/category/' . $storeid . '/' . $value->tid . '">' . $value->name . '</a></div></div>';
+      $markup .= '<area shape="rect" coords="' . $mapVars['coords'] . '" href="/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $mapVars['name'] . '" data-toggle="tooltip" data-placement="bottom center" title="' . $mapVars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
     }
 
 
-    $markup .= '</div>';
+    $markup .= '</map>';
 
+    // the image is below the map because Chrome positions data-placement relative to the map element instead of to the image
+    $markup .= '<img class="img-responsive" src="/' . drupal_get_path('module', 'gpii_saa_custom') . '/images/ULStoreMapFlat.png" alt="Choose a department" width="1113" height="545" usemap="#storemap" id="departmentmap" />';
 
   }
 
@@ -206,7 +278,8 @@ function virtual_category($storeid, $category) {
 
 function virtual_shelf($tid) {
 
-  //dpm($_SESSION['browse_virtual_stores']);
+  // @@ add a condition for "other"
+  // Check for tids filter
 
   $markup = '<nav aria-label="Breadcrumb" class="breadcrumbs">';
   $markup .=  theme('item_list', array(
@@ -250,11 +323,21 @@ function virtual_shelf($tid) {
     // Demo: http://dev.saa.gpii.net/search/virtual/shelf/3698
 
 
-    $results = views_get_view_result('browse_shelf', 'page_1', $tid);
+    // get the trouble terms from the session
+    $troubleTIDs = $_SESSION['browse_virtual_stores']['troubleTIDs'];
+
+    $args = array($tid, $troubleTIDs);
+    $view = views_get_view('browse_shelf');
+    $view->set_display('page_1');
+    $view->set_arguments($args);
+    $view->pre_execute();
+    $view->execute();
+    $result = $view->result;
+
 
     //dpm($results);
 
-    $resultCount = count($results);
+    $resultCount = count($result);
 
 
     if ($resultCount > 0) {
@@ -267,7 +350,7 @@ function virtual_shelf($tid) {
 
 END;
 
-      foreach ($results as $key => $value) {
+      foreach ($result as $key => $value) {
         if ($key === 0) {
           $markup .= '<li class="first">';
         }
