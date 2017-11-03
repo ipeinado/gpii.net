@@ -368,7 +368,13 @@ function virtual_shelf($tid) {
     //dpm($results);
 
     $resultCount = count($result);
-    $markup .= '<p>There are ' . $resultCount . ' products on this shelf.</p>';
+    if ($resultCount == 1) {
+      $resultCount = 'is ' . $resultCount . ' product';
+    }
+    else {
+      $resultCount = 'are ' . $resultCount . ' products';
+    }
+    $markup .= '<p>There ' . $resultCount . ' on this shelf.</p>';
 
     if ($resultCount > 0) {
       $markup .= <<<END
