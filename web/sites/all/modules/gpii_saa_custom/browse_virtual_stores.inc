@@ -113,6 +113,7 @@ function virtual_category($storeid, $category) {
     $vid = 11;
     $units = taxonomy_get_tree($vid, $category, 1, FALSE);
     //dpm($units);
+    $resultTotal = 0;
     foreach ($units as $key => $value) {
       //dpm($args);
       $args = array($value->tid, $troubleTIDs);
@@ -127,12 +128,12 @@ function virtual_category($storeid, $category) {
       //dpm($resultcount);
       if ($resultcount > 0 && $depth > 1) {
         $unitList[] = l(t($value->name), 'browse/shelf/' . $value->tid) . ' (' . $resultcount . ')';
+        $resultTotal = $resultTotal + $resultcount;
       }
       elseif ($resultcount > 0) {
         $unitList[] = l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid) . ' (' . $resultcount . ')';
+        $resultTotal = $resultTotal + $resultcount;
       }
-
-
     }
 
     //dpm($unitList);
@@ -165,9 +166,19 @@ function virtual_category($storeid, $category) {
         }
       }
 
-      //kpr($result);
-      $unitList[] = l(t('Other'), 'browse/shelf/' . $category) . ' (' . count($result) . ')';
+      if ($result > 1) {
+        //kpr($result);
+        $unitList[] = l(t('Other'), 'browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')';
+      }
+
     }
+
+    // if the total number of results we're working with is less than 40, then just skip directly to the shelf
+    if ($resultTotal < 40) {
+      unset($resultTotal);
+      drupal_goto('browse/shelf/' . $category, array('query' => array('child_categories' => 'true')), 302);
+    }
+
 
     if (count($unitList) === 0) {
         $markup .= '<p>No products are currently available in this sectioon.<p>';
@@ -260,7 +271,7 @@ function virtual_category($storeid, $category) {
           break;
       }
 
-      $markup .= '<area shape="rect" coords="' . $mapVars['coords'] . '" href="/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $mapVars['name'] . '" data-toggle="tooltip" data-placement="bottom center" title="' . $mapVars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
+      $markup .= '<area shape="rect" coords="' . $mapVars['coords'] . '" href="/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $mapVars['name'] . '" data-toggle="tooltip" data-selector"#departmentmap" title="' . $mapVars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
     }
 
 
@@ -280,6 +291,8 @@ function virtual_shelf($tid) {
 
   // @@ add a condition for "other"
   // Check for tids filter
+  //
+  //dpm($_GET['child_categories']);
 
   $markup = '<nav aria-label="Breadcrumb" class="breadcrumbs">';
   $markup .=  theme('item_list', array(
@@ -289,7 +302,6 @@ function virtual_shelf($tid) {
         )
     );
   $markup .= '</nav>';
-
 
   // sanitize and verify that we have a valid term id
   check_plain($tid);
@@ -334,11 +346,29 @@ function virtual_shelf($tid) {
     $view->execute();
     $result = $view->result;
 
+    // if this is an "other" shelf, then we need to remove any records that are tagged with child terms
+    if($_GET['child_categories'] === 'none') {
+
+      $children = taxonomy_get_children($tid);
+      $children = array_keys($children);
+      //kpr($children);
+
+      foreach ($result as $key => $value) {
+        # get the terms on the node and unset the row if we find a match
+        //kpr($value->_field_data['nid']['entity']);
+        $terms = gpii_saa_custom_get_term_ids($value->_field_data['nid']['entity']);
+        $match = array_intersect($children, $terms);
+        if (count($match) > 0) {
+          unset($result[$key]);
+        }
+      }
+    }
+
 
     //dpm($results);
 
     $resultCount = count($result);
-
+    $markup .= '<p>There are ' . $resultCount . ' products on this shelf.</p>';
 
     if ($resultCount > 0) {
       $markup .= <<<END
