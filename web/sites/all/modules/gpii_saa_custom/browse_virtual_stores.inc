@@ -14,22 +14,22 @@ function virtual_stores() {
   $rows = array_chunk($results, 3); // 3 items per row, adjust grid glasses below to center the last one
   foreach ($rows as $stores) {
     if (count($stores) == 3) {
-      $gridClasses = 'col-sm-12 col-md-8';
+      $grid_classes = 'col-sm-12 col-md-8';
     }
     elseif (count($stores) == 2) {
-      $gridClasses = 'col-sm-24 col-md-8 col-md-offset-4';
+      $grid_classes = 'col-sm-24 col-md-8 col-md-offset-4';
     }
     else {
-      $gridClasses = 'col-sm-24';
+      $grid_classes = 'col-sm-24';
     }
       $markup .= '<div class="row">';
           foreach ($stores as $key => $store) {
             // adjust grid classes when we have only two in a row to offset and center below row of 3
             if (count($stores) == 2 && $key == 1) {
-              $gridClasses = 'col-sm-24 col-md-8';
+              $grid_classes = 'col-sm-24 col-md-8';
             }
-              $markup .= '<div class="' . $gridClasses . ' text-center browse-stores"><a href="/browse/category/' . $store->nid . '">';
-              $markup .= theme('image_style',array(
+              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores"><a href="/browse/category/' . $store->nid . '">';
+              $markup .= theme('image_style', array(
                   'style_name' => 'medium',
                   'path' => $store->field_field_image[0]['raw']['uri'],
                   'attributes' => array(
@@ -56,16 +56,16 @@ function virtual_category($storeid, $category) {
   $store = node_load($storeid);
   //dpm($store);
 
-  $troubleTerms = $store->field_trouble_with['und'];
+  $trouble_terms = $store->field_trouble_with['und'];
 
-  $troubleTIDs = array();
-  foreach ($troubleTerms as $key => $value) {
-    $troubleTIDs[] = $value['tid'];
+  $trouble_tids = array();
+  foreach ($trouble_terms as $key => $value) {
+    $trouble_tids[] = $value['tid'];
   }
 
-  $troubleTIDs = implode('+', $troubleTIDs);
+  $trouble_tids = implode('+', $trouble_tids);
 
-  //dpm($troubleTIDs);
+  //dpm($trouble_tids);
 
   $crumbs = array();
   $crumbs[] = l(t('Home'), '');
@@ -74,19 +74,20 @@ function virtual_category($storeid, $category) {
   if ($depth > 1) {
     $parents = taxonomy_get_parents($category);
     //dpm($parents);
-    foreach ($parents as $key => $value) {
+    foreach ( $parents as $key => $value ) {
       $crumbs[] = l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid);
     }
 
   }
   if (is_numeric($category)) {
-    $categoryObj = taxonomy_term_load($category);
-    $crumbs[] = l(t($categoryObj->name), 'browse/category/' . $storeid . '/' . $category);
+    $category_obj = taxonomy_term_load($category);
+    $crumbs[] = l(t($category_obj
+->name), 'browse/category/' . $storeid . '/' . $category);
   }
 
   $_SESSION['browse_virtual_stores'] = array();
   $_SESSION['browse_virtual_stores']['crumbs'] = $crumbs;
-  $_SESSION['browse_virtual_stores']['troubleTIDs'] = $troubleTIDs;
+  $_SESSION['browse_virtual_stores']['troubleTIDs'] = $trouble_tids;
 
 
   array_pop($crumbs);
@@ -100,12 +101,12 @@ function virtual_category($storeid, $category) {
   $markup .= '</nav>';
 
   if ($depth > 1) {
-    $categoryType = 'shelf';
+    $category_type = 'shelf';
   }
   else {
-    $categoryType = 'section';
+    $category_type = 'section';
   }
-  drupal_set_title($categoryObj->name . ': Choose a ' . $categoryType, $output = CHECK_PLAIN);
+  drupal_set_title($category_obj->name . ': Choose a ' . $category_type, $output = CHECK_PLAIN);
 
 
   if (is_numeric($category)) {
@@ -113,10 +114,10 @@ function virtual_category($storeid, $category) {
     $vid = 11;
     $units = taxonomy_get_tree($vid, $category, 1, FALSE);
     //dpm($units);
-    $resultTotal = 0;
+    $result_total = 0;
     foreach ($units as $key => $value) {
       //dpm($args);
-      $args = array($value->tid, $troubleTIDs);
+      $args = array($value->tid, $trouble_tids);
       $view = views_get_view('browse_shelf');
       $view->set_display('page_1');
       $view->set_arguments($args);
@@ -124,23 +125,23 @@ function virtual_category($storeid, $category) {
       $view->execute();
       $result = $view->result;
 
-      $resultcount = count($result);
-      //dpm($resultcount);
-      if ($resultcount > 0 && $depth > 1) {
-        $unitList[] = l(t($value->name), 'browse/shelf/' . $value->tid) . ' (' . $resultcount . ')';
-        $resultTotal = $resultTotal + $resultcount;
+      $result_count = count($result);
+      //dpm($result_count);
+      if ($result_count > 0 && $depth > 1) {
+        $unit_list[] = l(t($value->name), 'browse/shelf/' . $value->tid) . ' (' . $result_count . ')';
+        $result_total = $result_total + $result_count;
       }
-      elseif ($resultcount > 0) {
-        $unitList[] = l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid) . ' (' . $resultcount . ')';
-        $resultTotal = $resultTotal + $resultcount;
+      elseif ($result_count > 0) {
+        $unit_list[] = l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid) . ' (' . $result_count . ')';
+        $result_total = $result_total + $result_count;
       }
     }
 
-    //dpm($unitList);
+    //dpm($unit_list);
 
     if ($depth > 1) {
       // @@ find the 'others'
-      $args = array($category, $troubleTIDs);
+      $args = array($category, $trouble_tids);
       $view = views_get_view('browse_shelf');
       $view->set_display('page_1');
       $view->set_arguments($args);
@@ -168,25 +169,25 @@ function virtual_category($storeid, $category) {
 
       if ($result > 1) {
         //kpr($result);
-        $unitList[] = l(t('Other'), 'browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')';
+        $unit_list[] = l(t('Other'), 'browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')';
       }
 
     }
 
     // if the total number of results we're working with is less than 40, then just skip directly to the shelf
-    if ($resultTotal < 40) {
-      unset($resultTotal);
+    if ($result_total < 40) {
+      unset($result_total);
       drupal_goto('browse/shelf/' . $category, array('query' => array('child_categories' => 'true')), 302);
     }
 
 
-    if (count($unitList) === 0) {
+    if (count($unit_list) === 0) {
         $markup .= '<p>No products are currently available in this sectioon.<p>';
       }
 
 
     $markup .= theme('item_list', array(
-      'items' => $unitList,
+      'items' => $unit_list,
       'type' => 'ul',
       'attributes' => array('id' => 'shelving-units', 'class' => array('unit')),
         )
@@ -200,7 +201,7 @@ function virtual_category($storeid, $category) {
     drupal_add_js('sites/all/modules/gpii_saa_custom/js/browse-category.js');
 
     //dpm($store);
-    drupal_set_title('Choose a Department in the ' . $title = $store->title . ' Store', $output = CHECK_PLAIN);
+    drupal_set_title(t('Choose a Department in the ' . $title = $store->title . ' Store'), $output = CHECK_PLAIN);
 
     $vid = 11;
     $departments = taxonomy_get_tree($vid, 0, 1, FALSE);
@@ -211,56 +212,56 @@ function virtual_category($storeid, $category) {
       // set coordinates and other values related to the generated image map for each top-level item
       switch (true) {
         case $value->tid === '3629': // Adaptive or Assistive Products
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '750,33,1112,359',
             'name' => $value->name,
             'tooltip' => $value->name
           );
           break;
         case $value->tid === '3637': // Computer Access and Use
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '25,164,329,513',
             'name' => $value->name,
             'tooltip' => $value->name
           );
           break;
         case $value->tid === '3639': // Commmunication
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '514,33,739,279',
             'name' => $value->name,
             'tooltip' => $value->name
           );
           break;
         case $value->tid === '3641': // Education
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '749,371,1079,512',
             'name' => $value->name,
             'tooltip' => $value->name
           );
           break;
         case $value->tid === '3648': // Employment/Job
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '566,290,739,513',
             'name' => $value->name,
             'tooltip' => $value->name
           );
           break;
         case $value->tid === '3646': // Daily Living
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '2,34,330,152',
             'name' => $value->name,
             'tooltip' => $value->name
           );
           break;
         case $value->tid === '3634': // Health, Fitness and Sports
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '341,1,501,279',
             'name' => $value->name,
             'tooltip' => $value->name
           );
           break;
         case $value->tid === '4300': // Entertainment and Play
-          $mapVars = array(
+          $map_vars = array(
             'coords' => '341,290,555,544',
             'name' => $value->name,
             'tooltip' => $value->name
@@ -271,7 +272,7 @@ function virtual_category($storeid, $category) {
           break;
       }
 
-      $markup .= '<area shape="rect" coords="' . $mapVars['coords'] . '" href="/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $mapVars['name'] . '" data-toggle="tooltip" data-selector"#departmentmap" title="' . $mapVars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
+      $markup .= '<area shape="rect" coords="' . $map_vars['coords'] . '" href="/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $map_vars['name'] . '" data-toggle="tooltip" data-selector"#departmentmap" title="' . $map_vars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
     }
 
 
@@ -305,11 +306,11 @@ function virtual_shelf($tid) {
 
   // sanitize and verify that we have a valid term id
   check_plain($tid);
-  $termObj = taxonomy_term_load($tid);
+  $term_object = taxonomy_term_load($tid);
 
-  //dpm($termObj);
+  //dpm($term_object);
 
-  if ($termObj->tid !== $tid) {
+  if ($term_object->tid !== $tid) {
     //dpm('Invalid term ID.');
     return 'The value provided is not a valid term ID.';
   }
@@ -336,9 +337,9 @@ function virtual_shelf($tid) {
 
 
     // get the trouble terms from the session
-    $troubleTIDs = $_SESSION['browse_virtual_stores']['troubleTIDs'];
+    $trouble_tids = $_SESSION['browse_virtual_stores']['troubleTIDs'];
 
-    $args = array($tid, $troubleTIDs);
+    $args = array($tid, $trouble_tids);
     $view = views_get_view('browse_shelf');
     $view->set_display('page_1');
     $view->set_arguments($args);
@@ -347,7 +348,7 @@ function virtual_shelf($tid) {
     $result = $view->result;
 
     // if this is an "other" shelf, then we need to remove any records that are tagged with child terms
-    if($_GET['child_categories'] === 'none') {
+    if ($_GET['child_categories'] === 'none') {
 
       $children = taxonomy_get_children($tid);
       $children = array_keys($children);
@@ -367,16 +368,16 @@ function virtual_shelf($tid) {
 
     //dpm($results);
 
-    $resultCount = count($result);
-    if ($resultCount == 1) {
-      $shelfItems = 'is ' . $resultCount . ' product';
+    $result_count = count($result);
+    if ($result_count == 1) {
+      $shelf_items = 'is ' . $result_count . ' product';
     }
     else {
-      $shelfItems = 'are ' . $resultCount . ' products';
+      $shelf_items = 'are ' . $result_count . ' products';
     }
-    $markup .= '<p>There ' . $shelfItems . ' on this shelf.</p>';
+    $markup .= '<p>There ' . $shelf_items . ' on this shelf.</p>';
 
-    if ($resultCount > 0) {
+    if ($result_count > 0) {
       $markup .= <<<END
       <div class="container" id="flexslider-wrap">
         <div class="row">
@@ -390,7 +391,7 @@ END;
         if ($key === 0) {
           $markup .= '<li class="first">';
         }
-        elseif ($key ===  ($resultCount - 1)) {
+        elseif ($key ===  ($result_count - 1)) {
           $markup .= '<li class="last">';
         }
         else {
@@ -402,7 +403,7 @@ END;
 
 // @@ Add missing alt text
 
-        $markup .= '<p class="text-center">' . theme('image_style',array('style_name' => 'medium', 'path' => $value->field_field_product_image[0]['rendered']['#item']['uri'])) . '</p></div>';
+        $markup .= '<p class="text-center">' . theme('image_style', array('style_name' => 'medium', 'path' => $value->field_field_product_image[0]['rendered']['#item']['uri'])) . '</p></div>';
 
         $markup .= '<div class="description"><p>' . strip_tags($value->field_body[0]['rendered']['#markup']) . '</p></div>';
 
@@ -425,7 +426,7 @@ END;
 
     }
 
-    drupal_set_title($title = $termObj->name, $output = CHECK_PLAIN);
+    drupal_set_title($title = $term_object->name, $output = CHECK_PLAIN);
 
     return $markup;
 

@@ -1022,9 +1022,9 @@ div.discontinued {
     .page-browse-category .grid-item:hover, .page-browse-category .grid-item:focus, .page-browse-category .grid-item:active {
       background-color: #f4f4f4; }
   .page-browse-category .grid-item--width2 {
-    width: 38%; }
+    width: 36%; }
   .page-browse-category .grid-item--width3 {
-    width: 58%; }
+    width: 56%; }
   .page-browse-category .grid-item--width4 {
     width: 18%; }
   .page-browse-category .grid-item--height2 {
@@ -1041,7 +1041,8 @@ div.discontinued {
   width: 100%; }
 
 .page-browse-shelf .slides li {
-  padding: 0 1rem; }
+  padding: 0 1rem;
+  cursor: pointer; }
 
 .page-browse-shelf div.description {
   background: #000;

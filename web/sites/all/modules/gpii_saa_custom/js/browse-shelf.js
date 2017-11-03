@@ -22,16 +22,16 @@
     });
   });
 
-  // increase the clicktarget on the flexslider items @@ needs work
-  // $(document).ready(function(){
-  //   console.log($('.slide > li'));
-  //   $('.slide').on('click', function() {
-  //     window.location.href = $(this)
-  //       .find('a[href]')
-  //       .first()
-  //       .attr('href');
+  //increase the clicktarget on the flexslider items
+  $(document).ready(function(){
+    //console.log($('.slides > li'));
+    $('.slides').on('click', function() {
+      window.location.href = $(this)
+        .find('a[href]')
+        .first()
+        .attr('href');
 
-  //   });
-  // });
+    });
+  });
 
 }(jQuery));

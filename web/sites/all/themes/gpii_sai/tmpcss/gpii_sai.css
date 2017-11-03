@@ -980,7 +980,8 @@ div.discontinued {
   width: 100%; }
 
 .page-browse-shelf .slides li {
-  padding: 0 1rem; }
+  padding: 0 1rem;
+  cursor: pointer; }
 
 .page-browse-shelf div.description {
   background: #000;
