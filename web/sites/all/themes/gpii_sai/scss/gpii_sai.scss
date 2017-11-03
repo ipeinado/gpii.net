@@ -1399,6 +1399,16 @@ div.discontinued {
       li {
         padding: 0 1rem;
         cursor: pointer;
+        & > div.focused:not(.description) {
+          border: 1px solid $color-gpii-sai-primary;
+          box-shadow: 0 0 2px #000;
+        }
+        a {
+          &:hover, &:focus, &:active {
+            text-decoration: none;
+            outline: none;
+          }
+        }
       }
     }
 
