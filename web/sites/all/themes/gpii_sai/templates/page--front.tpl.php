@@ -162,7 +162,6 @@
                     else {
                       $blockObject = block_load('bean', 'search-method-button-qanda');
                     }
-                    $blockObject = block_load('bean', 'search-method-button-qanda');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
