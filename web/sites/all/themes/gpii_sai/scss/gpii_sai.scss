@@ -1465,11 +1465,6 @@ div.discontinued {
     #flexslider-wrap > .row {
       display: flex;
     }
-    .flex-viewport {
-      overflow-x: hidden;
-      overflow-y: visible;
-    }
-
     .flex-preface {
       background: transparent url("../images/left-end.png") no-repeat left bottom;
       margin-bottom: 4.6rem;
@@ -1516,11 +1511,11 @@ div.discontinued {
           }
         }
         div.description {
-          bottom: -22.5rem;
+          bottom: -12.5rem;
           background: #000;
           color: #fff;
           width: 90%;
-          height: 19rem;
+          height: 9rem;
           position: absolute;
           p {
               /* hide text if it more than N lines  */
