@@ -1099,6 +1099,9 @@ div.discontinued {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex; }
+  .page-browse-shelf .flex-viewport {
+    overflow-x: hidden;
+    overflow-y: visible; }
   .page-browse-shelf .flex-preface {
     background: transparent url("../images/left-end.png") no-repeat left bottom;
     margin-bottom: 4.6rem; }
@@ -1141,11 +1144,11 @@ div.discontinued {
           margin: 0 auto;
           max-height: 12rem; }
       .page-browse-shelf .slides li div.description {
-        bottom: -12.5rem;
+        bottom: -22.5rem;
         background: #000;
         color: #fff;
         width: 90%;
-        height: 9rem;
+        height: 19rem;
         position: absolute; }
         .page-browse-shelf .slides li div.description p {
           /* hide text if it more than N lines  */

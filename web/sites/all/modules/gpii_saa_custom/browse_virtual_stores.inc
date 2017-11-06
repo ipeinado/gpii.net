@@ -32,9 +32,9 @@ function virtual_stores() {
               $markup .= theme('image_style', array(
                   'style_name' => 'medium',
                   'path' => $store->field_field_image[0]['raw']['uri'],
+                  'alt' => $store->node_title,
                   'attributes' => array(
                     'class' => 'center-block',
-                    'alt' => $store->node_title,
                   )
                 )
               );
