@@ -1211,4 +1211,85 @@ div.discontinued {
     content: '\f001 \A';
     display: block; }
 
+#section {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+  text-align: center; }
+  #section li {
+    display: inline-block;
+    text-align: left;
+    height: 45rem;
+    width: 18rem;
+    margin-left: 0;
+    background: transparent url("../images/perspective_shelf.png") no-repeat top left;
+    -webkit-background-size: cover;
+            background-size: cover;
+    margin-bottom: 8rem;
+    position: relative; }
+    #section li.focused {
+      cursor: pointer; }
+      #section li.focused div {
+        background: #c82c3e; }
+  #section div {
+    position: absolute;
+    font-size: 1.2em;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    width: 11.2rem;
+    margin: 1rem 0.5rem;
+    padding: 1rem 0.5rem;
+    top: 10px;
+    left: 8px;
+    display: block;
+    color: #fff;
+    background: #A72534; }
+    #section div a, #section div:visited, #section div:hover, #section div:active {
+      color: #fff; }
+
+#shelf {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+  text-align: center;
+  background: transparent url("../images/SingleShelf-bg.png") repeat-y top left; }
+  #shelf li {
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    height: 6rem;
+    margin-left: 0;
+    background: transparent url("../images/SingleShelf-NoLabel.png") no-repeat top left;
+    position: relative;
+    margin: 2rem 0; }
+    #shelf li.focused {
+      cursor: pointer; }
+      #shelf li.focused div {
+        background: #c82c3e; }
+  #shelf div {
+    position: absolute;
+    font-size: 1em;
+    width: 24rem;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    top: 2.8rem;
+    left: 5rem;
+    display: block;
+    color: #fff;
+    background: #A72534; }
+    #shelf div a, #shelf div:visited, #shelf div:hover, #shelf div:active {
+      color: #fff; }
+  #shelf::before {
+    background: #fff url("../images/SingleShelf-Top.png") no-repeat top left;
+    height: 6rem;
+    display: block;
+    content: ' '; }
+  #shelf::after {
+    background: #fff url("../images/SingleShelf-Bottom.png") no-repeat top left;
+    height: 6rem;
+    display: block;
+    content: ' '; }
+
 /*# sourceMappingURL=gpii_sai.css.map */

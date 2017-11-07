@@ -48,6 +48,8 @@ function virtual_stores() {
 
 
 function virtual_category($storeid, $category) {
+
+  drupal_add_js('sites/all/modules/gpii_saa_custom/js/browse-section.js');
   //dpm ($storeid);
   // find out how deep in the taxonomy we are
   $depth = count(taxonomy_get_parents_all($category));
@@ -128,11 +130,11 @@ function virtual_category($storeid, $category) {
       $result_count = count($result);
       //dpm($result_count);
       if ($result_count > 0 && $depth > 1) {
-        $unit_list[] = l(t($value->name), 'browse/shelf/' . $value->tid) . ' (' . $result_count . ')';
+        $unit_list[] = '<div>' . l(t($value->name), 'browse/shelf/' . $value->tid) . ' (' . $result_count . ')</div>';
         $result_total = $result_total + $result_count;
       }
       elseif ($result_count > 0) {
-        $unit_list[] = l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid) . ' (' . $result_count . ')';
+        $unit_list[] = '<div>' . l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid) . ' (' . $result_count . ')</div>';
         $result_total = $result_total + $result_count;
       }
     }
@@ -169,7 +171,7 @@ function virtual_category($storeid, $category) {
 
       if ($result > 1) {
         //kpr($result);
-        $unit_list[] = l(t('Other'), 'browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')';
+        $unit_list[] = '<div>' . l(t('Other'), 'browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')</div>';
       }
 
     }
@@ -189,7 +191,7 @@ function virtual_category($storeid, $category) {
     $markup .= theme('item_list', array(
       'items' => $unit_list,
       'type' => 'ul',
-      'attributes' => array('id' => 'shelving-units', 'class' => array('unit')),
+      'attributes' => array('id' => $category_type, 'class' => array('unit')),
         )
     );
   }

@@ -5,12 +5,7 @@
   'use strict';
 
   $(document).ready(function(){
-    // $('.grid').masonry({
-    //   itemSelector: '.grid-item',
-    //   columnWidth: '.grid-sizer',
-    //   percentPosition: true,
-    //   gutter: 10
-    // });
+    // make the store maps responsive image maps
     $('img[usemap]').rwdImageMaps();
   });
 
