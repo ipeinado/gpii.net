@@ -108,18 +108,24 @@
 .node-teaser {
 	display: block;
 	clear: both;
-	padding-top: 1em;
-	padding-bottom: 1em;
+	position: relative;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 	border-top: 1px solid rgb(226, 226, 226);
 
 	h2 {
 		margin-top: 0;
-		margin-bottom: .25em;
+		margin-bottom: (8px/15px)*1rem;
 		line-height: (20px/15px)*1rem;
 		font-size: (18px/15px)*1rem;
+
 		a {
 			font-size: (18px/15px)*1rem;
-			font-weight: 600;	
+			font-weight: 600;
+		}
+
+		@media (min-width: $screen-md-min) {
+			margin-right: (60px/15px)*1rem;
 		}
 	}
 
@@ -133,10 +139,38 @@
 
 	.group-action-links {
 
-		.flag-outer.flag-outer-bookmarks,
-		.social-button {
-			display: inline-block;
-			margin-right: (25px/15px)*1rem;
+		.flag-throbber {
+			font-size: 0;
+		}
+
+		a {
+			color: #999;
+		}
+
+		@media (max-width: $screen-sm-max) {
+			.flag-outer.flag-outer-bookmarks,
+			.social-button {
+				display: inline-block;
+				margin-right: (25px/15px)*1rem;
+			}
+		}
+
+		@media (min-width: $screen-md-min) {
+			position: absolute;
+			top: 0;
+			right: 0;
+
+			.flag-outer.flag-outer-bookmarks,
+			.social-button {
+				display: inline-block;
+				margin-left: (15px/15px)*1rem;
+			}
+		}
+	}
+
+	.tags {
+		@media (min-width: $screen-md-min) {
+			margin-bottom: 0;
 		}
 	}
 }
@@ -144,7 +178,7 @@
 .node-bb.node-teaser {
 	h2 {
 		display: inline-block;
-		margin-right: 0.5rem;
+		margin-right: 0.3rem;
 	}
 }
 
@@ -270,53 +304,41 @@
 	}
 }
 
-.view-bibliography,
-.view-questions {
+/*******************************************************************
+** VIEWS
+*******************************************************************/
 
+.view-header {
+	margin-bottom: (8px/15px)*1rem;
+}
+
+.page-learn-bibliography,
+.page-develop-components {
 	.view-header {
-		display: block;
-		padding: (10px/15px)*1rem 0;
-		float: left;
+		
+		@media (min-width: $screen-md-min) {
+			float: left;
+			margin-top: (32px/15px)*1rem;
+		}
 	}
 
 	.view-filters {
-		float: right;
-	}
-
-	.views-exposed-form {
-		.views-exposed-widget {
+		@media (min-width: $screen-md-min) {
 			float: right;
-			padding: 0;
-		}
 
-		.control-label {
-			display: inline-block;
-			margin-right: (7px/15px)*1rem;
-		}
+			.views-exposed-form .views-exposed-widget {
+				padding: 0 0 0 1rem;
+			}
 
-		.form-control {
-			display: inline-block;
-			width: auto;
+			.views-submit-button {
+				display: none;
+			}
 		}
 	}
 }
 
-.view-parts-and-tools {
-	.view-header {
-		display: block;
-		padding-top: (34px/15px)*1rem;
-		float: left;
-	}
 
-	.view-filters {
-		float: right;
-	}
 
-	.views-exposed-widget {
-		padding: 0 0 0 0.5rem;
-		display: inline-block;
-	}
-}
 
 // CALENDAR
 .view .date-nav-wrapper .date-prev {

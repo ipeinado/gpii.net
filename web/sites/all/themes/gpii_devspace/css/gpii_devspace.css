@@ -503,29 +503,50 @@
 .node-teaser {
   display: block;
   clear: both;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  position: relative;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   border-top: 1px solid #e2e2e2; }
   .node-teaser h2 {
     margin-top: 0;
-    margin-bottom: .25em;
+    margin-bottom: 0.53333333rem;
     line-height: 1.33333333rem;
     font-size: 1.2rem; }
     .node-teaser h2 a {
       font-size: 1.2rem;
       font-weight: 600; }
+    @media (min-width: 992px) {
+      .node-teaser h2 {
+        margin-right: 4rem; } }
   .node-teaser .node-teaser-subtitle {
     color: #666; }
   .node-teaser .node-teaser-body {
     margin-top: 0.66666667rem; }
-  .node-teaser .group-action-links .flag-outer.flag-outer-bookmarks,
-  .node-teaser .group-action-links .social-button {
-    display: inline-block;
-    margin-right: 1.66666667rem; }
+  .node-teaser .group-action-links .flag-throbber {
+    font-size: 0; }
+  .node-teaser .group-action-links a {
+    color: #999; }
+  @media (max-width: 991px) {
+    .node-teaser .group-action-links .flag-outer.flag-outer-bookmarks,
+    .node-teaser .group-action-links .social-button {
+      display: inline-block;
+      margin-right: 1.66666667rem; } }
+  @media (min-width: 992px) {
+    .node-teaser .group-action-links {
+      position: absolute;
+      top: 0;
+      right: 0; }
+      .node-teaser .group-action-links .flag-outer.flag-outer-bookmarks,
+      .node-teaser .group-action-links .social-button {
+        display: inline-block;
+        margin-left: 1rem; } }
+  @media (min-width: 992px) {
+    .node-teaser .tags {
+      margin-bottom: 0; } }
 
 .node-bb.node-teaser h2 {
   display: inline-block;
-  margin-right: 0.5rem; }
+  margin-right: 0.3rem; }
 
 .node-card {
   padding: 0;
@@ -615,42 +636,28 @@
   padding-bottom: .5em;
   text-indent: 1em; }
 
-.view-bibliography .view-header,
-.view-questions .view-header {
-  display: block;
-  padding: 0.66666667rem 0;
-  float: left; }
+/*******************************************************************
+** VIEWS
+*******************************************************************/
+.view-header {
+  margin-bottom: 0.53333333rem; }
 
-.view-bibliography .view-filters,
-.view-questions .view-filters {
-  float: right; }
+@media (min-width: 992px) {
+  .page-learn-bibliography .view-header,
+  .page-develop-components .view-header {
+    float: left;
+    margin-top: 2.13333333rem; } }
 
-.view-bibliography .views-exposed-form .views-exposed-widget,
-.view-questions .views-exposed-form .views-exposed-widget {
-  float: right;
-  padding: 0; }
-
-.view-bibliography .views-exposed-form .control-label,
-.view-questions .views-exposed-form .control-label {
-  display: inline-block;
-  margin-right: 0.46666667rem; }
-
-.view-bibliography .views-exposed-form .form-control,
-.view-questions .views-exposed-form .form-control {
-  display: inline-block;
-  width: auto; }
-
-.view-parts-and-tools .view-header {
-  display: block;
-  padding-top: 2.26666667rem;
-  float: left; }
-
-.view-parts-and-tools .view-filters {
-  float: right; }
-
-.view-parts-and-tools .views-exposed-widget {
-  padding: 0 0 0 0.5rem;
-  display: inline-block; }
+@media (min-width: 992px) {
+  .page-learn-bibliography .view-filters,
+  .page-develop-components .view-filters {
+    float: right; }
+    .page-learn-bibliography .view-filters .views-exposed-form .views-exposed-widget,
+    .page-develop-components .view-filters .views-exposed-form .views-exposed-widget {
+      padding: 0 0 0 1rem; }
+    .page-learn-bibliography .view-filters .views-submit-button,
+    .page-develop-components .view-filters .views-submit-button {
+      display: none; } }
 
 .view .date-nav-wrapper .date-prev {
   left: 0;
