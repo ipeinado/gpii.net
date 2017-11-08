@@ -1531,7 +1531,6 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
         }
       }
 
-
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been updated.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
     }
 
@@ -1564,19 +1563,19 @@ function gpii_saa_custom_sync_needs_to_trouble_vbo($features) {
 
 function gpii_saa_custom_virtual_stores() {
   // include browse virtual store functions
-  module_load_include('inc', 'gpii_saa_custom', 'browse_virtual_stores');
+  module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.browse_virtual_stores');
   return virtual_stores();
 }
 
 function gpii_saa_custom_virtual_category($storeid) {
   // include browse virtual store functions
-  module_load_include('inc', 'gpii_saa_custom', 'browse_virtual_stores');
+  module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.browse_virtual_stores');
   return virtual_category($storeid, arg(3));
 }
 
 function gpii_saa_custom_virtual_shelf($tid) {
   // include browse virtual store functions
-  module_load_include('inc', 'gpii_saa_custom', 'browse_virtual_stores');
+  module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.browse_virtual_stores');
   return virtual_shelf($tid);
 }
 

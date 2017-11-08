@@ -21,7 +21,7 @@
       $(this).removeClass("focused");
     });
 
-    $('#section li a, , #shelf li a').focus(function() {
+    $('#section li a, #shelf li a').focus(function() {
       $(this).closest('li').addClass('focused');
     }).blur(function() {
       $(this).closest('li').removeClass('focused');

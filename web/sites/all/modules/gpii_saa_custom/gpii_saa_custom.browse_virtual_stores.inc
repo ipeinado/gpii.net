@@ -4,7 +4,25 @@
  */
 
 
+function get_lang_code() {
+  global $language ;
+  $lang_code = $language->language ;
+
+  if ($lang_code == 'en') {
+    unset($lang_code);
+  }
+
+  else {
+    $lang_code = '/' . $lang_code;
+  }
+  return $lang_code;
+}
+
 function virtual_stores() {
+
+  // get the currently active language code
+  $lang_code = get_lang_code();
+
 
   // grab a view that pulls in all the stores and icons we need to build the page
   $results = views_get_view_result('virtual_stores', 'default', NULL);
@@ -22,17 +40,19 @@ function virtual_stores() {
     else {
       $grid_classes = 'col-sm-24';
     }
+
+
       $markup .= '<div class="row">';
           foreach ($stores as $key => $store) {
             // adjust grid classes when we have only two in a row to offset and center below row of 3
             if (count($stores) == 2 && $key == 1) {
               $grid_classes = 'col-sm-24 col-md-8';
             }
-              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores"><a href="/browse/category/' . $store->nid . '">';
+              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores"><a href="' . $lang_code . '/browse/category/' . $store->nid . '">';
               $markup .= theme('image_style', array(
                   'style_name' => 'medium',
-                  'path' => $store->field_field_image[0]['raw']['uri'],
-                  'alt' => $store->node_title,
+                  'path' => t($store->field_field_image[0]['raw']['uri']),
+                  'alt' => t($store->node_title),
                   'attributes' => array(
                     'class' => 'center-block',
                   )
@@ -48,6 +68,9 @@ function virtual_stores() {
 
 
 function virtual_category($storeid, $category) {
+
+  // get the currently active language code
+  $lang_code = get_lang_code();
 
   drupal_add_js('sites/all/modules/gpii_saa_custom/js/browse-section.js');
   //dpm ($storeid);
@@ -77,14 +100,14 @@ function virtual_category($storeid, $category) {
     $parents = taxonomy_get_parents($category);
     //dpm($parents);
     foreach ( $parents as $key => $value ) {
-      $crumbs[] = l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid);
+      $crumbs[] = l(t($value->name), '/browse/category/' . $storeid . '/' . $value->tid);
     }
 
   }
   if (is_numeric($category)) {
     $category_obj = taxonomy_term_load($category);
     $crumbs[] = l(t($category_obj
-->name), 'browse/category/' . $storeid . '/' . $category);
+->name), '/browse/category/' . $storeid . '/' . $category);
   }
 
   $_SESSION['browse_virtual_stores'] = array();
@@ -114,7 +137,7 @@ function virtual_category($storeid, $category) {
   if (is_numeric($category)) {
 
     $vid = 11;
-    $units = taxonomy_get_tree($vid, $category, 1, FALSE);
+    $units = i18n_taxonomy_localize_terms(taxonomy_get_tree($vid, $category, 1, FALSE));
     //dpm($units);
     $result_total = 0;
     foreach ($units as $key => $value) {
@@ -130,11 +153,12 @@ function virtual_category($storeid, $category) {
       $result_count = count($result);
       //dpm($result_count);
       if ($result_count > 0 && $depth > 1) {
-        $unit_list[] = '<div>' . l(t($value->name), 'browse/shelf/' . $value->tid) . ' (' . $result_count . ')</div>';
+        $unit_list[] = '<div>' . l(t($value->name), '/browse/shelf/' . $value->tid) . ' (' . $result_count . ')</div>';
+        //t('@username, welcome to my website', array('@username' => $account->name));
         $result_total = $result_total + $result_count;
       }
       elseif ($result_count > 0) {
-        $unit_list[] = '<div>' . l(t($value->name), 'browse/category/' . $storeid . '/' . $value->tid) . ' (' . $result_count . ')</div>';
+        $unit_list[] = '<div>' . l(t($value->name), '/browse/category/' . $storeid . '/' . $value->tid) . ' (' . $result_count . ')</div>';
         $result_total = $result_total + $result_count;
       }
     }
@@ -171,7 +195,7 @@ function virtual_category($storeid, $category) {
 
       if ($result > 1) {
         //kpr($result);
-        $unit_list[] = '<div>' . l(t('Other'), 'browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')</div>';
+        $unit_list[] = '<div>' . l(t('Other'), $lang_code . '/browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')</div>';
       }
 
     }
@@ -184,7 +208,7 @@ function virtual_category($storeid, $category) {
 
 
     if (count($unit_list) === 0) {
-        $markup .= '<p>No products are currently available in this sectioon.<p>';
+        $markup .= '<p>' . t('No products are currently available in this sectioon.') . '<p>';
       }
 
 
@@ -206,9 +230,9 @@ function virtual_category($storeid, $category) {
     drupal_set_title(t('Choose a Department in the ' . $title = $store->title . ' Store'), $output = CHECK_PLAIN);
 
     $vid = 11;
-    $departments = taxonomy_get_tree($vid, 0, 1, FALSE);
+    $departments = i18n_taxonomy_localize_terms(taxonomy_get_tree($vid, 0, 1, FALSE));
 
-     $markup .= '<map name="storemap">';
+    $markup .= '<map name="storemap">';
 
     foreach ($departments as $key => $value) {
       // set coordinates and other values related to the generated image map for each top-level item
@@ -274,7 +298,7 @@ function virtual_category($storeid, $category) {
           break;
       }
 
-      $markup .= '<area shape="rect" coords="' . $map_vars['coords'] . '" href="/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $map_vars['name'] . '" data-toggle="tooltip" data-selector"#departmentmap" title="' . $map_vars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
+      $markup .= '<area shape="rect" coords="' . $map_vars['coords'] . '" href="' . $lang_code . '/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $map_vars['name'] . '" data-toggle="tooltip" data-selector"#departmentmap" title="' . $map_vars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
     }
 
 
@@ -291,6 +315,9 @@ function virtual_category($storeid, $category) {
 
 
 function virtual_shelf($tid) {
+
+  // get the currently active language code
+  $lang_code = get_lang_code();
 
   // @@ add a condition for "other"
   // Check for tids filter
@@ -401,7 +428,7 @@ END;
         }
         // consider target="_blank" so that users don't lose their place on the shelf. Other option is to add a modal
 
-        $markup .= '<div><h3><a href="/node/' . $value->nid . '">' . $value->node_title . '</a></h3>';
+        $markup .= '<div><h3><a href="' . $lang_code . '/node/' . $value->nid . '">' . $value->node_title . '</a></h3>';
 
 // @@ Add missing alt text
 

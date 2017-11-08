@@ -1150,12 +1150,12 @@ div.discontinued {
   #section li {
     display: inline-block;
     text-align: left;
-    height: 45rem;
-    width: 18rem;
+    height: 40rem;
+    width: 15.5rem;
     margin-left: 0;
     background: transparent url("../images/perspective_shelf.png") no-repeat top left;
     background-size: cover;
-    margin-bottom: 8rem;
+    margin-bottom: 4rem;
     position: relative; }
     #section li.focused {
       cursor: pointer; }
@@ -1167,7 +1167,7 @@ div.discontinued {
     border-top: 3px solid #000;
     border-bottom: 3px solid #000;
     width: 11.2rem;
-    margin: 1rem 0.5rem;
+    margin: 0.5rem 0;
     padding: 1rem 0.5rem;
     top: 10px;
     left: 8px;
