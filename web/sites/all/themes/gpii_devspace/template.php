@@ -16,3 +16,23 @@ function gpii_devspace_form_alter(&$form, &$form_state, $form_id) {
 			break;	
 	}
 }
+
+/**
+* Preprocess the wrapping HTML
+*
+* @param array &$variables
+*/
+function gpii_devspace_preprocess_html(&$vars) {
+	// Setup Google Webmasters Verification Meta Tag
+	$google_webmasters_verification = array(
+		'#type' => 'html_tag',
+		'#tag' => 'meta',
+		'#attributes' => array(
+			'name' => 'google-site-verification',
+			'content' => 'zFHqFXEns79WsfjFrNGvDBrw9HGgG53j1IVf86fnMDg'
+		),
+	);
+
+	// Add Google Webmasters Verification Meta Tag to head.
+	drupal_add_html_head($google_webmasters_verification, 'google_webmasters_verification');
+}
