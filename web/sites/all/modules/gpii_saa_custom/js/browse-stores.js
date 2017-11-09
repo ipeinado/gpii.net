@@ -5,21 +5,14 @@
   'use strict';
 
   $(document).ready(function(){
-    // make the store maps responsive image maps
-    $('img[usemap]').rwdImageMaps();
-
-
-    // make the store map divs clickable and styleable on hover
-    //
-
-    $('#storemap div').on('click', function() {
+    $('.browse-stores').on('click', function() {
       window.location.href = $(this)
         .find('a[href]')
         .first()
         .attr('href');
     });
     // Call the event handler on #text
-    $('#storemap div').hover(function(){
+    $('.browse-stores').hover(function(){
       // add a class to children so we can style on hover/focus
       $(this).addClass("focused");
     },
@@ -28,10 +21,10 @@
       $(this).removeClass("focused");
     });
 
-    $('p.term a').focus(function() {
-      $(this).closest('div').addClass('focused');
+    $('.browse-stores a').focus(function() {
+      $(this).parent('div').addClass('focused');
     }).blur(function() {
-      $(this).closest('div').removeClass('focused');
+      $(this).parent('div').removeClass('focused');
     });
   });
 

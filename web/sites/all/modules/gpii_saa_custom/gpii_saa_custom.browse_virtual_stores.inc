@@ -24,6 +24,8 @@ function virtual_stores() {
   $lang_code = get_lang_code();
 
 
+  drupal_add_js('sites/all/modules/gpii_saa_custom/js/browse-stores.js');
+
   // grab a view that pulls in all the stores and icons we need to build the page
   $results = views_get_view_result('virtual_stores', 'default', NULL);
   //dpm($results);
@@ -48,7 +50,7 @@ function virtual_stores() {
             if (count($stores) == 2 && $key == 1) {
               $grid_classes = 'col-sm-24 col-md-8';
             }
-              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores"><a href="' . $lang_code . '/browse/category/' . $store->nid . '">';
+              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores"><div class="shop-label">' . t($store->node_title) . '</div><a href="' . $lang_code . '/browse/category/' . $store->nid . '">';
               $markup .= theme('image_style', array(
                   'style_name' => 'medium',
                   'path' => t($store->field_field_image[0]['raw']['uri']),
@@ -232,80 +234,32 @@ function virtual_category($storeid, $category) {
     $vid = 11;
     $departments = i18n_taxonomy_localize_terms(taxonomy_get_tree($vid, 0, 1, FALSE));
 
-    $markup .= '<map name="storemap">';
+    $markup .= '<div id="storemap">';
 
-    foreach ($departments as $key => $value) {
-      // set coordinates and other values related to the generated image map for each top-level item
-      switch (true) {
-        case $value->tid === '3629': // Adaptive or Assistive Products
-          $map_vars = array(
-            'coords' => '750,33,1112,359',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        case $value->tid === '3637': // Computer Access and Use
-          $map_vars = array(
-            'coords' => '25,164,329,513',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        case $value->tid === '3639': // Commmunication
-          $map_vars = array(
-            'coords' => '514,33,739,279',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        case $value->tid === '3641': // Education
-          $map_vars = array(
-            'coords' => '749,371,1079,512',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        case $value->tid === '3648': // Employment/Job
-          $map_vars = array(
-            'coords' => '566,290,739,513',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        case $value->tid === '3646': // Daily Living
-          $map_vars = array(
-            'coords' => '2,34,330,152',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        case $value->tid === '3634': // Health, Fitness and Sports
-          $map_vars = array(
-            'coords' => '341,1,501,279',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        case $value->tid === '4300': // Entertainment and Play
-          $map_vars = array(
-            'coords' => '341,290,555,544',
-            'name' => $value->name,
-            'tooltip' => $value->name
-          );
-          break;
-        default:
-          // dpm('no dice');
-          break;
+    // splice the departements array into groups so that we can have something that looks like
+    // a map, but works responsively, deals with translations and allows text resizing
+    $department_groups = array(
+      array_splice($departments, 0, 2),
+      array_splice($departments, 1, 4),
+      array_splice($departments, 1, 2),
+      array_splice($departments, 1)
+    );
+
+    //dpm($department_groups);
+
+    foreach ($department_groups as $key => $departments) {
+      $markup .= '<div class="group group-' . $key . '">';
+
+
+      foreach ($departments as $key => $value) {
+        $markup .= '<div id="t-' . $value->tid . '"><p class="term"><a href="' . $lang_code . '/browse/category/' . $storeid . '/' . $value->tid . '">' . $value->name . '</a></p></div>';
       }
 
-      $markup .= '<area shape="rect" coords="' . $map_vars['coords'] . '" href="' . $lang_code . '/browse/category/' . $storeid . '/' . $value->tid . '" alt="' . $map_vars['name'] . '" data-toggle="tooltip" data-selector"#departmentmap" title="' . $map_vars['tooltip'] . '" data-template =\'<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>\'>';
+      $markup .= '</div>';
     }
 
 
-    $markup .= '</map>';
-
-    // the image is below the map because Chrome positions data-placement relative to the map element instead of to the image
-    $markup .= '<img class="img-responsive" src="/' . drupal_get_path('module', 'gpii_saa_custom') . '/images/ULStoreMapFlat.png" alt="Choose a department" width="1113" height="545" usemap="#storemap" id="departmentmap" />';
+    $markup .= '</div>';
 
   }
 
@@ -432,7 +386,7 @@ END;
 
 // @@ Add missing alt text
 
-        $markup .= '<p class="text-center">' . theme('image_style', array('style_name' => 'medium', 'path' => $value->field_field_product_image[0]['rendered']['#item']['uri'])) . '</p></div>';
+        $markup .= '<p class="text-center">' . theme('image_style', array('style_name' => 'shelf_thumbnail', 'path' => $value->field_field_product_image[0]['rendered']['#item']['uri'])) . '</p></div>';
 
         $markup .= '<div class="description"><p>' . strip_tags($value->field_body[0]['rendered']['#markup']) . '</p></div>';
 

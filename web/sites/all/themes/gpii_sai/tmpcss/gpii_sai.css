@@ -924,6 +924,20 @@ div.discontinued {
 
 .page-browse .browse-store-wrapper .browse-stores {
   margin-bottom: 6rem; }
+  .page-browse .browse-store-wrapper .browse-stores.focused {
+    cursor: pointer; }
+    .page-browse .browse-store-wrapper .browse-stores.focused .shop-label {
+      text-decoration: underline; }
+
+.page-browse .shop-label {
+  background: #000;
+  padding: 0.5rem 0.5rem;
+  max-width: 11rem;
+  margin: 0 auto -2px;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Roboto Slab', 'Open Sans', sans-serif;
+  border-radius: 4px; }
 
 /**
  * Virtual Store departments
@@ -932,6 +946,121 @@ div.discontinued {
   /* ---- grid ---- */
   /* clearfix */
   /* ---- grid-item ---- */ }
+  .page-browse-category #storemap {
+    align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%; }
+    .page-browse-category #storemap div.group {
+      margin: .5rem;
+      min-height: 42rem; }
+      .page-browse-category #storemap div.group.group-0 {
+        width: 27%;
+        position: relative; }
+        .page-browse-category #storemap div.group.group-0 div:nth-child(1) {
+          position: absolute;
+          top: 2rem;
+          width: 100%;
+          left: 0;
+          height: 10rem;
+          background: #6E4397; }
+          .page-browse-category #storemap div.group.group-0 div:nth-child(1).focused {
+            background: #8351b2; }
+        .page-browse-category #storemap div.group.group-0 div:nth-child(2) {
+          position: absolute;
+          top: 13rem;
+          width: 90%;
+          right: 0;
+          background: #A72534;
+          height: 18rem; }
+          .page-browse-category #storemap div.group.group-0 div:nth-child(2).focused {
+            background: #c82c3e; }
+      .page-browse-category #storemap div.group.group-1 {
+        flex-grow: auto;
+        width: 40%;
+        position: relative; }
+        .page-browse-category #storemap div.group.group-1 div:nth-child(1) {
+          position: absolute;
+          top: 0;
+          width: 38%;
+          left: 0;
+          background: #23527C;
+          height: 20rem; }
+          .page-browse-category #storemap div.group.group-1 div:nth-child(1).focused {
+            background: #2c679c; }
+        .page-browse-category #storemap div.group.group-1 div:nth-child(2) {
+          position: absolute;
+          top: 2rem;
+          width: 58%;
+          right: 0;
+          background: #18606B;
+          height: 18rem; }
+          .page-browse-category #storemap div.group.group-1 div:nth-child(2).focused {
+            background: #1f7e8c; }
+        .page-browse-category #storemap div.group.group-1 div:nth-child(3) {
+          position: absolute;
+          top: 21rem;
+          width: 58%;
+          left: 0;
+          background: #18606B;
+          height: 16rem; }
+          .page-browse-category #storemap div.group.group-1 div:nth-child(3).focused {
+            background: #1f7e8c; }
+        .page-browse-category #storemap div.group.group-1 div:nth-child(4) {
+          position: absolute;
+          top: 21rem;
+          width: 38%;
+          right: 0;
+          background: #23527C;
+          height: 14rem; }
+          .page-browse-category #storemap div.group.group-1 div:nth-child(4).focused {
+            background: #2c679c; }
+      .page-browse-category #storemap div.group.group-2 {
+        width: 27%;
+        position: relative; }
+        .page-browse-category #storemap div.group.group-2 div:nth-child(1) {
+          position: absolute;
+          top: 2rem;
+          width: 100%;
+          left: 0;
+          background: #A72534;
+          height: 24rem; }
+          .page-browse-category #storemap div.group.group-2 div:nth-child(1).focused {
+            background: #c82c3e; }
+        .page-browse-category #storemap div.group.group-2 div:nth-child(2) {
+          position: absolute;
+          top: 27rem;
+          width: 90%;
+          left: 0;
+          background: #6E4397;
+          height: 8rem; }
+          .page-browse-category #storemap div.group.group-2 div:nth-child(2).focused {
+            background: #8351b2; }
+      .page-browse-category #storemap div.group.group-3 {
+        position: relative;
+        width: 100%; }
+      .page-browse-category #storemap div.group div {
+        justify-content: middle;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: 1px solid #000;
+        background: #ccc;
+        padding: 0.5rem;
+        word-wrap: break-word;
+        margin-bottom: 1rem; }
+        .page-browse-category #storemap div.group div.focused {
+          cursor: pointer; }
+        .page-browse-category #storemap div.group div p.term {
+          width: 100%;
+          text-align: center;
+          font-size: 1.6em;
+          margin-bottom: 0; }
+        .page-browse-category #storemap div.group div a {
+          color: #fff; }
+          .page-browse-category #storemap div.group div a:hover, .page-browse-category #storemap div.group div a:focus, .page-browse-category #storemap div.group div a:active {
+            color: #fff; }
   .page-browse-category .category-label {
     display: block;
     bottom: 0;
@@ -988,6 +1117,8 @@ div.discontinued {
   .page-browse-shelf .slides li a:hover, .page-browse-shelf .slides li a:focus, .page-browse-shelf .slides li a:active {
     text-decoration: none;
     outline: none; }
+  .page-browse-shelf .slides li img {
+    width: auto; }
 
 .page-browse-shelf div.description {
   background: #000;

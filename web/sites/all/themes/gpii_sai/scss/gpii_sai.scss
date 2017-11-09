@@ -1322,7 +1322,24 @@ div.discontinued {
   .browse-store-wrapper {
     .browse-stores {
       margin-bottom: 6rem;
+      &.focused {
+        cursor: pointer;
+        .shop-label {
+          text-decoration: underline;
+        }
+      }
     }
+  }
+
+  .shop-label {
+    background: #000;
+    padding: 0.5rem 0.5rem;
+    max-width: 11rem;
+    margin: 0 auto -2px;
+    font-weight: bold;
+    color: #fff;
+    font-family: 'Roboto Slab', 'Open Sans', sans-serif;
+    border-radius: 4px;
   }
 }
 
@@ -1331,6 +1348,161 @@ div.discontinued {
  */
 
  .page-browse-category {
+
+  #storemap {
+  // colors for store map
+  $store-purple: #6E4397;
+  $store-blue: #23527C;
+  $store-teal: #18606B;
+  $store-maroon: #A72534;
+
+    //justify-content: space-between;
+    align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    div.group {
+      //background: yellow; // debugging
+      margin: .5rem;
+      min-height: 42rem;
+      &.group-0 {
+        width: 27%;
+        position: relative;
+        div:nth-child(1) { // Health, Fitness and Sports
+          position: absolute;
+          top: 2rem;
+          width: 100%;
+          left: 0;
+          height: 10rem;
+          background: $store-purple;
+          &.focused {
+            background: lighten($store-purple, 8%);
+          }
+        }
+        div:nth-child(2) { // Communication (person to person)
+          position: absolute;
+          top: 13rem;
+          width: 90%;
+          right: 0;
+          background: $store-maroon;
+          height: 18rem;
+          &.focused {
+            background: lighten($store-maroon, 8%);
+          }
+        }
+      }
+      &.group-1 {
+        flex-grow: auto;
+        width: 40%;
+        position: relative;
+        div:nth-child(1) { // Health, Fitness and Sports
+          position: absolute;
+          top: 0;
+          width: 38%;
+          left: 0;
+          background: $store-blue;
+          height: 20rem;
+          &.focused {
+            background: lighten($store-blue, 8%);
+          }
+        }
+        div:nth-child(2) { // Communication (person to person)
+          position: absolute;
+          top: 2rem;
+          width: 58%;
+          right: 0;
+          background: $store-teal;
+          height: 18rem;
+          &.focused {
+            background: lighten($store-teal, 8%);
+          }
+        }
+        div:nth-child(3) { // @@ 3634 Health, Fitness and Sports
+          position: absolute;
+          top: 21rem;
+          width: 58%;
+          left: 0;
+          background: $store-teal;
+          height: 16rem;
+          &.focused {
+            background: lighten($store-teal, 8%);
+          }
+        }
+        div:nth-child(4) { // @@ 3634 Health, Fitness and Sports
+          position: absolute;
+          top: 21rem;
+          width: 38%;
+          right: 0;
+          background: $store-blue;
+          height: 14rem;
+          &.focused {
+            background: lighten($store-blue, 8%);
+          }
+        }
+      }
+      &.group-2 {
+        width: 27%;
+        position: relative;
+        div:nth-child(1) { // Health, Fitness and Sports
+          position: absolute;
+          top: 2rem;
+          width: 100%;
+          left: 0;
+          background: $store-maroon;
+          height: 24rem;
+          &.focused {
+            background: lighten($store-maroon, 8%);
+          }
+        }
+        div:nth-child(2) { // Communication (person to person)
+          position: absolute;
+          top: 27rem;
+          width: 90%;
+          left: 0;
+          background: $store-purple;
+          height: 8rem;
+          &.focused {
+            background: lighten($store-purple, 8%);
+          }
+        }
+      }
+      &.group-3 {
+        position: relative;
+        width: 100%;
+      }
+
+      div { // all divs
+        justify-content: middle;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: 1px solid #000;
+        background: #ccc;
+        padding: 0.5rem;
+        word-wrap: break-word;
+        margin-bottom: 1rem;
+        &.focused {
+          cursor: pointer;
+        }
+        p.term {
+          width: 100%;
+          text-align: center;
+          font-size: 1.6em;
+          margin-bottom: 0;
+        }
+        a {
+          color: #fff;
+          &:hover, &:focus, &:active {
+            color: #fff;
+          }
+        }
+
+      }
+    }
+
+
+  }
 
   .category-label {
     display: block;
@@ -1408,6 +1580,9 @@ div.discontinued {
             text-decoration: none;
             outline: none;
           }
+        }
+        img {
+          width: auto;
         }
       }
     }
