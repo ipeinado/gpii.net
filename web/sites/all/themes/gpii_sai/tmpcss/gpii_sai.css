@@ -983,7 +983,7 @@ div.discontinued {
         .page-browse-category #storemap div.group.group-1 div:nth-child(1) {
           position: absolute;
           top: 0;
-          width: 38%;
+          width: 44%;
           left: 0;
           background: #23527C;
           height: 20rem; }
@@ -992,7 +992,7 @@ div.discontinued {
         .page-browse-category #storemap div.group.group-1 div:nth-child(2) {
           position: absolute;
           top: 2rem;
-          width: 58%;
+          width: 52%;
           right: 0;
           background: #18606B;
           height: 18rem; }
