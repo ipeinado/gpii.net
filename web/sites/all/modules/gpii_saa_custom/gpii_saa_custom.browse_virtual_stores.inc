@@ -236,19 +236,17 @@ function virtual_category($storeid, $category) {
 
     $markup .= '<div id="storemap">';
 
-    watchdog('gpii_saa_custom', '<pre>' . print_r($departments) . '</pre>', array(), WATCHDOG_NOTICE, current_path());
-
+    //dpm($departments);
     // splice the departements array into groups so that we can have something that looks like
     // a map, but works responsively, deals with translations and allows text resizing
     $department_groups = array(
       array_splice($departments, 0, 2),
-      array_splice($departments, 1, 4),
-      array_splice($departments, 1, 2),
-      array_splice($departments, 1)
+      array_splice($departments, 0, 4),
+      array_splice($departments, 0, 2),
+      array_splice($departments, 0)
     );
 
     //dpm($department_groups);
-    watchdog('gpii_saa_custom', '<pre>' . print_r($department_groups) . '</pre>', array(), WATCHDOG_NOTICE, current_path());
 
     foreach ($department_groups as $key => $departments) {
       $markup .= '<div class="group group-' . $key . '">';
