@@ -111,6 +111,11 @@
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
             <?php endif; ?>
+            <ul class="menu nav navbar-nav navbar-right">
+              <li>
+                <a role="button" class="search-toggle" href="#" aria-pressed="false" aria-controls="search-box"><i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Search</span></a>
+              </li>
+            </ul>
             <?php if (!empty($secondary_nav)): ?>
               <?php print render($secondary_nav); ?>
             <?php endif; ?>
@@ -122,12 +127,13 @@
               <?php print gpii_base_equal_width_column_regions($page, $region_info, 'menu'); ?>
             <?php endif; ?>
           </nav>
-        </div>
 
-        <?php if(!empty($page['menu_search'])): ?>
-          <?php print render($page['menu_search']); ?>
-        <?php endif; ?>
-      <?php endif; ?>
+          <?php if(!empty($page['search_box'])): ?>
+            <div id="search-box" aria-expanded="false" role="search">
+              <?php print render($page['search_box']); ?>
+            </div>
+          <?php endif; ?>
+        </div>
     </div>
   </header>
 

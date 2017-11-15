@@ -123,10 +123,6 @@
       	line-height: (22px/15px)*1rem;
     	}
 
-    	li > a > .search-text {
-      	display: none;
-    	}
-
     	li > a:hover,
     	li > a:focus,
     	li > a[aria-pressed="true"] {
@@ -136,40 +132,4 @@
     	}
   	}
 	}
-}
-
-.region-menu-search {
-
-  position: relative;
-
-  input[type="text"] {
-    border-radius: 4px;
-  }
-
-  button[type="submit"] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1500;
-    background-color: transparent;
-    color: #555;
-    border: 0;
-    padding: 0.42857143rem 0.85714286rem;
-  }
-
-  @media (max-width: $screen-sm-max) {
-    padding: 1rem;
-    
-    .input-group {
-      width: 100%;
-    }
-  }
-
-  @media (min-width: 992px) {
-    position: absolute;
-    top: (95.5px/15px)*1rem;
-    right: (30px/15px)*1rem; 
-    margin-top: (8px/15px)*1rem;
-    padding: 0;
-  }  
 }

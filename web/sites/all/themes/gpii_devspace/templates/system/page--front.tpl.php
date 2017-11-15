@@ -118,12 +118,22 @@
             <?php if ($region_info['menu']['has_columns']): ?>
               <?php print gpii_base_equal_width_column_regions($page, $region_info, 'menu'); ?>
             <?php endif; ?>
+
+            <ul class="menu nav navbar-nav navbar-right">
+              <li>
+                <a role="button" class="search-toggle" href="#" aria-pressed="false" aria-controls="search-box"><i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Search</span></a>
+              </li>
+            </ul>
           </nav>
+
+          <?php if(!empty($page['search_box'])): ?>
+            <div id="search-box" aria-expanded="false" role="search">
+              <?php print render($page['search_box']); ?>
+            </div>
+          <?php endif; ?>
         </div>
-        <?php if(!empty($page['menu_search'])): ?>
-          <?php print render($page['menu_search']); ?>
-        <?php endif; ?>
       <?php endif; ?>
+      
     </div>
   </header>
 

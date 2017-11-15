@@ -81,40 +81,12 @@
       border-top-color: transparent;
       text-decoration: none;
       line-height: 1.46666667rem; }
-    .navbar.navbar-default .navbar-right li > a > .search-text {
-      display: none; }
     .navbar.navbar-default .navbar-right li > a:hover,
     .navbar.navbar-default .navbar-right li > a:focus,
     .navbar.navbar-default .navbar-right li > a[aria-pressed="true"] {
       border-top-color: #18606b;
       color: #18606b;
       background-color: #FFFFFF; } }
-
-.region-menu-search {
-  position: relative; }
-  .region-menu-search input[type="text"] {
-    border-radius: 4px; }
-  .region-menu-search button[type="submit"] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1500;
-    background-color: transparent;
-    color: #555;
-    border: 0;
-    padding: 0.42857143rem 0.85714286rem; }
-  @media (max-width: 991px) {
-    .region-menu-search {
-      padding: 1rem; }
-      .region-menu-search .input-group {
-        width: 100%; } }
-  @media (min-width: 992px) {
-    .region-menu-search {
-      position: absolute;
-      top: 6.36666667rem;
-      right: 2rem;
-      margin-top: 0.53333333rem;
-      padding: 0; } }
 
 .front .welcome-block {
   margin-top: 2.4rem;
@@ -922,22 +894,32 @@ a {
 .homepage-news #calendar {
   background-color: #eceff1; }
 
-@media (max-width: 767px) {
-  .search-button {
-    position: absolute;
-    top: 0;
-    right: 68px;
-    padding: 0.33333333rem 0.93333333rem;
-    margin-top: 0.6rem;
-    background-color: transparent;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 17px;
-    color: #888; } }
+/**************************************************
+** SEARCH
+***************************************************/
+#search-box {
+  overflow: hidden;
+  padding: 1rem; }
+  @media (min-width: 768px) {
+    #search-box {
+      display: none; } }
+  @media (min-width: 768px) {
+    #search-box .region-search-box {
+      width: 50%;
+      padding-top: 1rem;
+      float: right; } }
+  #search-box .block-search-api-page .input-group {
+    width: 100%; }
 
-@media (min-width: 768px) {
-  .search-button {
-    display: none; } }
+button#edit-submit-1 {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden; }
 
 .exposed-form {
   margin-bottom: 2rem; }
