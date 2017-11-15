@@ -30,6 +30,12 @@ html, body {
   }
 }
 
+.btn:not(.btn-default) {
+  &:visited {
+    color: #FFF;
+  }
+}
+
 dl dt {
   margin-bottom: (10px/15px)*1rem;
 }
