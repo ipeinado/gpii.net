@@ -173,6 +173,25 @@
 			margin-bottom: 0;
 		}
 	}
+
+	.question-source {
+		.label {
+			background-color: #f0ad4e;
+		}
+		.label.DeveloperSpace {
+			background-color: $color-gpii-devspace-primary;
+		}
+
+		@media (max-width: $screen-sm-max) {
+			margin-bottom: (8px/15px)*1rem;
+		}
+
+		@media (min-width: $screen-md-min) {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+	}
 }
 
 .node-bb.node-teaser {
