@@ -60,8 +60,8 @@
 
 <div class="col-lg-4 col-md-4 col-sm-24 search-method text-adjust">
   <h3>
-    Standard Search</h3>
-  <p>The world&#39;s most popular search method.</p></div>
+    <?php t('Standard Search'); ?></h3>
+  <p><?php t('The world&#39;s most popular search method.'); ?></p></div>
 
 
       <div class="col-lg-16 col-md-16 col-sm-24 search-method-input">
