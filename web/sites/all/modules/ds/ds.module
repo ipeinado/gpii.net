@@ -1312,11 +1312,26 @@ function ds_field_formatter_view($entity_type, $entity, $field, $instance, $lang
         }
         if ($display['type'] == 'ds_taxonomy_separator_localized' && function_exists('i18n_taxonomy_term_name')) {
           $term->name = i18n_taxonomy_term_name($term, $language->language);
+
+          /**
+         * BBC: Call a custom fuction in gpii_custom to see if what we're about to render has a translation
+         * @@ move this out to a more maintainable location (gpii_custom)
+         */
+
+          // call the fuction with term id and language
+          $translation_status = gpii_custom_get_translation_status($term->tid, $language->language);
+
+          // kpr($translation_status);
         }
         $item_display = check_plain($term->name);
         if ($linked) {
           $uri = entity_uri('taxonomy_term', $term);
-          $item_display = l($term->name, $uri['path'], $uri['options']);
+          if ($translation_status > 0) {
+            $item_display = '<span class="skiptranslate">' . l($term->name, $uri['path'], $uri['options']) . '</span>';
+          }
+          else {
+            $item_display = l($term->name, $uri['path'], $uri['options']);
+          }
         }
       }
       $terms[] = $item_display;
