@@ -1579,4 +1579,12 @@ function gpii_saa_custom_virtual_shelf($tid) {
   return virtual_shelf($tid);
 }
 
+function gpii_saa_custom_init() {
+  global $user;
+  $isTranslator = in_array('Translator', $user->roles);
+  $path = drupal_get_path('module', 'gpii_saa_custom');
+  drupal_add_js(array('isTranslator' => $isTranslator), 'setting');
+  drupal_add_js($path . '/js/bundle.js');
+}
+
 

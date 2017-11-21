@@ -133,8 +133,11 @@ function virtual_category($storeid, $category) {
   else {
     $category_type = 'section';
   }
-  drupal_set_title($category_obj->name . ': Choose a ' . $category_type, $output = CHECK_PLAIN);
-
+  drupal_set_title(t($category_obj->name . ': Choose a ' . $category_type, $output = CHECK_PLAIN));
+  // $lang = ltrim($lang_code, '/');
+  // $translated_term = i18n_taxonomy_term_get_translation($category_obj, $lang);
+  // $title = t('@translated_term: Choose a @category_type', array('@translated_term' => $translated_term, '@category_type' => $category_type));
+  // dpm(t($translated_term->name));
 
   if (is_numeric($category)) {
 

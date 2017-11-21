@@ -76,11 +76,3 @@ function gpii_custom_get_translation_status($item, $lang) {
     $record = $result->fetchAll();
     return count($record);
 }
-
-function gpii_custom_init() {
-  global $user;
-  $isTranslator = in_array('Translator', $user->roles);
-  $path = drupal_get_path('module', 'gpii_custom');
-  drupal_add_js(array('isTranslator' => $isTranslator), 'setting');
-  drupal_add_js($path . '/js/bundle.js');
-}
