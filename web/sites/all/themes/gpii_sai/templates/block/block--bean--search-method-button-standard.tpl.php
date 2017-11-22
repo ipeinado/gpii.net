@@ -53,7 +53,30 @@
   <?php endif;?>
   <?php print render($title_suffix); ?>
 
-  <div class="container">
+<?php
+
+// get a list of active languages
+  $languages = array_keys(language_list());
+  // remove the leading slash from the request
+  $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
+  // reduce the string to the first three characters
+  $currlanguage = substr($currlanguage, 0, 3);
+  //kpr($currlanguage);
+
+  // initialize a variable in case we need to tell Google Translate to skip this block
+  $skiptranslate = '';
+  // if the first three characters include a slash or is only two characters long (es, de, el), then add skiptranslate
+  if(strstr($currlanguage, '/') || (strlen($currlanguage) == 2)) {
+    $currlanguage = substr($currlanguage, 0, 2);
+    // ensure that the block we're rendering has a translation for one of the languages we support
+    if (in_array($currlanguage,$languages)) {
+      $skiptranslate = ' skiptranslate';
+    }
+  }
+
+?>
+
+  <div class="container <?php print $skiptranslate; ?>">
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-24 search-method">
   <a href="/search/"><img alt="Go to the Standard Search Page" src="/sites/saa.gpii.net/files/uploads/images/standardsearchcircle.png" /></a></div>
