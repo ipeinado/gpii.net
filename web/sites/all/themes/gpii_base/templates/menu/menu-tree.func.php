@@ -22,7 +22,7 @@ function gpii_base_menu_tree__primary(&$variables) {
   $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
   // reduce the string to the first three characters
   $currlanguage = substr($currlanguage, 0, 3);
-  kpr($currlanguage);
+  //kpr($currlanguage);
 
   // initialize a variable in case we need to tell Google Translate to skip this menu
   $skiptranslate = '';
