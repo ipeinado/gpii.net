@@ -175,12 +175,18 @@
           <?php print render($page['content_preface']); ?>
         <?php endif; ?>
 
-        <div class="highlighted jumbotron"><div class="container"><?php print render($page['content']); ?>
+        <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?>
             <div class="row row-flex row-flex-wrap">
               <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'search-method-button-virtual-sto');
+                    // if the user has the tester role, render the block that references the demo content
+                    if (user_has_role(15)) {
+                      $blockObject = block_load('bean', 'search-method-button-virtual-s-0');
+                    }
+                    else {
+                      $blockObject = block_load('bean', 'search-method-button-virtual-sto');
+                    }
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
@@ -190,7 +196,13 @@
             <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    $blockObject = block_load('bean', 'search-method-button-qanda');
+                    // if the user has the tester role, render the block that references the demo content
+                    if (user_has_role(15)) {
+                      $blockObject = block_load('bean', 'search-method-button-qanda-test');
+                    }
+                    else {
+                      $blockObject = block_load('bean', 'search-method-button-qanda');
+                    }
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
                     print $output;
