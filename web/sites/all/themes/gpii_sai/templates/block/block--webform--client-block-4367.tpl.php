@@ -45,7 +45,7 @@
  * @ingroup templates
  */
 ?>
-<p><a aria-controls="feedback-collapsible" aria-expanded="false" class="btn btn-default collapsed" data-target="#feedback-collapsible" data-toggle="collapse" type="button" href="#feedback-collapsible"><?php print t('If you see an error or omission or if you have any other comments, please let us know'); ?></a></p>
+<p><a aria-controls="feedback-collapsible" aria-expanded="false" class="btn btn-default collapsed skiptranslate" data-target="#feedback-collapsible" data-toggle="collapse" type="button" href="#feedback-collapsible"><?php print t('If you see an error or omission or if you have any other comments, please let us know'); ?></a></p>
 <section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 <div class="container">
   <div class="row">
