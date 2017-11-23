@@ -232,7 +232,7 @@ function virtual_category($storeid, $category) {
     drupal_add_js('sites/all/modules/gpii_saa_custom/js/browse-category.js');
 
     //dpm($store);
-    drupal_set_title(t('Choose a Department in the ' . $title = $store->title . ' Store'), $output = CHECK_PLAIN);
+    drupal_set_title(t('Choose a Department in the @storetitle Store', array('@storetitle' => $store->title) ), $output = CHECK_PLAIN);
 
     $vid = 11;
     $departments = i18n_taxonomy_localize_terms(taxonomy_get_tree($vid, 0, 1, FALSE));
