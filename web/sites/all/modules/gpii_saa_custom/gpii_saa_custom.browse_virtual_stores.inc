@@ -233,7 +233,7 @@ function virtual_category($storeid, $category) {
 
       if ($result > 1) {
         //kpr($result);
-        $unit_list[] = '<div>' . l(t('Other'), $lang_code . '/browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')</div>';
+        $unit_list[] = '<div>' . l(t('Other'), '/browse/shelf/' . $category, array('query' => array('child_categories' => 'none'))) . ' (' . count($result) . ')</div>';
       }
 
     }
