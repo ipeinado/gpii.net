@@ -23,6 +23,26 @@ function virtual_stores() {
   // get the currently active language code
   $lang_code = get_lang_code();
 
+  // get a list of active languages
+  $languages = array_keys(language_list());
+
+  // remove the leading slash from the request
+  $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
+  // reduce the string to the first three characters
+  $currlanguage = substr($currlanguage, 0, 3);
+
+  // initialize a variable in case we need to tell Google Translate to skip this block
+  $skiptranslate = '';
+
+  // if the first three characters include a slash or is only two characters long (es, de, el), then add skiptranslate
+  if(strstr($currlanguage, '/') || (strlen($currlanguage) == 2)) {
+    $currlanguage = substr($currlanguage, 0, 2);
+    // ensure that the block we're rendering has a translation for one of the languages we support
+    if (in_array($currlanguage,$languages)) {
+      $skiptranslate = ' skiptranslate';
+    }
+  }
+
 
   drupal_add_js('sites/all/modules/gpii_saa_custom/js/browse-stores.js');
 
@@ -46,15 +66,18 @@ function virtual_stores() {
 
       $markup .= '<div class="row">';
           foreach ($stores as $key => $store) {
+             kpr($skiptranslate);
+            // Load the node so that we get the corect translation
+            $translated_node = node_load($store->nid);
             // adjust grid classes when we have only two in a row to offset and center below row of 3
             if (count($stores) == 2 && $key == 1) {
               $grid_classes = 'col-sm-24 col-md-8';
             }
-              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores"><div class="shop-label">' . t($store->node_title) . '</div><a href="' . $lang_code . '/browse/category/' . $store->nid . '">';
+              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores' .  $skiptranslate . '"><div class="shop-label">' . t($translated_node->title) . '</div><a href="' . $lang_code . '/browse/category/' . $store->nid . '">';
               $markup .= theme('image_style', array(
                   'style_name' => 'medium',
                   'path' => t($store->field_field_image[0]['raw']['uri']),
-                  'alt' => t($store->node_title),
+                  'alt' => t($translated_node->title),
                   'attributes' => array(
                     'class' => 'center-block',
                   )

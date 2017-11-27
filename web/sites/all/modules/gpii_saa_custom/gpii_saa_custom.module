@@ -996,6 +996,21 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
         }
       }
     }
+    if ($controller['view info']['view_name'] == 'trouble_categories') {
+
+      // get the currently active language
+      global $language ;
+      $lang = $language->language ;
+
+
+      foreach ($result as $key => $value) {
+        // call the fuction with term id and language
+        $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
+        if ($translation_status > 0) {
+          $result[$key]->lang = $lang;
+        }
+      }
+    }
     if ($controller['view info']['view_name'] == 'deleted_records') {
       foreach ($result as $key => $value) {
         if (isset($result[$key]->duplicate_nid['value'])) {
