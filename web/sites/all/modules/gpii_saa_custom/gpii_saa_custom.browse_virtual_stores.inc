@@ -66,7 +66,7 @@ function virtual_stores() {
 
       $markup .= '<div class="row">';
           foreach ($stores as $key => $store) {
-             kpr($skiptranslate);
+            // kpr($skiptranslate);
             // Load the node so that we get the corect translation
             $translated_node = node_load($store->nid);
             // adjust grid classes when we have only two in a row to offset and center below row of 3
@@ -180,13 +180,23 @@ function virtual_category($storeid, $category) {
 
       $result_count = count($result);
       //dpm($result_count);
+
+      // get the currently active language code
+      $lang_code = get_lang_code();
+      $translation_status = gpii_custom_get_translation_status($value->tid, substr($lang_code, 1, 2));
+      //kpr($translation_status);
+      $skiptranslate = '';
+      if ($translation_status > 0) {
+        $skiptranslate = 'skiptranslate';
+      }
+
       if ($result_count > 0 && $depth > 1) {
-        $unit_list[] = '<div>' . l(t($value->name), '/browse/shelf/' . $value->tid) . ' (' . $result_count . ')</div>';
+        $unit_list[] = '<div class="' . $skiptranslate .  '">' . l(t($value->name), '/browse/shelf/' . $value->tid) . ' (' . $result_count . ')</div>';
         //t('@username, welcome to my website', array('@username' => $account->name));
         $result_total = $result_total + $result_count;
       }
       elseif ($result_count > 0) {
-        $unit_list[] = '<div>' . l(t($value->name), '/browse/category/' . $storeid . '/' . $value->tid) . ' (' . $result_count . ')</div>';
+        $unit_list[] = '<div class="' . $skiptranslate .  '">' . l(t($value->name), '/browse/category/' . $storeid . '/' . $value->tid) . ' (' . $result_count . ')</div>';
         $result_total = $result_total + $result_count;
       }
     }
@@ -236,7 +246,7 @@ function virtual_category($storeid, $category) {
 
 
     if (count($unit_list) === 0) {
-        $markup .= '<p>' . t('No products are currently available in this sectioon.') . '<p>';
+        $markup .= '<p>' . t('No products are currently available in this section.') . '<p>';
       }
 
 
@@ -279,7 +289,13 @@ function virtual_category($storeid, $category) {
 
 
       foreach ($departments as $key => $value) {
-        $markup .= '<div id="t-' . $value->tid . '"><p class="term"><a href="' . $lang_code . '/browse/category/' . $storeid . '/' . $value->tid . '">' . $value->name . '</a></p></div>';
+        $translation_status = gpii_custom_get_translation_status($value->tid, substr($lang_code, 1, 2));
+        //kpr($translation_status);
+        $skiptranslate = '';
+        if ($translation_status > 0) {
+          $skiptranslate = ' skiptranslate';
+        }
+        $markup .= '<div id="t-' . $value->tid . '"><p class="term' . $skiptranslate. '"><a href="' . $lang_code . '/browse/category/' . $storeid . '/' . $value->tid . '">' . $value->name . '</a></p></div>';
       }
 
       $markup .= '</div>';
