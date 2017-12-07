@@ -405,6 +405,12 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page arguments' => array(1),
         'access arguments' => array('access advanced search data'),
       );
+      $items['uid/%'] = array(
+        'title' => 'UID Redirect',
+        'page callback' => 'gpii_saa_custom_uid_redirect',
+        'page arguments' => array(1),
+        'access arguments' => array(''),
+      );
 
       return $items;
     }
@@ -1602,4 +1608,48 @@ function gpii_saa_custom_init() {
   drupal_add_js($path . '/js/bundle.js');
 }
 
+/**
+ * Take a provided UL UID and redirect to the product record that has that UID. This is used
+ * by the UL API in reporting changes to source records.
+ *
+ *
+ *
+ * @param      <string>  $uid    The uid from the UL API we're interested in.
+ *
+ * @return     302 redirect to the product
+ */
 
+function gpii_saa_custom_uid_redirect($uid) {
+  // query a view to find products with the requested UID
+  $results = views_get_view_result('find_product_by_uid', 'default', $uid);
+
+  // we should only get one result back from the view, redirect if this is true
+  if (count($results) == 1) {
+    drupal_goto('node/' . $results[0]->nid, array(), 302);
+  }
+
+  // if we somehow get more than one result back, throw an error and render the results as a list
+  elseif (count($results) > 1) {
+    drupal_set_message(t('<strong>Error:</strong> More than one record with this UID exists. Please review the results below and update the records as appropriate.'), 'error', FALSE);
+
+    $items = array();
+    foreach ($results as $key => $value) {
+      $items[] = l(t($value->node_title), 'node/' . $value->nid);
+    }
+
+    $markup .=  theme('item_list', array(
+      'items' => $items,
+      'type' => 'ul',
+      'attributes' => array('id' => 'duplicates', 'class' => array('')),
+        )
+    );
+
+    return $markup;
+  }
+
+  else {
+    drupal_set_message(t('<strong>Error:</strong> No results found. Please verify that you have a provided a valid UID and try again.'), 'error', FALSE);
+    return '';
+  }
+
+}
