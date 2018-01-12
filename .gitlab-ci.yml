@@ -21,4 +21,4 @@ deploy:
     url: http://staging.developerspace.gpii.net
 
   only:
-    - master
+    - master 
