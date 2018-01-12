@@ -16,5 +16,9 @@ deploy:
   stage: deploy
   script:
     - npm run deploy
+  environment:
+    name: stg07
+    url: http://staging.developerspace.gpii.net
+
   only:
     - master
