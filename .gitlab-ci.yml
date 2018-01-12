@@ -17,8 +17,8 @@ deploy:
   script:
     - npm run deploy
   environment:
-    name: stg07
-    url: http://staging.developerspace.gpii.net
+    name: njs01
+    url: http://node.pushing7.com:2361
 
   only:
     - master
