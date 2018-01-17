@@ -594,7 +594,14 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           // We don't actually get here if there's only one and the redirect above kicks in.
 
           foreach ($links as $key => $value) {
-            $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a> (' . strtoupper(substr($value->language, 0, 2)) . ')</li>';
+            $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a>';
+
+            if (isset($value->language)) {
+              $markup .= '(' . strtoupper(substr($value->language, 0, 2)) . ')';
+            }
+
+
+            $markup .= '</li>';
           }
         }
 
@@ -607,7 +614,14 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           foreach ($sources as $key => $value) {
 
             if (($value->source != 'sai') && (in_array($value->source, $sourceDBs) != 1)) {
-              $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a> (' . strtoupper(substr($value->language, 0, 2)) . ')</li>';
+              $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a>';
+
+                if (isset($value->language)) {
+                  $markup .= '(' . strtoupper(substr($value->language, 0, 2)) . ')';
+                }
+
+
+                $markup .= '</li>';
             }
 
             // add the source to the $sourceDBs array
