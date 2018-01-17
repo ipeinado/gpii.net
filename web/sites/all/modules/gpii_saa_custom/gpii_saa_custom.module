@@ -597,7 +597,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a>';
 
             if (isset($value->language)) {
-              $markup .= '(' . strtoupper(substr($value->language, 0, 2)) . ')';
+              $markup .= ' (' . strtoupper(substr($value->language, 0, 2)) . ')';
             }
 
 
@@ -617,7 +617,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a>';
 
                 if (isset($value->language)) {
-                  $markup .= '(' . strtoupper(substr($value->language, 0, 2)) . ')';
+                  $markup .= ' (' . strtoupper(substr($value->language, 0, 2)) . ')';
                 }
 
 
