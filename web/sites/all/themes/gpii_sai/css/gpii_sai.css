@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
 #block-bean-search-method-button-standard .container {
   border: 1px solid #cccccc;
@@ -653,6 +654,12 @@ a.tree-label {
 #saa-app h2 {
   padding-top: 0.6rem; }
 
+#saa-app h2.results {
+  padding-top: 0.4rem;
+  font-size: 2rem; }
+  #saa-app h2.results span {
+    font-size: 2rem; }
+
 #saa-app button.reset {
   padding: 0.5rem 4rem;
   float: right;
@@ -668,6 +675,20 @@ a.tree-label {
   color: #000; }
   #saa-app .tree-classic a:not(.btn):visited {
     color: #000; }
+
+#saa-app .pagination {
+  text-transform: lowercase; }
+  #saa-app .pagination li.pagination-first a::before {
+    content: "«  "; }
+  #saa-app .pagination li.pagination-prev a::before {
+    content: "‹ "; }
+  #saa-app .pagination li.pagination-next a::after {
+    content: " ›"; }
+  #saa-app .pagination li.pagination-last a::after {
+    content: " »"; }
+  #saa-app .pagination a {
+    font-size: 1.1rem;
+    padding: 7px 15px; }
 
 /**
  * P4A Rating Tool and Feed3 Styles

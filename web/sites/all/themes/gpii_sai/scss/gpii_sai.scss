@@ -842,6 +842,14 @@ a.tree-label {
   h2 {
     padding-top: 0.6rem;
   }
+
+  h2.results {
+    padding-top: 0.4rem;
+    font-size: 2rem;
+    span {
+      font-size: 2rem;
+    }
+  }
   button.reset {
     padding: 0.5rem 4rem;
     float:right;
@@ -861,6 +869,34 @@ a.tree-label {
       &:not(.btn):visited {
         color: #000;
       }
+    }
+  }
+
+  .pagination { // set uib to match drupal pagination styles more closely
+    text-transform: lowercase;
+    li.pagination-first {
+      a::before {
+        content: "«  ";
+      }
+    }
+    li.pagination-prev {
+      a::before {
+        content: "‹ ";
+      }
+    }
+    li.pagination-next {
+      a::after {
+        content: " ›";
+      }
+    }
+    li.pagination-last {
+      a::after {
+        content: " »";
+      }
+    }
+    a {
+      font-size: 1.1rem;
+      padding: $padding-base-vertical + 1px $padding-base-horizontal + 3px;
     }
   }
 
