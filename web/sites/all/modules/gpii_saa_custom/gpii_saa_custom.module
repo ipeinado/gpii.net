@@ -539,10 +539,16 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           }
 
         $response = json_decode($response);
-        //dpm($response->sources);
+        //kpr($response->sources);
 
         $sources = $response->sources;
 
+        // remove any deleted sources from the array so that we don't send people to dead links
+        foreach ($sources as $key => $value) {
+          if ($value->status == "deleted") {
+            unset($sources[$key]);
+          }
+        }
 
         // if a source is specified
         if ($source) {
