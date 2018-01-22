@@ -100,7 +100,7 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   overflow: hidden;
   background-color: #18606b;
-  background-image: url("../images/home_hero_background.png");
+  background-image: url("../images/home_hero_background.jpg");
   background-repeat: no-repeat;
   -webkit-background-size: cover;
           background-size: cover;
@@ -912,7 +912,6 @@ a {
 ***************************************************/
 #search-box {
   overflow: hidden;
-  position: relative;
   padding: 1rem; }
   @media (min-width: 768px) {
     #search-box {
