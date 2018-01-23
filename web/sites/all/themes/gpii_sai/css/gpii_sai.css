@@ -229,7 +229,7 @@ a {
 body.page-search .view-search {
   margin-top: 1rem; }
 
-.node-product.view-mode-search_results .field-name-field-product-image {
+.node-product.view-mode-search_results .field-name-field-product-image, .node-product.view-mode-search_results .field-name-i18n-image-thumbnail {
   float: right;
   margin-left: 3em;
   margin-bottom: 2em; }
