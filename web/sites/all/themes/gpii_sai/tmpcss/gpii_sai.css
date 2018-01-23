@@ -282,11 +282,11 @@ body.page-search .view-search {
 #block-views-exp-search-page .dropdown {
   clear: both; }
 
-.view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image {
+.view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image, .view-search.view-display-id-page .view-mode-search_results .field-name-i18n-image-thumbnail {
   width: 100%;
   text-align: center;
   margin-bottom: 1em; }
-  .view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image img {
+  .view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image img, .view-search.view-display-id-page .view-mode-search_results .field-name-i18n-image-thumbnail img {
     margin-left: auto;
     margin-right: auto;
     padding: 2rem 0 1rem; }
@@ -458,7 +458,7 @@ body.front, body.page-node-1903 {
 .view-search-facets- .view-mode-search_results h3 {
   margin-top: 0; }
 
-.view-search-facets- .view-mode-search_results .field-name-field-product-image {
+.view-search-facets- .view-mode-search_results .field-name-field-product-image, .view-search-facets- .view-mode-search_results .field-name-i18n-image-thumbnail {
   float: none;
   margin-left: 0;
   margin-bottom: 0;

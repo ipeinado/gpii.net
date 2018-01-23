@@ -286,11 +286,11 @@ body.page-search .view-search {
 #block-views-exp-search-page .dropdown {
   clear: both; }
 
-.view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image {
+.view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image, .view-search.view-display-id-page .view-mode-search_results .field-name-i18n-image-thumbnail {
   width: 100%;
   text-align: center;
   margin-bottom: 1em; }
-  .view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image img {
+  .view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image img, .view-search.view-display-id-page .view-mode-search_results .field-name-i18n-image-thumbnail img {
     margin-left: auto;
     margin-right: auto;
     padding: 2rem 0 1rem; }
