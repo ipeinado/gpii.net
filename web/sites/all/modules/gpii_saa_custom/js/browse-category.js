@@ -12,14 +12,14 @@
     // make the store map divs clickable and styleable on hover
     //
 
-    $('#storemap div').on('click', function() {
+    $('#storemap div.group div').on('click', function() {
       window.location.href = $(this)
         .find('a[href]')
         .first()
         .attr('href');
     });
     // Call the event handler on #text
-    $('#storemap div').hover(function(){
+    $('#storemap div.group div').hover(function(){
       // add a class to children so we can style on hover/focus
       $(this).addClass("focused");
     },
