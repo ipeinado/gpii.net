@@ -15,7 +15,7 @@ include_once dirname(__FILE__) . '/includes/common.inc';
  * @param array $texts
  *   Default colorization rules.
  *
- * @see _bootstrap_colorize_text()
+ * @see _bootstrap_colorize_text()hyb
  */
 function gpii_base_bootstrap_colorize_text_alter(&$texts) {
   $texts['contains'][t('Administer')] = 'default';
@@ -80,4 +80,36 @@ function gpii_base_textarea($variables) {
   $output .= '<textarea' . drupal_attributes($element ['#attributes']) . '>' . check_plain($element ['#value']) . '</textarea>';
   $output .= '</div>';
   return $output;
+}
+
+/**
+ * Implements Hook form alter
+ */
+
+function gpii_base_form_alter(&$form, &$form_state, $form_id) {
+
+  if ($form_id == 'user_login' || $form_id == 'user_register_form') {
+
+    // use the address to determine whether we're on the register or login page and adjust the help text that follows
+    $path = arg(1);
+
+    if ($path == 'register') {
+      $form_function = 'create a new account';
+    }
+    else {
+      $form_function = 'sign in';
+    }
+
+    // add some introductory text so that nonvisual users are aware that login/account creation can be done via hybridauth
+    $form['intro_text'] = array(
+          '#type' => 'item',
+          '#markup' => '<p class="sr-only">Please ' . $form_function . ' by completing the form or using social media links below.</p>',
+          '#weight' => -200,
+      );
+    // push the hybridauth widget to the end of the form.
+    $form['hybridauth'] = array(
+      '#type' => 'hybridauth_widget',
+      '#weight' => 300,
+    );
+  }
 }
