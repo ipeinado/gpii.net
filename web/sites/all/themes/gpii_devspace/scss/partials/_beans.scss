@@ -4,10 +4,38 @@
 *
 ***************************************/
 
-.front .bean-featured-link {
+.region.region-featured-links {
+	display: block;
+	margin-bottom: 3rem;
+
+	@media (max-width: 520px) {
+		width: 100%;
+		overflow: scroll;
+	}
+}
+
+.front .region-featured-links {
+	margin-bottom: 3rem;
+
+	.container {
+		display: flex;
+		flex-direction: row;
+
+		@media (max-width: $screen-sm-max) {
+			width: 100%;
+		}
+
+		@media (max-width: 520px) {
+			width: 190%;
+		}
+	}
+}
+
+.front .featured-link-block {
 	cursor: pointer;
 	border-bottom: 3px solid #FFF;
 	color: #333;
+	padding: 0 (7px/15px)*1rem;
 
 	img {
 		opacity: 0.9;
@@ -32,24 +60,47 @@
 }
 
 .not-front .region-featured-links {
-	@media (max-width: $screen-sm-max) {
+
+	@media (max-width: $screen-xs-max) {
 		display: none;
 	}
 
-	@media (min-width: $screen-lg-min) {
+	@media (min-width: $screen-sm-min) {
 		background-color: #F5F5F5;
 		padding-top: (15px/15px)*1rem;	
+
+		.container {
+			width: 100%;
+			display: flex;
+			display: -webkit-flex;
+			flex-direction: row;
+		}
+	}
+
+	@media (min-width: 992px) {
+		.container {
+			width: 960px;
+		}
+	}
+
+	@media (min-width: 1200px) {
+		.container {
+			width: 1160px;
+		}
 	}
 }
 
-.not-front .bean-featured-link {
+.not-front .featured-link-block {
 
-	@media (max-width: $screen-sm-max) {
+	@media (max-width: $screen-xs-max) {
 		display: none;
 	}
 
-	@media (min-width: $screen-lg-min) {
+	@media (min-width: $screen-sm-min) {
 		cursor: pointer;
+		max-width: 25%;
+		flex: 1;
+		padding: 0 (7px/15px)*1rem;
 
 		img {
 			margin-bottom: (7px/15px)*1rem;
