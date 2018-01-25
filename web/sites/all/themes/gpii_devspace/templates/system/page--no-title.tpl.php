@@ -79,6 +79,7 @@
             <img src="<?php print $logo; ?>" alt="<?php print t('GPII.net Home Page'); ?>" />
           </a>
         <?php endif; ?>
+
         <?php if (!empty($site_slogan)): ?>
           <p class="lead"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
         <?php endif; ?>
@@ -104,7 +105,7 @@
           <?php endif; ?>
 
           <nav>
-            <h1 class="sr-only">Main Navigation</h1>
+            <h1 class="element-invisible">Main Navigation</h1>
             <?php if (!empty($primary_nav)): ?>
               <?php print render($primary_nav); ?>
             <?php endif; ?>
@@ -133,37 +134,29 @@
           <?php endif; ?>
         </div>
       <?php endif; ?>
-      
     </div>
   </header>
 
-  <section id="hero-homepage" role="banner">
-    <?php if (!empty($page['hero'])): ?>
-      <?php print render($page['hero']); ?>
-    <?php endif; ?>
-  </section>
-
   <?php if(!empty($page['featured_links'])): ?>
-    <h2 class="element-invisible">Featured Links</h2>
-    <?php print render($page['featured_links']); ?>
+      <h2 class="element-invisible">Featured Links</h2>
+      <?php print render($page['featured_links']); ?>
+  <?php endif; ?>
+
+  <?php if (!empty($page['hero'])): ?>
+    <?php print render($page['hero']); ?>
   <?php endif; ?>
 
   <div id="main-container" class="main-container <?php print $container_class; ?>">
+
     <div class="row">
       <section <?php print $content_column_class; ?>>
-        
-        <?php if (!empty($page['highlighted']) && !$is_front): ?>
+
+        <?php if (!empty($page['highlighted'])): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
         <?php endif; ?>
 
         <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
         <a id="main-content"></a>
-
-        <?php print render($title_prefix); ?>
-        <?php if (!empty($title)): ?>
-          <h1 class="page-header element-invisible"><?php print $title; ?></h1>
-        <?php endif; ?>
-        <?php print render($title_suffix); ?>
         <?php print $messages; ?>
         <?php if (!empty($tabs)): ?>
           <?php print render($tabs); ?>
@@ -188,12 +181,14 @@
 
       <?php if (!empty($page['sidebar_first'])): ?>
         <aside id="sidebar_first" class="<?php print $sidebar_first_column_class; ?>" role="complementary">
+          <h2 class="element-invisible">Filters</h2>
           <?php print render($page['sidebar_first']); ?>
         </aside>  <!-- /#sidebar-first -->
       <?php endif; ?>
 
       <?php if (!empty($page['sidebar_second'])): ?>
         <aside id="sidebar_second" class="<?php print $sidebar_second_column_class; ?>" role="complementary">
+          <h2 class="element-invisible">Complementary Information</h2>
           <?php print render($page['sidebar_second']); ?>
         </aside>  <!-- /#sidebar-second -->
       <?php endif; ?>
@@ -248,8 +243,3 @@
     </footer>
   </div>
 <?php endif; ?>
-
-<script>
-var searchBox = document.getElementsByClassName('region-search-box');
-searchBox[0].style.display = 'block';
-</script>
