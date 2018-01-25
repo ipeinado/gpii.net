@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
 #block-bean-search-method-button-standard .container {
   border: 1px solid #cccccc;
@@ -225,7 +226,7 @@ a {
 body.page-search .view-search {
   margin-top: 1rem; }
 
-.node-product.view-mode-search_results .field-name-field-product-image {
+.node-product.view-mode-search_results .field-name-field-product-image, .node-product.view-mode-search_results .field-name-i18n-image-thumbnail {
   float: right;
   margin-left: 3em;
   margin-bottom: 2em; }
@@ -281,11 +282,11 @@ body.page-search .view-search {
 #block-views-exp-search-page .dropdown {
   clear: both; }
 
-.view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image {
+.view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image, .view-search.view-display-id-page .view-mode-search_results .field-name-i18n-image-thumbnail {
   width: 100%;
   text-align: center;
   margin-bottom: 1em; }
-  .view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image img {
+  .view-search.view-display-id-page .view-mode-search_results .field-name-field-product-image img, .view-search.view-display-id-page .view-mode-search_results .field-name-i18n-image-thumbnail img {
     margin-left: auto;
     margin-right: auto;
     padding: 2rem 0 1rem; }
@@ -457,7 +458,7 @@ body.front, body.page-node-1903 {
 .view-search-facets- .view-mode-search_results h3 {
   margin-top: 0; }
 
-.view-search-facets- .view-mode-search_results .field-name-field-product-image {
+.view-search-facets- .view-mode-search_results .field-name-field-product-image, .view-search-facets- .view-mode-search_results .field-name-i18n-image-thumbnail {
   float: none;
   margin-left: 0;
   margin-bottom: 0;
@@ -612,6 +613,12 @@ a.tree-label {
 #saa-app h2 {
   padding-top: 0.6rem; }
 
+#saa-app h2.results {
+  padding-top: 0.4rem;
+  font-size: 2rem; }
+  #saa-app h2.results span {
+    font-size: 2rem; }
+
 #saa-app button.reset {
   padding: 0.5rem 4rem;
   float: right;
@@ -627,6 +634,20 @@ a.tree-label {
   color: #000; }
   #saa-app .tree-classic a:not(.btn):visited {
     color: #000; }
+
+#saa-app .pagination {
+  text-transform: lowercase; }
+  #saa-app .pagination li.pagination-first a::before {
+    content: "«  "; }
+  #saa-app .pagination li.pagination-prev a::before {
+    content: "‹ "; }
+  #saa-app .pagination li.pagination-next a::after {
+    content: " ›"; }
+  #saa-app .pagination li.pagination-last a::after {
+    content: " »"; }
+  #saa-app .pagination a {
+    font-size: 1.1rem;
+    padding: 7px 15px; }
 
 /**
  * P4A Rating Tool and Feed3 Styles
