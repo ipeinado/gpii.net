@@ -702,7 +702,7 @@ a.tree-label {
   border: none; }
 
 #bootstrap-fieldgroup-accordion--product-info .panel-body {
-  padding: 0 1rem 0; }
+  padding: 3rem 1rem 0; }
 
 #bootstrap-fieldgroup-accordion--product-info .panel-heading a:not(.collapsed) {
   color: #2c3849; }

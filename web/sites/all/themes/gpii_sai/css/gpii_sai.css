@@ -499,7 +499,7 @@ body.front, body.page-node-1903 {
 .view-search-facets- .view-mode-search_results h3 {
   margin-top: 0; }
 
-.view-search-facets- .view-mode-search_results .field-name-field-product-image {
+.view-search-facets- .view-mode-search_results .field-name-field-product-image, .view-search-facets- .view-mode-search_results .field-name-i18n-image-thumbnail {
   float: none;
   margin-left: 0;
   margin-bottom: 0;
@@ -746,7 +746,7 @@ a.tree-label {
   border: none; }
 
 #bootstrap-fieldgroup-accordion--product-info .panel-body {
-  padding: 0 1rem 0; }
+  padding: 3rem 1rem 0; }
 
 #bootstrap-fieldgroup-accordion--product-info .panel-heading a:not(.collapsed) {
   color: #2c3849; }
