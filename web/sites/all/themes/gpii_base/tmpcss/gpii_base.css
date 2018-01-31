@@ -6979,6 +6979,7 @@ body.not-logged-in .navbar-nav.secondary > li.last > a {
 
 .panel-default > .panel-heading {
   float: left;
+  width: 100%;
   font-size: 1.2rem;
   padding: 8px 12px; }
   .panel-default > .panel-heading .panel-title {

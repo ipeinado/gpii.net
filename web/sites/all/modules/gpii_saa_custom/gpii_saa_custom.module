@@ -537,7 +537,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
     function gpii_saa_custom_order_form_submit($form, &$form_state) {
 
-    drupal_set_message('Thank you for your order. Now we need to build the node and redirect to it.');
+    drupal_set_message('Thank you for your order.');
     //dpm($form_state);
     // foreach ($form_state['values'] as $key => $value) {
     //   dsm($key . ': ' . $value);
