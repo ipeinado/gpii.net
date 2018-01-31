@@ -44,6 +44,9 @@ function gpii_saa_custom_permission() {
     ),
     'access browse virtual stores' => array(
       'title' => t('Access browse virtual stores pages.'),
+    ),
+    'order openmarketplace products' => array(
+      'title' => t('Order products in the Open Marketplace.'),
     )
   );
 }
@@ -411,10 +414,150 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page arguments' => array(1),
         'access arguments' => array(''),
       );
+      $items['orders/add/%'] = array(
+        'title' => t('Place an order'),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('gpii_saa_custom_order_form', 2),
+        'access arguments' => array('order openmarketplace products'),
+        'description' => t('Place an order.'),
+        'type' => MENU_CALLBACK,
+      );
 
       return $items;
     }
 
+
+
+    /**
+     * Builds a mutlistep form that subscribers can use to create new packages.
+     */
+    function gpii_saa_custom_order_form($form, &$form_state, $nid) {
+      // Use the values from $form_state['storage'] to determine what to do with regard to rendering the form
+      if (isset($form_state['storage']['complete'])) {
+        return gpii_saa_custom_order_form_page_complete($_SESSION['gpii_saa_custom_order_form']);
+      }
+
+      if (!is_numeric($nid)) {
+        drupal_set_message(t('Your request was not valid. Please return to the previous page and try again.'), 'status', FALSE);
+
+        return;
+      }
+
+      $product = node_load($nid);
+
+      //dpm($product);
+
+      drupal_set_title('Order: ' . $product->title, CHECK_PLAIN);
+
+      $form['customerinfo'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Customer Information'),
+        '#collapsible' => FALSE,
+        '#collapsed' => FALSE,
+      );
+
+      $form['customerinfo']['first_name']= array(
+        '#type' => 'textfield',
+        '#title' => t('First Name'),
+        '#required' => TRUE,
+        '#default_value' => $_SESSION['gpii_saa_custom_package_form'][0],
+        '#description' => t('Please enter your first name.'),
+      );
+
+      $form['customerinfo']['last_name']= array(
+        '#type' => 'textfield',
+        '#title' => t('Last Name'),
+        '#required' => TRUE,
+        '#default_value' => $_SESSION['gpii_saa_custom_package_form'][1],
+        '#description' => t('Please enter your last name.'),
+      );
+
+      $form['customerinfo']['email']= array(
+        '#type' => 'textfield',
+        '#title' => t('Email'),
+        '#required' => TRUE,
+        '#default_value' => $_SESSION['gpii_saa_custom_package_form'][2],
+        '#description' => t('Please enter your email address.'),
+      );
+
+
+      $form['order'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Order Information'),
+        '#collapsible' => FALSE,
+        '#collapsed' => FALSE,
+      );
+
+      // @@ need to create field for product types
+      $form['order']['type'] = array(
+        '#type' => 'item',
+        '#title' => t('Product Type'),
+        '#markup' => t('<p>Software License</p>'),
+      );
+
+
+      $form['order']['description'] = array(
+        '#type' => 'item',
+        '#title' => t('Description'),
+        '#default_value' => '1',
+        '#markup' => t('<p>Refer to <a href="/node/' . $product->nid . '">' . $product->title .  '</a> for additional information.</p>'),
+      );
+
+      $form['order']['quantity'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Quantity'),
+        '#required' => TRUE,
+        '#default_value' =>  $_SESSION['gpii_saa_custom_package_form'][3],
+        '#description' => t('Please enter the number of items you would like to order.'),
+      );
+
+      $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Next'),
+        '#submit' => array('gpii_saa_custom_order_form_submit'),
+      );
+
+      return $form;
+
+    }
+
+    /**
+     * Validates the form.
+     */
+    function gpii_saa_custom_order_form_validate($form, &$form_state) {
+      if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬]/', $form_state['values']['first_name'])) {
+        // one or more of the 'special characters' found in the Job number
+        form_set_error('first_name', t('Names can not include special charaters.'));
+      }
+
+      if (!valid_email_address($form_state['values']['email'])) {
+        form_set_error('email', t('Please enter a valid email address.'));
+      }
+    }
+
+    function gpii_saa_custom_order_form_submit($form, &$form_state) {
+
+    drupal_set_message('Thank you for your order. Now we need to build the node and redirect to it.');
+    //dpm($form_state);
+    // foreach ($form_state['values'] as $key => $value) {
+    //   dsm($key . ': ' . $value);
+    // }
+
+    // Set the form values in the session so that they're remembered next time around
+
+        $_SESSION['gpii_saa_custom_package_form'] = array(
+          $form_state['values']['first_name'],
+          $form_state['values']['last_name'],
+          $form_state['values']['email'],
+          $form_state['values']['quantity'],
+        );
+
+        //kpr($form_state);
+        $form_state["rebuild"] = TRUE;
+
+        drupal_goto('node/6122');
+
+    }
 
     /**
      * This callback is used to view a list of database source records that are related

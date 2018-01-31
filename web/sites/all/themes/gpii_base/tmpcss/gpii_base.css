@@ -6976,3 +6976,11 @@ body.not-logged-in .navbar-nav.secondary > li.last > a {
 
 .form-item-homemail {
   display: none !important; }
+
+.panel-default > .panel-heading {
+  float: left;
+  font-size: 1.2rem;
+  padding: 8px 12px; }
+  .panel-default > .panel-heading .panel-title {
+    font-size: 1.2rem;
+    font-weight: bold; }

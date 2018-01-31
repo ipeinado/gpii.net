@@ -793,3 +793,18 @@ html {
 .form-item-homemail {
   display: none !important;
 }
+
+// Override bootstrap issues with fieldset legends extending beyond their bounding box
+.panel-default {
+  & > .panel-heading {
+    float: left;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    .panel-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+}
+
+
