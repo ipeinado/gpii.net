@@ -133,7 +133,7 @@
           <?php endif; ?>
         </div>
       <?php endif; ?>
-      
+
     </div>
   </header>
 
@@ -151,7 +151,7 @@
   <div id="main-container" class="main-container <?php print $container_class; ?>">
     <div class="row">
       <section <?php print $content_column_class; ?>>
-        
+
         <?php if (!empty($page['highlighted']) && !$is_front): ?>
           <div class="highlighted jumbotron"><?php print render($page['highlighted']); ?></div>
         <?php endif; ?>
@@ -221,6 +221,8 @@
     <?php
       $blockObject = block_load('webform', 'client-block-4309');
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+      $block->title = '';
+      $block->region = 'none';
       $output = drupal_render($block);
       print $output;
     ?>

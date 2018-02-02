@@ -221,6 +221,8 @@
     <?php
       $blockObject = block_load('webform', 'client-block-4309');
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+      $block->title = '';
+      $block->region = 'none';
       $output = drupal_render($block);
       print $output;
     ?>
