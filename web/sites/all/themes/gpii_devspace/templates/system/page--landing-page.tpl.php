@@ -161,9 +161,9 @@
       $webform_id = '4309';
     }
       $blockObject = block_load('webform', 'client-block-' . $webform_id);
+      $blockObject->title = '';
+      $blockObject->region = 'none';
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-      $block->title = '';
-      $block->region = 'none';
       $output = drupal_render($block);
       print $output;
     ?>

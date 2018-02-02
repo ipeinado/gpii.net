@@ -149,13 +149,11 @@
 
             // If the current language matches the language preference that is set, then add a skiptranslate class to the title.
             // This keeps Google translate from re-translating the content when invoked.
+            $skiptranslate_class = '';
             if (isset($node)) {
               if ($node && $lang === $node->language) {
                 $skiptranslate_class = 'skiptranslate';
               }
-            }
-            else {
-                $skiptranslate_class = '';
             }
           ?>
           <h1 class="page-header <?php print $skiptranslate_class; ?>"><?php print  $title; ?></h1>
@@ -236,9 +234,9 @@
             break;
     }
       $blockObject = block_load('webform', 'client-block-' . $webform_id);
+      $blockObject->title = '';
+      $blockObject->region = 'none';
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-      $block->title = '';
-      $block->region = 'none';
       $output = drupal_render($block);
       print $output;
     ?>

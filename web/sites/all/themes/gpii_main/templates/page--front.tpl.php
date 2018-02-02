@@ -230,10 +230,28 @@
   <div id="footer-wrap">
       <div id="feedback-wrap">
     <?php
+      switch ($_SERVER['HTTP_HOST']) {
+        case 'dev.developerspace.gpii.net':
+        case 'staging.developerspace.gpii.net':
+        case 'ds.gpii.net':
+            $webform_id = '4309';
+            break;
+        case 'gpii.net':
+        case 'www.gpii.net':
+        case 'dev.gpii.net':
+        case 'staging.gpii.net':
+            $webform_id = '65';
+            break;
+        case 'dev.saa.gpii.net':
+        case 'staging.saa.gpii.net':
+        case 'ul.gpii.net':
+            $webform_id = '4367';
+            break;
+      }
       $blockObject = block_load('webform', 'client-block-65' . $webform_id);
+      $blockObject->title = '';
+      $blockObject->region = 'none';
       $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-      $block->title = '';
-      $block->region = 'none';
       $output = drupal_render($block);
       print $output;
     ?>
