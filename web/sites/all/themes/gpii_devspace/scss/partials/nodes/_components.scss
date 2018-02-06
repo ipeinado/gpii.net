@@ -1,0 +1,42 @@
+.view-compare-components.full-page {
+	.views-table {
+		table-layout: fixed;
+		width: 100%;
+		border-collapse: collapse;
+		margin: 1rem 0 2rem;
+	}
+
+	thead th:nth-child(1) {
+		width: 20%;
+	}
+
+	thead {
+		border-bottom: 3px solid #E0E0E0;
+	}
+	tr {
+		border-bottom: 1px solid #E0E0E0;
+	}
+
+	th, td {
+		padding: 1rem;
+		vertical-align: top;
+	}
+
+	td > ul {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+.node-bb.node-teaser {
+	h2 {
+		display: inline-block;
+		margin-right: 0.3rem;
+	}
+}
+
+.node-bb.view-mode-full {
+	h1 {
+		display: none;
+	}
+}
