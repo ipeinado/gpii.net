@@ -136,6 +136,12 @@ function phpmailer_settings_form($form, $form_state) {
     '#default_value' => variable_get('smtp_keepalive', 0),
     '#description' => t('Whether to reuse an existing connection during a request.  Improves performance when sending a lot of e-mails at once.'),
   );
+  $form['advanced']['smtp_encode_headers'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Encode headers'),
+    '#default_value' => variable_get('smtp_encode_headers', 0),
+    '#description' => t('If you have subjects and names with accented, etc. characters, check this box to UTF-8 encode them before sending the message.'),
+  );
   $form['advanced']['smtp_debug'] = array(
     '#type' => 'select',
     '#title' => t('Debug level'),
@@ -344,4 +350,3 @@ function phpmailer_preview() {
   print $body;
   drupal_exit();
 }
-

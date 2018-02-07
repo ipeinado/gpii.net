@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * BBC - This widget is pretty heavily customized from the 7.x-1.1 version of this module. Some 
+ * of the code from the 7.x-1.2 was incorporated, but we have kind of mishmash now. 
  * @file
  * Functions for manipulating taxonomy_autocomplete widget to add
  * clickable/popular tags.
@@ -9,36 +11,27 @@
 /**
  * Util function to inject the popular tags functionality into a form element.
  *
- * @param string $children
- *   rendered form element
  * @param array $element
  *   form element
+ * @param array $context
+ *   form element context
  */
 function _popular_tags_inject($children, $element) {
-
   if (preg_match('/<\\/[a-zA-Z0-9]+>$/', $children, $matches) != 1) {
     return $children;
   }
-
-
   drupal_add_js(drupal_get_path('module', 'popular_tags') . '/popular_tags.js');
   drupal_add_css(drupal_get_path('module', 'popular_tags') . '/popular_tags.css');
-
   $field_name = $element['#field_name'];
   $field = field_info_field($field_name);
   $instance = field_info_instance($element['#entity_type'], $field_name, $element['#bundle']);
-
   $vname = $field['settings']['allowed_values'][0]['vocabulary'];
   $limit = $instance['widget']['settings']['popular_tags']['limit'];
   $showhide = $instance['widget']['settings']['popular_tags']['showhide'];
-
-
   if ($showhide) {
-    $data = array();
     $data['popular_tags'][$field_name]['limit'] = $limit;
-    drupal_add_js($data, array('type' =>'setting'));
+    drupal_add_js($data, 'setting');
   }
-
   $terms = _popular_tags_get_terms($vname, $limit, $showhide);
   $tag_terms = '<div class="tag-terms">';
   $classes[] = 'term';
@@ -73,7 +66,7 @@ function _popular_tags_inject($children, $element) {
     $html .= '<a href="#" class="show-popular-terms">' . t('Show Popular Terms') . '</a>';
   }
   $html .= $tag_terms . '</div>';
-
+  $element['#description'] = isset($element['#description']) ? $element['#description'] . $html : $html;
 // BBC: There are a few issues with this module related to how the popular tags code gets injected.
 // Temporary fix below is to test which theme is active and inject the popular tags code in slightly different locations
   global $theme;

@@ -72,7 +72,7 @@ Drupal.behaviors.termReferenceTree = {
             event_target.remove();
 
             var checkbox = $('#' + control_id);
-            checkbox.removeAttr('checked');
+            checkbox[0].checked = false;
             checkMaxChoices(tree, checkbox);
 
             //Show "nothing selected" message, if needed.
@@ -272,7 +272,7 @@ function checkMaxChoices(item, checkbox) {
 
       if(checkbox.is(':checked')) {
         checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[type=checkbox]').each(function() {
-          $(this).attr('checked', checkbox.is(':checked'));
+          this.checked = true;
 
           if(track_list_container) {
             label_element = $(this).next();

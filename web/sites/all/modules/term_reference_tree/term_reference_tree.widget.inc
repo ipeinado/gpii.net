@@ -217,25 +217,7 @@ function _term_reference_tree_output_list_level(&$element, &$tree) {
         $output .= token_replace($replace, array('term' => $term), array('clear' => TRUE));
       }
       else {
-        /**
-         * BBC: Call a custom fuction in gpii_custom to see if what we're about to render has a translation
-         * @@ move this out to a more maintainable location (gpii_custom)
-         */
-
-        // get the currently active language
-        global $language ;
-        $lang = $language->language ;
-
-        // call the fuction with term id and language
-        $translation_status = gpii_custom_get_translation_status($term->tid, $lang);
-
-        if ($translation_status > 0) {
-          $output .= '<span class="skiptranslate">' . l(entity_label('taxonomy_term', $term), $uri['path'], $uri['options']) . '</span>';
-        }
-        else {
-          $output .= l(entity_label('taxonomy_term', $term), $uri['path'], $uri['options']);
-        }
-
+        $output .= l(filter_xss(entity_label('taxonomy_term', $term)), $uri['path'], $uri['options']);
       }
       if (isset($item['children'])) {
         $output .= _term_reference_tree_output_list_level($element, $item);

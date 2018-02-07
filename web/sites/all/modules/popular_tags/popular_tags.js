@@ -4,7 +4,7 @@ Drupal.behaviors.popular_tags = {
   attach: function(context, settings) {
     $('.popular-tags .tag-terms .term', context).click(function(event) {
       $this = $(this);
-      var inp = $this.parents('.form-item').find('input:text.form-text');
+      var inp = $this.parents('.form-item').find('input:text.form-autocomplete');
       var val = inp.val();
       var term = $this.text();
       if(val.indexOf(term) == 0) {
@@ -20,11 +20,10 @@ Drupal.behaviors.popular_tags = {
       }
       return false;
     });
-    console.log(Drupal.settings.popular_tags);
     if(Drupal.settings.popular_tags) {
       for(field_name in Drupal.settings.popular_tags) {
-        var field_name = field_name.replace(/_/g, '-');
-        var field_container = $('.form-item-' + field_name + '-und', context);
+        var _field_name = field_name.replace('_', '-');
+        var field_container = $('.form-item-' + _field_name + '-und', context);
         var tag_container = field_container.find('.popular-tags');
         var show = tag_container.find('a.show-all-terms');
         var hide = tag_container.find('a.show-popular-terms');

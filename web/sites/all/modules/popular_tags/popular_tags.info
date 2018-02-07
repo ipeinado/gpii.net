@@ -5,10 +5,10 @@ package = Taxonomy
 
 dependencies[] = taxonomy
 
-; Information added by Drupal.org packaging script on 2015-01-21
-version = "7.x-1.1"
+; Information added by Drupal.org packaging script on 2017-05-14
+version = "7.x-1.2"
 core = "7.x"
 project = "popular_tags"
-datestamp = "1421853484"
+datestamp = "1494727091"
 
-patch[] = Customized popular_tags.widget.inc to include the taxonomy description and frequency count in the title attribute.
+patch[] = Customized popular_tags.widget.inc to include the taxonomy description and frequency count in the title attribute. Widget and .module file include additional customizations from the 7.x-1.1 version to keep it working.

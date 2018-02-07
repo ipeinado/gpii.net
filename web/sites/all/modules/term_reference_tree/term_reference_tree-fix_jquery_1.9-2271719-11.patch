@@ -1,7 +1,16 @@
 diff --git a/term_reference_tree.js b/term_reference_tree.js
-index 61e5ed9..cca5af7 100644
+index 61e5ed9..386dd70 100644
 --- a/term_reference_tree.js
 +++ b/term_reference_tree.js
+@@ -72,7 +72,7 @@ Drupal.behaviors.termReferenceTree = {
+             event_target.remove();
+ 
+             var checkbox = $('#' + control_id);
+-            checkbox.removeAttr('checked');
++            checkbox[0].checked = false;
+             checkMaxChoices(tree, checkbox);
+ 
+             //Show "nothing selected" message, if needed.
 @@ -86,7 +86,7 @@ Drupal.behaviors.termReferenceTree = {
            removeNothingSelectedMessage(track_list_container);
            var event_target = $(event.target);
@@ -28,7 +37,7 @@ index 61e5ed9..cca5af7 100644
 +      if(checkbox.is(':checked')) {
          checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[type=checkbox]').each(function() {
 -          $(this).attr('checked', checkbox.attr('checked'));
-+          $(this).attr('checked', checkbox.is(':checked'));
++          this.checked = true;
  
            if(track_list_container) {
              label_element = $(this).next();

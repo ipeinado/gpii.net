@@ -101,11 +101,13 @@ function search_api_exclude_node_insert($node) {
  * Implements hook_node_update().
  */
 function search_api_exclude_node_update($node) {
-  if (!empty($node->search_api_exclude)) {
-    search_api_exclude_add_node($node->nid);
-  }
-  elseif (isset($node->form_id)) {
-    search_api_exclude_remove_node($node->nid);
+  if (isset($node->search_api_exclude)) {
+    if (!empty($node->search_api_exclude)) {
+      search_api_exclude_add_node($node->nid);
+    }
+    else {
+      search_api_exclude_remove_node($node->nid);
+    }
   }
 }
 
@@ -221,4 +223,59 @@ function search_api_exclude_remove_node($nid) {
   db_delete('search_api_exclude')
     ->condition('nid', $nid)
     ->execute();
+}
+
+/**
+ * Implements hook_action_info().
+ */
+function search_api_exclude_action_info() {
+  $actions = array();
+
+  $actions['search_api_exclude_set_status_action'] = array(
+    'type' => 'node',
+    'label' => t('Exclude node from Search API'),
+    'behavior' => array('changes_property'),
+    'configurable' => FALSE,
+    'vbo_configurable' => FALSE,
+    'triggers' => array('any'),
+  );
+  $actions['search_api_exclude_reset_status_action'] = array(
+    'type' => 'node',
+    'label' => t('Include node into Search API'),
+    'behavior' => array('changes_property'),
+    'configurable' => FALSE,
+    'vbo_configurable' => FALSE,
+    'triggers' => array('any'),
+  );
+
+  return $actions;
+}
+
+/**
+ * Action function.
+ *
+ * Removes node from the list of excluded from Search API.
+ */
+function search_api_exclude_reset_status_action(&$node, $context) {
+  search_api_exclude_remove_node($node->nid);
+}
+
+/**
+ * Action function.
+ *
+ * Excludes node from Search API.
+ */
+function search_api_exclude_set_status_action(&$node, $context) {
+  search_api_exclude_add_node($node->nid);
+}
+
+
+/**
+ *
+ */
+function search_api_exclude_views_api() {
+  return array(
+    'api' => 3.0,
+    'path' => drupal_get_path('module', 'search_api_exclude') . '/views',
+  );
 }

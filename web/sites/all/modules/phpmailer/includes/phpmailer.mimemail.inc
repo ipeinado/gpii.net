@@ -30,6 +30,9 @@ function mimemail_phpmailer_send($message) {
     $mail->From = $from['mail'];
     if ($from['name'] != '') {
       $mail->FromName = $from['name'];
+      if (variable_get('smtp_encode_headers') && preg_match('/\=\?UTF-8\?B\?.*\?\=/', $from['name']) === 0) {
+        $mail->FromName = mime_header_encode($from['name']);
+      }
     }
 
     if (variable_get('phpmailer_debug_email', '') === '') {
@@ -69,6 +72,9 @@ function mimemail_phpmailer_send($message) {
     }
 
     $message['headers']['Subject'] = $message['subject'];
+    if (variable_get('smtp_encode_headers') && preg_match('/\=\?UTF-8\?B\?.*\?\=/', $message['subject']) === 0) {
+      $message['headers']['Subject'] = mime_header_encode($message['subject']);
+    }
 
     // FIXME SpamAssassin says INVALID_MSGID to PHPMailer's generated Message-ID. 06/04/2009 smk
 //    if (!isset($message['headers']['Message-ID'])) {
@@ -85,4 +91,3 @@ function mimemail_phpmailer_send($message) {
     return FALSE;
   }
 }
-
