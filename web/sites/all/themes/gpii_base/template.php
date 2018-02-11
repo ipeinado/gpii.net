@@ -87,6 +87,7 @@ function gpii_base_textarea($variables) {
  */
 
 function gpii_base_form_alter(&$form, &$form_state, $form_id) {
+
   if ($form_id == 'user_login' || $form_id == 'user_register_form') {
 
     // use the address to determine whether we're on the register or login page and adjust the help text that follows
@@ -112,9 +113,10 @@ function gpii_base_form_alter(&$form, &$form_state, $form_id) {
     );
   }
 
-  if ($form_id == 'payment_form_standalone') {
+  // experimental code that makes it possible for users to use text formats other than plain text in webform textareas
+  if ($form_id == 'webform_client_form_5376') {
     //dpm($form);
-    $form['actions']['save']['#value'] = 'Buy Now';
-    $form['payment_line_items']['#markup'] = '<h2>Payment Summary</h2>' . $form['payment_line_items']['#markup'];
+    $form['submitted']['description']['#type'] = 'text_format';
+    $form['submitted']['description']['#format'] = 'filtered_html';
   }
 }

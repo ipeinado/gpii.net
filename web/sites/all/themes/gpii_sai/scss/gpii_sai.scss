@@ -282,6 +282,7 @@
 
 .btn-primary {
   background-color: $color-gpii-sai-primary;
+  border-color: darken($color-gpii-sai-primary, 6%);
   &:focus, &:active, &:hover {
     background-color: darken($color-gpii-sai-primary, 6%);
   }
@@ -533,76 +534,246 @@ body.front, body.page-node-1903 {
  * Experimental custom button with pure CSS transition/animation
  */
 
-.gpii-button:hover {
-    background-color: $color-gpii-sai-primary;
-    color: #fff;
-    transition: .25s;
-    transition-delay: .25s;
+// .gpii-button:hover {
+//     background-color: $color-gpii-sai-primary;
+//     color: #fff;
+//     transition: .25s;
+//     transition-delay: .25s;
+// }
+// .gpii-button {
+//     position: relative;
+//     display: inline-block;
+//     text-align: center;
+//     cursor: pointer;
+//     transition: .25s;
+//     border: 0;
+//     margin: 1rem;
+//     font-weight:bold;
+// }
+
+// .gpii-button a {
+//     color: $color-gpii-sai-primary;
+//     display: block;
+//     padding: 16px 35px;
+//     font-size: 1em;
+//     font-family: 'Montserrat-Bold', sans-serif;
+//     line-height: 1em;
+//     transition: .25s;
+//     text-decoration: none;
+// }
+
+// .gpii-button:hover a {
+//     color: #fff;
+//     transition: .25s;
+//     transition-delay: .25s;
+//     text-decoration: none;
+// }
+
+// .gpii-button:hover::before {
+//     left: 0;
+//     transition: .25s;
+// }
+// .gpii-button::before {
+//     content: "";
+//     position: absolute;
+//     width: 12px;
+//     left: -12px;
+//     top: 0;
+//     bottom: 0;
+//     border-left: 1px solid $color-gpii-sai-primary;
+//     border-top: 1px solid $color-gpii-sai-primary;
+//     border-bottom: 1px solid $color-gpii-sai-primary;
+//     transition: .25s;
+//     transition-delay: .25s;
+// }
+
+// .gpii-button:hover::after {
+//     right: 0;
+//     transition: .25s;
+// }
+
+// .gpii-button::after {
+//     content: "";
+//     position: absolute;
+//     width: 12px;
+//     right: -12px;
+//     top: 0;
+//     bottom: 0;
+//     border-right: 1px solid $color-gpii-sai-primary;
+//     border-top: 1px solid $color-gpii-sai-primary;
+//     border-bottom: 1px solid $color-gpii-sai-primary;
+//     transition: .25s;
+//     transition-delay: .25s;
+// }
+
+@import 'https://fonts.googleapis.com/css?family=Oswald|Open+Sans';
+
+/* centers the button in the DOM*/
+.gpii-add-product-button-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+
+  /* gives btn width and height */
+  a {
+    text-decoration: none; /* strip natual underlines */
+    width: 45rem;
+    margin: 1.5em 1.6em 0;
+    color: #fff !important;
+  }
 }
+
+
+// There's a z-index issue introduced by the attempt to make this scss
 .gpii-button {
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  position: relative;
+  z-index: 1;
+
+
+
+   /**  colors and transitions back to normal
+    **/
+  a {
+    background: $color-gpii-sai-primary;
+    border-radius: 4px;
+    padding: 1rem 4rem 1rem;
+    display:block;
+    transition: background 500ms ease!important;
+    height:auto;
+    width: auto;
+    font-family: Oswald, sans-serif;
     position: relative;
-    display: inline-block;
+    transition: all 500ms ease;
+    border: none;
+    border-radius: 2px;
+    overflow: hidden;
+    color: #fff !important;
     text-align: center;
-    cursor: pointer;
-    transition: .25s;
-    border: 0;
-    margin: 1rem;
-    font-weight:bold;
-}
+    line-height: 1;
+  }
 
-.gpii-button a {
-    color: $color-gpii-sai-primary;
+  a:before, a:focus, a:hover {
+      background: #910F1E;
+      text-decoration: none;
+  }
+
+  /* places copy on top */
+  a span {
+      z-index: 8;
+      position: relative;
+      font-size: 1.4rem;
+  }
+
+  /** definition and placement of
+    * starting size before element */
+
+  a:before {
+    content: "";
     display: block;
-    padding: 16px 35px;
-    font-size: 1em;
-    font-family: 'Montserrat-Bold', sans-serif;
-    line-height: 1em;
-    transition: .25s;
-    text-decoration: none;
+    width: 92%;
+    height: 84%;
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: all 600ms cubic-bezier(.32,1.25,.1,1.47);
+    transform: translate(-50%,-50%);
+  }
+
+  /* grow to sizing for before element */
+  a:focus:before, a:hover:before {
+      height: 105%;
+      width: 105%;
+  }
+
+
 }
 
-.gpii-button:hover a {
+.gpii-add-product-button-wrapper {
+
+  /**  colors and transitions back to normal
+    **/
+  .btn-add-product {
+    background: $color-gpii-sai-primary;
+    font-size: 1.9rem;
+    padding-top: 2.1rem;
+    display:block;
+    transition: background 500ms ease!important;
+    border-radius: 4px;
+  }
+
+  .btn-add-product:before, .btn-add-product:focus, .btn-add-product:hover {
+      background: #910F1E;
+  }
+
+  /* base btn styling */
+  .btn-base {
+    height:auto;
+    font-family: Oswald, sans-serif;
+    position: relative;
+    transition: all 500ms ease;
+    border: none;
+    border-radius: 2px;
+    overflow: hidden;
     color: #fff;
-    transition: .25s;
-    transition-delay: .25s;
-    text-decoration: none;
-}
+    text-align: center;
+    line-height: 1;
+  }
 
-.gpii-button:hover::before {
-    left: 0;
-    transition: .25s;
-}
-.gpii-button::before {
+  /* places copy on top */
+  .btn-cta span {
+      z-index: 8;
+      position: relative;
+  }
+
+  /** definition and placement of
+    * starting size before element */
+
+  .btn-cta:before {
     content: "";
+    display: block;
+    width: 92%;
+    height: 84%;
+    border-radius: 4px;
     position: absolute;
-    width: 12px;
-    left: -12px;
-    top: 0;
-    bottom: 0;
-    border-left: 1px solid $color-gpii-sai-primary;
-    border-top: 1px solid $color-gpii-sai-primary;
-    border-bottom: 1px solid $color-gpii-sai-primary;
-    transition: .25s;
-    transition-delay: .25s;
-}
+    left: 50%;
+    top: 50%;
+    transition: all 600ms cubic-bezier(.32,1.25,.1,1.47);
+    transform: translate(-50%,-50%);
+  }
 
-.gpii-button:hover::after {
-    right: 0;
-    transition: .25s;
-}
+  /* grow to sizing for before element */
+  .btn-cta:focus:before, .btn-cta:hover:before {
+      height: 105%;
+      width: 105%;
+  }
 
-.gpii-button::after {
-    content: "";
-    position: absolute;
-    width: 12px;
-    right: -12px;
-    top: 0;
-    bottom: 0;
-    border-right: 1px solid $color-gpii-sai-primary;
-    border-top: 1px solid $color-gpii-sai-primary;
-    border-bottom: 1px solid $color-gpii-sai-primary;
-    transition: .25s;
-    transition-delay: .25s;
+  .lead {
+    font-size: 2.1rem;
+    text-transform: uppercase;
+    display:block;
+    line-height:1;
+    margin-bottom: 0;
+  }
+
+  .tiny {
+    font-size: 1.2rem;
+    font-style: italic;
+    display:block;
+    margin-top: -1rem;
+  }
+
+  .addl-note {
+    font-size: 1.4rem;
+    display:block;
+    margin-bottom:2.3rem;
+    margin-top: -1rem;
+  }
 }
 
 
@@ -1066,7 +1237,6 @@ a.tree-label {
   }
 }
 
-
 @media (min-width: $screen-sm) {
   .node.node-open-marketplace-product {
     .row {
@@ -1104,6 +1274,47 @@ a.tree-label {
 
 // End Open Marketplace
 
+
+/**
+ * Order Nodes
+ */
+
+.node-type-order {
+  .field {
+    margin-bottom: 0.5rem;
+  }
+  .orderupdate {
+    margin-top: 1rem;
+  }
+  .btn-purchase {
+    padding-top: 0.8rem;
+    padding-bottom: 0.7rem;
+    color: #000;
+    border-color: darken(#FFBB00, 10%);
+    background-color: #FFBB00;
+    &:hover, &:focus {
+      background-color: darken(#FFBB00, 5%)
+    }
+  }
+  .btn-primary {
+    padding-top: 0.9rem;
+    padding-bottom: 0.75rem;
+  }
+  .btn-primary, .btn-purchase {
+    width: 16em;
+    font-size: 115%;
+    font-weight: bold;
+  }
+  .node-order {
+    h2 {
+      border-bottom: 1px solid $color-gpii-dark-gray;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+ // End Order Nodes
 
 /**
  * Product Slideshow Overrides

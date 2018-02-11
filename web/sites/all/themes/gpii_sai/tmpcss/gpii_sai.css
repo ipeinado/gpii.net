@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto+Slab");
+@import 'https://fonts.googleapis.com/css?family=Oswald|Open+Sans';
 #block-bean-search-method-button-standard .container {
   border: 1px solid #cccccc;
   box-shadow: 3px 3px 10px #cccccc; }
@@ -202,7 +203,8 @@
     color: #A72534; }
 
 .btn-primary {
-  background-color: #A72534; }
+  background-color: #A72534;
+  border-color: #8e1f2c; }
   .btn-primary:focus, .btn-primary:active, .btn-primary:hover {
     background-color: #8e1f2c; }
 
@@ -372,71 +374,131 @@ body.front, body.page-node-1903 {
 /**
  * Experimental custom button with pure CSS transition/animation
  */
-.gpii-button:hover {
-  background-color: #A72534;
-  color: #fff;
-  transition: .25s;
-  transition-delay: .25s; }
+/* centers the button in the DOM*/
+.gpii-add-product-button-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  /* gives btn width and height */ }
+  .gpii-add-product-button-wrapper a {
+    text-decoration: none;
+    /* strip natual underlines */
+    width: 45rem;
+    margin: 1.5em 1.6em 0;
+    color: #fff !important; }
 
 .gpii-button {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
   position: relative;
-  display: inline-block;
-  text-align: center;
-  cursor: pointer;
-  transition: .25s;
-  border: 0;
-  margin: 1rem;
-  font-weight: bold; }
+  z-index: 1;
+  /**  colors and transitions back to normal
+    **/
+  /* places copy on top */
+  /** definition and placement of
+    * starting size before element */
+  /* grow to sizing for before element */ }
+  .gpii-button a {
+    background: #A72534;
+    border-radius: 4px;
+    padding: 1rem 4rem 1rem;
+    display: block;
+    transition: background 500ms ease !important;
+    height: auto;
+    width: auto;
+    font-family: Oswald, sans-serif;
+    position: relative;
+    transition: all 500ms ease;
+    border: none;
+    border-radius: 2px;
+    overflow: hidden;
+    color: #fff !important;
+    text-align: center;
+    line-height: 1; }
+  .gpii-button a:before, .gpii-button a:focus, .gpii-button a:hover {
+    background: #910F1E;
+    text-decoration: none; }
+  .gpii-button a span {
+    z-index: 8;
+    position: relative;
+    font-size: 1.4rem; }
+  .gpii-button a:before {
+    content: "";
+    display: block;
+    width: 92%;
+    height: 84%;
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: all 600ms cubic-bezier(0.32, 1.25, 0.1, 1.47);
+    transform: translate(-50%, -50%); }
+  .gpii-button a:focus:before, .gpii-button a:hover:before {
+    height: 105%;
+    width: 105%; }
 
-.gpii-button a {
-  color: #A72534;
-  display: block;
-  padding: 16px 35px;
-  font-size: 1em;
-  font-family: 'Montserrat-Bold', sans-serif;
-  line-height: 1em;
-  transition: .25s;
-  text-decoration: none; }
-
-.gpii-button:hover a {
-  color: #fff;
-  transition: .25s;
-  transition-delay: .25s;
-  text-decoration: none; }
-
-.gpii-button:hover::before {
-  left: 0;
-  transition: .25s; }
-
-.gpii-button::before {
-  content: "";
-  position: absolute;
-  width: 12px;
-  left: -12px;
-  top: 0;
-  bottom: 0;
-  border-left: 1px solid #A72534;
-  border-top: 1px solid #A72534;
-  border-bottom: 1px solid #A72534;
-  transition: .25s;
-  transition-delay: .25s; }
-
-.gpii-button:hover::after {
-  right: 0;
-  transition: .25s; }
-
-.gpii-button::after {
-  content: "";
-  position: absolute;
-  width: 12px;
-  right: -12px;
-  top: 0;
-  bottom: 0;
-  border-right: 1px solid #A72534;
-  border-top: 1px solid #A72534;
-  border-bottom: 1px solid #A72534;
-  transition: .25s;
-  transition-delay: .25s; }
+.gpii-add-product-button-wrapper {
+  /**  colors and transitions back to normal
+    **/
+  /* base btn styling */
+  /* places copy on top */
+  /** definition and placement of
+    * starting size before element */
+  /* grow to sizing for before element */ }
+  .gpii-add-product-button-wrapper .btn-add-product {
+    background: #A72534;
+    font-size: 1.9rem;
+    padding-top: 2.1rem;
+    display: block;
+    transition: background 500ms ease !important;
+    border-radius: 4px; }
+  .gpii-add-product-button-wrapper .btn-add-product:before, .gpii-add-product-button-wrapper .btn-add-product:focus, .gpii-add-product-button-wrapper .btn-add-product:hover {
+    background: #910F1E; }
+  .gpii-add-product-button-wrapper .btn-base {
+    height: auto;
+    font-family: Oswald, sans-serif;
+    position: relative;
+    transition: all 500ms ease;
+    border: none;
+    border-radius: 2px;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    line-height: 1; }
+  .gpii-add-product-button-wrapper .btn-cta span {
+    z-index: 8;
+    position: relative; }
+  .gpii-add-product-button-wrapper .btn-cta:before {
+    content: "";
+    display: block;
+    width: 92%;
+    height: 84%;
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: all 600ms cubic-bezier(0.32, 1.25, 0.1, 1.47);
+    transform: translate(-50%, -50%); }
+  .gpii-add-product-button-wrapper .btn-cta:focus:before, .gpii-add-product-button-wrapper .btn-cta:hover:before {
+    height: 105%;
+    width: 105%; }
+  .gpii-add-product-button-wrapper .lead {
+    font-size: 2.1rem;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1;
+    margin-bottom: 0; }
+  .gpii-add-product-button-wrapper .tiny {
+    font-size: 1.2rem;
+    font-style: italic;
+    display: block;
+    margin-top: -1rem; }
+  .gpii-add-product-button-wrapper .addl-note {
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 2.3rem;
+    margin-top: -1rem; }
 
 #provideoyourrate .widget_label, #provideoyourrate .spanstar {
   font-size: 2.5rem; }
@@ -781,6 +843,38 @@ a.tree-label {
       width: 12rem;
       margin-bottom: auto;
       padding-top: 0; } }
+
+/**
+ * Order Nodes
+ */
+.node-type-order .field {
+  margin-bottom: 0.5rem; }
+
+.node-type-order .orderupdate {
+  margin-top: 1rem; }
+
+.node-type-order .btn-purchase {
+  padding-top: 0.8rem;
+  padding-bottom: 0.7rem;
+  color: #000;
+  border-color: #cc9600;
+  background-color: #FFBB00; }
+  .node-type-order .btn-purchase:hover, .node-type-order .btn-purchase:focus {
+    background-color: #e6a800; }
+
+.node-type-order .btn-primary {
+  padding-top: 0.9rem;
+  padding-bottom: 0.75rem; }
+
+.node-type-order .btn-primary, .node-type-order .btn-purchase {
+  width: 16em;
+  font-size: 115%;
+  font-weight: bold; }
+
+.node-type-order .node-order h2 {
+  border-bottom: 1px solid #2c3849;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem; }
 
 /**
  * Product Slideshow Overrides
