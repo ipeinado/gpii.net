@@ -1179,8 +1179,10 @@ a.tree-label {
 
   .region-hero {
     background-color: $color-gpii-sai-primary;
+    background-image: none;
     padding:0 0 0 0;
     border-radius: 0;
+    margin-top: 2.5rem;
     #OMicon {
       width: 11rem;
       margin-bottom: -.6rem;
@@ -1265,6 +1267,9 @@ a.tree-label {
     float: none;
     #OMicon {
       width: 12rem;
+      position: fixed;
+      left: 0;
+      top: 10rem;
       margin-bottom: auto;
       padding-top: 0;
     }
