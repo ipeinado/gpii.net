@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the OpenMarketplace Order Processing feature.
+ */
+
+include_once 'openmarketplace_order_processing.features.inc';
