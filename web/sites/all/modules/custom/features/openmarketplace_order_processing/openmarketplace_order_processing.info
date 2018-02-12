@@ -35,7 +35,6 @@ features[field_instance][] = node-order-field_payment_reference
 features[field_instance][] = node-order-field_product_reference
 features[field_instance][] = node-order-title_field
 features[node][] = order
-features[payment_method][] = paypal_express
 features[user_permission][] = create order content
 features[user_permission][] = delete any order content
 features[user_permission][] = delete own order content

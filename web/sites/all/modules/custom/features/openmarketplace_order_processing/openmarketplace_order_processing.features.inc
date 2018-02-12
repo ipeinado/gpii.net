@@ -28,28 +28,3 @@ function openmarketplace_order_processing_node_info() {
   drupal_alter('node_info', $items);
   return $items;
 }
-
-/**
- * Implements hook_default_payment_method().
- */
-function openmarketplace_order_processing_default_payment_method() {
-  $items = array();
-  $items['paypal_express'] = entity_import('payment_method', '{
-    "controller_data" : {
-      "capture" : "Authorization",
-      "email_address" : "",
-      "password" : "VCK75TCSCQ7LGA8B",
-      "server" : 1,
-      "signature" : "AZyJIVtrKZJIFn35ToMVOPQoZ8ZAAT0o-pBqbwwRdjoi.gwiCxab7T2M",
-      "username" : "treasurer_api1.raisingthefloor.net"
-    },
-    "enabled" : true,
-    "name" : "paypal_express",
-    "title_specific" : "PayPal Express",
-    "title_generic" : "PayPal Express",
-    "uid" : 1,
-    "rdf_mapping" : [],
-    "controller_class_name" : "PayPalPaymentECPaymentMethodController"
-  }');
-  return $items;
-}
