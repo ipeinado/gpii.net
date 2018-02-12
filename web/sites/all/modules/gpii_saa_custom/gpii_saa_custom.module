@@ -565,7 +565,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
     function gpii_saa_custom_order_form_submit($form, &$form_state) {
 
-    drupal_set_message('Please review your order and complete your purchase by selecting the "Buy Now" button below.');
+    drupal_set_message('Please review your order and complete your purchase by clicking on the "Check out with PayPal" button below.');
     //dpm($form_state);
     // foreach ($form_state['values'] as $key => $value) {
     //   dsm($key . ': ' . $value);
@@ -2037,7 +2037,7 @@ function gpii_saa_custom_uid_redirect($uid) {
  */
 
 function gpii_saa_custom_node_view($node, $view_mode) {
-  if ($node->type=='order'  && $view_mode == 'full'){
+  if ($node->type=='order' && $view_mode == 'full'){
     $node->content['update_button'] = array(
          "#markup"=> '<div class="orderupdate"><a class="btn btn-purchase" href="/orders/update/' . $node->nid . '">Update Order</a></div>',
          "#weight"=> 5
