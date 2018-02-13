@@ -229,7 +229,7 @@ function paymentform_payment_finish(Payment $payment) {
 
    // need to write the function below and figure out how to move this out of the payment module
   // @@ add patchinfo to point to this modification
-  gpii_saa_custom_openmarketplace_order_complete($payment->context_data['entity_id'], $payment->pid);
+  gpii_saa_custom_openmarketplace_order_complete($payment->context_data['entity_id'], $payment);
 
   if ($uri = entity_uri($payment->context_data['entity_type'], $entity)) {
     drupal_goto($uri['path'], $uri['options']);

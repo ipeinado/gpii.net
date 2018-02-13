@@ -2069,7 +2069,7 @@ function gpii_saa_custom_node_access($node, $view_mode) {
 function gpii_saa_custom_openmarketplace_order_complete($nid, $payment) {
 
     $entity = node_load($nid);
-    dpm($payment);
+    //dpm($payment);
 
     // Now create an entity_metadata_wrapper around the node entity
     // to make getting and setting values easier
@@ -2090,8 +2090,8 @@ function gpii_saa_custom_preprocess(&$variables, $hook) {
 // Hook the payment view to remove payment_status and other info.
 
   if ($hook == 'entity' && isset($variables['payment']) && $variables['elements']['#view_mode'] == 'full') {
-    dpm(array_pop($variables['elements']['#entity']->statuses));
-    dpm($variables);
+    // dpm(array_pop($variables['elements']['#entity']->statuses));
+    // dpm($variables);
 
   }
   if ($hook == 'entity' && isset($variables['payment']) && $variables['elements']['#view_mode'] == 'token') {
