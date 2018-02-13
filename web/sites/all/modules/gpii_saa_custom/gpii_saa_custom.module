@@ -505,7 +505,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $form['order']['type'] = array(
         '#type' => 'item',
         '#title' => t('Product Type'),
-        '#markup' => t('<p>Software License</p>'),
+        '#markup' => t('<p>Software</p>'),
       );
 
 
@@ -668,7 +668,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $form['order']['type'] = array(
         '#type' => 'item',
         '#title' => t('Product Type'),
-        '#markup' => t('<p>Software License</p>'),
+        '#markup' => t('<p>Software</p>'),
       );
 
       $om_product = node_load($product->field_product_reference['und'][0]['target_id']);
@@ -2066,20 +2066,46 @@ function gpii_saa_custom_node_access($node, $view_mode) {
  * Function takes the order nid and payment id and updates the order to reference the payment.
  */
 
-function gpii_saa_custom_openmarketplace_order_complete($nid, $pid) {
+function gpii_saa_custom_openmarketplace_order_complete($nid, $payment) {
 
     $entity = node_load($nid);
+    dpm($payment);
 
     // Now create an entity_metadata_wrapper around the node entity
     // to make getting and setting values easier
     $ewrapper = entity_metadata_wrapper('node', $entity);
 
     // Note that the entity id must be passed as an integer not a string
-    $ewrapper->field_payment_reference->set(intval($pid));
+    $ewrapper->field_payment_reference->set(intval($payment->pid));
 
     // Now just save the wrapper and the entity
     $ewrapper->save(true);
     $entity->revision = TRUE;
     entity_save('node', $entity);
+
+}
+
+function gpii_saa_custom_preprocess(&$variables, $hook) {
+
+// Hook the payment view to remove payment_status and other info.
+
+  if ($hook == 'entity' && isset($variables['payment']) && $variables['elements']['#view_mode'] == 'full') {
+    dpm(array_pop($variables['elements']['#entity']->statuses));
+    dpm($variables);
+
+  }
+  if ($hook == 'entity' && isset($variables['payment']) && $variables['elements']['#view_mode'] == 'token') {
+    unset($variables['content']['payment_status_items']);
+    unset($variables['content']['payment_method']);
+    // get the most recent status
+    $last_status = array_pop($variables['elements']['#entity']->statuses);
+
+    $variables['content']['payment_complete'] = array(
+      '#type' => markup,
+      '#markup' => '<p>Order completed (' . format_date($last_status->created, 'medium') . '). You will get a confirmation by email within 24 hours along with shipping or downloading information.</p>',
+      '#weight' => 10,
+    );
+  }
+
 
 }
