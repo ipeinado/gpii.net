@@ -14,8 +14,27 @@
 	}
 }
 
+.region-featured-links::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.region-featured-links::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.region-featured-links::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.region-featured-links::-webkit-scrollbar-track { 
+    background-color: #fff; 
+    border-radius: 8px; 
+} 
+
 .front .region-featured-links {
-	margin-bottom: 3rem;
+	margin-bottom: 2rem;
 
 	.container {
 		display: flex;

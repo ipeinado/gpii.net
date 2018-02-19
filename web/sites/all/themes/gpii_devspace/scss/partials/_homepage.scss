@@ -7,7 +7,6 @@
 
 	.region-hero {
 		position: relative;
-		padding: (35px/15px)*1rem 0;
 		margin-bottom: 1rem;
 		text-align: center;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -16,7 +15,7 @@
 		background-image: url('../images/home_hero_background.jpg');
   		background-repeat: no-repeat;
   		background-size: cover;
-  		background-position: 50% 80%;
+  		background-position: 50% 50%;
 
   		h1 {
   			text-shadow: 1px 1px 1px #333;
@@ -92,94 +91,8 @@
 
 .components-block {
 	margin-bottom: 3rem;
-	background-color: #FAFAFA;
 	padding-bottom: 0;
 }
-
-.view-recent-components {
-	margin-top: 1rem;
-	margin-bottom: 0 !important;
-	padding-bottom: 2rem;
-	border-bottom: 3px solid #EBEBEB;
-	display: block;
-	overflow: scroll !important;
-
-	.view-header {
-		display: block;
-		overflow: hidden;
-		clear: both;
-		margin-bottom: 0;
-		padding: 0 1rem;
-
-		h2 {
-			margin-top: 0;
-
-			@media (max-width: $screen-xs-max) {
-				margin-bottom: 0.5rem;
-				text-align: left;
-			}
-
-			@media (min-width: $screen-sm-min) {
-				float: left;
-				margin-left: 0.5rem;
-			}
-		}
-
-		p {
-			@media (max-width: $screen-xs-max) {
-				text-align: left;
-				margin-bottom: 1rem;
-			}
-
-			@media (min-width: $screen-sm-min) {
-				float: right;
-				margin-right: 0.5rem;
-			}
-		}
-
-		.header-link {
-			font-weight: 600;
-		}
-	}
-
-	.view-content {
-		display: flex;
-		height: 180px;
-		padding: 2px;
-
-		@media (max-width: 768px) {
-			width: 740px;
-		}
-
-		.recent-component-item {
-			width: 100%;
-			border-radius: 4px;
-			overflow: hidden;
-			background: #FFF;
-			box-shadow: 0 1px 4px 0 hsla(0, 0%, 0%, 0.1), 0 0px 4px 0 hsla(0, 0%, 0%, 0.1);
-			padding: 0 24px;
-		}
-
-		.recent-component-item:not(.views-row-first) {
-			margin-left: 24px;
-		}
-
-		.recent-component-item.views-row-first {
-			margin-left: 1rem;
-		}
-
-		.recent-component-item.views-row-last {
-			margin-right: 1rem;
-		}
-
-		.recent-component-body {
-			height: (64px/15px)*1rem;
-			margin-bottom: (15px/15px)*1rem;
-			overflow: hidden;
-		}
-	}
-}
-
 
 /*********************************************
 * FRONT STORIES
