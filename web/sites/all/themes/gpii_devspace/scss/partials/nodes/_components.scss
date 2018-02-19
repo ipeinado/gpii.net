@@ -28,6 +28,120 @@
 	}
 }
 
+.view-recent-components {
+	margin-top: 1rem;
+	padding-bottom: 2rem;
+	display: block;
+	overflow: scroll !important;
+
+	.view-header {
+		display: block;
+		overflow: hidden;
+		clear: both;
+		margin-bottom: 1rem;
+		padding: 0;
+
+		h2 {
+			margin-top: 0;
+			font-size: (18px/15px)*1rem;
+
+			@media (max-width: $screen-xs-max) {
+				margin-bottom: 0.5rem;
+				text-align: left;
+			}
+
+			@media (min-width: $screen-sm-min) {
+				float: left;
+				margin-left: 0.5rem;
+			}
+		}
+
+		.view-header-link {
+			display: inline-block;
+			font-weight: 600;
+
+			@media (max-width: $screen-xs-max) {
+				float: left;
+			}
+
+			@media (min-width: $screen-sm-min) {
+				float: right;	
+			}
+		}
+	}
+
+	.view-content {
+		display: flex;
+		height: 200px;
+		padding: 2px;
+
+		@media (max-width: $screen-sm-max) {
+			width: 910px;
+		}
+
+		.recent-component-item {
+			width: 100%;
+			border-radius: 4px;
+			overflow: hidden;
+			background: #FFF;
+			box-shadow: 0 1px 4px 0 hsla(0, 0%, 0%, 0.1), 0 0px 4px 0 hsla(0, 0%, 0%, 0.1);
+			padding: 0 24px;
+			cursor: pointer;
+		}
+
+		.recent-component-item:hover {
+			    box-shadow: 0 1px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.1)), 0 0px 4px 0 var(--shadow-color, hsla(0, 0%, 0%, 0.1)), 0 0 20px 0 hsla(0, 0%, 0%, 0.1) !important;
+			    
+			    h3 {
+			    	text-decoration: underline;
+			    	color: $color-gpii-devspace-primary;
+			    }
+		}
+
+		.recent-component-item:not(.views-row-first) {
+			margin-left: 24px;
+		}
+
+		.recent-component-item.views-row-first {
+			margin-left: 0;
+		}
+
+		.recent-component-item.views-row-last {
+			margin-right: 0;
+		}
+
+		.recent-component-body {
+			height: (64px/15px)*1rem;
+			margin-bottom: 1rem;
+			overflow: hidden;
+		}
+
+		.recent-component-footer {
+			padding-top: 1rem;
+			border-top: 1px solid #E0E0E0;
+		}
+	}
+}
+
+.view-recent-components::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.view-recent-components::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.view-recent-components::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.view-recent-components::-webkit-scrollbar-track { 
+    background-color: #fff; 
+    border-radius: 8px; 
+} 
+
 .node-bb.node-teaser {
 	h2 {
 		display: inline-block;
