@@ -2121,3 +2121,68 @@ div.discontinued {
     content: ' ';
   }
 }
+
+.page-node-5571, .page-node-6163 { // delete 5571 after sync
+  h3 {
+    font-size: 1.8em;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+}
+
+#block-webform-client-block-5572, #block-webform-client-block-6140 { // delete 5572 after testing completes
+  .panel-default > .panel-heading .panel-title {
+    font-size: 1.6rem;
+  }
+  fieldset.collapsed {
+    margin-bottom: 4em;
+  }
+
+  .manufacturer-info {
+    margin-top: 5rem;
+  }
+}
+
+.form-required {
+  font-weight: bold;
+  color: $color-gpii-sai-primary;
+}
+.form-control.form-file {
+  height: auto;
+}
+.form-control.chosen-container {
+  height: auto;
+  padding: 0;
+  border: none;
+  a {
+    div {
+      top: 3px;
+    }
+    background: none;
+    padding: 1rem;
+    span {
+      margin-top: -0.8rem;
+    }
+  }
+
+}
+
+.callout {
+  border-width: 1px 1px 1px 5px;
+  border-color: $color-gpii-gray;
+  border-left-color: $color-gpii-dark-gray;
+  border-style: solid;
+  padding: 0.85rem 1rem 0.85rem 1.5rem;
+  margin: 2rem 0;
+  clear: both;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.callout-primary {
+  border-left-color: $color-gpii-sai-primary;
+}
+
+
+

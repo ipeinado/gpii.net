@@ -1580,4 +1580,51 @@ div.discontinued {
     display: block;
     content: ' '; }
 
+.page-node-5571 h3, .page-node-6163 h3 {
+  font-size: 1.8em;
+  font-weight: bold;
+  line-height: 1.2; }
+
+#block-webform-client-block-5572 .panel-default > .panel-heading .panel-title, #block-webform-client-block-6140 .panel-default > .panel-heading .panel-title {
+  font-size: 1.6rem; }
+
+#block-webform-client-block-5572 fieldset.collapsed, #block-webform-client-block-6140 fieldset.collapsed {
+  margin-bottom: 4em; }
+
+#block-webform-client-block-5572 .manufacturer-info, #block-webform-client-block-6140 .manufacturer-info {
+  margin-top: 5rem; }
+
+.form-required {
+  font-weight: bold;
+  color: #A72534; }
+
+.form-control.form-file {
+  height: auto; }
+
+.form-control.chosen-container {
+  height: auto;
+  padding: 0;
+  border: none; }
+  .form-control.chosen-container a {
+    background: none;
+    padding: 1rem; }
+    .form-control.chosen-container a div {
+      top: 3px; }
+    .form-control.chosen-container a span {
+      margin-top: -0.8rem; }
+
+.callout {
+  border-width: 1px 1px 1px 5px;
+  border-color: #e5e5e5;
+  border-left-color: #2c3849;
+  border-style: solid;
+  padding: 0.85rem 1rem 0.85rem 1.5rem;
+  margin: 2rem 0;
+  clear: both;
+  font-weight: bold;
+  border-radius: 4px; }
+
+.callout-primary {
+  border-left-color: #A72534; }
+
 /*# sourceMappingURL=gpii_sai.css.map */
