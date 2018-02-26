@@ -34,10 +34,29 @@ function paypal_payment_ipn_post() {
     $ipn_variables[$ipn_variable] = rawurldecode($value);
   }
   if (PayPalPaymentIPNController::acknowledge($ipn_variables) && PayPalPaymentIPNController::validate($ipn_variables)) {
-    $new_status = PayPalPaymentIPNController::process($ipn_variables);
-    $ipn = new PayPalPaymentIPN($ipn_variables);
-    $ipn->pid = $new_status->pid;
-    $ipn->psiid = $new_status->psiid;
-    PayPalPaymentIPNController::save($ipn);
+    PayPalPaymentIPNController::process($ipn_variables);
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for payment.
+ *
+ * If available save the IPN records after saving the payment.
+ */
+function paypal_payment_ipn_payment_update($payment) {
+  if ($payment->method->controller instanceof PayPalPaymentIPNPaymentMethodControllerInterface) {
+    $status = $payment->getStatus();
+    if (isset($status->ipn)) {
+      $status->ipn->pid = $payment->pid;
+      $status->ipn->psiid = $status->psiid;
+      PayPalPaymentIPNController::save($status->ipn);
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for payment.
+ */
+function paypal_payment_ipn_payment_insert($payment) {
+  paypal_payment_ipn_payment_update($payment);
 }

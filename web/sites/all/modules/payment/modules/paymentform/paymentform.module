@@ -219,23 +219,19 @@ function paymentform_payment_finish(Payment $payment) {
   }
   elseif (payment_status_is_or_has_ancestor($payment->getStatus()->status, PAYMENT_STATUS_SUCCESS)) {
     drupal_set_message(t('Your payment was successfully completed.') . $view);
-
   }
   elseif (payment_status_is_or_has_ancestor($payment->getStatus()->status, PAYMENT_STATUS_FAILED)) {
     drupal_set_message(t('Your payment failed.') . $view);
   }
 
   $entity = entity_load_single($payment->context_data['entity_type'], $payment->context_data['entity_id']);
-
-   // need to write the function below and figure out how to move this out of the payment module
-  // @@ add patchinfo to point to this modification
-  gpii_saa_custom_openmarketplace_order_complete($payment->context_data['entity_id'], $payment);
-
   if ($uri = entity_uri($payment->context_data['entity_type'], $entity)) {
     drupal_goto($uri['path'], $uri['options']);
   }
   drupal_goto('<front>');
 }
+
+
 
 /**
  * Implements form validate callback for a paymentform_line_item field widget.

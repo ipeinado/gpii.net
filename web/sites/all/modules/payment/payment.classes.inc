@@ -357,7 +357,7 @@ class PaymentEntityController extends EntityAPIController {
       $line_item_data['description_arguments'] = unserialize($line_item_data['description_arguments']);
       $line_item_data['amount'] = (float) $line_item_data['amount'];
       $line_item_data['tax_rate'] = (float) $line_item_data['tax_rate'];
-      $line_item_data['quantity'] = (int) $line_item_data['quantity'];
+      $line_item_data['quantity'] = (float) $line_item_data['quantity'];
       $line_items[$line_item_data['pid']][$line_item_data['name']] = new PaymentLineItem($line_item_data);
     }
 
@@ -394,7 +394,16 @@ class PaymentEntityController extends EntityAPIController {
     $payment->pmid = $payment->method->pmid;
     $return = parent::save($payment, $transaction);
     unset($payment->pmid);
+    return $return;
+  }
 
+  /**
+   * Save the line items and payment status items if needed.
+   *
+   * @param Payment $payment
+   *   The payment object.
+   */
+  function saveAttachedData($payment) {
     // Save line items.
     foreach ($payment->line_items as $line_item) {
       db_merge('payment_line_item')
@@ -435,8 +444,6 @@ class PaymentEntityController extends EntityAPIController {
         ));
         $query->execute();
     }
-
-    return $return;
   }
 
   /**
@@ -1113,7 +1120,7 @@ class PaymentLineItem extends PaymentCommon {
    *
    * @var float
    */
-  public $quantity = 1;
+  public $quantity = 1.0;
 
   /**
    * Return this line item's unit amount.

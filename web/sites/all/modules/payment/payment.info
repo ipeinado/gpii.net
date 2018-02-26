@@ -18,9 +18,9 @@ files[] = views/PaymentViewsHandlerFilterPaymentMethodControllerTitle.inc
 files[] = views/PaymentViewsHandlerFilterPaymentMethodTitle.inc
 files[] = views/PaymentViewsHandlerFilterPaymentStatusItemStatus.inc
 files[] = tests/PaymentWebTestCase.test
-; Information added by Drupal.org packaging script on 2016-07-08
-version = "7.x-1.16"
+; Information added by Drupal.org packaging script on 2018-02-14
+version = "7.x-1.17"
 core = "7.x"
 project = "payment"
-datestamp = "1467988822"
+datestamp = "1518596889"
 

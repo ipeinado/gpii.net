@@ -85,6 +85,13 @@ define('PAYPAL_PAYMENT_STATUS_INTL', 'PAYPAL_PAYMENT_STATUS_INTL');
 define('PAYPAL_PAYMENT_STATUS_COMPLETED_FUNDS_HELD', 'PAYPAL_PAYMENT_STATUS_COMPLETED_FUNDS_HELD');
 
 /**
+ * A user was successfully redirected to the return URL but the payment is not
+ * yet confirmed via a proper IPN packet. The user’s session should be treated
+ * as if the payment was successfully completed.
+ */
+define('PAYPAL_PAYMENT_STATUS_SUCCESSFULLY_RETURNED', 'paypal_payment_successfully_returned');
+
+/**
  * Implements hook_payment_status_info().
  */
 function paypal_payment_payment_status_info() {
@@ -168,6 +175,12 @@ function paypal_payment_payment_status_info() {
       'parent' => PAYMENT_STATUS_SUCCESS,
       'status' => PAYPAL_PAYMENT_STATUS_COMPLETED_FUNDS_HELD,
       'title' => t('Completed (funds are being held back)'),
+    )),
+    new PaymentStatusInfo(array(
+      'parent' => PAYMENT_STATUS_SUCCESS,
+      'status' => PAYPAL_PAYMENT_STATUS_SUCCESSFULLY_RETURNED,
+      'title' => t('User successfully returned'),
+      'description' => t('The user was redirect back from PayPal after a successful payment. The payment was not yet confirmed using a IPN request.'),
     )),
   );
 }

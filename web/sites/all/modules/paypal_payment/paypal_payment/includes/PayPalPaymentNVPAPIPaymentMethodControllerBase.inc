@@ -115,7 +115,10 @@ abstract class PayPalPaymentNVPAPIPaymentMethodControllerBase extends PaymentMet
     $response = chr_curl_http_request($this->NVPAPIServerURL($payment->method->controller_data['server']), array(
       'method' => 'POST',
       'data' => $post_data,
-      'verify_ssl' => TRUE,
+      'curl_opts' => [
+        CURLOPT_SSL_VERIFYPEER => TRUE,
+        CURLOPT_SSL_VERIFYHOST => 2,
+      ],
     ));
 
     if (isset($response->error)) {

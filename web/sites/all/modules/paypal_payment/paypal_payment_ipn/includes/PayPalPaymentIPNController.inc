@@ -109,7 +109,10 @@ abstract class PayPalPaymentIPNController {
     $response = chr_curl_http_request($url, array(
       'method' => 'POST',
       'data' => $data,
-      'verify_ssl' => TRUE,
+      'curl_opts' => [
+        CURLOPT_SSL_VERIFYPEER => TRUE,
+        CURLOPT_SSL_VERIFYHOST => 2,
+      ],
     ));
     // Process the response.
     if (isset($response->error)) {
@@ -162,12 +165,14 @@ abstract class PayPalPaymentIPNController {
   public static function process(array $ipn_variables) {
     $pid = self::PID($ipn_variables['invoice']);
     $payment = entity_load_single('payment', $pid);
-    $payment->setStatus(new PaymentStatusItem(self::convertStatus($ipn_variables)));
-    entity_save('payment', $payment);
     if ($payment->method->controller instanceof PayPalPaymentIPNPaymentMethodControllerInterface) {
       $payment->method->controller->PayPalProcessIPN($payment, $ipn_variables);
     }
-    return $payment->getStatus();
+    $new_status = new PaymentStatusItem(self::convertStatus($ipn_variables));
+    $new_status->ipn = new PayPalPaymentIPN($ipn_variables);
+    $payment->setStatus($new_status);
+    entity_save('payment', $payment);
+    return $new_status;
   }
 
   /**
