@@ -1486,6 +1486,16 @@ div.discontinued {
 
 #block-webform-client-block-5572 .manufacturer-info, #block-webform-client-block-6140 .manufacturer-info {
   margin-top: 5rem; }
+  #block-webform-client-block-5572 .manufacturer-info .help-block:first-child, #block-webform-client-block-6140 .manufacturer-info .help-block:first-child {
+    border-width: 1px 1px 1px 5px;
+    border-color: #e5e5e5;
+    border-left-color: #A72534;
+    border-style: solid;
+    padding: 0.85rem 1rem 0.85rem 1.5rem;
+    margin: 2rem 0;
+    clear: both;
+    font-weight: bold;
+    border-radius: 4px; }
 
 .form-required {
   font-weight: bold;
