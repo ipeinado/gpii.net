@@ -2001,6 +2001,97 @@ function gpii_saa_custom_uid_redirect($uid) {
   // query a view to find products with the requested UID
   $results = views_get_view_result('find_product_by_uid', 'default', $uid);
 
+  // @@ make this a function
+  if (count($results) == 0) {
+
+  // if the view didn't return any results, let's hit the UL API to see if there's a better UID to use
+
+    if (variable_get('UL_API_LOGGEDIN') < (time() + 10800)) {
+      //dpm('LOGGED IN ALREADY ' . variable_get('UL_API_LOGGEDIN'));
+    }
+
+    else {
+      // log into the API
+      $curl = curl_init();
+
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.ul.gpii.net/api/user/login",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "username=" . variable_get('UL_API_USERNAME') . "&password=" . variable_get('UL_API_PASSWORD'),
+        CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
+        CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
+        CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+
+        CURLOPT_HTTPHEADER => array(
+          "accept: application/json",
+          "content-type: application/x-www-form-urlencoded"
+        ),
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      curl_close($curl);
+
+      if ($err) {
+        //dpm("cURL Error #:" . $err);
+      } else {
+        //dpm($response);
+        variable_set('UL_API_LOGGEDIN', time());
+      }
+    }
+
+
+    //dpm($uid);
+
+    // Check with the UL API to see if a redirect for the requested UID is available
+    if (variable_get('UL_API_LOGGEDIN') < (time())) {
+      $curl = curl_init();
+
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.ul.gpii.net/api/product/unified/" . $uid,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_FOLLOWLOCATION => true, // follow 301 redirects!!!!
+        CURLOPT_COOKIE => "connect.sid=s%253A0TlzsZZs_kSUqlJ-kNDv8w4mXG2pAkHn.fOJBQHuaanPi5hBgQUASol0%252FGtcg48MsOdRjAdLqch8",
+        CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
+        CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+        CURLOPT_HTTPHEADER => array(
+          "accept: application/json"
+        ),
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      curl_close($curl);
+
+      if ($err) {
+        //dpm("cURL Error #:" . $err);
+      } else {
+        //dpm($response);
+      }
+
+    $response = json_decode($response);
+
+    //dpm($response->uid);
+
+    if ($uid != $response->uid) {
+      gpii_saa_custom_uid_redirect($response->uid);
+    }
+
+      //drupal_exit();
+    }
+  }
 
   // we should only get one result back from the view, redirect if this is true
   if (count($results) == 1) {
