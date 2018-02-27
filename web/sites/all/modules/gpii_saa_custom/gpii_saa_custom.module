@@ -419,7 +419,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'title' => 'UID Redirect',
         'page callback' => 'gpii_saa_custom_uid_redirect',
         'page arguments' => array(1),
-        'access arguments' => array(''),
+        'access arguments' => array('access content'),
       );
       $items['orders/add/%'] = array(
         'title' => t('Place an order'),
@@ -2001,6 +2001,7 @@ function gpii_saa_custom_uid_redirect($uid) {
   // query a view to find products with the requested UID
   $results = views_get_view_result('find_product_by_uid', 'default', $uid);
 
+
   // we should only get one result back from the view, redirect if this is true
   if (count($results) == 1) {
     drupal_goto('node/' . $results[0]->nid, array(), 302);
@@ -2008,7 +2009,7 @@ function gpii_saa_custom_uid_redirect($uid) {
 
   // if we somehow get more than one result back, throw an error and render the results as a list
   elseif (count($results) > 1) {
-    drupal_set_message(t('<strong>Error:</strong> More than one record with this UID exists. Please review the results below and update the records as appropriate.'), 'error', FALSE);
+    drupal_set_message(t('<strong>Error:</strong> More than one record with this UID exists.'), 'error', FALSE);
 
     $items = array();
     foreach ($results as $key => $value) {
@@ -2092,8 +2093,8 @@ function gpii_saa_custom_preprocess(&$variables, $hook) {
   if ($hook == 'entity' && isset($variables['payment']) && $variables['elements']['#view_mode'] == 'full') {
     // dpm(array_pop($variables['elements']['#entity']->statuses));
     // dpm($variables);
-
   }
+
   if ($hook == 'entity' && isset($variables['payment']) && $variables['elements']['#view_mode'] == 'token') {
     unset($variables['content']['payment_status_items']);
     unset($variables['content']['payment_method']);
@@ -2106,6 +2107,5 @@ function gpii_saa_custom_preprocess(&$variables, $hook) {
       '#weight' => 10,
     );
   }
-
 
 }
