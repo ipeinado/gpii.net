@@ -985,7 +985,28 @@
 
 .node-bb.node-teaser h2 {
   display: inline-block;
-  margin-right: 0.3rem; }
+  margin-right: 0.35rem; }
+
+.node-bb.node-teaser .company-name {
+  font-family: Consolas, "Liberation Mono", Menlo, Monaco, Courier, monospace;
+  font-size: 0.86666667rem; }
+
+@media (min-width: 992px) {
+  .node-bb.node-teaser .group-action-links {
+    right: 10px; } }
+
+.node-bb.node-teaser .group-action-links a {
+  font-size: 13px;
+  color: #777; }
+  .node-bb.node-teaser .group-action-links a .fa {
+    color: #c99500;
+    font-size: 16px;
+    padding-right: 3px; }
+
+.node-bb.node-teaser .group-action-links .flag-outer.flag-outer-bookmarks,
+.node-bb.node-teaser .group-action-links .social-button {
+  margin-left: 10px;
+  margin-right: 0; }
 
 .node-bb.view-mode-full h1 {
   display: none; }
@@ -1160,5 +1181,94 @@ a {
 
 .exposed-form {
   margin-bottom: 2rem; }
+
+/*******************************************************
+** PAGES WITH FACETS
+********************************************************/
+.faceted-page-container .col-sm-18.col-sm-push-6 {
+  border-left: 1px solid #E0E0E0; }
+  @media (min-width: 992px) {
+    .faceted-page-container .col-sm-18.col-sm-push-6 {
+      width: 80%;
+      padding: 0 24px;
+      left: 20%; } }
+  @media (min-width: 1200px) {
+    .faceted-page-container .col-sm-18.col-sm-push-6 {
+      width: 60%; } }
+
+.faceted-page-container .facets-sidebar {
+  padding: 0 24px; }
+  .faceted-page-container .facets-sidebar h2 {
+    margin-bottom: 2rem; }
+  .faceted-page-container .facets-sidebar h3 {
+    margin-top: 0; }
+  .faceted-page-container .facets-sidebar .block-facetapi {
+    margin-bottom: 1.4rem; }
+  .faceted-page-container .facets-sidebar .facetapi-facetapi-checkbox-links {
+    margin-bottom: 0.53333333rem; }
+  @media (min-width: 768px) {
+    .faceted-page-container .facets-sidebar {
+      right: 75%; } }
+  @media (min-width: 992px) {
+    .faceted-page-container .facets-sidebar {
+      width: 20%;
+      right: 80%; } }
+  @media (min-width: 1200px) {
+    .faceted-page-container .facets-sidebar {
+      right: 60%; } }
+
+/******************************************************
+* ACCESSIBILITY MASTERLIST
+*******************************************************/
+#needs-filter h2 {
+  font-size: 1rem;
+  font-weight: 600; }
+
+#needs-filter {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 2rem; }
+
+.needs-filter-row {
+  display: block;
+  margin-bottom: 0.53333333rem; }
+
+.count-characters {
+  color: #666;
+  font-weight: 600; }
+
+.needs-filter-cell {
+  display: inline-block;
+  vertical-align: middle; }
+
+.filter-button {
+  overflow: hidden;
+  margin-right: 0.5rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 3px;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  -webkit-background-size: cover;
+          background-size: cover; }
+
+.filter-button:hover,
+.filter-button.selected {
+  border: 3px solid #18606b; }
+
+#blind-filter {
+  background-image: url("https://ds.gpii.net/sites/developerspace.gpii.net/files/blind_icon.png"); }
+
+#lv-filter {
+  background-image: url("https://ds.gpii.net/sites/developerspace.gpii.net/files/low_vision_icon.png"); }
+
+#cll-filter {
+  background-image: url("https://ds.gpii.net/sites/developerspace.gpii.net/files/cll_icon.png"); }
+
+#phy-filter {
+  background-image: url("https://ds.gpii.net/sites/developerspace.gpii.net/files/phy_icon.png"); }
+
+#dhoh-filter {
+  background-image: url("https://ds.gpii.net/sites/developerspace.gpii.net/files/deaf_icon.png"); }
 
 /*# sourceMappingURL=gpii_devspace.css.map */
