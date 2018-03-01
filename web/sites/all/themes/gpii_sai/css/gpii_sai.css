@@ -309,8 +309,25 @@ body.page-search .view-search {
 .page-adv-search .btn.reset {
   line-height: 1.1; }
 
-.page-adv-search .list-unstyled {
-  border-top: 1px solid #000; }
+.page-adv-search hr.results {
+  border: 1px solid #000;
+  margin: 0 0 0.5rem; }
+
+.page-adv-search hr.results + .btn-group {
+  width: 25em;
+  margin-top: 0; }
+
+.page-adv-search .resultcount {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end; }
+  .page-adv-search .resultcount button {
+    margin-bottom: 0.5rem; }
 
 .page-adv-search .col-xs-8 {
   text-align: center;
@@ -319,6 +336,21 @@ body.page-search .view-search {
     margin-left: auto;
     margin-right: auto;
     padding: 2rem 0.5rem 0 1rem; }
+
+.page-adv-search ul.list-unstyled {
+  margin-top: 2rem; }
+
+.page-adv-search .alt-terms .panel-body ol {
+  display: inline-block;
+  margin-top: 1rem;
+  -webkit-column-count: 2;
+     -moz-column-count: 2;
+          column-count: 2;
+  -webkit-column-gap: 3rem;
+     -moz-column-gap: 3rem;
+          column-gap: 3rem;
+  list-style-type: disc;
+  margin-bottom: 0; }
 
 /**
  * Home Page Specific Styles

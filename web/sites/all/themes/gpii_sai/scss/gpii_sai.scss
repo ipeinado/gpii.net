@@ -434,8 +434,22 @@ body.page-search {
   .btn.reset {
     line-height: 1.1;
   }
-  .list-unstyled {
-    border-top: 1px solid #000;
+  hr.results {
+    border: 1px solid #000;
+    margin: 0 0 0.5rem;
+  }
+
+  hr.results + .btn-group {
+    width: 25em;
+    margin-top: 0;
+  }
+
+  .resultcount {
+    display: flex;
+    align-items: flex-end;
+    button {
+      margin-bottom: 0.5rem;
+    }
   }
   .col-xs-8 {
     text-align: center;
@@ -444,6 +458,23 @@ body.page-search {
       margin-left: auto;
       margin-right:auto;
       padding: 2rem 0.5rem 0 1rem;
+    }
+  }
+
+  ul.list-unstyled {
+    margin-top: 2rem;
+  }
+
+  .alt-terms {
+    .panel-body {
+      ol {
+        display: inline-block;
+        margin-top: 1rem;
+        column-count: 2;
+        column-gap: 3rem;
+        list-style-type: disc;
+        margin-bottom: 0;
+      }
     }
   }
 }
