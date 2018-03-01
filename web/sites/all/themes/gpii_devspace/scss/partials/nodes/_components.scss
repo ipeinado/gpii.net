@@ -145,8 +145,35 @@
 .node-bb.node-teaser {
 	h2 {
 		display: inline-block;
-		margin-right: 0.3rem;
+		margin-right: 0.35rem;
 	}
+
+	.company-name {
+      font-family: Consolas, "Liberation Mono", Menlo, Monaco, Courier, monospace;
+      font-size: (13px/15px)*1rem;
+    }
+
+    .group-action-links {
+
+    	@media (min-width: 992px) {
+    		right: 10px;
+    	}
+    	a {
+      		font-size: 13px;  
+      		color: #777;
+
+      		.fa {
+        		color: #c99500;
+        		font-size: 16px;
+        		padding-right: 3px;
+      		}
+    	}
+    	.flag-outer.flag-outer-bookmarks,
+    	.social-button {
+    		margin-left: 10px;
+    		margin-right: 0;
+    	}
+  	}
 }
 
 .node-bb.view-mode-full {
