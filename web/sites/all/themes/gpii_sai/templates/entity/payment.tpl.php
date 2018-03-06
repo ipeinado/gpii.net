@@ -3,6 +3,7 @@
 /**
  * Overrides entity.tpl.php to remove link and customize the output of payment pages.
  */
+
 ?>
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 

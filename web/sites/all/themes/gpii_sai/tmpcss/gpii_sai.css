@@ -293,6 +293,9 @@ body.page-search .view-search {
     margin-right: auto;
     padding: 2rem 0 1rem; }
 
+.page-adv-search .btn-group-justified {
+  margin-bottom: 0.5rem; }
+
 .page-adv-search .form-control {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
