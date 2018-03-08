@@ -1159,8 +1159,17 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         // trim the body field by calling text_summary and clean up the markup
         foreach ($output as $key => $value) {
           if (isset($value->body)) {
-            $summary = text_summary($value->body, $value->format, 400);
-            $summary = check_markup($summary, $value->format);
+
+            $alter = array(
+              'max_length' => 400, //Integer
+              'ellipsis' => TRUE, //Boolean
+              'word_boundary' => TRUE, //Boolean
+              'html' => TRUE, //Boolean
+              );
+
+            $body = $value->body;
+            $summary = views_trim_text($alter, $body);
+
             $value->body = $summary;
           }
 
@@ -1203,8 +1212,15 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           }
 
           elseif (isset($value->body)) {
-            $summary = text_summary($value->body, $value->format, 400);
-            $summary = check_markup($summary, $value->format);
+            $alter = array(
+              'max_length' => 400, //Integer
+              'ellipsis' => TRUE, //Boolean
+              'word_boundary' => TRUE, //Boolean
+              'html' => TRUE, //Boolean
+              );
+
+            $body = $value->body;
+            $summary = views_trim_text($alter, $body);
             $value->body = $summary;
           }
         }
@@ -1232,9 +1248,18 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         // trim the body field by calling text_summary and clean up the markup
         foreach ($output as $key => $value) {
           if (isset($value->body)) {
-            $summary = text_summary($value->body, $value->format, 400);
-            $summary = check_markup($summary, $value->format);
-            $value->body = $summary;
+            $alter = array(
+              'max_length' => 400, //Integer
+              'ellipsis' => TRUE, //Boolean
+              'word_boundary' => TRUE, //Boolean
+              'html' => TRUE, //Boolean
+              );
+
+            $body = $value->body;
+            $summary = views_trim_text($alter, $body);
+
+            $value->summary = $summary;
+
           }
 
           // make needs into an object that matches the original format
