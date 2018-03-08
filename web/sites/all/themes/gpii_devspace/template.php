@@ -36,3 +36,9 @@ function gpii_devspace_preprocess_html(&$vars) {
 	// Add Google Webmasters Verification Meta Tag to head.
 	drupal_add_html_head($google_webmasters_verification, 'google_webmasters_verification');
 }
+
+function gpii_devspace_preprocess_page(&$variables) {
+	if (arg(1) == '3243') {
+		drupal_add_js(drupal_get_path('theme', 'gpii_devspace') . '/js/masterlist.js');
+	}
+}
