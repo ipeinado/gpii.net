@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Related Terms feature.
+ */
+
+include_once 'related_terms.features.inc';
