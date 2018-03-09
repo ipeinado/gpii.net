@@ -2227,12 +2227,12 @@ function gpii_saa_custom_preprocess(&$variables, $hook) {
 }
 
 /**
- * Hook feeds so that we avoid the possibility of accidentally overwriting term names when imports are run
+ * Hook feeds so that we avoid the possibility of accidentally overwriting term names when imports are run. Note that in order for intial import to work correctly, both the term ID and the term name need to be an exact match.
  */
 
 function gpii_saa_custom_feeds_presave($source, $entity, $item, $entity_id) {
   if ($source->id == 'vocabulary_study_difficulties_category_import' || $source->id == 'vocabulary_study_import') {
-    if(isset($entity->name_original)) {
+    if($entity->name_original != $entity->name) {
       $entity->name = $entity->name_original;
     }
 
