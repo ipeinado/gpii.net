@@ -2232,9 +2232,9 @@ function gpii_saa_custom_preprocess(&$variables, $hook) {
 
 function gpii_saa_custom_feeds_presave($source, $entity, $item, $entity_id) {
   if ($source->id == 'vocabulary_study_difficulties_category_import' || $source->id == 'vocabulary_study_import') {
-    if($entity->name_original != $entity->name) {
-      $entity->name = $entity->name_original;
-    }
+    // if($entity->name_original != $entity->name) {
+    //   $entity->name = $entity->name_original;
+    // }
 
   }
 }
