@@ -11,7 +11,7 @@ echo "Grabbing latest info from Git..."
 # switch to the right starting directory
 cd /var/www/staging.gpii.net/web/sites
 
-git pull 
+git pull
 
 
 # switch to the right starting directory
@@ -27,16 +27,19 @@ echo "syncing database from @devspaceprod"
 $DRUSH_PATH  @devspaceprod sql-dump --result-file=/var/www/clients/client4/web5/tmp/devspaceprod-db.sql
 
 #rsync the file created above so that it is available locally
-rsync -e 'ssh ' -akz --remove-source-files gpiiweb@qual-msn-web07.qualtim.local:/var/www/clients/client4/web5/tmp/devspaceprod-db.sql /var/www/clients/client2/web3/tmp/devspaceprod-db.sql 
+rsync -e 'ssh ' -akz --remove-source-files gpiiweb@qual-msn-web07.qualtim.local:/var/www/clients/client4/web5/tmp/devspaceprod-db.sql /var/www/clients/client2/web3/tmp/devspaceprod-db.sql
 
 # drop the current DB and import the new
 $DRUSH_PATH --yes sql-drop
-$DRUSH_PATH --yes sql-cli < /var/www/clients/client2/web3/tmp/devspaceprod-db.sql 
+$DRUSH_PATH --yes sql-cli < /var/www/clients/client2/web3/tmp/devspaceprod-db.sql
 # disable CSS/JS aggregation
 #$DRUSH_PATH -y config-set system.performance css.preprocess 0
 
+# Turning on maint. mode.
+$DRUSH_PATH --yes vset maintenance_mode 1
+
 # disable modules
-$DRUSH_PATH --yes dis google_analytics
+$DRUSH_PATH --yes dis googleanalytics
 
 # enable modules
 $DRUSH_PATH --yes en reroute_email search_api_override patchinfo
