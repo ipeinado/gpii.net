@@ -374,6 +374,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_products_ulisting',
         'access arguments' => array('access advanced search data'),
       );
+      $items['api/v1/deleted'] = array(
+        'title' => 'Deleted Products Endpoint',
+        'page callback' => 'gpii_saa_custom_deleted_ulisting',
+        'access arguments' => array('access advanced search data'),
+      );
       $items['browse'] = array(
         'title' => 'Browse Virtual Stores',
         'page callback' => 'gpii_saa_custom_virtual_stores',
@@ -1229,6 +1234,27 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         return drupal_json_output($output);
     }
 
+
+     /**
+    * This callback is used by the UL API to gather intel about deleted products
+    */
+    function gpii_saa_custom_deleted_ulisting() {
+      $result = db_query('SELECT * FROM DeletedProducts');
+        $record = $result->fetchAll();
+
+        // initialize a new variable for use in the output
+        $output = array();
+
+        // iterate through the records and remove null values
+        foreach ($record as $key => $value) {
+          $value->status = 'deleted';
+          $output[] = (object) array_filter((array) $value);
+        }
+
+        // convert the object to JSON
+        return drupal_json_output($output);
+    }
+
     /**
     * This callback is used by the Unified Listing application to retrieve a list
      * of SAI records for comparison and synchronization.
@@ -1418,18 +1444,6 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
         if ($translation_status > 0) {
           $result[$key]->lang = $lang;
         }
-      }
-    }
-    if ($controller['view info']['view_name'] == 'deleted_records') {
-      foreach ($result as $key => $value) {
-        if (isset($result[$key]->duplicate_nid['value'])) {
-          $result[$key]->duplicate_nid = $result[$key]->duplicate_nid['value'];
-        }
-        else {
-          unset($result[$key]->duplicate_nid);
-        }
-         $result[$key]->uid = $result[$key]->uid['value'];
-         $result[$key]->status = 'deleted'; // set manually since this is a filter in the view itself
       }
     }
   }
