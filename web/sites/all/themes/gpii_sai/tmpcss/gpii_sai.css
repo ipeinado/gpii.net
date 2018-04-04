@@ -350,7 +350,7 @@ body.page-search .view-search {
 
 .page-search-power .alt-terms .panel-body ol {
   columns: 2;
-  column-gap: 2rem;
+  column-gap: 3rem;
   column-fill: balance;
   margin-top: 1rem;
   list-style-type: disc;

@@ -365,9 +365,9 @@ body.page-search .view-search {
   -webkit-columns: 2;
      -moz-columns: 2;
           columns: 2;
-  -webkit-column-gap: 2rem;
-     -moz-column-gap: 2rem;
-          column-gap: 2rem;
+  -webkit-column-gap: 3rem;
+     -moz-column-gap: 3rem;
+          column-gap: 3rem;
   -webkit-column-fill: balance;
      -moz-column-fill: balance;
           column-fill: balance;
