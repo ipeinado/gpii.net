@@ -358,13 +358,19 @@ body.page-search .view-search {
     margin-right: auto;
     padding: 2rem 0.5rem 0 1rem; }
 
-.page-search-power ul.list-unstyled {
-  margin-top: 2rem; }
-
 .page-search-power .alt-terms .panel-heading {
   float: none; }
 
 .page-search-power .alt-terms .panel-body ol {
+  -webkit-columns: 2;
+     -moz-columns: 2;
+          columns: 2;
+  -webkit-column-gap: 2rem;
+     -moz-column-gap: 2rem;
+          column-gap: 2rem;
+  -webkit-column-fill: balance;
+     -moz-column-fill: balance;
+          column-fill: balance;
   margin-top: 1rem;
   list-style-type: disc;
   margin-bottom: 0;
