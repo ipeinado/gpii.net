@@ -225,6 +225,11 @@ function paymentform_payment_finish(Payment $payment) {
   }
 
   $entity = entity_load_single($payment->context_data['entity_type'], $payment->context_data['entity_id']);
+
+  // Call a custom fucnction to associate payment with an order. @@ add patchinfo to point out this modification or find a way to otherwise override this function
+  gpii_saa_custom_openmarketplace_order_complete($payment->context_data['entity_id'], $payment);
+
+
   if ($uri = entity_uri($payment->context_data['entity_type'], $entity)) {
     drupal_goto($uri['path'], $uri['options']);
   }
