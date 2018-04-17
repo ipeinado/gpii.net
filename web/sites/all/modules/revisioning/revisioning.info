@@ -21,3 +21,4 @@ core = "7.x"
 project = "revisioning"
 datestamp = "1403741628"
 
+patch[] = https://www.drupal.org/project/revisioning/issues/751092 Issue 751092, Patch #25
