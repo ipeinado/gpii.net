@@ -2254,3 +2254,33 @@ function gpii_saa_custom_feeds_presave($source, $entity, $item, $entity_id) {
 
   }
 }
+
+
+/*
+* Implements hook_views_data_alter() to provide access to the revision id for the latest draft
+*/
+
+function gpii_saa_custom_views_data_alter(&$data) {
+  $data['node_revision']['latest_revision'] = array(
+    'title' => t('Latest revision'),
+    'help' => t('Get the latest vid.'),
+    'group' => t('Content revision'),
+    'real field' => 'nid',
+    'field' => array(
+      'handler' => 'gpii_saa_custom_field_handler_latest_revision',
+      'click sortable' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Provide the latest revision number from the nid field.
+ */
+class gpii_saa_custom_field_handler_latest_revision extends views_handler_field {
+
+  // Return latest vid as the field value.
+  public function render($values) {
+    $value = $this->get_value($values);
+    return revisioning_get_latest_revision_id($value);
+  }
+}
