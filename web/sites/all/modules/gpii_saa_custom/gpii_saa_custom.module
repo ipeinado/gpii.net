@@ -1277,8 +1277,8 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           $value->title = $latest->title;
           $value->UL_uid = $latest->field_uid['und'][0]['value'];
           $value->mfr_nid = $latest->field_manufacturer_reference['und'][0]['target_id'];
-          $mfgr = field_view_field('node', $latest, 'field_manufacturer_reference');
-          $value->mfgr_name = $mfgr[0]['#label'];
+          $mf4r = field_view_field('node', $latest, 'field_manufacturer_reference');
+          $value->mfr_name = $mf4r[0]['#label'];
 
           $output[] = (object) array_filter((array) $value);
         }
