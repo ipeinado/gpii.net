@@ -379,6 +379,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_deleted_ulisting',
         'access arguments' => array('access advanced search data'),
       );
+      $items['api/v1/abledata'] = array(
+        'title' => 'Deleted Products Endpoint',
+        'page callback' => 'gpii_saa_custom_abledata_report',
+        'access arguments' => array('access advanced search data'),
+      );
       $items['browse'] = array(
         'title' => 'Browse Virtual Stores',
         'page callback' => 'gpii_saa_custom_virtual_stores',
@@ -1255,6 +1260,34 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         return drupal_json_output($output);
     }
 
+     /**
+    * This callback is used by the UL API to gather intel about deleted products
+    */
+    function gpii_saa_custom_abledata_report() {
+      $result = db_query('SELECT * FROM ABLEDATAExport');
+        $record = $result->fetchAll();
+
+        // initialize a new variable for use in the output
+        $output = array();
+
+        // iterate through the records and remove null values
+        foreach ($record as $key => $value) {
+          //$value->status = 'deleted';
+          $latest = node_load($value->nid, $value->latest_vid, reset);
+          $value->title = $latest->title;
+          $value->UL_uid = $latest->field_uid['und'][0]['value'];
+          $value->mfr_nid = $latest->field_manufacturer_reference['und'][0]['target_id'];
+          $mfgr = field_view_field('node', $latest, 'field_manufacturer_reference');
+          $value->mfgr_name = $mfgr[0]['#label'];
+
+          $output[] = (object) array_filter((array) $value);
+        }
+
+        // convert the object to JSON
+        return drupal_json_output($output);
+    }
+
+
     /**
     * This callback is used by the Unified Listing application to retrieve a list
      * of SAI records for comparison and synchronization.
@@ -1487,9 +1520,50 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    'gpii_saa_custom_publish_latest_revision_vbo' => array(
+      'type' => 'entity',
+      'label' => t('Publish the most recent revision of a node'),
+      'behavior' => array('changes_property'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
   );
 }
 
+
+/**
+ * This function is called from the action_info array above
+ */
+
+function gpii_saa_custom_publish_latest_revision_vbo(&$entity) {
+   gpii_saa_custom_publish_latest_revision($entity);
+
+
+
+}
+
+
+// BBC: Shouldn't need this one anymore
+function gpii_saa_custom_publish_latest_revision(&$entity) {
+  $vid = revisioning_get_latest_revision_id($entity->nid);
+  dpm($entity);
+  $entity = node_load($entity->nid, $vid);
+
+  $entity->revision = TRUE;
+  $entity->is_current = TRUE;
+  $entity->status = 1;
+  $entity->is_pending = TRUE;
+  $entity->revision_moderation = FALSE;
+  $entity->title = $entity->title . '--VBO2';
+  $entity->log = 'VBO: Publish most recent revision 8.';
+  node_save($entity);
+
+
+  //_revisioning_publish_latest_revision($result);
+  //unset($entity);
+  return $entity;
+}
 
 /**
  * This function is called from the action_info array above
