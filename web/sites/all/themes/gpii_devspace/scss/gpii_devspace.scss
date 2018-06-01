@@ -8,6 +8,7 @@
 @import "partials/nodes/challenges.scss";
 @import "partials/nodes/develop.scss";
 @import "partials/nodes/components.scss";
+@import "partials/nodes/dswalkthrough.scss";
 
 
 // #############################################################################
@@ -212,7 +213,7 @@ a {
 #search-box {
   overflow: visible;
   padding: 1rem;
-  
+
   @media (min-width: $screen-sm-min) {
     display: none;
   }
