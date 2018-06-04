@@ -1233,6 +1233,15 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $summary = views_trim_text($alter, $body);
             $value->body = $summary;
           }
+          if (isset($value->status)) {
+            if ($value->status == 2) {
+              $value->discontinued = 1;
+            }
+            else {
+              $value->discontinued = 0;
+            }
+            unset($value->status);
+          }
         }
 
         // convert the object to JSON
