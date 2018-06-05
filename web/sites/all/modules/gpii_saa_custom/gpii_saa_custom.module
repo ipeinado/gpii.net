@@ -2226,7 +2226,7 @@ function gpii_saa_custom_node_view($node, $view_mode) {
 
 function gpii_saa_custom_node_access($node, $view_mode) {
   if (isset($node)) {
-    if ($node->type=='order'){
+    if (isset($node->type) && $node->type=='order') {
       global $user;
       //  print '<pre>';
       // print_r($user);
