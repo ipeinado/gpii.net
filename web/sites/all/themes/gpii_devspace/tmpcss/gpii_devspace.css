@@ -977,7 +977,7 @@
   display: none; }
 
 .ds-walkthrough .wt-howto {
-  border: 1px solid #009688;
+  border: 1px solid #124A52;
   margin: 2rem 2rem;
   padding: 1rem 1.5rem 0.5rem;
   border-radius: 6pt; }
@@ -990,7 +990,7 @@
   padding: 1rem 0;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
-  color: #006696; }
+  color: #124A52; }
 
 .ds-walkthrough .wt-item {
   margin-top: 2rem;
@@ -1008,7 +1008,7 @@
 
 .ds-walkthrough .wt-try {
   margin-top: 1rem;
-  background-color: #c9eeff;
+  background-color: #E7EFF0;
   padding: 1rem 0.5rem 0.5rem; }
 
 .ds-walkthrough .ds-main a:not(.btn) {

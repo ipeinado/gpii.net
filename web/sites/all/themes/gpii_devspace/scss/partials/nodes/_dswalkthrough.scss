@@ -1,10 +1,9 @@
 // DeveloperSpace Walktrhough - https://ds.gpii.net/content/developerspace-walkthrough
 
-$color-walkthrough-headings: #006696;
-$color-gpii-devspace-bright-green: #009688;
+$color-walkthrough-headings: #124A52;
 .ds-walkthrough {
   .wt-howto {
-    border: 1px solid $color-gpii-devspace-bright-green;
+    border: 1px solid $color-walkthrough-headings;
     margin: 2rem 2rem;
     padding: 1rem 1.5rem 0.5rem;
     border-radius: 6pt;
@@ -39,7 +38,7 @@ $color-gpii-devspace-bright-green: #009688;
   }
   .wt-try {
     margin-top: 1rem;
-    background-color: lighten($color-walkthrough-headings, 60%);
+    background-color: #E7EFF0;
     padding: 1rem 0.5rem 0.5rem;
   }
   .ds-main {
