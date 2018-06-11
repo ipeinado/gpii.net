@@ -379,6 +379,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'page callback' => 'gpii_saa_custom_deleted_ulisting',
         'access arguments' => array('access advanced search data'),
       );
+      $items['api/v1/abledata'] = array(
+        'title' => 'Deleted Products Endpoint',
+        'page callback' => 'gpii_saa_custom_abledata_report',
+        'access arguments' => array('access advanced search data'),
+      );
       $items['browse'] = array(
         'title' => 'Browse Virtual Stores',
         'page callback' => 'gpii_saa_custom_virtual_stores',
@@ -1255,6 +1260,34 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         return drupal_json_output($output);
     }
 
+     /**
+    * This callback is used by the UL API to gather intel about deleted products
+    */
+    function gpii_saa_custom_abledata_report() {
+      $result = db_query('SELECT * FROM ABLEDATAExport');
+        $record = $result->fetchAll();
+
+        // initialize a new variable for use in the output
+        $output = array();
+
+        // iterate through the records and remove null values
+        foreach ($record as $key => $value) {
+          //$value->status = 'deleted';
+          $latest = node_load($value->nid, $value->latest_vid, reset);
+          $value->title = $latest->title;
+          $value->UL_uid = $latest->field_uid['und'][0]['value'];
+          $value->mfr_nid = $latest->field_manufacturer_reference['und'][0]['target_id'];
+          $mf4r = field_view_field('node', $latest, 'field_manufacturer_reference');
+          $value->mfr_name = $mf4r[0]['#label'];
+
+          $output[] = (object) array_filter((array) $value);
+        }
+
+        // convert the object to JSON
+        return drupal_json_output($output);
+    }
+
+
     /**
     * This callback is used by the Unified Listing application to retrieve a list
      * of SAI records for comparison and synchronization.
@@ -1489,6 +1522,8 @@ function gpii_saa_custom_action_info() {
     ),
   );
 }
+
+
 
 
 /**

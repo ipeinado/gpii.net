@@ -1011,6 +1011,48 @@
 .node-bb.view-mode-full h1 {
   display: none; }
 
+.ds-walkthrough .wt-howto {
+  border: 1px solid #009688;
+  margin: 2rem 2rem;
+  padding: 1rem 1.5rem 0.5rem;
+  border-radius: 6pt; }
+
+.ds-walkthrough h2.wt-topic {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  border-top: 1px #B2B2B2 solid;
+  border-bottom: 1px #B2B2B2 solid;
+  padding: 1rem 0;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #006696; }
+
+.ds-walkthrough .wt-item {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  padding-left: 0;
+  padding-right: 0; }
+
+.ds-walkthrough .wt-learning .embed-responsive {
+  margin-top: 0.4rem; }
+
+.ds-walkthrough .wt-item h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem; }
+
+.ds-walkthrough .wt-try {
+  margin-top: 1rem;
+  background-color: #c9eeff;
+  padding: 1rem 0.5rem 0.5rem; }
+
+.ds-walkthrough .ds-main a:not(.btn) {
+  color: #e74c3c;
+  font-weight: bold;
+  text-decoration: underline; }
+  .ds-walkthrough .ds-main a:not(.btn):hover {
+    color: #bf2718; }
+
 html, body {
   font-size: 15px;
   font-family: 'Open Sans', Helvetica, sans-serif; }
@@ -1220,10 +1262,6 @@ a {
 /******************************************************
 * ACCESSIBILITY MASTERLIST
 *******************************************************/
-#needs-filter h2 {
-  font-size: 1rem;
-  font-weight: 600; }
-
 #needs-filter {
   display: block;
   margin-top: 1rem;

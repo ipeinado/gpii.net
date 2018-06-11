@@ -1,0 +1,56 @@
+// DeveloperSpace Walktrhough - https://ds.gpii.net/content/developerspace-walkthrough
+
+$color-walkthrough-headings: #006696;
+$color-gpii-devspace-bright-green: #009688;
+.ds-walkthrough {
+  .wt-howto {
+    border: 1px solid $color-gpii-devspace-bright-green;
+    margin: 2rem 2rem;
+    padding: 1rem 1.5rem 0.5rem;
+    border-radius: 6pt;
+  }
+  h2.wt-topic {
+      font-size: 1.6rem;
+      line-height: 1.2;
+      border-top: 1px #B2B2B2 solid;
+      border-bottom: 1px #B2B2B2 solid;
+      padding: 1rem 0;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      color: $color-walkthrough-headings;
+    }
+  .wt-item {
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .wt-learning {
+    .embed-responsive {
+      margin-top: 0.4rem;
+    }
+  }
+  .wt-item {
+    h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+  }
+  .wt-try {
+    margin-top: 1rem;
+    background-color: lighten($color-walkthrough-headings, 60%);
+    padding: 1rem 0.5rem 0.5rem;
+  }
+  .ds-main {
+    a:not(.btn) {
+      color: #e74c3c;
+      font-weight: bold;
+      text-decoration: underline;
+      &:hover {
+        color: darken(#e74c3c, 15%);
+      }
+    }
+  }
+}
+
