@@ -30,7 +30,4 @@
 	url = https://github.com/thegurf/rating-tool.git
 [submodule "web/sites/all/modules/qa_search"]
 	path = web/sites/all/modules/qa_search
-	url = git@github.com:ipeinado/qa_search.git
-[submodule "sites/all/modules/qa_search"]
-	path = sites/all/modules/qa_search
-	url = git@github.com:ipeinado/qa_search.git
+	url = https://github.com/ipeinado/qa_search.git
