@@ -300,6 +300,9 @@ body.page-search .view-search {
 .page-search-power p.lead {
   margin-left: -10px;
   margin-right: -10px; }
+  .page-search-power p.lead a {
+    margin-top: 1rem;
+    display: inline-block; }
 
 .page-search-power .reset-revert {
   margin-bottom: 0.5rem;
@@ -320,7 +323,6 @@ body.page-search .view-search {
   border-bottom-left-radius: 0; }
 
 .page-search-power .btn.reset {
-  line-height: 1.1;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-top-left-radius: 4px;
@@ -819,6 +821,18 @@ a.tree-label {
   #saa-app .pagination a {
     font-size: 1.1rem;
     padding: 7px 15px; }
+
+@media (max-width: 992px) {
+  #saa-app hr.results + div.row .col-xs-16, #saa-app hr.results + div.row .col-xs-8 {
+    width: 100%;
+    text-align: left; } }
+
+@media (min-width: 768px) and (max-width: 1172px) {
+  #saa-app hr.results + div.row .col-xs-16, #saa-app hr.results + div.row .col-xs-8 {
+    width: 100%;
+    text-align: left; }
+    #saa-app hr.results + div.row .col-xs-16 .btn-group-justified, #saa-app hr.results + div.row .col-xs-8 .btn-group-justified {
+      width: auto; } }
 
 /**
  * P4A Rating Tool and Feed3 Styles
