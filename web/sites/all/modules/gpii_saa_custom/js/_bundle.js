@@ -1239,8 +1239,6 @@ return Promise$2;
 
 })));
 
-//# sourceMappingURL=es6-promise.map
-
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)))
 
 /***/ }),
@@ -1636,15 +1634,27 @@ var Cookies = __webpack_require__(2);
 (function ($) {
     window.Drupal.behaviors.gpii_custom = {
         attach: function (context, settings) {
-            var LANGUAGES = ['de', 'el', 'es', 'en'];
-            var old = window.location.href.split('/')[3];
+            var LANGUAGES = ['de', 'el', 'en', 'es'];
+            var arr = window.location.href.split('/');
+            var old = arr[3];
             var got = Cookies.get('googtrans');
-            if (!got && LANGUAGES.indexOf(old) !== -1) {
-                Cookies.set('googtrans', "/en/" + old);
+            // if our old language is in the URL
+            if (LANGUAGES.indexOf(old) !== -1) {
+                // if we don't have a GT cookie, set the cookie
+                if (!got) {
+                    Cookies.set('googtrans', "/en/" + old);
+                }
+                else {
+                    // otherwise redirect to en
+                    if (old !== got.split('/')[1]) {
+                        arr.splice(3, 1);
+                        window.location.href = arr.join('/');
+                    }
+                }
             }
         }
     };
-}(window.jQuery));
+})(window.jQuery);
 
 
 /***/ }),
