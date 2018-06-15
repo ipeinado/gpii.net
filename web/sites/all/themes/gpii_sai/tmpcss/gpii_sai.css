@@ -345,7 +345,8 @@ body.page-search .view-search {
   .page-search-power .col-xs-8 img {
     margin-left: auto;
     margin-right: auto;
-    padding: 2rem 0.5rem 0 1rem; }
+    padding: 2rem 0.5rem 0 1rem;
+    max-height: 15em; }
 
 .page-search-power .alt-terms .panel-heading {
   float: none; }
