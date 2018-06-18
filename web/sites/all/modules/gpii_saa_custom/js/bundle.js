@@ -1239,8 +1239,6 @@ return Promise$2;
 
 })));
 
-//# sourceMappingURL=es6-promise.map
-
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)))
 
 /***/ }),

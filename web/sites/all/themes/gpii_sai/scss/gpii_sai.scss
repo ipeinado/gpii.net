@@ -426,6 +426,10 @@ body.page-search {
   p.lead {
     margin-left: -10px;
     margin-right: -10px;
+    a {
+      margin-top: 1rem;
+      display: inline-block;
+    }
   }
   .reset-revert {
     margin-bottom: 0.5rem;
@@ -446,7 +450,6 @@ body.page-search {
     border-bottom-left-radius: 0;
   }
   .btn.reset {
-    line-height: 1.1;
     border-top-right-radius: 0;
     border-bottom-right-radius:0;
     border-top-left-radius: 4px;
@@ -477,6 +480,7 @@ body.page-search {
       margin-left: auto;
       margin-right:auto;
       padding: 2rem 0.5rem 0 1rem;
+      max-height: 15em;
     }
   }
 
@@ -1123,6 +1127,32 @@ a.tree-label {
       font-size: 1.1rem;
       padding: $padding-base-vertical + 1px $padding-base-horizontal + 3px;
     }
+  }
+
+  hr.results+div.row {
+
+
+    @media (max-width: $screen-md) {
+      .col-xs-16, .col-xs-8 {
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    @media (min-width: $screen-sm) and (max-width: $screen-md + 180) {
+      .col-xs-16, .col-xs-8 {
+        width: 100%;
+        text-align: left;
+        .btn-group-justified {
+          width: auto;
+          .btn-group:first-child {
+          }
+        }
+
+      }
+    }
+
+
   }
 
 }
