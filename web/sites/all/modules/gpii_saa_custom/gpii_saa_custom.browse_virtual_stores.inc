@@ -48,7 +48,6 @@ function virtual_stores() {
 
   // grab a view that pulls in all the stores and icons we need to build the page
   $results = views_get_view_result('virtual_stores', 'default', NULL);
-  //dpm($results);
 
   $markup .= '<div class="browse-store-wrapper">';
   $rows = array_chunk($results, 3); // 3 items per row, adjust grid glasses below to center the last one
@@ -63,30 +62,34 @@ function virtual_stores() {
       $grid_classes = 'col-sm-24';
     }
 
+    $markup .= '<div class="row">';
+      
+    foreach ($stores as $key => $store) {
+      // kpr($skiptranslate);
+      // Load the node so that we get the corect translation
+      $translated_node = node_load($store->nid);
+        
+      // adjust grid classes when we have only two in a row to offset and center below row of 3
+      if (count($stores) == 2 && $key == 1) {
+        $grid_classes = 'col-sm-24 col-md-8';
+      }
 
-      $markup .= '<div class="row">';
-          foreach ($stores as $key => $store) {
-            // kpr($skiptranslate);
-            // Load the node so that we get the corect translation
-            $translated_node = node_load($store->nid);
-            // adjust grid classes when we have only two in a row to offset and center below row of 3
-            if (count($stores) == 2 && $key == 1) {
-              $grid_classes = 'col-sm-24 col-md-8';
-            }
-              $markup .= '<div class="' . $grid_classes . ' text-center browse-stores' .  $skiptranslate . '"><div class="shop-label">' . t($translated_node->title) . '</div><a href="' . $lang_code . '/browse/category/' . $store->nid . '">';
-              $markup .= theme('image_style', array(
-                  'style_name' => 'medium',
-                  'path' => t($store->field_field_image[0]['raw']['uri']),
-                  'alt' => t($translated_node->title),
-                  'attributes' => array(
-                    'class' => 'center-block',
-                  )
-                )
-              );
-              $markup .= '</a></div>';
-          }
-            $markup .= '</div>';
+      $markup .= '<a href="' . $lang_code . '/browse/category/' . $store->nid . '" class="' . $grid_classes . ' text-center browse-stores' .  $skiptranslate . '"><span class="shop-label">' . t($translated_node->title) . '</span>';
+              
+      $markup .= theme('image_style', array(
+        'style_name' => 'medium',
+        'path' => t($store->field_field_image[0]['raw']['uri']),
+        'alt' => '',
+        'attributes' => array(
+        'class' => 'center-block',
+      )));
+        
+      $markup .= '</a>';
+    }
+    
+    $markup .= '</div>';
   }
+
   $markup .= '</div>';
   return $markup;
 }
