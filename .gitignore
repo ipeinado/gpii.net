@@ -8,6 +8,8 @@ php_errors.log
 
 # Ignore paths that contain user-generated content.
 web/sites/vendor/*
+web/sites/vendor/autoload.php
+web/sites/vendor/composer/*
 web/sites/*/files
 web/sites/*/private
 web/sites/all/themes/devspace/node_modules/*
