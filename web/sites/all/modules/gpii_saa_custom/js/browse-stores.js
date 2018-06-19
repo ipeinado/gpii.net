@@ -5,12 +5,6 @@
   'use strict';
 
   $(document).ready(function(){
-    $('.browse-stores').on('click', function() {
-      window.location.href = $(this)
-        .find('a[href]')
-        .first()
-        .attr('href');
-    });
     // Call the event handler on #text
     $('.browse-stores').hover(function(){
       // add a class to children so we can style on hover/focus

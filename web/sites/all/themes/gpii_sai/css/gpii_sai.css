@@ -459,6 +459,8 @@ body.front, body.page-node-1903 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
@@ -478,6 +480,8 @@ body.front, body.page-node-1903 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
@@ -1188,11 +1192,14 @@ div.discontinued {
 .page-browse .browse-store-wrapper .browse-stores {
   margin-bottom: 6rem; }
   .page-browse .browse-store-wrapper .browse-stores.focused {
+    -webkit-filter: contrast(110%);
+            filter: contrast(110%);
     cursor: pointer; }
     .page-browse .browse-store-wrapper .browse-stores.focused .shop-label {
       text-decoration: underline; }
 
 .page-browse .shop-label {
+  display: block;
   background: #000;
   padding: 0.5rem 0.5rem;
   max-width: 11rem;
