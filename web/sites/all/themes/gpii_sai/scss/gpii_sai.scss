@@ -1659,6 +1659,7 @@ div.discontinued {
     .browse-stores {
       margin-bottom: 6rem;
       &.focused {
+        filter: contrast(110%);
         cursor: pointer;
         .shop-label {
           text-decoration: underline;
@@ -1668,6 +1669,7 @@ div.discontinued {
   }
 
   .shop-label {
+    display: block;
     background: #000;
     padding: 0.5rem 0.5rem;
     max-width: 11rem;

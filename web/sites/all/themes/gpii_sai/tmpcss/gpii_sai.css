@@ -1104,11 +1104,13 @@ div.discontinued {
 .page-browse .browse-store-wrapper .browse-stores {
   margin-bottom: 6rem; }
   .page-browse .browse-store-wrapper .browse-stores.focused {
+    filter: contrast(110%);
     cursor: pointer; }
     .page-browse .browse-store-wrapper .browse-stores.focused .shop-label {
       text-decoration: underline; }
 
 .page-browse .shop-label {
+  display: block;
   background: #000;
   padding: 0.5rem 0.5rem;
   max-width: 11rem;
