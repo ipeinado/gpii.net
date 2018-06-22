@@ -1,0 +1,92 @@
+diff --git a/term_reference_tree.js b/term_reference_tree.js
+index 61e5ed9..cc0c95e 100644
+--- a/term_reference_tree.js
++++ b/term_reference_tree.js
+@@ -106,8 +106,10 @@ Drupal.behaviors.termReferenceTree = {
+         }); //End process checkbox changes.
+       } //End Want a track list.
+ 
+-      //On page load, check if the user wants a cascading selection.
+-      if($(this).hasClass('term-reference-tree-cascading-selection')) {
++      //On page load, check if the user wants a cascading selection or unselecting children.
++      var cascadingSelection = $(this).hasClass('term-reference-tree-cascading-selection');
++      var unselectChildren = $(this).hasClass('term-reference-tree-unselect-children');
++      if(cascadingSelection || unselectChildren) {
+ 
+         //Check children when checkboxes are clicked.
+         $(this).find('.form-checkbox').change(function(event) {
+@@ -115,21 +117,23 @@ Drupal.behaviors.termReferenceTree = {
+           var control_id = event_target.attr('id');
+           var children = event_target.parent().next().children().children('div.form-type-checkbox').children('input[id^="' + control_id + '-children"]');
+           if(event_target.attr('checked')) {
+-            //Checkbox checked - check children if none were checked.
+-            if(!$(children).filter(':checked').length) {
++            //cascadingSelection ONLY: Checkbox checked - check children if none were checked.
++            if(cascadingSelection && !$(children).filter(':checked').length) {
+               $(children).click().trigger('change');
+             }
+           }
+           else {
+-            //Checkbox unchecked. Uncheck children if all were checked.
++            //cascadingSelection OR unselectChildren: Checkbox unchecked. Uncheck children if all were checked.
+             if(!$(children).not(':checked').length) {
+               $(children).click().trigger('change');
+             }
++            else if(unselectChildren) {
++              $(children).filter(':checked').click().trigger('change');
++            }
+           }
+-
+         });
+         //End process checkbox changes.
+-      } //End Want a cascading checking.
++      } //End Want a cascading or unselecting checking.
+ 
+     });
+   }
+diff --git a/term_reference_tree.widget.inc b/term_reference_tree.widget.inc
+index 1685a43..16d27b9 100644
+--- a/term_reference_tree.widget.inc
++++ b/term_reference_tree.widget.inc
+@@ -18,6 +18,7 @@ function term_reference_tree_field_widget_info() {
+         'filter_view' => '',
+         'select_parents' => 0,
+         'cascading_selection' => 0,
++        'unselect_children' => 0,
+         'track_list' => 0,
+         'token_display' => '',
+         'parent_term_id' => '',
+@@ -70,6 +71,14 @@ function term_reference_tree_field_widget_settings_form($field, $instance) {
+       '#return_value' => 1,
+     );
+ 
++    $form['unselect_children'] = array(
++      '#type' => 'checkbox',
++      '#title' => t('Unselect children'),
++      '#description' => t('On parent unselection, automatically unselect all children. You might also call this "Force selection of parents".'),
++      '#default_value' => $settings['unselect_children'],
++      '#return_value' => 1,
++    );
++
+     if (module_exists('views')) {
+       $views = views_get_all_views();
+       $options = array('' => 'none');
+@@ -356,6 +365,10 @@ function theme_checkbox_tree($variables) {
+     $attributes['class'][] = "term-reference-tree-cascading-selection";
+   }
+ 
++  if (array_key_exists('#unselect_children', $element) && $element['#unselect_children']) {
++    $attributes['class'][] = "term-reference-tree-unselect-children";
++  }
++
+   $add_track_list = FALSE;
+   if (array_key_exists('#track_list', $element) && $element['#track_list']) {
+     $attributes['class'][] = "term-reference-tree-track-list-shown";
+@@ -513,6 +526,7 @@ function term_reference_tree_field_widget_form(&$form, &$form_state, $field, $in
+       $element['#filter_view'] = module_exists('views') ? $settings['filter_view'] : '';
+       $element['#select_parents'] = $settings['select_parents'];
+       $element['#cascading_selection'] = $settings['cascading_selection'];
++      $element['#unselect_children'] = $settings['unselect_children'];
+       $element['#track_list'] = $settings['track_list'];
+       $element['#parent_tid'] = $settings['parent_term_id'] ? $settings['parent_term_id'] : $field['settings']['allowed_values'][0]['parent'];
+       $element['#vocabulary'] = $vocabulary;

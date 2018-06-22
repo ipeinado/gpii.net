@@ -1,0 +1,31 @@
+--- term_reference_tree.js
++++ term_reference_tree.js
+@@ -117,21 +119,23 @@
+           var control_id = event_target.attr('id');
+           var children = event_target.parent().next().children().children('div.form-type-checkbox').children('input[id^="' + control_id + '-children"]');
+           if(event_target.attr('checked')) {
+-            //Checkbox checked - check children if none were checked.
+-            if(!$(children).filter(':checked').length) {
++            //cascadingSelection ONLY: Checkbox checked - check children if none were checked.
++            if(cascadingSelection && !$(children).filter(':checked').length) {
+               $(children).click().trigger('change');
+             }
+           }
+           else {
+-            //Checkbox unchecked. Uncheck children if all were checked.
++            //cascadingSelection OR unselectChildren: Checkbox unchecked. Uncheck children if all were checked.
+             if(!$(children).not(':checked').length) {
+               $(children).click().trigger('change');
+             }
++            else if(unselectChildren) {
++              $(children).filter(':checked').click().trigger('change');
++            }
+           }
+-
+         });
+         //End process checkbox changes.
+-      } //End Want a cascading checking.
++      } //End Want a cascading or unselecting checking.
+ 
+     });
+   }

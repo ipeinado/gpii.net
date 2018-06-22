@@ -106,10 +106,8 @@ Drupal.behaviors.termReferenceTree = {
         }); //End process checkbox changes.
       } //End Want a track list.
 
-      //On page load, check if the user wants a cascading selection or unselecting children.
-      var cascadingSelection = $(this).hasClass('term-reference-tree-cascading-selection');
-      var unselectChildren = $(this).hasClass('term-reference-tree-unselect-children');
-      if(cascadingSelection || unselectChildren) {
+      //On page load, check if the user wants a cascading selection.
+      if($(this).hasClass('term-reference-tree-cascading-selection')) {
 
         //Check children when checkboxes are clicked.
         $(this).find('.form-checkbox').change(function(event) {
@@ -117,24 +115,21 @@ Drupal.behaviors.termReferenceTree = {
           var control_id = event_target.attr('id');
           var children = event_target.parent().next().children().children('div.form-type-checkbox').children('input[id^="' + control_id + '-children"]');
           if(event_target.is(':checked')) {
-            //cascadingSelection ONLY: Checkbox checked - check children if none were checked.
-            if(cascadingSelection && !$(children).filter(':checked').length) {
+            //Checkbox checked - check children if none were checked.
+            if(!$(children).filter(':checked').length) {
               $(children).click().trigger('change');
             }
           }
           else {
-            //cascadingSelection OR unselectChildren: Checkbox unchecked. Uncheck children if all were checked.
+            //Checkbox unchecked. Uncheck children if all were checked.
             if(!$(children).not(':checked').length) {
               $(children).click().trigger('change');
-            }
-            else if(unselectChildren) {
-              $(children).filter(':checked').click().trigger('change');
             }
           }
 
         });
         //End process checkbox changes.
-      } //End Want a cascading or unselecting checking.
+      } //End Want a cascading checking.
 
     });
   }

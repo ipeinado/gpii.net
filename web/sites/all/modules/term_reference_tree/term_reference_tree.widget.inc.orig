@@ -18,7 +18,6 @@ function term_reference_tree_field_widget_info() {
         'filter_view' => '',
         'select_parents' => 0,
         'cascading_selection' => 0,
-        'unselect_children' => 0,
         'track_list' => 0,
         'token_display' => '',
         'parent_term_id' => '',
@@ -68,14 +67,6 @@ function term_reference_tree_field_widget_settings_form($field, $instance) {
       '#description' => t('On parent selection, automatically select children if none were selected. Some may then be manually unselected. In the same way, on parent unselection, unselect children if all were selected. <em>This option is only valid if an unlimited number of values can be selected.</em>'),
       '#default_value' => $settings['cascading_selection'],
       '#element_validate' => array('_term_reference_tree_cascading_selection_validate'),
-      '#return_value' => 1,
-    );
-
-    $form['unselect_children'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Unselect children'),
-      '#description' => t('On parent unselection, automatically unselect all children. You might also call this "Force selection of parents".'),
-      '#default_value' => $settings['unselect_children'],
       '#return_value' => 1,
     );
 
@@ -366,10 +357,6 @@ function theme_checkbox_tree($variables) {
     $attributes['class'][] = "term-reference-tree-cascading-selection";
   }
 
-  if (array_key_exists('#unselect_children', $element) && $element['#unselect_children']) {
-    $attributes['class'][] = "term-reference-tree-unselect-children";
-  }
-
   $add_track_list = FALSE;
   if (array_key_exists('#track_list', $element) && $element['#track_list']) {
     $attributes['class'][] = "term-reference-tree-track-list-shown";
@@ -527,7 +514,6 @@ function term_reference_tree_field_widget_form(&$form, &$form_state, $field, $in
       $element['#filter_view'] = module_exists('views') ? $settings['filter_view'] : '';
       $element['#select_parents'] = $settings['select_parents'];
       $element['#cascading_selection'] = $settings['cascading_selection'];
-      $element['#unselect_children'] = $settings['unselect_children'];
       $element['#track_list'] = $settings['track_list'];
       $element['#parent_tid'] = $settings['parent_term_id'] ? $settings['parent_term_id'] : $field['settings']['allowed_values'][0]['parent'];
       $element['#vocabulary'] = $vocabulary;
