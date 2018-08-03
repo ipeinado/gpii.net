@@ -1,5 +1,5 @@
-
 -- SUMMARY --
+
 This module integrates the fluidproject.org UI Options accessibility framework,
 which allows visitors to customize site appearance, including font size, line
 height, site contrast, generate a table of contents from the <h> tags, and
@@ -9,25 +9,38 @@ The module adds a "+ show display preferences" tab to the top right of the page,
 which toggles the UI Options. The framework uses cookies to save user
 preferences.
 
-The module includes a precompiled framework JS file from the source but you can
-compile a new file using the source here: https://github.com/fluid-project/
-infusion
-
 
 -- REQUIREMENTS --
-* The Libraries API module and the Fluid UI Options framework source files.
+
+* The Libraries API module (https://www.drupal.org/project/libraries) and the Fluid UI Options framework source files (at least version 3.0.0).
+
 * jquery_update to update jquery to at least version 1.7.
-
-
 
 -- INSTALLATION --
 
 * Install as usual, see http://drupal.org/node/895232 for further information.
 
 * Download the source files from
-  https://github.com/fluid-project/infusion/tree/master (version 2.0) and
-  extract the "lib", "framework", and "components" folders in the /src/ folder
+  https://github.com/fluid-project/infusion/tree/master (version 3.0) 
+
+  - From the project root directory, run:
+
+    npm install
+
+    For installing/updating the project dependencies
+
+  - Also from the project root directory, run:
+
+    grunt custom --exclude="jQuery" --include="uiOptions"
+
+    For building the uiOptions package from the source files
+
+  - Copy "lib", "framework", and "components" folders from the build/src/ folder
   to your sites/all/libraries/fluid folder.
+
+  - create the "infusion" directory in sites/all/libraries/fluid/lib.
+
+  - Copy infusion-custom.js from build/src to sites/all/libraries/fluid/lib/infusion
 
 
 -- CONFIGURATION --
@@ -40,6 +53,8 @@ infusion
 * Style customization
   Use the module's css/fluid.css file to customize the appearance and placement
   of the "+ show display preferences" tab.
+
+  You can also use this file for changing the appearance of the html elements inside the panel (boxes, titles, input elements, etc).
 
 * Multilingual support
   The framework supports multilingual labels and text, but it must be created
@@ -87,6 +102,7 @@ Current maintainers:
 
 
 This project has been sponsored by:
+* OpenConcept Consulting Inc.
 * OPIN Software Inc.
   OPIN is a provider of enterprise content management solutions built with
   Drupal. At OPIN, our vision is to assist clients through Drupal

@@ -88,7 +88,7 @@
 
     $(window).resize(function(){
       var offset = $googleTranslate.is(':visible') ? $googleTranslate.outerHeight() : 0;
-      $toggleContainer.css('top', offset+'px');
+      //$toggleContainer.css('top', offset+'px');
     });
 
     setTimeout(function(){

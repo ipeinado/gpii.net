@@ -1,8 +1,0 @@
-/* Theme Overrides*/
-.flc-prefsEditor-separatedPanel {
-  z-index: 1600; /* BBC: Set to 1400 to allow admin menu to be on top */
-  position: fixed; /* BBC: Switched to fixed to get it above bootstrap navbar */
-  right: 0;
-  top: 0;
-  width: 100%;
-}

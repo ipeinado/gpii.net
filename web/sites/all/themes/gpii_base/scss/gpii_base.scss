@@ -93,7 +93,10 @@ body.admin-menu {
 // Bootstrap and Drupal Bootstrap Overrides
 // #############################################################################
 .navbar-fixed-top {
-  z-index: 499;
+  z-index: 10000000;
+  @media (min-width: $screen-md-min) {
+    z-index: 499;
+  }
 }
 
 #navbar {
@@ -189,34 +192,59 @@ body.admin-menu {
 // #############################################################################
 .flc-iframe {
   width: 100%;
+  display:block !important;
 }
 
-.flc-prefsEditor-separatedPanel {
+
+.fl-prefsEditor-separatedPanel {
   // Increase the specificity here so that defaults are overridden but so that
   // !important isn't required in JavaScript.
   body & {
-    width: auto;
+
+    height: 0;
     z-index: 10000001;
-    position: initial;
-    @media (min-width: $screen-sm-min) {
+    position: inherit;
+    background: #000;
+
+    @media (min-width: 640px) {
+      html:not(.force-mobile-layout) & {
+        position: relative;
+        top: 2.1rem;
+      }
+    }
+
+    @media (min-width: 768px) {
       html:not(.force-mobile-layout) & {
         position: fixed;
+        width: 100% !important;
+        top: 0;
       }
     }
   }
   .fl-panelBar .fl-prefsEditor-buttons {
-    margin-right: 0.5rem;
-    box-shadow: 2px 2px 3px 0px #333333;
-    border-bottom: 1px solid $color-fluidui-gray;
-    border-left: 1px solid $color-fluidui-gray;
-    background-color: #000;
+    height: auto;
+    @media (min-width: 640px) {
+      box-shadow: 2px 2px 3px 0px #333333;
+      border-bottom: 1px solid $color-fluidui-gray;
+      border-left: 1px solid $color-fluidui-gray;
+      border-right: 1px solid $color-fluidui-gray;
+      background-color: #000;
+      margin-right: 2%;
+    }
     button {
       color: #fff;
       background-color: #000;
+      height: 1.8em;
+      min-width: 10em;
+
     }
   }
+}
 
-
+.flc-toc-tocContainer {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2rem;
 }
 
 .flc-toc-header,
@@ -224,6 +252,8 @@ body.admin-menu {
   margin-right: 15px;
   margin-left: 15px;
 }
+
+// keep Fluid from screwing up icon fonts
 
 .fl-font-prefsEditor-comic-sans *:not(.fa):not(.fl-icon-undo) {
   font-family: 'Comic Sans MS', sans-serif !important;
@@ -240,6 +270,7 @@ body.admin-menu {
 .fl-font-prefsEditor-verdana *:not(.fa):not(.fl-icon-undo) {
   font-family: 'Verdana', sans-serif !important;
 }
+
 
 
 
@@ -268,7 +299,6 @@ body > div.skiptranslate {
   padding: 1rem;
   border-bottom: 1px solid $color-fluidui-gray;
   background-color: $color-fluidui-beige;
-  background-image: url('/sites/all/libraries/fluid/framework/preferences/images/default/separatedpanelbg.png');
   background-repeat: repeat;
   text-align: center;
   .goog-te-gadget {
@@ -297,43 +327,55 @@ body > div.skiptranslate {
 }
 
 .goog-te-banner-frame {
-  position: static !important;
+  position: absolute !important;
   margin: 1rem 0 0 !important;
 }
 
 #gpii-translate-toggle_container {
   position: initial;
-  width: 12em;
-  right: calc(50px + 14rem + 1.5rem);
-  z-index: 10000001;
-  min-height: 2em;
-  box-shadow: 2px 2px 3px 0px #333333;
-  border-bottom: 1px solid $color-fluidui-gray;
-  border-left: 1px solid $color-fluidui-gray;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  display: block;
+  width: 100%;
+   @media (min-width: $screen-xs-min) {
+       width: 100%;
+    }
   background-color: #000;
+  // right: calc(50px + 14rem + 1.5rem);
+  z-index: 10000001;
+  // min-height: 2em;
+
   #gpii-translate-toggle_button {
-    height: 1.8em;
-    min-width: 10em;
     margin-right: 0.5em;
-    margin-left: 0.5em;
+    margin-left: 1.2rem;
     border: 0;
     background-color: #000;
     color: #fff;
     font-family: 'open-sans', 'Myriad Pro', 'Helvetica', 'Arial', sans-serif;
-    font-size: 1.1em;
-    font-weight: bold;
+    font-weight: normal;
     text-transform: lowercase;
+    @media (min-width: 640px) {
+      position:absolute;
+      right: 16em;
+      width: auto;
+      height: 1.8em;
+      min-width: 10em;
+      box-shadow: 2px 2px 3px 0px #333333;
+      border-bottom: 1px solid $color-fluidui-gray;
+      border-left: 1px solid $color-fluidui-gray;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      height: 1.8em;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
   }
 
   html.force-mobile-layout & {
-    float: right;
-    margin-right: calc(3rem + 6px);
+    //float: right;
+    //margin-right: calc(3rem + 6px);
   }
 
   @media (max-width: $screen-xs-max) {
-    float: right;
+    //float: right;
     margin-right: calc(3rem + 6px);
   }
 
@@ -341,6 +383,7 @@ body > div.skiptranslate {
     html:not(.force-mobile-layout) & {
       position: fixed;
       top: 0;
+
     }
   }
 }

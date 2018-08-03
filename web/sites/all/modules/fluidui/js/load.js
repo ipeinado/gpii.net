@@ -1,7 +1,6 @@
 /**
  * @file
  * Used to initialize the plugin when the page has finished loading.
- * Customized based on the README instructions to allow for i18n
  */
 
 (function ($) {
@@ -12,24 +11,40 @@
       var modulePath = Drupal.settings.modulePath;
       var libraryPath = Drupal.settings.libraryPath;
 
+      var uio = fluid.uiOptions.prefsEditor(".flc-prefsEditor-separatedPanel", {
+        terms: {
+            "templatePrefix": origin + modulePath + "/html",
+            "messagePrefix": origin + modulePath + "/messages/",
+        },
+        "tocTemplate": libraryPath + "/components/tableOfContents/html/TableOfContents.html",
+        "ignoreForToC": {
+          "overviewPanel": ".flc-overviewPanel"
+        }
+      });
 
-      var path = window.location.pathname;
-      //console.log(path);
+      //for smaller screens ( < 480px ), display the toolbox in full width
+      $(".fl-prefsEditor-buttons button").click(function (e) {
+        var status = $(this).attr("aria-label");
+        if (status == "Show Display Preferences"){
+          if (window.innerWidth < 480){
+            $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
+          }
+        } else if (status == "Hide Display Preferences") {
+          if (window.innerWidth < 480){
+            $(".flc-prefsEditor-separatedPanel").css("width", "87%");            
+          } else {
+            $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
+          }
+        }
+      });
 
-      if (path.lastIndexOf('/el/', 0) === 0) {
-        fluid.uiOptions.prefsEditor(".flc-prefsEditor-separatedPanel", {
-          "templatePrefix": libraryPath + "/framework/preferences/html/",
-          "messagePrefix": origin + modulePath + "/messages/el/",
-          "tocTemplate": libraryPath + "/components/tableOfContents/html/TableOfContentsEL.html"
-        });
-      }
-      else {
-        fluid.uiOptions.prefsEditor(".flc-prefsEditor-separatedPanel", {
-          "templatePrefix": libraryPath + "/framework/preferences/html/",
-          "messagePrefix": origin + modulePath + "/messages/en/",
-          "tocTemplate": libraryPath + "/components/tableOfContents/html/TableOfContents.html"
-        });
-      }
-      }
+      $(window).resize(function() {
+        if (window.innerWidth < 480){
+          $(".flc-prefsEditor-separatedPanel").css("width", "87%");            
+        } else {
+          $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
+        }
+      });
+    }
   };
 }(jQuery));

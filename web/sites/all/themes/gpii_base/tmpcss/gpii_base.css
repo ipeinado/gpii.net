@@ -6451,7 +6451,10 @@ body.admin-menu .flc-prefsEditor-separatedPanel {
   top: 29px; }
 
 .navbar-fixed-top {
-  z-index: 499; }
+  z-index: 10000000; }
+  @media (min-width: 992px) {
+    .navbar-fixed-top {
+      z-index: 499; } }
 
 #navbar nav {
   clear: both; }
@@ -6521,25 +6524,44 @@ body.admin-menu .flc-prefsEditor-separatedPanel {
   text-decoration: underline; }
 
 .flc-iframe {
-  width: 100%; }
+  width: 100%;
+  display: block !important; }
 
-body .flc-prefsEditor-separatedPanel {
-  width: auto;
+body .fl-prefsEditor-separatedPanel {
+  height: 0;
   z-index: 10000001;
-  position: initial; }
+  position: inherit;
+  background: #000; }
+  @media (min-width: 640px) {
+    html:not(.force-mobile-layout) body .fl-prefsEditor-separatedPanel {
+      position: relative;
+      top: 2.1rem; } }
   @media (min-width: 768px) {
-    html:not(.force-mobile-layout) body .flc-prefsEditor-separatedPanel {
-      position: fixed; } }
+    html:not(.force-mobile-layout) body .fl-prefsEditor-separatedPanel {
+      position: fixed;
+      width: 100% !important;
+      top: 0; } }
 
-.flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
-  margin-right: 0.5rem;
-  box-shadow: 2px 2px 3px 0px #333333;
-  border-bottom: 1px solid #191919;
-  border-left: 1px solid #191919;
-  background-color: #000; }
-  .flc-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons button {
+.fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
+  height: auto; }
+  @media (min-width: 640px) {
+    .fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons {
+      box-shadow: 2px 2px 3px 0px #333333;
+      border-bottom: 1px solid #191919;
+      border-left: 1px solid #191919;
+      border-right: 1px solid #191919;
+      background-color: #000;
+      margin-right: 2%; } }
+  .fl-prefsEditor-separatedPanel .fl-panelBar .fl-prefsEditor-buttons button {
     color: #fff;
-    background-color: #000; }
+    background-color: #000;
+    height: 1.8em;
+    min-width: 10em; }
+
+.flc-toc-tocContainer {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2rem; }
 
 .flc-toc-header,
 .flc-toc-levels-level1 {
@@ -6571,7 +6593,6 @@ body > div.skiptranslate {
   padding: 1rem;
   border-bottom: 1px solid #191919;
   background-color: #b9b2ab;
-  background-image: url("/sites/all/libraries/fluid/framework/preferences/images/default/separatedpanelbg.png");
   background-repeat: repeat;
   text-align: center; }
   @media (min-width: 768px) {
@@ -6598,39 +6619,44 @@ body > div.skiptranslate {
     height: 1rem; }
 
 .goog-te-banner-frame {
-  position: static !important;
+  position: absolute !important;
   margin: 1rem 0 0 !important; }
 
 #gpii-translate-toggle_container {
   position: initial;
-  width: 12em;
-  right: calc(50px + 14rem + 1.5rem);
-  z-index: 10000001;
-  min-height: 2em;
-  box-shadow: 2px 2px 3px 0px #333333;
-  border-bottom: 1px solid #191919;
-  border-left: 1px solid #191919;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background-color: #000; }
+  display: block;
+  width: 100%;
+  background-color: #000;
+  z-index: 10000001; }
+  @media (min-width: 480px) {
+    #gpii-translate-toggle_container {
+      width: 100%; } }
   #gpii-translate-toggle_container #gpii-translate-toggle_button {
-    height: 1.8em;
-    min-width: 10em;
     margin-right: 0.5em;
-    margin-left: 0.5em;
+    margin-left: 1.2rem;
     border: 0;
     background-color: #000;
     color: #fff;
     font-family: 'open-sans', 'Myriad Pro', 'Helvetica', 'Arial', sans-serif;
-    font-size: 1.1em;
-    font-weight: bold;
+    font-weight: normal;
     text-transform: lowercase; }
-  html.force-mobile-layout #gpii-translate-toggle_container {
-    float: right;
-    margin-right: calc(3rem + 6px); }
+    @media (min-width: 640px) {
+      #gpii-translate-toggle_container #gpii-translate-toggle_button {
+        position: absolute;
+        right: 16em;
+        width: auto;
+        height: 1.8em;
+        min-width: 10em;
+        box-shadow: 2px 2px 3px 0px #333333;
+        border-bottom: 1px solid #191919;
+        border-left: 1px solid #191919;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        height: 1.8em;
+        font-weight: bold;
+        font-size: 1.1em; } }
   @media (max-width: 767px) {
     #gpii-translate-toggle_container {
-      float: right;
       margin-right: calc(3rem + 6px); } }
   @media (min-width: 768px) {
     html:not(.force-mobile-layout) #gpii-translate-toggle_container {
