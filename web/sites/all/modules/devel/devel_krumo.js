@@ -1,7 +1,14 @@
+/**
+ * @file
+ * Behaviors for Devel.
+ */
+
 (function ($) {
 
 /**
  * Attaches double-click behavior to toggle full path of Krumo elements.
+ *
+ * @type {Drupal~behavior}
  */
 Drupal.behaviors.devel = {
   attach: function (context, settings) {
@@ -22,7 +29,9 @@ Drupal.behaviors.devel = {
       }
     }
 
-    $('.krumo-child > div:first-child', context).dblclick(
+    $('.krumo-child > div:first-child', context).once('krumo_path',
+    function() {
+      $('.krumo-child > div:first-child', context).dblclick(
       function(e) {
         if ($(this).find('> .krumo-php-path').length > 0) {
           // Remove path if shown.
@@ -59,19 +68,20 @@ Drupal.behaviors.devel = {
           krumo_name = [];
           krumo_type = [];
         }
-      }
-    );
+      });
+    });
 
     // Events
-    $('.krumo-element')
-      .click(function() {
+    $('.krumo-element').once('krumo-events', function() {
+      $(this).click(function() {
         krumo.toggle(this);
       }).mouseover(function() {
         krumo.over(this);
       }).mouseout(function() {
         krumo.out(this);
       });
-  }
-};
+    });// End krumo-events .once
+  }// End attach.
+};// End behaviors.devel.
 
-})(jQuery);
+})(jQuery);// end outer function

@@ -297,10 +297,10 @@ body.page-search .view-search {
     margin-right: auto;
     padding: 2rem 0 1rem; }
 
-.page-search-power p.lead {
+.page-search-power #block-system-main p.lead {
   margin-left: -10px;
   margin-right: -10px; }
-  .page-search-power p.lead a {
+  .page-search-power #block-system-main p.lead a {
     margin-top: 1rem;
     display: inline-block; }
 
@@ -459,8 +459,6 @@ body.front, body.page-node-1903 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
@@ -480,8 +478,6 @@ body.front, body.page-node-1903 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;

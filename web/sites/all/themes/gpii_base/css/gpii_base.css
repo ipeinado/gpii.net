@@ -6600,6 +6600,14 @@ body .fl-prefsEditor-separatedPanel {
     height: 1.8em;
     min-width: 10em; }
 
+.fl-prefsEditor-separatedPanel .fl-panelBar {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important; }
+  @media (min-width: 640px) {
+    .fl-prefsEditor-separatedPanel .fl-panelBar {
+      -webkit-box-shadow: 0 2px 3px 0 #6f6f6f;
+              box-shadow: 0 2px 3px 0 #6f6f6f; } }
+
 .flc-toc-tocContainer {
   padding-left: 0;
   padding-right: 0;
@@ -6678,6 +6686,7 @@ body > div.skiptranslate {
     margin-right: 0.5em;
     margin-left: 1.2rem;
     border: 0;
+    padding: 3px 0 2px;
     background-color: #000;
     color: #fff;
     font-family: 'open-sans', 'Myriad Pro', 'Helvetica', 'Arial', sans-serif;
@@ -6688,8 +6697,8 @@ body > div.skiptranslate {
         position: absolute;
         right: 16em;
         width: auto;
+        padding: 3px 1rem 2px;
         height: 1.8em;
-        min-width: 10em;
         -webkit-box-shadow: 2px 2px 3px 0px #333333;
                 box-shadow: 2px 2px 3px 0px #333333;
         border-bottom: 1px solid #191919;

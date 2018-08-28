@@ -31,7 +31,7 @@
           }
         } else if (status == "Hide Display Preferences") {
           if (window.innerWidth < 480){
-            $(".flc-prefsEditor-separatedPanel").css("width", "87%");            
+            $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
           } else {
             $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
           }
@@ -40,7 +40,7 @@
 
       $(window).resize(function() {
         if (window.innerWidth < 480){
-          $(".flc-prefsEditor-separatedPanel").css("width", "87%");            
+          $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
         } else {
           $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
         }

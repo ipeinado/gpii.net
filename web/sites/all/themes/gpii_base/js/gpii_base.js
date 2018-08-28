@@ -71,8 +71,9 @@
 
     $toggleButton.click(function(){
       var visible = $googleTranslate.is(':visible');
-
-      setTimeout(function(){ $fluidUiPanel.toggle(); }, (visible ? duration : 0));
+      if (window.innerWidth > 640){
+        setTimeout(function(){ $fluidUiPanel.toggle(); }, (visible ? duration : 0));
+      }
       $(this).text((visible ? '+  Translate To...' : '- Hide'));
       $googleTranslate.slideToggle({
         duration: duration,
@@ -88,17 +89,16 @@
 
     $(window).resize(function(){
       var offset = $googleTranslate.is(':visible') ? $googleTranslate.outerHeight() : 0;
-      //$toggleContainer.css('top', offset+'px');
+      $toggleContainer.css('top', offset+'px');
     });
 
     setTimeout(function(){
       $('.goog-te-combo').change(function(){ $toggleButton.click(); });
     }, 1500);
 
-    $('#show-hide').click(function(){
+    $('.fl-prefsEditor-showHide').click(function(){
       var visible = $(this).text().match(/^\s*\-/);
-
-      setTimeout(function(){ $toggleContainer.toggle(); }, (visible ? duration : 0));
+        setTimeout(function(){ $toggleContainer.toggle(); }, (visible ? duration : 0));
 
       // Temporarily modify the width of the FluidUI panel so that it doesn't
       // interfere with other elements at the top of the page, e.g., the
@@ -113,7 +113,7 @@
         $('#iframe-focus').focus();
       } else {
         $('.flc-prefsEditor-iframe').before('<a id="iframe-focus" href></a>');
-        $('#iframe-focus').focus();
+        $('#iframe-focus').focus(); 
       }
 
     });

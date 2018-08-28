@@ -421,16 +421,18 @@ body.page-search {
 // Advanced Search
 // #########################
 
-.page-search-power {
-
-  p.lead {
-    margin-left: -10px;
-    margin-right: -10px;
-    a {
-      margin-top: 1rem;
-      display: inline-block;
+.page-search-power { 
+  #block-system-main {
+    p.lead {
+      margin-left: -10px;
+      margin-right: -10px;
+      a {
+        margin-top: 1rem;
+        display: inline-block;
+      }
     }
   }
+  
   .reset-revert {
     margin-bottom: 0.5rem;
     float: right;
