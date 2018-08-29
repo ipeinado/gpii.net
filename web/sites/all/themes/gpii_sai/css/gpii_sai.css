@@ -382,6 +382,21 @@ body.page-search .view-search {
     margin-left: 0;
     margin-bottom: 0.3rem; }
 
+.page-search-power h3 a {
+  float: left; }
+
+.page-search-power h3:after {
+  clear: both;
+  content: "";
+  display: table; }
+
+.page-search-power .fa-small {
+  font-size: 60%;
+  margin-top: 0.3rem;
+  margin-left: 0.25rem;
+  float: left;
+  color: #757575; }
+
 /**
  * Home Page Specific Styles
  */

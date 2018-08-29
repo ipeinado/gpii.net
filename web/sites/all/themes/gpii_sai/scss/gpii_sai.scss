@@ -418,7 +418,7 @@ body.page-search {
 
 
 // #########################
-// Advanced Search
+// Power Search
 // #########################
 
 .page-search-power { 
@@ -500,15 +500,35 @@ body.page-search {
         margin-bottom: 0;
         padding-left: 2rem;
         li {
-          margin-left: 0;
+          margin-left: 0; 
           margin-bottom: 0.3rem;
         }
       }
     }
   }
+ 
+  h3 {
+    a {
+      float: left;
+    }
+    &:after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+  }
+   
+  .fa-small {
+    font-size: 60%;
+    margin-top: 0.3rem;
+    margin-left: 0.25rem;
+    float: left; 
+    color: rgb(117, 117, 117);
+  }
+
 }
 
-// End Advanced Search
+// End Power Search
 
 /**
  * Home Page Specific Styles
