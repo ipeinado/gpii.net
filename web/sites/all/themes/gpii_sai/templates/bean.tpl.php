@@ -29,7 +29,7 @@
 ?>
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
-  <?php dpm($bean->title); if (!empty($bean->title)): ?>
+  <?php dpm(strlen($bean->title)); if (!empty($bean->title)): ?>
     <h2<?php print $title_attributes; ?>><?php print $bean->title ?></h2>
   <?php endif;?>
   <?php print render($title_suffix); ?>
