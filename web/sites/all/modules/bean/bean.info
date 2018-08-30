@@ -30,3 +30,5 @@ version = "7.x-1.13"
 core = "7.x"
 project = "bean"
 datestamp = "1533832989"
+
+patch[] = https://www.drupal.org/project/bean/issues/2701835 Issue 2701835, Patch #2

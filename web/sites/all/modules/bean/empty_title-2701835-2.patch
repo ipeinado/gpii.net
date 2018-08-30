@@ -1,0 +1,19 @@
+diff --git a/includes/bean.pages.inc b/includes/bean.pages.inc
+index 1676a52..d893e8d 100644
+--- a/includes/bean.pages.inc
++++ b/includes/bean.pages.inc
+@@ -442,6 +442,14 @@ function bean_form_submit_build_bean($form, &$form_state) {
+   form_execute_handlers('submit', $form, $form_state);
+ 
+   $bean = $form_state['bean'];
++
++  // Add empty title support.
++  if (module_exists('title') && ($fr_info = title_field_replacement_info('bean')) && !empty($fr_info)) {
++    if (isset($form_state['values']['title_field'][$form_state['values']['language']]) && $form_state['values']['title_field'][$form_state['values']['language']][0]['value'] == '') {
++      $form_state['values']['title'] = '';
++    }
++  }
++
+   entity_form_submit_build_entity('bean', $bean, $form, $form_state);
+ 
+   foreach (module_implements('bean_submit') as $module) {
