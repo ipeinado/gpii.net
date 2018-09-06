@@ -3,13 +3,13 @@
 // GPII Main Site
 
 $aliases['gpiiprod'] = array(
-  'uri' => 'preview.gpii.net',
-  'root' => '/var/www/clients/client1/web17/web',
-  'remote-host' => 'web06.pushing7.com',
-  'remote-user' => 'rtfwebdevspace',
+  'uri' => 'gpii.net',
+  'root' => '/var/www/clients/client4/web5/web',
+  'remote-host' => '192.168.123.79',
+  'remote-user' => 'gpiiweb',
   'path-aliases' => array(
-    '%dump' => '/var/www/clients/client1/web17/tmp/dump.sql',
-    '%dump-dir' => '/var/www/clients/client1/web17/tmp',
+    '%dump' => '/var/www/clients/client4/web5/tmp/dump.sql',
+    '%dump-dir' => '/var/www/clients/client4/web5/tmp',
     '%files' => 'sites/gpii.net/files',
   ),
   // Read only - force the sql-sync & rsync to simulate transfer to this server
@@ -97,13 +97,13 @@ $aliases['devspacedev'] = array(
 // SAA
 
 $aliases['saaprod'] = array(
-  'uri' => 'saa.gpii.net',
-  'root' => '/var/www/clients/client1/web17/web',
-  'remote-host' => 'web06.pushing7.com',
-  'remote-user' => 'rtfwebdevspace',
+  'uri' => 'ul.gpii.net',
+  'root' => '/var/www/clients/client4/web5/web',
+  'remote-host' => '192.168.123.79',
+  'remote-user' => 'gpiiweb',
   'path-aliases' => array(
-    '%dump' => '/var/www/clients/client1/web17/tmp/dump.sql',
-    '%dump-dir' => '/var/www/clients/client1/web17/tmp',
+    '%dump' => '/var/www/clients/client4/web5/tmp/dump.sql',
+    '%dump-dir' => '/var/www/clients/client4/web5/tmp',
     '%files' => 'sites/saa.gpii.net/files',
   ),
   // Read only - force the sql-sync & rsync to simulate transfer to this server
