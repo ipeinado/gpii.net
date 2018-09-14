@@ -1529,15 +1529,49 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    'gpii_saa_custom_mark_latest_new' => array(
+      'type' => 'entity',
+      'label' => t('Set UL Status to NEW'),
+      'behavior' => array('changes_property'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
   );
+}
+
+/**
+ * This function is called from the action_info array above
+ */
+
+function gpii_saa_custom_mark_latest_new(&$entity) {
+  // call the gpii_saa_custom_mark_latest_new_vbo function
+  return gpii_saa_custom_update_status_vbo($entity, 'NEW');
+}
+
+function gpii_saa_custom_update_status_vbo(&$entity, $status) {
+
+  // get the latest revision and save it
+  $revision_id = revisioning_get_latest_revision_id($entity->nid);
+  $latest = node_load($value->nid, $revision_id, reset);
+  
+  //watchdog('gpii_saa_custom', 'A new revision of node ' . $entity->nid . ' has been created. The latest revision is ' . $revision_id . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+  $latest->field_status['und'][0]['value'] = 0;
+  $latest->revision = TRUE;
+  $latest->revision_moderation = TRUE;
+  $latest-> log = 'Batch updated to ' . $status . '.';
+  node_save($latest);
+
+  //also update the value for the current revision and pass it back to VBO
+
+  $entity->field_status['und'][0]['value'] = 0;
+  return $entity;
 }
 
 
 
 
-/**
- * This function is called from the action_info array above
- */
+
 
 function gpii_saa_custom_import_ul_images(&$entity) {
 
