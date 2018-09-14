@@ -19,3 +19,5 @@ version = "7.x-2.4"
 core = "7.x"
 project = "xmlsitemap"
 datestamp = "1531917526"
+
+patch[] = https://www.drupal.org/project/xmlsitemap/issues/2986847 Issue 2986847, Patch #2
