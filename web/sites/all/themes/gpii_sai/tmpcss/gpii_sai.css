@@ -603,8 +603,7 @@ body.node-type-product .term-tree-list .selected {
  * Advanced Search Overrides
  */
 .tree-classic li:focus, .tree-classic li:active {
-  outline: #484848 dotted thin;
-  background-color: #faeaec; }
+  outline: #484848 dotted thin; }
 
 .tree-classic {
   padding-left: 1.5rem; }
@@ -629,18 +628,18 @@ body.node-type-product .term-tree-list .selected {
 .text-right .taxonomy-label::before {
   content: " ";
   border-style: solid;
-  border-width: 11.5px 0 11px 11px;
-  border-color: transparent transparent transparent #000;
+  border-width: 0.8rem 0 0.758rem 0.758rem;
+  border-color: transparent transparent transparent #A72534;
   position: absolute;
-  right: -.78rem; }
+  right: -.758rem; }
 
 .text-left .taxonomy-label::before {
   content: " ";
   border-style: solid;
-  border-width: 11px 11px 11.5px 0;
-  border-color: transparent #A72534 transparent transparent;
+  border-width: 0.8rem 0.758rem 0.758rem 0;
+  border-color: transparent #000 transparent transparent;
   position: absolute;
-  left: -.775rem; }
+  left: -.758rem; }
 
 .label.taxonomy-label {
   margin: 0 1rem 0.25rem;
@@ -652,17 +651,21 @@ body.node-type-product .term-tree-list .selected {
   .label.taxonomy-label .fa.fa-close {
     position: absolute;
     top: 0.34rem;
-    right: 0.25rem; }
+    right: 0.35rem; }
 
 .taxonomy-label.label-default {
   background-color: #111;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0; }
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px; }
 
 .taxonomy-label.label-danger {
   background-color: #A72534;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0; }
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px; }
   .taxonomy-label.label-danger .fa.fa-close {
     right: 0.4rem; }
 
@@ -1605,3 +1608,11 @@ div.discontinued {
 
 .callout-primary {
   border-left-color: #A72534; }
+
+.tree-troubles {
+  padding-left: 1rem; }
+  .tree-troubles h3 {
+    margin: 0 0 0 -1rem;
+    display: inline-block;
+    font-size: 1.1em;
+    font-weight: 600; }
