@@ -293,6 +293,12 @@ body.page-search .view-search {
     margin-right: auto;
     padding: 2rem 0 1rem; }
 
+.page-search-power #main-container {
+  max-width: 1600px;
+  width: 100%; }
+  .page-search-power #main-container #saa-app {
+    max-width: 100%; }
+
 .page-search-power #block-system-main p.lead {
   margin-left: -10px;
   margin-right: -10px; }
@@ -1615,4 +1621,4 @@ div.discontinued {
     margin: 0 0 0 -1rem;
     display: inline-block;
     font-size: 1.1em;
-    font-weight: 600; }
+    font-weight: bold; }
