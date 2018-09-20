@@ -1,0 +1,34 @@
+name: gpii-sites
+recipe: drupal7
+config:
+  webroot: web
+  #via: nginx
+  xdebug: true
+  conf: 
+    # Tell Lando to use additional PHP settings.
+    # The location of this file is arbitrary. 
+    # We placed it inside .vscode/ folder simply because we find it convenient.
+    # php: .vscode/php.ini
+services:
+  database2:
+    type: mysql
+    version: 5.7
+    portforward: true
+    hostnames:
+      -database2
+      -database2.gpiisites.internal
+    creds:
+      user: drupal7
+      password: drupal7
+      database: ul
+
+proxy:
+  appserver: 
+    - gpii.lndo.site
+    - ul.gpii.lndo.site
+    - ds.gpii.lndo.site
+    - dev.gpii.net
+    - dev.ds.gpii.net
+    - dev.ul.gpii.net
+
+

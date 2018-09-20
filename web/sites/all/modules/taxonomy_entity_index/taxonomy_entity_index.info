@@ -12,5 +12,5 @@ core = "7.x"
 project = "taxonomy_entity_index"
 datestamp = "1390603432"
 
-; Patch to fix issue with old revisions not getting correctly removed from the entity index after updates
-patch[] = https://www.drupal.org/node/2030089 Issue 2030089, Patch #16
+; This patch gets terms from past revisions out of the mix when filtering for taxonomy terms
+patch[] = https://www.drupal.org/project/taxonomy_entity_index/issues/2030089 Issue 2030089, Patch #18 
