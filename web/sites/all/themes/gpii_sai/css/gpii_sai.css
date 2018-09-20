@@ -879,19 +879,25 @@ a.tree-label {
 
 .group-feed3 textarea {
   height: 2.5rem;
-  -webkit-transition: all 1s ease-in-out; }
+  -webkit-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out; }
 
 .group-feed3 textarea:focus, .group-feed3 textarea:active {
   height: -webkit-calc(100% - 2.5rem);
   height: calc(100% - 2.5rem);
-  -webkit-transition: all 1s ease-in-out; }
+  -webkit-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out; }
 
 .group-feed3 .webform-client-form:focus > div, .group-feed3 .webform-client-form:active > div {
   height: 20rem; }
   .group-feed3 .webform-client-form:focus > div textarea, .group-feed3 .webform-client-form:active > div textarea {
     height: -webkit-calc(100% - 2.5rem);
     height: calc(100% - 2.5rem);
-    -webkit-transition: all 1s ease-in-out; }
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out; }
 
 /**
  * Open Marketplace
