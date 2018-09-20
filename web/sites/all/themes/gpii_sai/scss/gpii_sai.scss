@@ -1180,8 +1180,6 @@ a.tree-label {
         text-align: left;
         .btn-group-justified {
           width: auto;
-          .btn-group:first-child {
-          }
         }
 
       }
@@ -1220,11 +1218,13 @@ a.tree-label {
   textarea {
     height:2.5rem;
     -webkit-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
   }
 
   textarea:focus, textarea:active {
     height:calc(100% - 2.5rem);
     -webkit-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
   }
 
 
@@ -1234,6 +1234,7 @@ a.tree-label {
       textarea {
         height:calc(100% - 2.5rem);
         -webkit-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
       }
     }
   }
