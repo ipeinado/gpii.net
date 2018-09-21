@@ -62,7 +62,4 @@ var gulp = require('gulp'),
 
     // if working on a remote server, use by ssh port forwarding -L 35729:localhost:35729 username@server
 
-    // server = livereload.createServer();
-    // server.watch([__dirname + "/js", __dirname + "/css"]);
-
     

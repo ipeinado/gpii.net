@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
-    livereload = require('livereload'),
+    livereload = require('gulp-livereload'),
     sourcemaps = require('gulp-sourcemaps'),
     scsslint = require('gulp-scss-lint');
 
@@ -21,10 +21,12 @@ var gulp = require('gulp'),
         // Run Sass on those files
         .pipe(sass({precision: '8'}).on('error', sass.logError))
         // Write the resulting CSS in the output folder
-        .pipe(gulp.dest(output));
+        .pipe(gulp.dest(output))
+        .pipe(livereload());
     });
 
     gulp.task('watch', function() {
+      livereload.listen();
       return gulp
         // Watch the input folder for change,
         // and run `sass` task when something happens
@@ -34,6 +36,7 @@ var gulp = require('gulp'),
         .on('change', function(event) {
           console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
         });
+      
     });
 
     gulp.task('tmpcss', function () {
@@ -54,9 +57,9 @@ var gulp = require('gulp'),
         .pipe(postcss(processors))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./css'));
+        
     });
 
     // if working on a remote server, use by ssh port forwarding -L 35729:localhost:35729 username@server
 
-    // server = livereload.createServer();
-    // server.watch([__dirname + "/js", __dirname + "/css"]);
+    
