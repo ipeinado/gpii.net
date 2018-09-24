@@ -1537,7 +1537,7 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
-    'gpii_saa_custom_os_migrate' => array(
+      'gpii_saa_custom_os_migrate' => array(
       'type' => 'entity',
       'label' => t('Migrate OS Compatibility Taxonomy'),
       'behavior' => array('changes_property'),
@@ -1589,7 +1589,7 @@ function gpii_saa_custom_os_migrate_vbo(&$entity) {
         if ($value['tid'] == '802') { // macOS
           $os_tid[] = '4458';
         }
-        if ($value['tid'] == '805') {  // iOS
+        if ($value['tid'] == '805') {  // iOS 
           $os_tid[] = '4459';
         }
         if ($value['tid'] == '260') { // Android
@@ -1604,7 +1604,7 @@ function gpii_saa_custom_os_migrate_vbo(&$entity) {
         if ($value['tid'] == '808') { // Proprietary
           $os_tid[] = '4463';
         }
-        // unset all of the OS-related tags from teh features category in the new draft
+        // unset all of the OS-related tags from the features category in the new draft
         unset($latest->field_features['und'][$key]);
       }
     }
