@@ -948,6 +948,9 @@ body.node-type-product {
 }
 
 .tree-classic {
+  a {
+    text-decoration: none !important;
+  }
   padding-left: 1.5rem;
   ul {
     padding-left: 1.25rem;

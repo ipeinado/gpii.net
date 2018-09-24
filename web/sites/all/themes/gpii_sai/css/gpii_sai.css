@@ -682,6 +682,8 @@ body.node-type-product .term-tree-list .selected {
 
 .tree-classic {
   padding-left: 1.5rem; }
+  .tree-classic a {
+    text-decoration: none !important; }
   .tree-classic ul {
     padding-left: 1.25rem; }
 
