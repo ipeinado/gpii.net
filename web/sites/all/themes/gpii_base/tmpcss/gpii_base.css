@@ -6779,6 +6779,12 @@ body.i18n-de #gpii-translate-toggle_container {
   .region-sidebar-second > .block:first-child > :first-child header h6 {
     margin-top: 0; } }
 
+#block-system-main a:not(.btn) {
+  text-decoration: underline; }
+
+#block-system-main .field-type-taxonomy-term-reference a {
+  text-decoration: none !important; }
+
 #footer {
   border-bottom: 0.85rem solid #2783c6;
   margin: 0;
