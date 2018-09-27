@@ -21,6 +21,11 @@ services:
       user: drupal7
       password: drupal7
       database: ul
+  solr:
+    type: solr:6.6
+    portforward: 9999
+    config:
+      conf: web/sites/all/modules/search_api_solr/solr-conf/6.x
 
 proxy:
   appserver: 
