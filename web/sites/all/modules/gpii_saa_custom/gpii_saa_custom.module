@@ -883,7 +883,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
+            CURLOPT_TIMEOUT => 3,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
@@ -1598,7 +1598,7 @@ function gpii_saa_custom_os_migrate_vbo(&$entity) {
         if ($value['tid'] == '4426') { // Chrome OS
           $os_tid[] = '4461';
         }
-        if ($value['tid'] == '806') { // Linux
+        if ($value['tid'] == '806') { // Linux                               e
           $os_tid[] = '4462';
         }
         if ($value['tid'] == '808') { // Proprietary
