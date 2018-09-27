@@ -205,6 +205,9 @@
   .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
     color: #A72534; }
 
+#block-system-main .pagination a {
+  text-decoration: none; }
+
 .btn-primary {
   background-color: #A72534;
   border-color: #8e1f2c; }
@@ -402,6 +405,9 @@ body.page-search .view-search {
   margin-left: 0.25rem;
   float: left;
   color: #757575; }
+
+.page-search-power #block-webform-client-block-5352 {
+  margin: 0 22%; }
 
 /**
  * Home Page Specific Styles
@@ -853,7 +859,8 @@ a.tree-label {
     content: " »"; }
   #saa-app .pagination a {
     font-size: 1.1rem;
-    padding: 7px 15px; }
+    padding: 7px 15px;
+    text-decoration: none; }
 
 @media (max-width: 992px) {
   #saa-app hr.results + div.row .col-xs-16, #saa-app hr.results + div.row .col-xs-8 {
