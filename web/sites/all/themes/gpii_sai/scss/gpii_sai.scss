@@ -432,7 +432,7 @@ body.page-search {
 // #########################
 
 .page-search-power  { 
-  #main-container {
+  #main-container { 
     max-width: 1600px;
     width: 100%;
     #saa-app { 
@@ -441,12 +441,17 @@ body.page-search {
   }
   #block-system-main {
     p.lead {
-      margin-left: -10px;
-      margin-right: -10px;
+      margin-left: -5px;
+      margin-right: -5px;
+      margin-bottom: 2px;
       a {
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         display: inline-block;
-      }
+        text-decoration: none; 
+        &:hover, &:focus, &:active {
+          text-decoration: underline;
+        }
+      } 
     }
   }
    
@@ -544,6 +549,23 @@ body.page-search {
   }
   #block-webform-client-block-5352 {
     margin: 0 22%; // this matches the grid layout used in power search  
+
+  }
+
+  .modal-body {
+    .form-group {
+      width: 90%;
+    }
+    #sharelink {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      height: 2.5rem;
+    }
+    .btn-default {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      height: 2.5rem;
+    }
 
   }
 }

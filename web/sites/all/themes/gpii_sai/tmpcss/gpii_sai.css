@@ -303,11 +303,15 @@ body.page-search .view-search {
     max-width: 100%; }
 
 .page-search-power #block-system-main p.lead {
-  margin-left: -10px;
-  margin-right: -10px; }
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-bottom: 2px; }
   .page-search-power #block-system-main p.lead a {
-    margin-top: 1rem;
-    display: inline-block; }
+    margin-top: 0.5rem;
+    display: inline-block;
+    text-decoration: none; }
+    .page-search-power #block-system-main p.lead a:hover, .page-search-power #block-system-main p.lead a:focus, .page-search-power #block-system-main p.lead a:active {
+      text-decoration: underline; }
 
 .page-search-power .reset-revert {
   margin-bottom: 0.5rem;
@@ -389,6 +393,19 @@ body.page-search .view-search {
 
 .page-search-power #block-webform-client-block-5352 {
   margin: 0 22%; }
+
+.page-search-power .modal-body .form-group {
+  width: 90%; }
+
+.page-search-power .modal-body #sharelink {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 2.5rem; }
+
+.page-search-power .modal-body .btn-default {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  height: 2.5rem; }
 
 /**
  * Home Page Specific Styles
