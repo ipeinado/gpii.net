@@ -444,9 +444,13 @@ body.page-search {
       margin-left: -10px;
       margin-right: -10px;
       a {
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         display: inline-block;
-      }
+        text-decoration: none; 
+        &:hover, &:focus, &:active {
+          text-decoration: underline;
+        }
+      } 
     }
   }
    
@@ -544,6 +548,23 @@ body.page-search {
   }
   #block-webform-client-block-5352 {
     margin: 0 22%; // this matches the grid layout used in power search  
+
+  }
+
+  .modal-body {
+    .form-group {
+      width: 90%;
+    }
+    #sharelink {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      height: 2.5rem;
+    }
+    .btn-default {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      height: 2.5rem;
+    }
 
   }
 }
@@ -1086,7 +1107,7 @@ body.node-type-product {
     background-color: lighten(#A72534, 20%) !important; 
     border-color: lighten(#A72534, 15%);
   }
-}
+} 
 
 .btn-link.sharelink {
   color: #A72534;
