@@ -1,0 +1,58 @@
+<?php
+
+// actions for the categories are defined in a switch statement below
+// if categories are added here be sure to define an action when saved
+function get_categories() {
+    return [
+        'tax_only' => t('Taxonomy Only'),
+        'minor' => t('Minor Edit'),
+        'moderate' => t('Moderate Edit'),
+        'substantial' => t('Substantial Edit')
+    ];
+}
+
+function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) {
+    // Find the content type of the node we are editing.
+    $content_type = $form['#node']->type;
+    if ($content_type == 'article') {
+        //drupal_set_message('<pre>' . print_r($form, true) . '</pre>');
+        $form['revision_information']['category'] = [
+            '#title' => t('Revision Category'),
+            '#type' => 'select',
+            '#description' => 'Select the category of edit that you made.',
+            '#options' => get_categories(),
+            '#required' => true
+        ];
+    }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function revision_category_views_api() {
+    return array(
+      'api' => 3,
+      'path' => drupal_get_path('module', 'revision_category') . '/views',
+    );
+}
+
+function revision_category_node_submit($node, $form, &$form_state) {
+    $category = $form_state['values']['category'];
+    switch ($category) {
+        case 'minor':
+            drupal_set_message('Category "' . $category . '" requires a notification.');
+            break;
+
+        case 'moderate':
+            drupal_set_message('Category "' . $category . '" requires a notification.');
+            break;
+
+        case 'substantial':
+            drupal_set_message('Category "' . $category . '" requires a notification.');
+            break;
+        
+        default: // all categories that do nothing on save
+            drupal_set_message('Category "' . $category . '" requires no action.');
+            break;
+    }
+}
