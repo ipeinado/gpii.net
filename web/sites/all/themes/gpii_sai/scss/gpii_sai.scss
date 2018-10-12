@@ -280,6 +280,12 @@
   }
 }
 
+#block-system-main .pagination {
+  a {
+    text-decoration: none;
+  }
+}
+
 .btn-primary {
   background-color: $color-gpii-sai-primary;
   border-color: darken($color-gpii-sai-primary, 6%);
@@ -327,6 +333,10 @@ body.page-search {
 
     margin-top: 1rem;
   }
+
+  
+
+
 }
 
 .node-product.view-mode-search_results {
@@ -421,11 +431,11 @@ body.page-search {
 // Power Search
 // #########################
 
-.page-search-power { 
+.page-search-power  { 
   #main-container {
     max-width: 1600px;
     width: 100%;
-    #saa-app {
+    #saa-app { 
       max-width: 100%;
     }
   }
@@ -434,18 +444,22 @@ body.page-search {
       margin-left: -10px;
       margin-right: -10px;
       a {
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         display: inline-block;
-      }
+        text-decoration: none; 
+        &:hover, &:focus, &:active {
+          text-decoration: underline;
+        }
+      } 
     }
   }
-  
+   
   .reset-revert {
     margin-bottom: 0.5rem;
     float: right;
     width: 15em;
   }
-  .form-control {
+  #saa-app .form-control {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -532,7 +546,27 @@ body.page-search {
     float: left; 
     color: rgb(117, 117, 117);
   }
+  #block-webform-client-block-5352 {
+    margin: 0 22%; // this matches the grid layout used in power search  
 
+  }
+
+  .modal-body {
+    .form-group {
+      width: 90%;
+    }
+    #sharelink {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      height: 2.5rem;
+    }
+    .btn-default {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      height: 2.5rem;
+    }
+
+  }
 }
 
 // End Power Search
@@ -948,6 +982,9 @@ body.node-type-product {
 }
 
 .tree-classic {
+  a {
+    text-decoration: none !important;
+  }
   padding-left: 1.5rem;
   ul {
     padding-left: 1.25rem;
@@ -974,28 +1011,28 @@ body.node-type-product {
   border-style: solid;
   border-width: 0.8rem 0 0.758rem 0.758rem; 
   //border-width: 11.5px 0 11px 13px;
-  border-color: transparent transparent transparent #A72534 ;
+  border-color: transparent transparent transparent #000 ;
   position: absolute;
-  right: -.758rem; 
-  // top:0;
+  right: -.7rem;
+  top: .73rem 
 }
 .text-left .taxonomy-label::before {
   content:" ";
   border-style: solid;
   border-width: 0.8rem 0.758rem 0.758rem 0; 
-  //border-width: 11px 13px 11.5px 0;
-  border-color: transparent #000 transparent transparent;
+  //border-width: 11px 13px 11.5px 0; 
+  border-color: transparent #A72534 transparent transparent; 
   position: absolute;
-  left: -.758rem;
-  // top:0;
+  left: -.7rem;
+  top: .73rem 
 }
 .label.taxonomy-label {
   margin: 0 1rem 0.25rem;
   display: inline-block;
   white-space: normal; //This allows labels to wrap to a second line, but is very inconsistent between Chrome and FF
   text-align: left;
-  padding: 0.1rem 1.5rem 0 0.5rem;
-  line-height: 1.5rem;
+  padding: 0.1rem 1.5rem 0.05rem 0.5rem;
+  line-height: inherit;
 
   .fa.fa-close {
     position: absolute;
@@ -1006,18 +1043,18 @@ body.node-type-product {
 
 .taxonomy-label.label-default {
   background-color: #111;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .taxonomy-label.label-danger {
   background-color: #A72534;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   .fa.fa-close {
     right: 0.4rem;
   }
@@ -1064,6 +1101,13 @@ body.node-type-product {
   border-color: transparent;
   font-weight: bold;
 }
+
+.btn-primary[disabled].reset, .btn-primary.reset {
+  &:hover, &:focus, &:active {
+    background-color: lighten(#A72534, 20%) !important; 
+    border-color: lighten(#A72534, 15%);
+  }
+} 
 
 .btn-link.sharelink {
   color: #A72534;
@@ -1142,7 +1186,7 @@ a.tree-label {
       a::before {
         content: "«  ";
       }
-    }
+    } 
     li.pagination-prev {
       a::before {
         content: "‹ ";
@@ -1161,6 +1205,7 @@ a.tree-label {
     a {
       font-size: 1.1rem;
       padding: $padding-base-vertical + 1px $padding-base-horizontal + 3px;
+      text-decoration: none;
     }
   }
 

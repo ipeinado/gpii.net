@@ -34,7 +34,6 @@
   </<?php print $right_wrapper; ?>>
   </div>
   <?php endif; ?>
-  <?php endif; ?>
 </<?php print $layout_wrapper ?>>
 
 

@@ -205,6 +205,9 @@
   .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
     color: #A72534; }
 
+#block-system-main .pagination a {
+  text-decoration: none; }
+
 .btn-primary {
   background-color: #A72534;
   border-color: #8e1f2c; }
@@ -307,15 +310,18 @@ body.page-search .view-search {
   margin-left: -10px;
   margin-right: -10px; }
   .page-search-power #block-system-main p.lead a {
-    margin-top: 1rem;
-    display: inline-block; }
+    margin-top: 0.5rem;
+    display: inline-block;
+    text-decoration: none; }
+    .page-search-power #block-system-main p.lead a:hover, .page-search-power #block-system-main p.lead a:focus, .page-search-power #block-system-main p.lead a:active {
+      text-decoration: underline; }
 
 .page-search-power .reset-revert {
   margin-bottom: 0.5rem;
   float: right;
   width: 15em; }
 
-.page-search-power .form-control {
+.page-search-power #saa-app .form-control {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -403,6 +409,22 @@ body.page-search .view-search {
   float: left;
   color: #757575; }
 
+.page-search-power #block-webform-client-block-5352 {
+  margin: 0 22%; }
+
+.page-search-power .modal-body .form-group {
+  width: 90%; }
+
+.page-search-power .modal-body #sharelink {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 2.5rem; }
+
+.page-search-power .modal-body .btn-default {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  height: 2.5rem; }
+
 /**
  * Home Page Specific Styles
  */
@@ -480,6 +502,8 @@ body.front, body.page-node-1903 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
@@ -499,6 +523,8 @@ body.front, body.page-node-1903 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
@@ -678,6 +704,8 @@ body.node-type-product .term-tree-list .selected {
 
 .tree-classic {
   padding-left: 1.5rem; }
+  .tree-classic a {
+    text-decoration: none !important; }
   .tree-classic ul {
     padding-left: 1.25rem; }
 
@@ -700,25 +728,27 @@ body.node-type-product .term-tree-list .selected {
   content: " ";
   border-style: solid;
   border-width: 0.8rem 0 0.758rem 0.758rem;
-  border-color: transparent transparent transparent #A72534;
+  border-color: transparent transparent transparent #000;
   position: absolute;
-  right: -.758rem; }
+  right: -.7rem;
+  top: .73rem; }
 
 .text-left .taxonomy-label::before {
   content: " ";
   border-style: solid;
   border-width: 0.8rem 0.758rem 0.758rem 0;
-  border-color: transparent #000 transparent transparent;
+  border-color: transparent #A72534 transparent transparent;
   position: absolute;
-  left: -.758rem; }
+  left: -.7rem;
+  top: .73rem; }
 
 .label.taxonomy-label {
   margin: 0 1rem 0.25rem;
   display: inline-block;
   white-space: normal;
   text-align: left;
-  padding: 0.1rem 1.5rem 0 0.5rem;
-  line-height: 1.5rem; }
+  padding: 0.1rem 1.5rem 0.05rem 0.5rem;
+  line-height: inherit; }
   .label.taxonomy-label .fa.fa-close {
     position: absolute;
     top: 0.34rem;
@@ -726,17 +756,17 @@ body.node-type-product .term-tree-list .selected {
 
 .taxonomy-label.label-default {
   background-color: #111;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px; }
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0; }
 
 .taxonomy-label.label-danger {
   background-color: #A72534;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px; }
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; }
   .taxonomy-label.label-danger .fa.fa-close {
     right: 0.4rem; }
 
@@ -779,6 +809,10 @@ body.node-type-product .term-tree-list .selected {
 .btn-primary.reset {
   border-color: transparent;
   font-weight: bold; }
+
+.btn-primary[disabled].reset:hover, .btn-primary[disabled].reset:focus, .btn-primary[disabled].reset:active, .btn-primary.reset:hover, .btn-primary.reset:focus, .btn-primary.reset:active {
+  background-color: #da5867 !important;
+  border-color: #d54354; }
 
 .btn-link.sharelink {
   color: #A72534; }
@@ -845,7 +879,8 @@ a.tree-label {
     content: " »"; }
   #saa-app .pagination a {
     font-size: 1.1rem;
-    padding: 7px 15px; }
+    padding: 7px 15px;
+    text-decoration: none; }
 
 @media (max-width: 992px) {
   #saa-app hr.results + div.row .col-xs-16, #saa-app hr.results + div.row .col-xs-8 {

@@ -509,6 +509,19 @@ body.i18n-de {
   }
 }
 
+#block-system-main { 
+  a:not(.btn) { 
+    text-decoration: underline;
+  }
+  .field-type-taxonomy-term-reference {
+    a {
+      text-decoration: none !important;
+    }
+  }
+} 
+
+
+
 #footer {
   border-bottom: 0.85rem solid #2783c6;
   margin: 0;
