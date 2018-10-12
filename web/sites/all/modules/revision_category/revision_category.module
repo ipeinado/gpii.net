@@ -14,16 +14,20 @@ function get_categories() {
 function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) {
     // Find the content type of the node we are editing.
     $content_type = $form['#node']->type;
-    if ($content_type == 'article') {
+    if ($content_type == 'product') {
         //drupal_set_message('<pre>' . print_r($form, true) . '</pre>');
+        
         $form['revision_information']['category'] = [
             '#title' => t('Revision Category'),
             '#type' => 'select',
             '#description' => 'Select the category of edit that you made.',
             '#options' => get_categories(),
-            '#required' => true
+            '#required' => true,
+            '#weight' => 18
         ];
+        dpm($form['revision_information']);
     }
+    
 }
 
 /**
