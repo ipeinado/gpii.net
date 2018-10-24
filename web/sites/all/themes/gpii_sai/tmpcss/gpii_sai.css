@@ -1056,6 +1056,13 @@ a.tree-label {
   #block-views-node-flag-report-block input[type="checkbox"] {
     margin: 0; }
 
+.view-editorial-progress-status-and-summary {
+  margin: 0 0.5rem 1rem; }
+  .view-editorial-progress-status-and-summary h3 {
+    font-size: 1.2em; }
+  .view-editorial-progress-status-and-summary .views-field-field-status-revision-id .field-content {
+    text-transform: uppercase; }
+
 .field-name-field-notes {
   background: #FFFDD9;
   border-color: #e5e5e5;

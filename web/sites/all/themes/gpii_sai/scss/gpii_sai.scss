@@ -1575,6 +1575,20 @@ a.tree-label {
   input[type="checkbox"] {
     margin: 0;
   }
+
+
+}
+
+.view-editorial-progress-status-and-summary {
+  margin: 0 0.5rem 1rem;
+  h3 {
+    font-size: 1.2em;
+  }
+  .views-field-field-status-revision-id {
+    .field-content {
+      text-transform: uppercase; 
+    }
+  }
 }
 
 .field-name-field-notes {
