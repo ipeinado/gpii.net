@@ -11,7 +11,7 @@ function manufacturers_and_products_feeds_importer_default() {
   $export = array();
 
   $feeds_importer = new stdClass();
-  $feeds_importer->disabled = FALSE; /* Edit this to true to make a default feeds_importer disabled initially */
+  $feeds_importer->disabled = TRUE; /* Edit this to true to make a default feeds_importer disabled initially */
   $feeds_importer->api_version = 1;
   $feeds_importer->id = 'manufacturers';
   $feeds_importer->config = array(
@@ -140,7 +140,7 @@ function manufacturers_and_products_feeds_importer_default() {
   $export['manufacturers'] = $feeds_importer;
 
   $feeds_importer = new stdClass();
-  $feeds_importer->disabled = FALSE; /* Edit this to true to make a default feeds_importer disabled initially */
+  $feeds_importer->disabled = TRUE; /* Edit this to true to make a default feeds_importer disabled initially */
   $feeds_importer->api_version = 1;
   $feeds_importer->id = 'products';
   $feeds_importer->config = array(
@@ -283,21 +283,17 @@ function manufacturers_and_products_feeds_importer_default() {
     'name' => 'Unified Listing Products',
     'description' => 'Imports products from the unified listing API. ',
     'fetcher' => array(
-      'plugin_key' => 'FeedsHTTPFetcher',
+      'plugin_key' => 'FeedsHTTPFetcherAppendHeaders',
       'config' => array(
-        'auto_detect_feeds' => 0,
-        'use_pubsubhubbub' => 0,
-        'designated_hub' => '',
+        'append_headers' => 'accept|application/json',
         'request_timeout' => '',
-        'auto_scheme' => 'http',
-        'accept_invalid_cert' => 0,
       ),
     ),
     'parser' => array(
       'plugin_key' => 'FeedsExJsonPath',
       'config' => array(
         'context' => array(
-          'value' => '$.records.*',
+          'value' => '$.products.*',
         ),
         'sources' => array(
           'uid' => array(
@@ -387,11 +383,13 @@ function manufacturers_and_products_feeds_importer_default() {
             'unique' => FALSE,
           ),
         ),
-        'update_existing' => '2',
-        'update_non_existent' => 'unpublish',
-        'input_format' => 'plain_text',
+        'update_existing' => '0',
+        'update_non_existent' => 'skip',
+        'input_format' => 'markdown',
         'skip_hash_check' => 0,
         'bundle' => 'product',
+        'insert_new' => '1',
+        'language' => 'und',
       ),
     ),
     'content_type' => '',

@@ -27,7 +27,7 @@ function manufacturers_and_products_node_info() {
     'manufacturer' => array(
       'name' => t('Manufacturer'),
       'base' => 'node_content',
-      'description' => t('Temporary Content type to store manufacturer contact information. '),
+      'description' => t('Content type to store manufacturer contact information. '),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
