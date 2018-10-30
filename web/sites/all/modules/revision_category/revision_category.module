@@ -12,11 +12,19 @@ function get_categories() {
 }
 
 function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) {
+    
     // Find the content type of the node we are editing.
     $content_type = $form['#node']->type;
     if ($content_type == 'product') {
         //drupal_set_message('<pre>' . print_r($form, true) . '</pre>');
         
+
+        // Hide revision options when user does not have respective role or is not admin
+        if (user_has_role(5) != 1 && user_has_role(3) != 1) {
+            $form['revision_information']['revision_operation']['#prefix'] = '<div style="display:none;">';
+            $form['revision_information']['revision_operation']['#suffix'] = '</div>';
+        } 
+
         $form['revision_information']['category'] = [
             '#title' => t('Revision Category'),
             '#type' => 'select',
@@ -26,6 +34,82 @@ function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) 
             '#weight' => 18
         ];
         dpm($form['revision_information']);
+        $form['revision_information']['send_notification'] = [
+            '#title' => t('Send Revision Notification'),
+            '#type' => 'checkbox',
+            '#description' => 'Send a notification to the following recipients'
+        ];
+        $form['revision_information']['notification_recipients'] = [
+            '#title' => t('Revision Notification Recipients'),
+            '#type' => 'textfield',
+            '#description' => 'Type the username of the user that you would like to notify.',
+            '#size' => 30,
+            '#maxlength' => 60,
+            '#autocomplete_path' => 'user/autocomplete'
+        ];
+    }
+}
+
+
+function revision_category_node_presave($node) {
+    
+
+    if ($node->type == 'product') {
+        
+        $manualSelectEnabled = (user_has_role(5) || user_has_role(3)) ? true : false ;
+        
+        if (!empty($node->send_notification) && $node->send_notification) {
+            drupal_set_message('Notification will be sent to recipient ' . $node->notification_recipients);
+        }
+        
+        switch ($node->category) {
+            case 'minor':
+                drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                if (!empty($node->revision_operation)) {
+                    $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                }
+                break;
+            
+            case 'moderate':
+                drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                if (!empty($node->revision_operation)) {
+                    $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                }
+                break;
+            
+            case 'substantial':
+                drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                if (!empty($node->revision_operation)) {
+                    $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                }
+                break;
+            
+            case 'tax_only':
+                if ($node->is_current) {
+                    drupal_set_message('Category "' . $node->category . '" requires no action. Edit will automatically be published since this product was already published.');
+                    if (!empty($node->revision_operation)) {
+                        $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : (($node->send_notification) ? 2 : 0) ;
+                    }
+                }
+                else {
+                    drupal_set_message('Category "' . $node->category . '" requires no action.');
+                    // load current published and set to new Taxonomy
+                    $currentPublished = node_load($node->nid);
+
+                    $currentPublished->field_product_category = $node->field_product_category;
+
+                    node_save($currentPublished);
+
+                    if (!empty($node->revision_operation)) {
+                        $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                    }
+                }
+                break;
+            
+            default: // all categories that do nothing on save
+            
+                break;
+        }
     }
     
 }
@@ -38,25 +122,4 @@ function revision_category_views_api() {
       'api' => 3,
       'path' => drupal_get_path('module', 'revision_category') . '/views',
     );
-}
-
-function revision_category_node_submit($node, $form, &$form_state) {
-    $category = $form_state['values']['category'];
-    switch ($category) {
-        case 'minor':
-            drupal_set_message('Category "' . $category . '" requires a notification.');
-            break;
-
-        case 'moderate':
-            drupal_set_message('Category "' . $category . '" requires a notification.');
-            break;
-
-        case 'substantial':
-            drupal_set_message('Category "' . $category . '" requires a notification.');
-            break;
-        
-        default: // all categories that do nothing on save
-            drupal_set_message('Category "' . $category . '" requires no action.');
-            break;
-    }
 }

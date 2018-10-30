@@ -22,6 +22,11 @@ function revision_category_install() {
         'not null' => false,
         'description' => t('revision category - added by revision category module')
     ));
+
+    db_update('system')
+    ->fields(array('weight' => '10'))
+    ->condition('name', 'revision_category')
+    ->execute();
 }
 
 function revision_category_uninstall() {
