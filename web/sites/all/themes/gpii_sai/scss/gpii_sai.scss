@@ -1575,10 +1575,40 @@ a.tree-label {
   input[type="checkbox"] {
     margin: 0;
   }
+
+
 }
 
+.view-editorial-progress-status-and-summary {
+  margin: 0 0.5rem 1rem;
+  h3 {
+    font-size: 1.2em;
+  }
+  .views-field-field-status-revision-id {
+    .field-content {
+      text-transform: uppercase; 
+    }
+  } 
+}
+
+.view-editorial-progress-todo {
+  margin: 0 0.6rem 1rem;
+  h3 {
+    font-size: 1.2em;
+  }
+}
+
+#field-task-values {
+  .field-multiple-drag {
+    a.tabledrag-handle, .handle {
+      text-decoration: none;
+      height: auto;
+      width: auto;
+    }
+  }
+}
 .field-name-field-notes {
-  background: #FFFDD9;
+  background: #FFFDD9; 
   border-color: $color-gpii-gray;
   border-style: solid dotted;
   border-width: 1px;

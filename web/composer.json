@@ -1,0 +1,10 @@
+{
+    "require": {
+        "drush/drush": "7.3"
+    },
+    "extra": {
+        "installer-paths": {
+            "core": ["type:drupal-core"]
+        }
+    }
+}

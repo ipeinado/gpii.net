@@ -40,6 +40,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'required' => FALSE,
     'settings' => array(
       'display_summary' => TRUE,
+      'entity_translation_sync' => FALSE,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -50,7 +51,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 31,
+      'weight' => 3,
     ),
   );
 
@@ -62,7 +63,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'addressfield',
         'settings' => array(
           'format_handlers' => array(
@@ -71,7 +72,7 @@ function manufacturers_and_products_field_default_field_instances() {
           'use_widget_handlers' => 1,
         ),
         'type' => 'addressfield_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -85,6 +86,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'Address',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -105,7 +107,89 @@ function manufacturers_and_products_field_default_field_instances() {
         ),
       ),
       'type' => 'addressfield_standard',
-      'weight' => 34,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_email'.
+  $field_instances['node-manufacturer-field_email'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'email',
+        'settings' => array(),
+        'type' => 'email_default',
+        'weight' => 8,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_email',
+    'label' => 'Email',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'email',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'email_textfield',
+      'weight' => 13,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_email_2'.
+  $field_instances['node-manufacturer-field_email_2'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'email',
+        'settings' => array(),
+        'type' => 'email_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_email_2',
+    'label' => 'Email 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'email',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'email_textfield',
+      'weight' => 14,
     ),
   );
 
@@ -117,131 +201,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_plain',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_fax',
-    'label' => 'Fax',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'telephone',
-      'settings' => array(
-        'placeholder' => '',
-      ),
-      'type' => 'telephone_default',
-      'weight' => 37,
-    ),
-  );
-
-  // Exported field_instance: 'node-manufacturer-field_origin_id'.
-  $field_instances['node-manufacturer-field_origin_id'] = array(
-    'bundle' => 'manufacturer',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Manufacturer_ID from Denis\' system. ',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => '',
-        ),
-        'type' => 'number_integer',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_origin_id',
-    'label' => 'Origin ID',
-    'required' => 0,
-    'settings' => array(
-      'max' => '',
-      'min' => '',
-      'prefix' => '',
-      'suffix' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'number',
-      'settings' => array(),
-      'type' => 'number',
-      'weight' => 33,
-    ),
-  );
-
-  // Exported field_instance: 'node-manufacturer-field_phone_1'.
-  $field_instances['node-manufacturer-field_phone_1'] = array(
-    'bundle' => 'manufacturer',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_plain',
-        'weight' => 3,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_phone_1',
-    'label' => 'Phone 1',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'telephone',
-      'settings' => array(
-        'placeholder' => '',
-      ),
-      'type' => 'telephone_default',
-      'weight' => 35,
-    ),
-  );
-
-  // Exported field_instance: 'node-manufacturer-field_phone_2'.
-  $field_instances['node-manufacturer-field_phone_2'] = array(
-    'bundle' => 'manufacturer',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
@@ -255,10 +215,11 @@ function manufacturers_and_products_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_phone_2',
-    'label' => 'Phone 2',
+    'field_name' => 'field_fax',
+    'label' => 'Fax',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -268,7 +229,500 @@ function manufacturers_and_products_field_default_field_instances() {
         'placeholder' => '',
       ),
       'type' => 'telephone_default',
-      'weight' => 36,
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_fax_2'.
+  $field_instances['node-manufacturer-field_fax_2'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 33,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_fax_2',
+    'label' => 'Fax 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'telephone',
+      'settings' => array(
+        'placeholder' => '',
+      ),
+      'type' => 'telephone_default',
+      'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_image'.
+  $field_instances['node-manufacturer-field_image'] = array(
+    'bundle' => 'manufacturer',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => 'medium',
+        ),
+        'type' => 'image',
+        'weight' => 13,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_image',
+    'label' => 'Image',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 1,
+      'default_image' => 0,
+      'entity_translation_sync' => FALSE,
+      'file_directory' => '',
+      'file_extensions' => 'png gif jpg jpeg',
+      'filefield_paths' => array(
+        'active_updating' => 0,
+        'file_name' => array(
+          'options' => array(
+            'pathauto' => 0,
+            'slashes' => 0,
+            'transliterate' => 0,
+          ),
+          'value' => '[file:ffp-name-only-original].[file:ffp-extension-original]',
+        ),
+        'file_path' => array(
+          'options' => array(
+            'pathauto' => 1,
+            'slashes' => 0,
+            'transliterate' => 1,
+          ),
+          'value' => 'uploads/images/node/[node:nid]/logo',
+        ),
+        'redirect' => 0,
+        'retroactive_update' => 0,
+      ),
+      'filefield_paths_enabled' => 1,
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'filefield_sources' => array(
+          'filefield_sources' => array(
+            'attach' => 0,
+            'clipboard' => 0,
+            'plupload' => 'plupload',
+            'reference' => 0,
+            'remote' => 'remote',
+            'upload' => 'upload',
+          ),
+          'source_attach' => array(
+            'absolute' => 0,
+            'attach_mode' => 'move',
+            'path' => 'file_attach',
+          ),
+          'source_imce' => array(
+            'imce_mode' => 0,
+          ),
+          'source_reference' => array(
+            'autocomplete' => 0,
+            'search_all_fields' => 0,
+          ),
+        ),
+        'insert' => 1,
+        'insert_absolute' => 0,
+        'insert_class' => '',
+        'insert_default' => 'auto',
+        'insert_styles' => array(
+          'auto' => 'auto',
+          'icon_link' => 0,
+          'image' => 0,
+          'image_large' => 0,
+          'image_medium' => 0,
+          'image_search_results_thumbnail' => 0,
+          'image_thumbnail' => 0,
+          'link' => 0,
+        ),
+        'insert_width' => '',
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'image_image',
+      'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_needs_work'.
+  $field_instances['node-manufacturer-field_needs_work'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Use this checkbox to flag content that needs additional work.   Here are shortcodes that can be used"
+<ul>
+<li> zARCHIVE - used to mark comments that should be kept for some reason -- after the action was approved and it is closed.</li> 
+</ul>',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 11,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_needs_work',
+    'label' => 'Needs Work?',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 0,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 40,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_notes'.
+  $field_instances['node-manufacturer-field_notes'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Include notes related to outstanding to-dos or ideas for future improvement here. ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_notes',
+    'label' => 'Curator\'s Notes',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 41,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_online_contact_form'.
+  $field_instances['node-manufacturer-field_online_contact_form'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_online_contact_form',
+    'label' => 'Online Contact Form',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 1,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => '',
+        'target' => 'default',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 1,
+      'entity_translation_sync' => FALSE,
+      'rel_remove' => 'default',
+      'title' => 'value',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => 'Online Contact Form',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 1,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'advanced_link',
+      'settings' => array(
+        'default_titles' => '',
+        'urls_allowed' => 'external',
+        'urls_filter' => '',
+        'urls_search' => 'start',
+      ),
+      'type' => 'advanced_link',
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_origin_id'.
+  $field_instances['node-manufacturer-field_origin_id'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Manufacturer_ID from Denis\' system. ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 32,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_origin_id',
+    'label' => 'Origin ID',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_phone_1'.
+  $field_instances['node-manufacturer-field_phone_1'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'telephone',
+        'settings' => array(
+          'title' => '',
+        ),
+        'type' => 'telephone_link',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_phone_1',
+    'label' => 'Phone',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'telephone',
+      'settings' => array(
+        'placeholder' => '',
+      ),
+      'type' => 'telephone_default',
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-manufacturer-field_phone_2'.
+  $field_instances['node-manufacturer-field_phone_2'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'telephone',
+        'settings' => array(
+          'title' => '',
+        ),
+        'type' => 'telephone_link',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_phone_2',
+    'label' => 'Phone 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'telephone',
+      'settings' => array(
+        'placeholder' => '',
+      ),
+      'type' => 'telephone_default',
+      'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-manufacturer-field_regional_contact_informati'.
+  $field_instances['node-manufacturer-field_regional_contact_informati'] = array(
+    'bundle' => 'manufacturer',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_regional_contact_informati',
+    'label' => 'Regional Contact Information',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 1,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => '',
+        'target' => 'default',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 1,
+      'entity_translation_sync' => FALSE,
+      'rel_remove' => 'default',
+      'title' => 'value',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => 'Regional Contact Information ',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 1,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'advanced_link',
+      'settings' => array(
+        'default_titles' => '',
+        'urls_allowed' => 'both',
+        'urls_filter' => '',
+        'urls_search' => 'start',
+      ),
+      'type' => 'advanced_link',
+      'weight' => 12,
     ),
   );
 
@@ -280,11 +734,11 @@ function manufacturers_and_products_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 6,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -311,6 +765,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
+      'entity_translation_sync' => FALSE,
       'rel_remove' => 'default',
       'title' => 'none',
       'title_label_use_field_label' => 0,
@@ -330,7 +785,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'urls_search' => 'contains',
       ),
       'type' => 'advanced_link',
-      'weight' => 38,
+      'weight' => 10,
     ),
   );
 
@@ -349,11 +804,20 @@ function manufacturers_and_products_field_default_field_instances() {
         'weight' => 6,
       ),
       'full' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 10,
+      ),
+      'search_results' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 150,
+        ),
+        'type' => 'text_summary_or_trimmed',
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -362,7 +826,7 @@ function manufacturers_and_products_field_default_field_instances() {
           'trim_length' => 600,
         ),
         'type' => 'text_summary_or_trimmed',
-        'weight' => 1,
+        'weight' => 2,
       ),
     ),
     'entity_type' => 'node',
@@ -371,6 +835,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'required' => FALSE,
     'settings' => array(
       'display_summary' => TRUE,
+      'entity_translation_sync' => FALSE,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
@@ -381,7 +846,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 1,
+      'weight' => 3,
     ),
   );
 
@@ -405,29 +870,36 @@ function manufacturers_and_products_field_default_field_instances() {
         'weight' => 4,
       ),
       'full' => array(
-        'label' => 'inline',
+        'label' => 'hidden',
         'module' => 'number',
         'settings' => array(
           'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
+          'prefix_suffix' => 1,
           'scale' => 2,
-          'thousand_separator' => '',
+          'thousand_separator' => ',',
         ),
         'type' => 'number_decimal',
-        'weight' => 6,
+        'weight' => 5,
+      ),
+      'search_results' => array(
+        'label' => 'inline',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 33,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 13,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_cost',
-    'label' => 'Cost',
+    'label' => 'Approximate Cost',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'max' => '',
       'min' => '',
       'prefix' => '',
@@ -439,7 +911,67 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 36,
+      'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_duplicate_nid'.
+  $field_instances['node-product-field_duplicate_nid'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'This is the node ID for a product that this record duplicates. It should only be updated programmatically as part of the duplicate identification process. ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_integer',
+        'weight' => 19,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 35,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 25,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_duplicate_nid',
+    'label' => 'Duplicate Node ID',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 13,
     ),
   );
 
@@ -465,20 +997,28 @@ function manufacturers_and_products_field_default_field_instances() {
           'token_display_unselected' => '',
         ),
         'type' => 'term_reference_tree',
-        'weight' => 9,
+        'weight' => 8,
+      ),
+      'search_results' => array(
+        'label' => 'inline',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 34,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 19,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_features',
     'label' => 'Features',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -490,10 +1030,12 @@ function manufacturers_and_products_field_default_field_instances() {
         'leaves_only' => 0,
         'max_depth' => '',
         'parent_term_id' => '',
+        'select_all_helper' => 0,
         'select_parents' => 1,
         'start_minimized' => 1,
         'token_display' => '',
         'track_list' => 1,
+        'unselect_children' => 1,
       ),
       'type' => 'term_reference_tree',
       'weight' => 10,
@@ -518,13 +1060,19 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 39,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 40,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 14,
       ),
     ),
     'entity_type' => 'node',
@@ -532,6 +1080,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'License',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -539,7 +1088,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 39,
+      'weight' => 10,
     ),
   );
 
@@ -554,25 +1103,33 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'inline',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
         'weight' => 3,
       ),
       'full' => array(
-        'label' => 'inline',
+        'label' => 'hidden',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => 1,
         ),
         'type' => 'entityreference_label',
-        'weight' => 2,
+        'weight' => 16,
+      ),
+      'search_results' => array(
+        'label' => 'inline',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 32,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'node',
@@ -580,6 +1137,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'Manufacturer Reference',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -591,7 +1149,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 35,
+      'weight' => 5,
     ),
   );
 
@@ -610,17 +1168,23 @@ function manufacturers_and_products_field_default_field_instances() {
         'weight' => 2,
       ),
       'full' => array(
-        'label' => 'inline',
+        'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 17,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 31,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 20,
       ),
     ),
     'entity_type' => 'node',
@@ -628,6 +1192,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'mfgr_name',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
@@ -661,13 +1226,19 @@ function manufacturers_and_products_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 2,
+      ),
+      'search_results' => array(
+        'label' => 'inline',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 30,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 15,
       ),
     ),
     'entity_type' => 'node',
@@ -675,6 +1246,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'Model',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
@@ -685,23 +1257,149 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 37,
+      'weight' => 1,
     ),
   );
 
-  // Exported field_instance: 'node-product-field_needs'.
-  $field_instances['node-product-field_needs'] = array(
+  // Exported field_instance: 'node-product-field_needs_work'.
+  $field_instances['node-product-field_needs_work'] = array(
+    'bundle' => 'product',
+    'default_value' => array(
+      0 => array(
+        'value' => 1,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Use this checkbox to flag content that needs additional work.   Here are shortcodes that can be used"
+<ul>
+<li>  DENISkill -- look at and delete (unless it should stay)</li> 
+<li> NEEDphoto -- Needs photos </li> 
+<li>  NEEDedit -- Text needs to be worked on</li>  
+<li> NEEDtext -- Does not have any text </li> 
+<li> NEEDrewrite -- Need drastic rewrite </li> 
+<li> NEEDcoding -- Needs coding or recoding of Tags</li> 
+<li> NEEDmerge -- two items for the same product. May only need to be marked as alternative -- but should be given the same UID (Comment field names other entry that is same as this one) </li> 
+<li> NEEDaction -- any other type of action that is needed on product entry - that doesnt have its own code above</li> 
+<li> NEEDmfgr -- no mfgr info</li> 
+<li> APPROVEphoto -- - photo needs editor review/approval </li> 
+<li> APPROVEsenior -- senior editor needs to look at this </li> 
+<li> zARCHIVE - used to mark comments that should be kept for some reason -- after the action was approved and it is closed.</li> 
+</ul>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 16,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 38,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 23,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_needs_work',
+    'label' => 'Needs Work?',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 0,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 35,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_notes'.
+  $field_instances['node-product-field_notes'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Include notes related to outstanding to-dos or ideas for future improvement here. ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 17,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 13,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 22,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_notes',
+    'label' => 'Curator\'s Notes',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 36,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_operating_system'.
+  $field_instances['node-product-field_operating_system'] = array(
     'bundle' => 'product',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'inline',
-        'module' => 'taxonomy',
+        'label' => 'above',
+        'module' => 'i18n_taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 7,
+        'type' => 'i18n_taxonomy_term_reference_link',
+        'weight' => 21,
       ),
       'full' => array(
         'label' => 'above',
@@ -711,38 +1409,49 @@ function manufacturers_and_products_field_default_field_instances() {
           'token_display_unselected' => '',
         ),
         'type' => 'term_reference_tree',
-        'weight' => 8,
+        'weight' => 9,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
-    'field_name' => 'field_needs',
-    'label' => 'Needs',
+    'field_name' => 'field_operating_system',
+    'label' => 'Operating System',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'term_reference_tree',
       'settings' => array(
+        'apply_chosen' => '',
         'cascading_selection' => 0,
         'filter_view' => '',
         'leaves_only' => 0,
         'max_depth' => '',
         'parent_term_id' => '',
-        'select_parents' => 1,
-        'start_minimized' => 1,
+        'select_all_helper' => 1,
+        'select_parents' => 0,
+        'start_minimized' => 0,
         'token_display' => '',
         'track_list' => 0,
+        'unselect_children' => 0,
       ),
       'type' => 'term_reference_tree',
-      'weight' => 9,
+      'weight' => 39,
     ),
   );
 
@@ -769,13 +1478,19 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 10,
+        'weight' => 40,
+      ),
+      'search_results' => array(
+        'label' => 'inline',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 35,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 16,
       ),
     ),
     'entity_type' => 'node',
@@ -783,6 +1498,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'Origin ID',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'max' => '',
       'min' => '',
       'prefix' => '',
@@ -794,23 +1510,23 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 34,
+      'weight' => 11,
     ),
   );
 
-  // Exported field_instance: 'node-product-field_product_categories'.
-  $field_instances['node-product-field_product_categories'] = array(
+  // Exported field_instance: 'node-product-field_product_categories1'.
+  $field_instances['node-product-field_product_categories1'] = array(
     'bundle' => 'product',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'inline',
+        'label' => 'above',
         'module' => 'taxonomy',
         'settings' => array(),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 5,
+        'weight' => 15,
       ),
       'full' => array(
         'label' => 'above',
@@ -822,18 +1538,26 @@ function manufacturers_and_products_field_default_field_instances() {
         'type' => 'term_reference_tree',
         'weight' => 7,
       ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 27,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
-    'field_name' => 'field_product_categories',
+    'field_name' => 'field_product_categories1',
     'label' => 'Product Categories',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -845,13 +1569,15 @@ function manufacturers_and_products_field_default_field_instances() {
         'leaves_only' => 0,
         'max_depth' => '',
         'parent_term_id' => '',
+        'select_all_helper' => 0,
         'select_parents' => 1,
         'start_minimized' => 1,
         'token_display' => '',
         'track_list' => 1,
+        'unselect_children' => 1,
       ),
       'type' => 'term_reference_tree',
-      'weight' => 32,
+      'weight' => 33,
     ),
   );
 
@@ -873,36 +1599,45 @@ function manufacturers_and_products_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'hidden',
-        'module' => 'image',
+        'module' => 'magnific_popup',
         'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
+          'gallery_style' => 'first_item',
+          'thumbnail_field' => 'field_product_image',
+          'thumbnail_style' => 'magnific_popup_thumbnail',
         ),
-        'type' => 'image',
+        'type' => 'magnific_popup_file_field_formatter',
         'weight' => 1,
+      ),
+      'search_results' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => 'content',
-          'image_style' => 'medium',
+          'image_style' => 'thumbnail',
         ),
         'type' => 'image',
-        'weight' => 0,
+        'weight' => 1,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_product_image',
     'label' => 'Product Image',
     'required' => 0,
     'settings' => array(
       'alt_field' => 1,
-      'default_image' => 0,
+      'default_image' => 8081,
+      'entity_translation_sync' => FALSE,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'filefield_paths' => array(
-        'active_updating' => 1,
+        'active_updating' => 0,
         'file_name' => array(
           'options' => array(
             'pathauto' => 1,
@@ -920,7 +1655,7 @@ function manufacturers_and_products_field_default_field_instances() {
           'value' => 'uploads/products/images/node/[node:nid]',
         ),
         'redirect' => 1,
-        'retroactive_update' => 1,
+        'retroactive_update' => 0,
       ),
       'filefield_paths_enabled' => 1,
       'max_filesize' => '',
@@ -937,10 +1672,10 @@ function manufacturers_and_products_field_default_field_instances() {
           'filefield_sources' => array(
             'attach' => 'attach',
             'clipboard' => 0,
-            'plupload' => 0,
+            'plupload' => 'plupload',
             'reference' => 0,
             'remote' => 'remote',
-            'upload' => 0,
+            'upload' => 'upload',
           ),
           'source_attach' => array(
             'absolute' => 0,
@@ -964,16 +1699,19 @@ function manufacturers_and_products_field_default_field_instances() {
           'icon_link' => 0,
           'image' => 0,
           'image_large' => 0,
+          'image_magnific_popup_thumbnail' => 0,
           'image_medium' => 0,
+          'image_search_results_thumbnail' => 0,
+          'image_shelf_thumbnail' => 0,
           'image_thumbnail' => 0,
           'link' => 0,
         ),
         'insert_width' => '',
         'preview_image_style' => 'medium',
-        'progress_indicator' => 'bar',
+        'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 2,
+      'weight' => 4,
     ),
   );
 
@@ -996,13 +1734,19 @@ function manufacturers_and_products_field_default_field_instances() {
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
-        'weight' => 4,
+        'weight' => 3,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 39,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'node',
@@ -1010,6 +1754,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'Product Type',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -1017,7 +1762,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 38,
+      'weight' => 9,
     ),
   );
 
@@ -1030,28 +1775,41 @@ function manufacturers_and_products_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'module' => 'title',
+        'settings' => array(
+          'title_class' => '',
+          'title_link' => '',
+          'title_style' => '',
+        ),
+        'type' => 'title_linked',
         'weight' => 11,
       ),
       'full' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 42,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 37,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 21,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_source',
     'label' => 'source',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
@@ -1062,49 +1820,129 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 8,
     ),
   );
 
   // Exported field_instance: 'node-product-field_status'.
   $field_instances['node-product-field_status'] = array(
     'bundle' => 'product',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
     'deleted' => 0,
-    'description' => 'The status field indicates which step in the workflow the product is currently at. ',
+    'description' => 'The status of this record. Refer to <a href="https://ul.gpii.net/api/docs/#statuses>unified listing statuses</a> for a more detailed description of this field. If set to "deleted," please do not publish or otherwise edit the record. 
+
+',
     'display' => array(
       'default' => array(
         'label' => 'above',
+        'module' => 'i18n_field',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'i18n_list_default',
         'weight' => 12,
       ),
       'full' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => 43,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 38,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 7,
+        'weight' => 22,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_status',
     'label' => 'status',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'options',
-      'settings' => array(),
+      'settings' => array(
+        'apply_chosen' => '',
+      ),
       'type' => 'options_select',
-      'weight' => 5,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_trouble_with'.
+  $field_instances['node-product-field_trouble_with'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'i18n_taxonomy',
+        'settings' => array(),
+        'type' => 'i18n_taxonomy_term_reference_link',
+        'weight' => 20,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 32,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 26,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_trouble_with',
+    'label' => 'Trouble With',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'term_reference_tree',
+      'settings' => array(
+        'cascading_selection' => 0,
+        'filter_view' => '',
+        'leaves_only' => 0,
+        'max_depth' => '',
+        'parent_term_id' => '',
+        'select_all_helper' => 0,
+        'select_parents' => 0,
+        'start_minimized' => 1,
+        'token_display' => '',
+        'track_list' => 0,
+        'unselect_children' => 1,
+      ),
+      'type' => 'term_reference_tree',
+      'weight' => 19,
     ),
   );
 
@@ -1117,21 +1955,32 @@ function manufacturers_and_products_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'module' => 'title',
+        'settings' => array(
+          'title_class' => '',
+          'title_link' => '',
+          'title_style' => '',
+        ),
+        'type' => 'title_linked',
         'weight' => 10,
       ),
       'full' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 11,
+        'weight' => 41,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 36,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 8,
+        'weight' => 23,
       ),
     ),
     'entity_type' => 'node',
@@ -1139,6 +1988,7 @@ function manufacturers_and_products_field_default_field_instances() {
     'label' => 'uid',
     'required' => 0,
     'settings' => array(
+      'entity_translation_sync' => FALSE,
       'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
@@ -1149,35 +1999,210 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 80,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-title_field'.
+  $field_instances['node-product-title_field'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'title',
+        'settings' => array(
+          'title_class' => '',
+          'title_link' => '',
+          'title_style' => '',
+        ),
+        'type' => 'title_linked',
+        'weight' => 18,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 36,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 24,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'title_field',
+    'label' => 'Title',
+    'required' => 1,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'hide_label' => array(
+        'entity' => 0,
+        'page' => 0,
+      ),
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'taxonomy_term-product_category1-description_field'.
+  $field_instances['taxonomy_term-product_category1-description_field'] = array(
+    'bundle' => 'product_category1',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 7,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'description_field',
+    'label' => 'Description',
+    'required' => FALSE,
+    'settings' => array(
+      'display_summary' => 0,
+      'entity_translation_sync' => FALSE,
+      'hide_label' => array(
+        'entity' => 0,
+        'page' => 0,
+      ),
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 20,
+        'summary_rows' => 5,
+      ),
+      'type' => 'text_textarea_with_summary',
+      'weight' => -5,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'taxonomy_term-product_category1-field_qasearch_question'.
+  $field_instances['taxonomy_term-product_category1-field_qasearch_question'] = array(
+    'bundle' => 'product_category1',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add a question for use in the Q&A search.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_qasearch_question',
+    'label' => 'Question',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 2,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 31,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Add a question for use in the Q&A search.');
   t('Address');
+  t('Approximate Cost');
   t('Body');
-  t('Cost');
+  t('Curator\'s Notes');
+  t('Description');
+  t('Duplicate Node ID');
+  t('Email');
+  t('Email 2');
   t('Fax');
+  t('Fax 2');
   t('Features');
+  t('Image');
+  t('Include notes related to outstanding to-dos or ideas for future improvement here. ');
   t('License');
   t('Manufacturer Reference');
   t('Manufacturer_ID from Denis\' system. ');
   t('Model');
-  t('Needs');
+  t('Needs Work?');
+  t('Online Contact Form');
+  t('Operating System');
   t('Origin ID');
-  t('Phone 1');
+  t('Phone');
   t('Phone 2');
   t('Product Categories');
   t('Product Image');
   t('Product Type');
+  t('Question');
   t('Reference to the manufacturer record for this product. ');
+  t('Regional Contact Information');
   t('Select the features that are applicable for this product. ');
   t('The name of the manufacturer.');
   t('The source of this record. If the record is provided by a source database, this field will be set to a unique string identifying the source. ');
-  t('The status field indicates which step in the workflow the product is currently at. ');
+  t('The status of this record. Refer to <a href="https://ul.gpii.net/api/docs/#statuses>unified listing statuses</a> for a more detailed description of this field. If set to "deleted," please do not publish or otherwise edit the record. 
+
+');
+  t('This is the node ID for a product that this record duplicates. It should only be updated programmatically as part of the duplicate identification process. ');
+  t('Title');
+  t('Trouble With');
   t('URL');
   t('Unified Listing Unique ID');
+  t('Use this checkbox to flag content that needs additional work.   Here are shortcodes that can be used"
+<ul>
+<li>  DENISkill -- look at and delete (unless it should stay)</li> 
+<li> NEEDphoto -- Needs photos </li> 
+<li>  NEEDedit -- Text needs to be worked on</li>  
+<li> NEEDtext -- Does not have any text </li> 
+<li> NEEDrewrite -- Need drastic rewrite </li> 
+<li> NEEDcoding -- Needs coding or recoding of Tags</li> 
+<li> NEEDmerge -- two items for the same product. May only need to be marked as alternative -- but should be given the same UID (Comment field names other entry that is same as this one) </li> 
+<li> NEEDaction -- any other type of action that is needed on product entry - that doesnt have its own code above</li> 
+<li> NEEDmfgr -- no mfgr info</li> 
+<li> APPROVEphoto -- - photo needs editor review/approval </li> 
+<li> APPROVEsenior -- senior editor needs to look at this </li> 
+<li> zARCHIVE - used to mark comments that should be kept for some reason -- after the action was approved and it is closed.</li> 
+</ul>');
+  t('Use this checkbox to flag content that needs additional work.   Here are shortcodes that can be used"
+<ul>
+<li> zARCHIVE - used to mark comments that should be kept for some reason -- after the action was approved and it is closed.</li> 
+</ul>');
   t('mfgr_name');
   t('source');
   t('status');
