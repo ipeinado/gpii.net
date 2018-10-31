@@ -16,7 +16,7 @@ function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) 
     // Find the content type of the node we are editing.
     $content_type = $form['#node']->type;
     if ($content_type == 'product') {
-        //drupal_set_message('<pre>' . print_r($form, true) . '</pre>');
+        //dpm($form);
         
 
         // Hide revision options when user does not have respective role or is not admin
@@ -24,6 +24,21 @@ function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) 
             $form['revision_information']['revision_operation']['#prefix'] = '<div style="display:none;">';
             $form['revision_information']['revision_operation']['#suffix'] = '</div>';
         } 
+
+        //dpm($form);
+
+        $form['revision_information']['#weight'] = -50;
+        $form['revision_information']['#attributes']['class'][] = 'selected';
+
+        // Move fields from "Needs Work" group to revision information tab so that
+        // everything an editor typically needs will be in one place. 
+
+        $form['revision_information']['field_needs_work']= $form['field_needs_work'];
+        $form['revision_information']['field_notes'] = $form['field_notes'];
+
+        unset($form['field_needs_work']);
+        unset($form['field_notes']);
+        unset($form['#groups']['group_editor_notes']);
 
         $form['revision_information']['category'] = [
             '#title' => t('Revision Category'),
