@@ -1138,6 +1138,13 @@ a.tree-label {
   .view-editorial-progress-status-and-summary .views-field-field-status-revision-id .field-content {
     text-transform: uppercase; }
 
+.view-editorial-status-text-alternatives-summary {
+  margin: 0 0.5rem 1rem; }
+  .view-editorial-status-text-alternatives-summary table {
+    border: 1px solid #cccccc; }
+    .view-editorial-status-text-alternatives-summary table th {
+      padding-bottom: 0.3rem; }
+
 .view-editorial-progress-todo {
   margin: 0 0.6rem 1rem; }
   .view-editorial-progress-todo h3 {
