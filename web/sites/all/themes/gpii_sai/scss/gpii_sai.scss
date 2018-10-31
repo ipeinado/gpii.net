@@ -1580,7 +1580,7 @@ a.tree-label {
 }
 
 .view-editorial-progress-status-and-summary {
-  margin: 0 0.5rem 1rem;
+  margin: 0 0.5rem 1rem;  
   h3 {
     font-size: 1.2em;
   }
@@ -1589,6 +1589,16 @@ a.tree-label {
       text-transform: uppercase; 
     }
   } 
+}
+
+#block-views-node-flag-report-block .view-editorial-status-text-alternatives-summary {
+  margin: 0 0.5rem 1rem;  
+  table {
+    border: 1px solid #cccccc;
+    th {
+      padding-bottom: 0.3rem;
+    }
+  }
 }
 
 .view-editorial-progress-todo {
