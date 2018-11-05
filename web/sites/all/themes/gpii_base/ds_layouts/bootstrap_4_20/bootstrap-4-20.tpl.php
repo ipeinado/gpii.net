@@ -17,7 +17,6 @@
 
 
 <<?php print $layout_wrapper; print $layout_attributes; ?> class="<?php print $classes; ?>">
-
 <?php if (isset($title_suffix['contextual_links'])): ?>
   <?php print render($title_suffix['contextual_links']); ?>
 <?php endif; ?>
@@ -29,11 +28,13 @@
     </<?php print $left_wrapper; ?>>
   <?php endif; ?>
   <?php if ($right): ?>
-  <<?php print $right_wrapper; ?> class="<?php if (empty($left)): ?>col-sm-24 <?php else: ?>col-sm-20 <?php endif; ?><?php print $right_classes; ?> <?php endif; ?><?php print $right_classes; ?>">
+  <<?php print $right_wrapper; ?> class="<?php if (empty($left)): ?>col-sm-24 <?php else: ?>col-sm-20 <?php endif; ?><?php print $right_classes; ?>">
   <?php print $right; ?>
   </<?php print $right_wrapper; ?>>
   </div>
   <?php endif; ?>
+  <?php endif; ?>
+  
 </<?php print $layout_wrapper ?>>
 
 
