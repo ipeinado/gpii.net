@@ -1157,6 +1157,9 @@ a.tree-label {
     span {
       font-size: 2rem;
     }
+    a {
+      text-decoration: none;
+    }
   }
   button.reset {
     padding: 0.5rem 4rem;
@@ -1202,7 +1205,7 @@ a.tree-label {
         content: " »";
       }
     }
-    a {
+    a { 
       font-size: 1.1rem;
       padding: $padding-base-vertical + 1px $padding-base-horizontal + 3px;
       text-decoration: none;
@@ -1608,13 +1611,38 @@ a.tree-label {
   }
 }
 
-#field-task-values {
+#field-fc-task-values {
   .field-multiple-drag {
     a.tabledrag-handle, .handle {
       text-decoration: none;
-      height: auto;
-      width: auto;
+      height: auto; 
+      width: auto; 
     }
+  }
+  td {
+    border-top: none; 
+  }
+  td:not(.field-multiple-drag) {
+    display: flex; 
+    align-items: center; 
+    button {
+      margin-left: 1.5rem;
+      height: 3em;
+    }
+  }
+}
+
+.views-field-field-fc-task {
+  ul {
+    li {
+      margin: 0;
+      padding-bottom: 1rem;
+      div.field-collection-item-field-fc-task:before, div {
+        display: inline;
+        content: unset;
+      }
+    }
+
   }
 }
 .field-name-field-notes {
@@ -2397,18 +2425,21 @@ div.discontinued {
   margin: 2rem 0;
   clear: both;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: 4px; 
 }
-
+ 
 .callout-primary {
   border-left-color: $color-gpii-sai-primary;
 }
 
 
-.tree-troubles {
+.tree_troubles {
   padding-left: 1rem; 
+  ul.tree-classic {
+    margin-top: -0.5rem;
+  }
   h3 {
-    margin:0 0 0 -1rem;
+    margin:0.5rem 0 0 -1rem;
     display: inline-block; 
     font-size: 1.1em;
     font-weight: bold;
