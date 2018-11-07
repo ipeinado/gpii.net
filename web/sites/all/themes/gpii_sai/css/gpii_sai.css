@@ -850,6 +850,8 @@ a.tree-label {
   font-size: 2rem; }
   #saa-app h2.results span {
     font-size: 2rem; }
+  #saa-app h2.results a {
+    text-decoration: none; }
 
 #saa-app button.reset {
   padding: 0.5rem 4rem;
@@ -1150,10 +1152,33 @@ a.tree-label {
   .view-editorial-progress-todo h3 {
     font-size: 1.2em; }
 
-#field-task-values .field-multiple-drag a.tabledrag-handle, #field-task-values .field-multiple-drag .handle {
+#field-fc-task-values .field-multiple-drag a.tabledrag-handle, #field-fc-task-values .field-multiple-drag .handle {
   text-decoration: none;
   height: auto;
   width: auto; }
+
+#field-fc-task-values td {
+  border-top: none; }
+
+#field-fc-task-values td:not(.field-multiple-drag) {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  #field-fc-task-values td:not(.field-multiple-drag) button {
+    margin-left: 1.5rem;
+    height: 3em; }
+
+.views-field-field-fc-task ul li {
+  margin: 0;
+  padding-bottom: 1rem; }
+  .views-field-field-fc-task ul li div.field-collection-item-field-fc-task:before, .views-field-field-fc-task ul li div {
+    display: inline;
+    content: unset; }
 
 .field-name-field-notes {
   background: #FFFDD9;
@@ -1803,10 +1828,12 @@ div.discontinued {
 .callout-primary {
   border-left-color: #A72534; }
 
-.tree-troubles {
+.tree_troubles {
   padding-left: 1rem; }
-  .tree-troubles h3 {
-    margin: 0 0 0 -1rem;
+  .tree_troubles ul.tree-classic {
+    margin-top: -0.5rem; }
+  .tree_troubles h3 {
+    margin: 0.5rem 0 0 -1rem;
     display: inline-block;
     font-size: 1.1em;
     font-weight: bold; }
