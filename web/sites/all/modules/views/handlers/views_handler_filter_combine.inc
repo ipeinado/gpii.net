@@ -119,7 +119,7 @@ class views_handler_filter_combine extends views_handler_filter_string {
       $words = $phrase ? array($words) : preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);
       $placeholder = $this->placeholder();
       foreach ($words as $word) {
-        $where->where($field . " LIKE $placeholder", array($placeholder => '%' . db_like(trim($word, " ,!?")) . '%'));
+        $where->where($field . " REGEXP $placeholder", array($placeholder => '([[:<:]]|^)'. trim($word, " ,!?") . '([[:>:]]|$)'));
       }
     }
 
