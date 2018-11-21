@@ -15,7 +15,7 @@ function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) 
     // Find the content type of the node we are editing.
     $content_type = $form['#node']->type;
     if ($content_type == 'product') {
-
+        dpm($form);
         /** 
          * Hide revision options when user does not have respective role or is not admin
          * @@ Should probably set defaults based on role and disable the form controls instead of hide. 
@@ -142,3 +142,14 @@ function revision_category_views_api() {
     );
 }
 
+/**
+ * Add some JS to cause the summary field to be shown by default when new content 
+ * is added and when content that does not already have a summary is edited. 
+ */
+
+function revision_category_init() {
+    drupal_add_js("jQuery().ready(function(){
+       jQuery('.link-edit-summary').trigger('click');
+       });",'inline');
+   }
+   
