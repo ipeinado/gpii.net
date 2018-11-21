@@ -49,7 +49,7 @@ function manufacturers_and_products_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Needs Work',
-    'weight' => '16',
+    'weight' => '20',
     'children' => array(
       0 => 'field_needs_work',
       1 => 'field_notes',
@@ -187,7 +187,7 @@ function manufacturers_and_products_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Taxonomies',
-    'weight' => '17',
+    'weight' => '22',
     'children' => array(
       0 => 'group_product_category',
       1 => 'group_features',

@@ -794,7 +794,23 @@ function manufacturers_and_products_field_default_field_instances() {
     'bundle' => 'product',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => '<p>1-3 sentence brief description that captures essence of the product(s) - in plain text.</p>
+<p>Then, if listing different versions:</p>
+<ol>
+  <li>Type: <strong><em>[ Curator, insert name of version/model ]</em></strong> as H2.</li>
+  <li>And provide a brief description that captures essence of that version. </li>
+</ol>
+<p>If some, but not all versions are discontinued:</p>
+<ul>
+  <li>Set the status to ACTIVE.</li>
+  <li>After the version/model name (Step 1), paste or type one of the following: 
+      <ul>
+        <li>This product has been discontinued and is no longer supported and serviced by the manufacturer. </li>
+        <li>This product has been discontinued. (choose this option if unsure)</li>
+       </ul>
+    </li>
+</ul>
+',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -829,20 +845,23 @@ function manufacturers_and_products_field_default_field_instances() {
         'weight' => 2,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'body',
-    'label' => 'Body',
-    'required' => FALSE,
+    'label' => 'Overview',
+    'required' => 0,
     'settings' => array(
-      'display_summary' => TRUE,
+      'description_display' => 'before',
+      'display_summary' => 1,
       'entity_translation_sync' => FALSE,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 20,
+        'rows' => 15,
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
@@ -911,7 +930,303 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_desc_main_features'.
+  $field_instances['node-product-field_desc_main_features'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '<p>List main features as bullets.</p>
+<p>If listing different versions:</p>
+<ul>
+  <li>Type: “These features are common to all versions:”  as H3
+    <ul>
+      <li>Under that title list all the features common to all versions.   </li>
+    </ul>
+  </li>
+  <li>Then, for each additional version:
+    <ul>
+      <li>Type: <strong><em>[ curator, insert name of version/model ] </em></strong> includes these additional features:” as H3</li>
+      <li>And provide a bulleted list of features unique to that version</li>
+    </ul>
+  </li>
+ 
+
+',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 22,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 11,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_desc_main_features',
+    'label' => 'Main Features',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'before',
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 8,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_desc_more_info'.
+  $field_instances['node-product-field_desc_more_info'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '<p>In the field below, paste the appropriate text from below and fill in the URL to indicate where more product information, including purchase information, can be found.</p>
+    <ul>
+      <li>Default:
+        <ul>
+          <li>See Manufacturer’s website. -- Curator, make this a link to the product on the manufacturer\'s website.
+          </li>
+        </ul>
+      </li>
+      <li>For Generic Products:
+        <ul>
+          <li>This is a generic entry. This type of product is available from many vendors. Type or paste the following search phrase into your preferred web browser:  "<strong><em>[ curator, insert proper search string> ]</em></strong>". 
+
+          </li>
+        </ul>
+      </li>
+      <li>For APPS: (create links to products in appropriate store)
+        <ul>
+          <li>See product in Apple\'s App Store.</li>
+          <li>See product in Google Play.</li>
+          <li>See product in Microsoft\'s Store.</li>
+        </ul>
+      </li>
+      <li>For Non-APPS sold exclusively by distributors: </li>
+        <ul>
+          <li>See Distributor’s website. (This option is only if the manufacturer directs to ONE distributor website. Curator, make this a link to the product on the distributor’s website.)</li>
+          <li>See Manufacturer’s website. (Curator, make this a link to the product on the list of distributors on the manufacturer’s website, if they have such a list.)
+          </li>
+          <li>This product is sold by third party vendors. Try searching the product by name on the internet. (Use this option if the manufacturer does not list and/or provide information about the product and does not direct to a distributor’s website.)
+          </li>
+        </ul>
+      <li>For Open Source:</li>
+        <ul>
+          
+          <li>This product is a freeware software available for free download off of the internet from <strong><em>[ curator, insert name of site where it is available and make it a link ]</em></strong>  or search for:  "open source freeware <strong><em>[ curator, insert name of product ]</em></strong>"
+          </li>
+          <li>Be sure to test both approaches to be sure they result in finding the product.</li>
+        </ul>
+      <li>For Discontinued and no longer available from the manufacturer:</li>
+        <ul>
+          <li>This product is discontinued by the manufacturer, but it may still be available for purchase from third party vendors. Try searching the product by name on the internet. Be careful as the manufacturer may no longer support it - or support it for long.
+          </li>
+          <li>A similar product is available from the manufacturer. See the entry for <strong><em>[ curator, insert name of product ]</em></strong>.  -- Add if a replacement or newer and very similar product is available from the manufacturer and make this a link to the UL product entry.
+          </li>
+        </ul>
+      <li>For Multi-Products:
+        <ul>
+          <li><strong><em>[ curator, insert name of product, version 1 ]</em></strong>: See Manufacturer\'s website. -- Curator, paste the appropriate text from the list above and follow the corresponding instructions.
+          </li>
+          <li><strong><em>[ curator, insert name of product, version 2 ]</em></strong>: See Manufacturer\'s website. -- Curator, list each of the product versions as a separate bullet. 
+          </li>
+        </ul>
+      </li>
+    </ul>
+    ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 22,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 14,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_desc_more_info',
+    'label' => 'More Information',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'before',
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 8,
+      ),
+      'type' => 'text_textarea',
       'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_desc_options'.
+  $field_instances['node-product-field_desc_options'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '<p>List main features as bullets.</p>
+  <p>Bulleted list of primary specifications. For multiple versions, use the same strategy as used for Main Features to list common options and those that apply only to specific versions. 
+  </p>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 22,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 13,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_desc_options',
+    'label' => 'Options & Accessories',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'before',
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 8,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_desc_primary_specs'.
+  $field_instances['node-product-field_desc_primary_specs'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '<p>Bulleted list of primary specifications. For multiple versions, use the same strategy as used for Main Features to list common options and those that apply only to specific versions. 
+  </p>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 22,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_desc_primary_specs',
+    'label' => 'Primary Specifications',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'before',
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 8,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 5,
     ),
   );
 
@@ -971,7 +1286,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 13,
+      'weight' => 17,
     ),
   );
 
@@ -1088,7 +1403,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 10,
+      'weight' => 14,
     ),
   );
 
@@ -1149,7 +1464,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 5,
+      'weight' => 9,
     ),
   );
 
@@ -1203,7 +1518,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 10,
     ),
   );
 
@@ -1509,7 +1824,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 11,
+      'weight' => 15,
     ),
   );
 
@@ -1710,7 +2025,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 4,
+      'weight' => 8,
     ),
   );
 
@@ -1761,7 +2076,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 9,
+      'weight' => 13,
     ),
   );
 
@@ -1819,7 +2134,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 12,
     ),
   );
 
@@ -1941,7 +2256,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'unselect_children' => 1,
       ),
       'type' => 'term_reference_tree',
-      'weight' => 19,
+      'weight' => 21,
     ),
   );
 
@@ -1998,7 +2313,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 80,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 16,
     ),
   );
 
@@ -2142,6 +2457,99 @@ function manufacturers_and_products_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('<p>1-3 sentence brief description that captures essence of the product(s) - in plain text.</p>
+<p>Then, if listing different versions:</p>
+<ol>
+  <li>Type: <strong><em>[ Curator, insert name of version/model ]</em></strong> as H2.</li>
+  <li>And provide a brief description that captures essence of that version. </li>
+</ol>
+<p>If some, but not all versions are discontinued:</p>
+<ul>
+  <li>Set the status to ACTIVE.</li>
+  <li>After the version/model name (Step 1), paste or type one of the following: 
+      <ul>
+        <li>This product has been discontinued and is no longer supported and serviced by the manufacturer. </li>
+        <li>This product has been discontinued. (choose this option if unsure)</li>
+       </ul>
+    </li>
+</ul>
+');
+  t('<p>Bulleted list of primary specifications. For multiple versions, use the same strategy as used for Main Features to list common options and those that apply only to specific versions. 
+  </p>');
+  t('<p>In the field below, paste the appropriate text from below and fill in the URL to indicate where more product information, including purchase information, can be found.</p>
+    <ul>
+      <li>Default:
+        <ul>
+          <li>See Manufacturer’s website. -- Curator, make this a link to the product on the manufacturer\'s website.
+          </li>
+        </ul>
+      </li>
+      <li>For Generic Products:
+        <ul>
+          <li>This is a generic entry. This type of product is available from many vendors. Type or paste the following search phrase into your preferred web browser:  "<strong><em>[ curator, insert proper search string> ]</em></strong>". 
+
+          </li>
+        </ul>
+      </li>
+      <li>For APPS: (create links to products in appropriate store)
+        <ul>
+          <li>See product in Apple\'s App Store.</li>
+          <li>See product in Google Play.</li>
+          <li>See product in Microsoft\'s Store.</li>
+        </ul>
+      </li>
+      <li>For Non-APPS sold exclusively by distributors: </li>
+        <ul>
+          <li>See Distributor’s website. (This option is only if the manufacturer directs to ONE distributor website. Curator, make this a link to the product on the distributor’s website.)</li>
+          <li>See Manufacturer’s website. (Curator, make this a link to the product on the list of distributors on the manufacturer’s website, if they have such a list.)
+          </li>
+          <li>This product is sold by third party vendors. Try searching the product by name on the internet. (Use this option if the manufacturer does not list and/or provide information about the product and does not direct to a distributor’s website.)
+          </li>
+        </ul>
+      <li>For Open Source:</li>
+        <ul>
+          
+          <li>This product is a freeware software available for free download off of the internet from <strong><em>[ curator, insert name of site where it is available and make it a link ]</em></strong>  or search for:  "open source freeware <strong><em>[ curator, insert name of product ]</em></strong>"
+          </li>
+          <li>Be sure to test both approaches to be sure they result in finding the product.</li>
+        </ul>
+      <li>For Discontinued and no longer available from the manufacturer:</li>
+        <ul>
+          <li>This product is discontinued by the manufacturer, but it may still be available for purchase from third party vendors. Try searching the product by name on the internet. Be careful as the manufacturer may no longer support it - or support it for long.
+          </li>
+          <li>A similar product is available from the manufacturer. See the entry for <strong><em>[ curator, insert name of product ]</em></strong>.  -- Add if a replacement or newer and very similar product is available from the manufacturer and make this a link to the UL product entry.
+          </li>
+        </ul>
+      <li>For Multi-Products:
+        <ul>
+          <li><strong><em>[ curator, insert name of product, version 1 ]</em></strong>: See Manufacturer\'s website. -- Curator, paste the appropriate text from the list above and follow the corresponding instructions.
+          </li>
+          <li><strong><em>[ curator, insert name of product, version 2 ]</em></strong>: See Manufacturer\'s website. -- Curator, list each of the product versions as a separate bullet. 
+          </li>
+        </ul>
+      </li>
+    </ul>
+    ');
+  t('<p>List main features as bullets.</p>
+<p>If listing different versions:</p>
+<ul>
+  <li>Type: “These features are common to all versions:”  as H3
+    <ul>
+      <li>Under that title list all the features common to all versions.   </li>
+    </ul>
+  </li>
+  <li>Then, for each additional version:
+    <ul>
+      <li>Type: <strong><em>[ curator, insert name of version/model ] </em></strong> includes these additional features:” as H3</li>
+      <li>And provide a bulleted list of features unique to that version</li>
+    </ul>
+  </li>
+ 
+
+');
+  t('<p>List main features as bullets.</p>
+  <p>Bulleted list of primary specifications. For multiple versions, use the same strategy as used for Main Features to list common options and those that apply only to specific versions. 
+  </p>');
   t('Add a question for use in the Q&A search.');
   t('Address');
   t('Approximate Cost');
@@ -2157,15 +2565,20 @@ function manufacturers_and_products_field_default_field_instances() {
   t('Image');
   t('Include notes related to outstanding to-dos or ideas for future improvement here. ');
   t('License');
+  t('Main Features');
   t('Manufacturer Reference');
   t('Manufacturer_ID from Denis\' system. ');
   t('Model');
+  t('More Information');
   t('Needs Work?');
   t('Online Contact Form');
   t('Operating System');
+  t('Options & Accessories');
   t('Origin ID');
+  t('Overview');
   t('Phone');
   t('Phone 2');
+  t('Primary Specifications');
   t('Product Categories');
   t('Product Image');
   t('Product Type');
