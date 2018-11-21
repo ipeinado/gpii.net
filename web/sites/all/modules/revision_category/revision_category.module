@@ -2,7 +2,7 @@
 
 // actions for the categories are defined in a switch statement below
 // if categories are added here be sure to define an action when saved
-function get_categories() {
+function revision_category_get_categories() {
     return [
         'tax_only' => t('Taxonomy Only'),
         'minor' => t('Minor Edit'),
@@ -15,7 +15,7 @@ function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) 
     // Find the content type of the node we are editing.
     $content_type = $form['#node']->type;
     if ($content_type == 'product') {
-        dpm($form);
+        //dpm($form);
         /** 
          * Hide revision options when user does not have respective role or is not admin
          * @@ Should probably set defaults based on role and disable the form controls instead of hide. 
@@ -47,24 +47,28 @@ function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) 
             '#title' => t('Revision Category'),
             '#type' => 'select',
             '#description' => 'Select the category of edit that you made.',
-            '#options' => get_categories(),
+            '#options' => revision_category_get_categories(),
             '#required' => true,
             '#weight' => -10
         ];
 
-        $form['revision_information']['send_notification'] = [
-            '#title' => t('Send Revision Notification'),
-            '#type' => 'checkbox',
-            '#description' => 'Send a notification to the following recipients'
-        ];
-        $form['revision_information']['notification_recipients'] = [
-            '#title' => t('Revision Notification '),
-            '#type' => 'textfield',
-            '#description' => 'Type the username of the user that you would like to notify.',
-            '#size' => 30,
-            '#maxlength' => 60,
-            '#autocomplete_path' => 'user/autocomplete'
-        ];
+        // BBC: Comment out notification features for initial release of this module
+        // $form['revision_information']['send_notification'] = [
+        //     '#title' => t('Send Revision Notification'),
+        //     '#type' => 'checkbox',
+        //     '#description' => 'Send a notification to the following recipients'
+        // ];
+        // $form['revision_information']['notification_recipients'] = [
+        //     '#title' => t('Revision Notification '),
+        //     '#type' => 'textfield',
+        //     '#description' => 'Type the username of the user that you would like to notify.',
+        //     '#size' => 30,
+        //     '#maxlength' => 60,
+        //     '#autocomplete_path' => 'user/autocomplete'
+        // ];
+
+        $form['body']['und'][0]['summary']['#description'] = '1-2 sentence summary of product(s), typically the first 1-2 sentences of the overview description. Text in this field ONLY displays in search results and taxonomy (category) pages.';
+        $form['body']['und'][0]['summary']['#description_display'] = 'before';
     }
 }
 
@@ -82,21 +86,21 @@ function revision_category_node_presave($node) {
         
         switch ($node->category) {
             case 'minor':
-                drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                //drupal_set_message('Category "' . $node->category . '" requires a notification.');
                 if (!empty($node->revision_operation)) {
                     $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
                 }
                 break;
             
             case 'moderate':
-                drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                //drupal_set_message('Category "' . $node->category . '" requires a notification.');
                 if (!empty($node->revision_operation)) {
                     $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
                 }
                 break;
             
             case 'substantial':
-                drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                //drupal_set_message('Category "' . $node->category . '" requires a notification.');
                 if (!empty($node->revision_operation)) {
                     $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
                 }
@@ -104,23 +108,23 @@ function revision_category_node_presave($node) {
             
             case 'tax_only':
                 if ($node->is_current) {
-                    drupal_set_message('Category "' . $node->category . '" requires no action. Edit will automatically be published since this product was already published.');
+                    //drupal_set_message('Category "' . $node->category . '" requires no action. Edit will automatically be published since this product was already published.');
                     if (!empty($node->revision_operation)) {
                         $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : (($node->send_notification) ? 2 : 0) ;
                     }
                 }
                 else {
-                    drupal_set_message('Category "' . $node->category . '" requires no action.');
-                    // load current published and set to new Taxonomy
-                    $currentPublished = node_load($node->nid);
+                    // drupal_set_message('Category "' . $node->category . '" requires no action.');
+                    // // load current published and set to new Taxonomy
+                    // $currentPublished = node_load($node->nid);
 
-                    $currentPublished->field_product_category = $node->field_product_category;
+                    // $currentPublished->field_product_category = $node->field_product_category;
 
-                    node_save($currentPublished);
+                    // node_save($currentPublished);
 
-                    if (!empty($node->revision_operation)) {
-                        $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
-                    }
+                    // if (!empty($node->revision_operation)) {
+                    //     $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                    // }
                 }
                 break;
             
