@@ -38,3 +38,4 @@ web/sites/vendor/composer/ClassLoader.php
 web/sites/vendor/composer/LICENSE
 web/sites/vendor/composer/autoload_real.php
 web/sites/vendor/composer/installed.json
+.vscode/last.sql

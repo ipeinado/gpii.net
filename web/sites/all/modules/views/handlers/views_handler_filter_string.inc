@@ -277,7 +277,7 @@ class views_handler_filter_string extends views_handler_filter {
       $words = $phrase ? array($words) : preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);
       foreach ($words as $word) {
         $placeholder = $this->placeholder();
-        $where->condition($field, '%' . db_like(trim($word, " ,!?")) . '%', 'LIKE');
+        $where->condition($field, '([[:<:]]|^)'. trim($word, " ,!?") . '([[:>:]]|$)', 'REGEXP');
       }
     }
 
