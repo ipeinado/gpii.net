@@ -3,7 +3,7 @@
 # exit 0
 # cd <profile/version controlled directory>
 
-DRUSH_PATH="/home/bcaldwell/code/gpii.net/web/vendor/bin/drush"
+DRUSH_PATH="drush"
 
 echo "Starting..."
 echo "Grabbing latest info from Git..."
@@ -11,7 +11,6 @@ echo "Grabbing latest info from Git..."
 cd ~/code/gpii.net/web
 
 git pull
-
 
 # switch to the right starting directory
 cd ~/code/gpii.net/web/sites/saa.gpii.net
@@ -26,7 +25,7 @@ echo "syncing database from @saaprod"
 $DRUSH_PATH @saaprod sql-dump --result-file=/var/www/clients/client4/web5/tmp/saaprod-db.sql
 
 #rsync the file created above so that it is available locally
-rsync -e 'ssh ' -akz --remove-source-files gpiiweb@192.168.123.79:/var/www/clients/client4/web5/tmp/saaprod-db.sql /home/bcaldwell/code/gpii.net/backups/saaprod-db.sql
+rsync -e 'ssh ' -akz --remove-source-files gpiiweb@192.168.123.79:/var/www/clients/client4/web5/tmp/saaprod-db.sql /home/ben/code/gpii.net/backups/saaprod-db.sql
 
 # # drop the current DB and import the new
 lando db-import ../../../backups/saaprod-db.sql --host database2
@@ -34,7 +33,7 @@ lando db-import ../../../backups/saaprod-db.sql --host database2
 echo "Database successfully imported!"
 
 # # disable CSS/JS aggregation
-lando drush -y config-set system.performance css.preprocess 0
+lando drush -y vset system.performance css.preprocess 0
 
 # # Turning on maint. mode.
 # lando drush --yes vset maintenance_mode 1

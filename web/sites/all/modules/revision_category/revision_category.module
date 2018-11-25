@@ -1,0 +1,159 @@
+<?php
+
+// actions for the categories are defined in a switch statement below
+// if categories are added here be sure to define an action when saved
+function revision_category_get_categories() {
+    return [
+        'tax_only' => t('Taxonomy Only'),
+        'minor' => t('Minor Edit'),
+        'moderate' => t('Moderate Edit'),
+        'substantial' => t('Substantial Edit')
+    ];
+}
+
+function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) {
+    // Find the content type of the node we are editing.
+    $content_type = $form['#node']->type;
+    if ($content_type == 'product') {
+        //dpm($form);
+        /** 
+         * Hide revision options when user does not have respective role or is not admin
+         * @@ Should probably set defaults based on role and disable the form controls instead of hide. 
+         * Need to test permissions here for different roles
+         */
+        
+        if (user_has_role(5) != 1 && user_has_role(3) != 1) {
+            $form['revision_information']['revision_operation']['#prefix'] = '<div style="display:none;">';
+            $form['revision_information']['revision_operation']['#suffix'] = '</div>';
+        } 
+
+ 
+        $form['revision_information']['#weight'] = -50;
+        $form['revision_information']['#attributes']['class'][] = 'selected';
+        $form['revision_information']['log']['#required'] = true;
+        $form['revision_information']['log']['#description'] = 'Provide an explanation of the change(s) you are making. This will help other authors and reviewers understand your motivations and is used to record completed tasks related to the record.';
+
+        // Move fields from "Needs Work" group to revision information tab so that
+        // everything an editor typically needs will be in one place. 
+
+        $form['revision_information']['field_notes'] = $form['field_notes'];
+
+        unset($form['field_needs_work']);
+        unset($form['field_notes']);
+        unset($form['#groups']['group_editor_notes']);
+        unset($form['#fieldgroups']['group_editor_notes']);
+
+        $form['revision_information']['category'] = [
+            '#title' => t('Revision Category'),
+            '#type' => 'select',
+            '#description' => 'Select the category of edit that you made.',
+            '#options' => revision_category_get_categories(),
+            '#required' => true,
+            '#weight' => -10
+        ];
+
+        // BBC: Comment out notification features for initial release of this module
+        // $form['revision_information']['send_notification'] = [
+        //     '#title' => t('Send Revision Notification'),
+        //     '#type' => 'checkbox',
+        //     '#description' => 'Send a notification to the following recipients'
+        // ];
+        // $form['revision_information']['notification_recipients'] = [
+        //     '#title' => t('Revision Notification '),
+        //     '#type' => 'textfield',
+        //     '#description' => 'Type the username of the user that you would like to notify.',
+        //     '#size' => 30,
+        //     '#maxlength' => 60,
+        //     '#autocomplete_path' => 'user/autocomplete'
+        // ];
+
+        $form['body']['und'][0]['summary']['#description'] = '1-2 sentence summary of product(s), typically the first 1-2 sentences of the overview description. Text in this field ONLY displays in search results and taxonomy (category) pages.';
+        $form['body']['und'][0]['summary']['#description_display'] = 'before';
+    }
+}
+
+
+function revision_category_node_presave($node) {
+    
+
+    if ($node->type == 'product') {
+        
+        $manualSelectEnabled = (user_has_role(5) || user_has_role(3)) ? true : false ;
+        
+        if (!empty($node->send_notification) && $node->send_notification) {
+            drupal_set_message('Notification will be sent to ' . $node->notification_recipients . ' (once notifications are enabled)');
+        }
+        
+        switch ($node->category) {
+            case 'minor':
+                //drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                if (!empty($node->revision_operation)) {
+                    $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                }
+                break;
+            
+            case 'moderate':
+                //drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                if (!empty($node->revision_operation)) {
+                    $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                }
+                break;
+            
+            case 'substantial':
+                //drupal_set_message('Category "' . $node->category . '" requires a notification.');
+                if (!empty($node->revision_operation)) {
+                    $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                }
+                break;
+            
+            case 'tax_only':
+                if ($node->is_current) {
+                    //drupal_set_message('Category "' . $node->category . '" requires no action. Edit will automatically be published since this product was already published.');
+                    if (!empty($node->revision_operation)) {
+                        $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : (($node->send_notification) ? 2 : 0) ;
+                    }
+                }
+                else {
+                    // drupal_set_message('Category "' . $node->category . '" requires no action.');
+                    // // load current published and set to new Taxonomy
+                    // $currentPublished = node_load($node->nid);
+
+                    // $currentPublished->field_product_category = $node->field_product_category;
+
+                    // node_save($currentPublished);
+
+                    // if (!empty($node->revision_operation)) {
+                    //     $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                    // }
+                }
+                break;
+            
+            default: // all categories that do nothing on save
+            
+                break;
+        }
+    }
+    
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function revision_category_views_api() {
+    return array(
+      'api' => 3,
+      'path' => drupal_get_path('module', 'revision_category') . '/views',
+    );
+}
+
+/**
+ * Add some JS to cause the summary field to be shown by default when new content 
+ * is added and when content that does not already have a summary is edited. 
+ */
+
+function revision_category_init() {
+    drupal_add_js("jQuery().ready(function(){
+       jQuery('.link-edit-summary').trigger('click');
+       });",'inline');
+   }
+   

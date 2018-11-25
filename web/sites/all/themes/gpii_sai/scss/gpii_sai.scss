@@ -1093,7 +1093,7 @@ body.node-type-product {
   font-size: 12px;
   cursor: pointer;
 }
-.search-group input[name="search"]:not(:valid) ~ button {
+.search-group input[name="search"]:not(:valid) ~ button { 
   display: none;
 }
 
@@ -1629,6 +1629,20 @@ a.tree-label {
       margin-left: 1.5rem;
       height: 3em;
     }
+  }
+}
+
+.views-field-field-fc-task {
+  ul {
+    li {
+      margin: 0;
+      padding-bottom: 1rem;
+      div.field-collection-item-field-fc-task:before, div {
+        display: inline;
+        content: unset;
+      }
+    }
+
   }
 }
 
@@ -2445,3 +2459,53 @@ div.discontinued {
     font-weight: bold;
   }
 }
+
+/**
+ * Assigned Tasks View
+ */
+
+.view-assigned-tasks.view-display-id-page_1 {
+
+
+
+  .views-exposed-widgets {
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: 25% 25% 25% 25% ;
+    background-color: #fff;
+    color: #444;
+  }
+  #edit-combine-wrapper {
+    grid-column: 1 / span 2;
+    grid-row: row;
+  }
+  #edit-uid-wrapper {
+    grid-column: 3 / span 2 ;
+    grid-row: row ;
+  }
+  .views-submit-button {
+    margin-bottom: 2rem;
+    grid-column: 1 / span 2;
+    grid-row: row 2;
+  }
+  .views-reset-button {
+    margin-bottom: 2rem;
+    grid-column: 1 / span 2;
+    grid-row: row 2;
+    margin-left: 5.5em;
+  }
+
+  table {
+    .views-field-field-assignee {
+      min-width: 8em;
+    }
+    .img-responsive {
+      display: inline;
+      margin-left: 0.5rem;
+    }
+  }
+
+
+}
+
+ /** End Assigned Tasks View */
