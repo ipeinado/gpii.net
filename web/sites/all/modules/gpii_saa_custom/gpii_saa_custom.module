@@ -960,6 +960,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
             else {
               drupal_set_message(t('Error: Invalid Link. Please return to the previous page.'), 'error', FALSE);
+              return '<p>No valid links to source databases for this record were found. Return to <a href="/node/' . $product->nid . '">' . $product->title . '</a>.';
             }
 
           }
