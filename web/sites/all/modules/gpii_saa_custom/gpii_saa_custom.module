@@ -931,7 +931,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
                 'lang' => $value->language,
                 'OriginalUrl' => $value->sourceData->OriginalUrl,
                 'EnglishUrl' => $value->sourceData->EnglishUrl,
-                'ManufacturerUrl' => $value->sourceData->ManufacturerWebSiteUrl,
                 'name' => $value->name
                 );
             }
@@ -950,9 +949,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             if (isset($links[0]['EnglishUrl'])) {
               $EnglishUrl =  filter_var($links[0]['EnglishUrl'], FILTER_VALIDATE_URL);
             }
-            if (isset($links[0]['ManufacturerUrl'])) {
-              $ManufacturerUrl =  filter_var($links[0]['ManufacturerUrl'], FILTER_VALIDATE_URL);
-            }
 
             if (isset($OriginalUrl)) {
               drupal_goto($OriginalUrl, array('external' => TRUE), 303);
@@ -960,10 +956,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
             elseif (isset($EnglishUrl)) {
                drupal_goto($EnglishUrl, array('external' => TRUE), 303);
-            }
-            
-            elseif (isset($ManufacturerUrl)) {
-               drupal_goto($ManufacturerUrl, array('external' => TRUE), 303);
             }
 
             else {
