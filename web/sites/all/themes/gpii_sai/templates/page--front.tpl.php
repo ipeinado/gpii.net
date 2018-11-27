@@ -139,8 +139,8 @@
               <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    // if the user has the tester role, render the block that references the demo content
-                    if (user_has_role(15)) {
+                    // if the user has the tester or a content admin, render the block that references the demo content
+                    if (user_has_role(15) || user_has_role(3) || user_has_role(4) || user_has_role(5)) {
                       $blockObject = block_load('bean', 'search-method-button-virtual-s-0');
                     }
                     else {
@@ -155,8 +155,8 @@
             <div class="col-sm-24 col-md-8">
                 <div class="panel searchtype">
                   <?php
-                    // if the user has the tester role, render the block that references the demo content
-                    if (user_has_role(15)) {
+                    // if the user has the tester a content admin role, render the block that references the demo content
+                    if (user_has_role(15) || user_has_role(3) || user_has_role(4) || user_has_role(5)) {
                       $blockObject = block_load('bean', 'search-method-button-qanda-test');
                     }
                     else {
