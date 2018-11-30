@@ -15,3 +15,4 @@ core = "7.x"
 project = "paypal_payment"
 datestamp = "1518607085"
 
+patch[] = https://www.drupal.org/project/paypal_payment/releases/7.x-1.4 Upgrading to 7.x-1.4 caused paypal payments to instantly return as failed. Reverting for now (11/30/2018)
