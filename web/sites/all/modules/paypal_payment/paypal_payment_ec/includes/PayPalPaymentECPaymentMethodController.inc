@@ -7,7 +7,7 @@
 /**
  * A PayPal Express Checkout payment method.
  */
-class PayPalPaymentECPaymentMethodController extends PayPalPaymentNVPAPIPaymentMethodControllerBase implements PayPalPaymentIPNPaymentMethodControllerInterface {
+class PayPalPaymentECPaymentMethodController extends PayPalPaymentNVPAPIPaymentMethodControllerBase {
 
   /**
    * Automatic funds capture.
@@ -233,11 +233,9 @@ class PayPalPaymentECPaymentMethodController extends PayPalPaymentNVPAPIPaymentM
    * @return array
    */
   public function paymentNVP(Payment $payment) {
-    $currency = currency_load($payment->currency_code);
-    $amount = $currency->roundAmount($payment->totalAmount(TRUE));
     return array(
       'PAYMENTREQUEST_0_CURRENCYCODE' => $payment->currency_code,
-      'PAYMENTREQUEST_0_AMT' => $amount,
+      'PAYMENTREQUEST_0_AMT' => $payment->totalAmount(TRUE),
       'PAYMENTREQUEST_0_PAYMENTACTION' => $payment->method->controller_data['capture'],
       'PAYMENTREQUEST_0_DESC' => $payment->description,
       'PAYMENTREQUEST_0_INVNUM' => PayPalPaymentIPNController::invoiceID($payment->pid),
@@ -347,19 +345,6 @@ class PayPalPaymentECPaymentMethodController extends PayPalPaymentNVPAPIPaymentM
       } 
     }
     return PAYMENT_STATUS_UNKNOWN;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function PayPalValidateIPNVariables(Payment $payment, array $ipn_variables) {
-    return TRUE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function PayPalProcessIPN(Payment $payment, array $ipn_variables) {
   }
 
 }
