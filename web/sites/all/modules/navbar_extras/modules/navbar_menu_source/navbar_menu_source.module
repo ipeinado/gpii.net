@@ -69,11 +69,52 @@ function navbar_menu_source_config_form($form, &$form_state) {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function navbar_menu_source_theme($existing, $type, $theme, $path) {
+  // Get user roles which has access to navbar.
+  $roles = user_roles(TRUE, 'access navbar');
+  $items = array();
+  foreach ($roles as $rid => $role) {
+    // Get menu source setting for user's role id.
+    $menu_name = variable_get('navbar_menu_' . $rid, '');
+    if (!empty($menu_name) && $menu_name != 'management') {
+      $menu_name = str_replace('-', '_', $menu_name);
+      // Core menu theming overrides.
+      $items['menu_tree__' . $menu_name] = array(
+          'render element' => 'tree',
+          'function' => 'theme_navbar_menu_tree',
+          'preprocess functions' => array('template_preprocess_navbar_menu_tree'),
+      );
+    }
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_module_implements_alter
+ *
+ * @param $implementations
+ * @param $hook
+ */
+function navbar_menu_source_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'navbar_alter') {
+    // Move my_module_rdf_mapping() to the end of the list. module_implements()
+    // iterates through $implementations with a foreach loop which PHP iterates
+    // in the order that the items were added, so to move an item to the end of
+    // the array, we remove it and then add it.
+    $group = $implementations['navbar_menu_source'];
+    unset($implementations['navbar_menu_source']);
+    $implementations = array_merge(array('navbar_menu_source' => $group), $implementations);
+  }
+}
+
+/**
  * Implements hook_navbar_alter().
  */
 function navbar_menu_source_navbar_alter(&$items) {
   global $user;
-
   // Find the user role rid.
   $roles_ids = array_keys(user_roles(TRUE, 'access navbar'));
   $user_roles_ids = array_keys($user->roles);
@@ -93,6 +134,36 @@ function navbar_menu_source_navbar_alter(&$items) {
     navbar_menu_navigation_links($tree);
 
     // Replace the tree of management menu links with new menu entries.
+    if (!isset($items['administration'])) {
+      $menu = array(
+          '#heading' => t('Administration menu'),
+          'navbar_administration' => array(
+              '#type' => 'container',
+              '#attributes' => array(
+                  'class' => array('navbar-menu-administration'),
+              ),
+              'administration_menu' => NULL,
+          ),
+      );
+
+      $__items['administration'] = array(
+          '#type' => 'navbar_item',
+          'tab' => array(
+              '#type' => 'link',
+              '#title' => t('Manage'),
+              '#href' => 'admin',
+              '#options' => array(
+                  'attributes' => array(
+                      'title' => t('Admin menu'),
+                      'class' => array('navbar-icon', 'navbar-icon-menu',),
+                  ),
+              ),
+          ),
+          'tray' => $menu,
+          '#weight' => -15,
+      );
+      $items = array_merge($__items, $items);
+    }
     $items['administration']['tray']['navbar_administration']['administration_menu'] = menu_tree_output($tree);
   }
 }

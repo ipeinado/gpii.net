@@ -37,6 +37,81 @@ function navbar_extras_permission() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function navbar_extras_theme($existing, $type, $theme, $path) {
+  $items['navbar_extras_item_list'] = array(
+      'variables' => array('items' => array(), 'title' => NULL, 'type' => 'ul', 'attributes' => array()),
+  );
+  $items['navbar_extras_tree'] = array(
+      'render element' => 'tree',
+      'function' => 'theme_navbar_menu_tree',
+      'preprocess functions' => array('template_preprocess_navbar_menu_tree'),
+  );
+
+  return $items;
+}
+
+/**
+ * Customize theme_item_list
+ */
+function theme_navbar_extras_item_list($variables) {
+  $items = $variables['items'];
+  $title = $variables['title'];
+  $type = $variables['type'];
+  $attributes = $variables['attributes'];
+
+  // Only output the list container and title, if there are any list items.
+  // Check to see whether the block title exists before adding a header.
+  // Empty headers are not semantic and present accessibility challenges.
+  $output = '';
+  if (isset($title) && $title !== '') {
+    $output .= '<h3>' . $title . '</h3>';
+  }
+
+  if (!empty($items)) {
+    $output .= "<$type" . drupal_attributes($attributes) . '>';
+    $num_items = count($items);
+    $i = 0;
+    foreach ($items as $item) {
+      $attributes = array();
+      $children = array();
+      $data = '';
+      $i++;
+      if (is_array($item)) {
+        foreach ($item as $key => $value) {
+          if ($key == 'data') {
+            $data = $value;
+          }
+          elseif ($key == 'children') {
+            $children = $value;
+          }
+          else {
+            $attributes[$key] = $value;
+          }
+        }
+      }
+      else {
+        $data = $item;
+      }
+      if (count($children) > 0) {
+        // Render nested list.
+        $data .= theme_item_list(array('items' => $children, 'title' => NULL, 'type' => $type, 'attributes' => $attributes));
+      }
+      if ($i == 1) {
+        $attributes['class'][] = 'first';
+      }
+      if ($i == $num_items) {
+        $attributes['class'][] = 'last';
+      }
+      $output .= '<li' . drupal_attributes($attributes) . '>' . $data . "</li>\n";
+    }
+    $output .= "</$type>";
+  }
+  return $output;
+}
+
+/**
  * Implements hook_navbar().
  */
 function navbar_extras_navbar() {
@@ -79,7 +154,8 @@ function navbar_extras_navbar() {
       $menu_tree[$key] = array('link' => $item, 'below' => array());
     }
     navbar_menu_navigation_links($menu_tree);
-
+    $menu_tree_renderable = menu_tree_output($menu_tree);
+    $menu_tree_renderable['#theme_wrappers'] = array('menu_tree__management');
     $items['create-content'] = array(
       '#type' => 'navbar_item',
       'tab' => array(
@@ -95,7 +171,11 @@ function navbar_extras_navbar() {
       ),
       'tray' => array(
         '#heading' => t('Content creation menu'),
-        'content_creation_menu' => menu_tree_output($menu_tree),
+        'content_creation_menu' => array(
+          '#prefix' => '<div class="navbar-menu-administration">',
+          'stuff' => $menu_tree_renderable,
+          '#suffix' => '</div>'
+        )
       ),
       '#weight' => -10,
     );
@@ -141,7 +221,6 @@ function navbar_extras_page_build(&$page) {
   }
 
   // Show/hide navbar for admin user.
-  // BBC: Patch applied from https://www.drupal.org/files/issues/show_navbar_for_admin_by_default.patch
   if (!variable_get('navbar_extras_admin_display', 1)) {
     global $user;
     $page['page_top']['navbar']['#access'] = ($user->uid != 1);
