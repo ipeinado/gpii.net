@@ -1314,9 +1314,49 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           $output[] = (object) array_filter((array) $value);
         }
 
-        // trim the body field by calling text_summary and clean up the markup
+
+        // @@ combine body with main_features, primary_specs, options, and more_info
+
+        
+        // combine the various description fields back into a single body field so that they can be digested by the UL API and external systems
         foreach ($output as $key => $value) {
+          
           if (isset($value->body)) {
+
+            $value->body = '<h2>Product Description:</h2>' . $value->body_summary;
+
+            if (isset($value->field_desc_main_features_value)) {
+              $value->body .= '<h2>Main Features:</h2>' . $value->field_desc_main_features_value;
+            }
+
+            if (isset($value->field_desc_primary_specs_value)) {
+              $value->body .= '<h2>Primary Specifications:</h2>' . $value->field_desc_primary_specs_value;
+            }
+
+            if (isset($value->field_desc_options_value)) {
+              $value->body .= '<h2>Options &amp; Accessories:</h2>' . $value->field_desc_options_value;
+            }
+
+            if (isset($value->field_desc_more_info_value)) {
+              $value->body .= '<h2>More Information:</h2>' . $value->field_desc_more_info_value;
+            }
+
+            unset($value->field_desc_main_features_value);
+            unset($value->field_desc_primary_specs_value);
+            unset($value->field_desc_options_value);
+            unset($value->field_desc_more_info_value);
+          }
+          
+          // use the body_summary field if available, else trim the body field by calling text_summary and clean up the markup
+
+          if (isset($value->body_summary)) {
+
+            $value->summary = $value->body_summary;
+
+          }
+
+          else {
+
             $alter = array(
               'max_length' => 400, //Integer
               'ellipsis' => TRUE, //Boolean
@@ -1330,6 +1370,9 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $value->summary = $summary;
 
           }
+
+          // unset body_summary as it's no longer needed in the output
+          unset($value->body_summary);
 
           // make needs into an object that matches the original format
           if (isset($value->needs)) {
@@ -1389,8 +1432,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               'filesize' => $value->filesize,
               'status' => $value->status,
               'timestamp' => $value->timestamp,
-              'origname' => $value->origname,
-              //'experiment' => $value->experiment
+              'origname' => $value->origname
               );
 
 
