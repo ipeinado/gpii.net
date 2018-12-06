@@ -1323,7 +1323,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           
           if (isset($value->body)) {
 
-            $value->body = '<h2>Product Description:</h2>' . $value->body_summary;
+            $value->body = '<h2>Product Description:</h2>' . $value->body;
 
             if (isset($value->field_desc_main_features_value)) {
               $value->body .= '<h2>Main Features:</h2>' . $value->field_desc_main_features_value;
