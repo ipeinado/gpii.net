@@ -2048,17 +2048,55 @@ function recursive_array_search($needle,$haystack) {
  */
 
 function gpii_saa_custom_remove_deleted_records(&$entity) {
+  $revision_id = revisioning_get_latest_revision_id($entity->nid);
+  $latest = node_load($value->nid, $revision_id, reset);
   // be sure that we have a UID and that the current status for the node is 'deleted'
-  if ($entity->field_status['und'][0]['value'] == '3' && isset($entity->field_uid['und'][0]['value'])) {
+  if ($latest->field_status['und'][0]['value'] == '3' && isset($latest->field_uid['und'][0]['value'])) {
 
     // call gpii_saa_custom_delete_records_vbo() to find out if the UL API agrees that the
     // status is 'deleted'
-    $apiStatus = gpii_saa_custom_delete_records_vbo($entity->field_uid['und'][0]['value']);
+    $apiStatus = gpii_saa_custom_delete_records_vbo($latest->field_uid['und'][0]['value']);
     //dpm($apiStatus);
     if ($apiStatus == 'deleted') {
       // log the deletion before we lose access to the variables we need to create the log entry.
-      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' (UID: ' . $entity->field_uid['und'][0]['value'] . ') has been deleted.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
-      // go ahead and delete the node
+      watchdog('gpii_saa_custom', 'Node ' . $latest->nid . ' (UID: ' . $latest->field_uid['und'][0]['value'] . ') has been deleted.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+      
+      if (isset($latest->field_duplicate_nid['und'][0]['value'])) {
+        //dpm($latest->field_duplicate_nid['und'][0]['value']);
+
+        // If the record is a duplicate, go ahead and programmatically create the redirect
+        // First, create an object with our redirect parameters
+        $redirect = new stdClass();
+        $redirect->source = 'node/' . $latest->nid;     // From URL
+        $redirect->source_options = array();
+        $redirect->redirect = 'node/' . $latest->field_duplicate_nid['und'][0]['value'];        // To URL
+        $redirect->redirect_options = array();
+        $redirect->status_code = 0;            // Redirect Status, 0 is default
+        $redirect->type = 'redirect';
+        $redirect->language = LANGUAGE_NONE;
+
+        watchdog('gpii_saa_custom', 'Created redirect from node/' . $latest->nid . ' to node/' . $latest->field_duplicate_nid['und'][0]['value'] . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+
+        // Next, save the redirect
+        redirect_save($redirect);
+
+        // we also want to create a redirect for links coming in from the UL API (ex. https://ul.gpii.net/uid/1519224321322-58025810)
+        $redirect = new stdClass();
+        $redirect->source = 'uid/' . $latest->field_uid['und'][0]['value'];    // From URL
+        $redirect->source_options = array();
+        $redirect->redirect = 'node/' . $latest->field_duplicate_nid['und'][0]['value'];        // To URL
+        $redirect->redirect_options = array();
+        $redirect->status_code = 0;            // Redirect Status, 0 is default
+        $redirect->type = 'redirect';
+        $redirect->language = LANGUAGE_NONE;
+
+        watchdog('gpii_saa_custom', 'Created redirect from uid/' . $latest->field_uid['und'][0]['value'] . ' to node/' . $latest->field_duplicate_nid['und'][0]['value'] . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+
+        redirect_save($redirect);
+
+      }
+      
+      // now we can go ahead and delete the node
       node_delete($entity->nid);
     }
 
