@@ -15,7 +15,14 @@ function revision_category_form_node_form_alter(&$form, &$form_state, $form_id) 
     // Find the content type of the node we are editing.
     $content_type = $form['#node']->type;
     if ($content_type == 'product') {
-        //dpm($form);
+
+        // Throw a warning message indicating that users are about to edit a DELETED record
+
+        if ($form['field_status']['und']['#default_value'][0] == '3') {
+            drupal_set_message('Warning! You are about to edit a product record that has been marked for deletion. Please do not publish or otherwise edit this record unless you intend to rescue it from its impending doom.', 'warning');
+        }
+
+        //dpm($form['field_status']);
         /** 
          * Hide revision options when user does not have respective role or is not admin
          * @@ Should probably set defaults based on role and disable the form controls instead of hide. 
