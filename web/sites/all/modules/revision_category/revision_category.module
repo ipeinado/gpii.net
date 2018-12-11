@@ -160,7 +160,7 @@ function revision_category_views_api() {
 
 function revision_category_init() {
     drupal_add_js("jQuery().ready(function(){
-       jQuery('.link-edit-summary').trigger('click');
+       jQuery('.link-edit-summary:contains(Edit)').trigger('click');
        });",'inline');
    }
    
