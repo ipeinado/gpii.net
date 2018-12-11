@@ -159,8 +159,6 @@ function revision_category_views_api() {
  */
 
 function revision_category_init() {
-    drupal_add_js("jQuery().ready(function(){
-       jQuery('.link-edit-summary:contains(Edit)').trigger('click');
-       });",'inline');
+    drupal_add_js(drupal_get_path('module', 'revision_category') . '/js/revision-edit.js');
    }
    
