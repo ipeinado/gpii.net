@@ -917,6 +917,69 @@ body.front, body.page-node-1903 {
   }
 }
 
+// @@ this still needs some work to deal with different widths
+
+#feedback-wrap {  
+  .block-webform {
+    text-align: left;
+  }
+  .webform-component--comments {
+    label {
+      text-align: left;
+      margin-left: 0.5rem;
+      display: block;
+    }
+  }
+  .webform-component-email { 
+    .description {
+      margin-top: 1rem;
+    }
+    label {
+      display: block;
+      text-align: left;
+      width: 100%;
+      padding-top: 1rem;;
+    }
+    input { 
+      display: block; 
+      left: auto;
+      top: auto;
+      margin-bottom: 1rem;
+    } 
+  }
+  @media (min-width: $screen-sm) { 
+    .block-webform {
+      text-align: center;
+    }
+    .webform-component--comments {
+      label {
+        text-align: right;
+        display: inline-block;
+      }
+    }
+    .webform-component-email { 
+      .description {
+        margin: 1rem 0 0.5rem;
+        padding-left: 11.6em;
+      }
+      label {
+        display: inline-block;
+        padding-top: 0;
+        width: 8em;
+        text-align: right;
+      }
+      input {
+        display: inline-block;
+        left: 0;
+        top: 0;
+        margin-bottom: 1rem;
+        width: 35em;
+      }
+    }
+    
+  }
+}
+
 
 // #############################################################################
 // Misc.

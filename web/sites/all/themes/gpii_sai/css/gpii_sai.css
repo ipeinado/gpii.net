@@ -669,6 +669,50 @@ body.front, body.page-node-1903 {
   #widget_stars_comments_part.widget_stars #histogram td > div {
     float: left; }
 
+#feedback-wrap .block-webform {
+  text-align: left; }
+
+#feedback-wrap .webform-component--comments label {
+  text-align: left;
+  margin-left: 0.5rem;
+  display: block; }
+
+#feedback-wrap .webform-component-email .description {
+  margin-top: 1rem; }
+
+#feedback-wrap .webform-component-email label {
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding-top: 1rem; }
+
+#feedback-wrap .webform-component-email input {
+  display: block;
+  left: auto;
+  top: auto;
+  margin-bottom: 1rem; }
+
+@media (min-width: 768px) {
+  #feedback-wrap .block-webform {
+    text-align: center; }
+  #feedback-wrap .webform-component--comments label {
+    text-align: right;
+    display: inline-block; }
+  #feedback-wrap .webform-component-email .description {
+    margin: 1rem 0 0.5rem;
+    padding-left: 11.6em; }
+  #feedback-wrap .webform-component-email label {
+    display: inline-block;
+    padding-top: 0;
+    width: 8em;
+    text-align: right; }
+  #feedback-wrap .webform-component-email input {
+    display: inline-block;
+    left: 0;
+    top: 0;
+    margin-bottom: 1rem;
+    width: 35em; } }
+
 .page-search-facet .block-facetapi ul {
   list-style-type: none;
   padding-left: 1rem; }
