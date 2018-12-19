@@ -47,7 +47,8 @@ class revisioning_handler_filter_revision_state extends views_handler_filter_in_
           $subclauses[] = "($revisions_table.vid>$node_table.vid OR ($node_table.status=0 AND (SELECT COUNT(vid) FROM {" . $revisions_table . "} WHERE nid=$node_table.nid)=1))";
           // Only add this join if there is not already a 'Revision NID of the
           // content revision' contextual filter relationship.
-          if (empty($this->query->relationships[$this->relationship])) {
+          // BBC: Patch from https://www.drupal.org/project/revisioning/issues/2881035#comment-12100366
+          if (!empty($this->relationship) && empty($this->query->relationships[$this->relationship])) {
             // Make sure UNIQUE is set!
             $this->query->table_queue[$revisions_table]['join'] = new views_join();
             $this->query->table_queue[$revisions_table]['join']->construct($node_table, $revisions_table, 'nid', 'nid');

@@ -22,3 +22,4 @@ project = "revisioning"
 datestamp = "1403741628"
 
 patch[] = https://www.drupal.org/project/revisioning/issues/751092 Issue 751092, Patch #25
+patch[] = https://www.drupal.org/project/revisioning/issues/2881035 Issue 2881035, Patch #2
