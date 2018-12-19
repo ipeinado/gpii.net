@@ -1251,6 +1251,23 @@ a.tree-label {
   border-top: none;
   padding: 1rem 0.5rem; }
 
+.view-revisioning-content-revisions-summary .view-header {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #000; }
+
+.view-revisioning-content-revisions-summary #edit-timestamp-wrapper, .view-revisioning-content-revisions-summary .views-submit-button {
+  clear: both; }
+
+.view-revisioning-content-revisions-summary #edit-combine-wrapper, .view-revisioning-content-revisions-summary #edit-uid-wrapper {
+  min-width: 40%; }
+
+.view-revisioning-content-revisions-summary #edit-field-status-value-wrapper, .view-revisioning-content-revisions-summary #edit-state-wrapper, .view-revisioning-content-revisions-summary #edit-timestamp-wrapper {
+  margin-top: 1rem;
+  min-width: 30%; }
+
+.view-revisioning-content-revisions-summary td.views-field-views-conditional ul {
+  padding-left: 1.5em; }
+
 .view-editorial-status .table-condensed > tbody > tr > td {
   padding: 0.5rem 0.25rem 0.25rem 0.25rem; }
 

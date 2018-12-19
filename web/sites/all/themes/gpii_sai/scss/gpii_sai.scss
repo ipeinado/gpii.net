@@ -1752,6 +1752,33 @@ a.tree-label {
   padding: 1rem 0.5rem;
 }
 
+.view-revisioning-content-revisions-summary {
+  .view-header {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #000;  
+  }
+
+  #edit-timestamp-wrapper, .views-submit-button {
+    clear: both;
+  }
+
+  #edit-combine-wrapper, #edit-uid-wrapper {
+    min-width: 40%;
+  }
+  
+  #edit-field-status-value-wrapper, #edit-state-wrapper, #edit-timestamp-wrapper {
+    margin-top: 1rem;
+    min-width: 30%;
+  }
+
+  td.views-field-views-conditional {
+    ul {
+      padding-left: 1.5em;
+    } 
+  }
+
+}
+
 .view-editorial-status {
   .table-condensed > tbody > tr > td {
     padding: 0.5rem 0.25rem 0.25rem 0.25rem;
