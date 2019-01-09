@@ -886,25 +886,14 @@ a.tree-label {
 /**
  * P4A Rating Tool and Feed3 Styles
  */
-.group-feed3 .widget_stars .blue_button {
-  background-color: #A72534; }
-  .group-feed3 .widget_stars .blue_button:focus, .group-feed3 .widget_stars .blue_button:hover {
-    outline: none;
-    text-shadow: none;
-    background-color: #8e1f2c; }
-
-.group-feed3 h2, .group-feed3 h2 > span.widgetStrings {
-  margin-top: 1.42857143rem;
-  margin-bottom: 0.71428571rem;
-  font-size: 1.4rem; }
-
 .group-feed3 .help-block {
   font-size: 0.9rem; }
 
 .group-feed3 textarea {
   height: 2.5rem;
   -webkit-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out; }
+  transition: all 1s ease-in-out;
+  margin: 0.4em 0 0.75rem; }
 
 .group-feed3 textarea:focus, .group-feed3 textarea:active {
   height: calc(100% - 2.5rem);
@@ -1715,7 +1704,7 @@ div.discontinued {
     display: block;
     content: ' '; }
 
-.page-node-5571 h3, .page-node-6163 h3 {
+.page-node-6163 h3 {
   font-size: 1.8em;
   font-weight: bold;
   line-height: 1.2; }

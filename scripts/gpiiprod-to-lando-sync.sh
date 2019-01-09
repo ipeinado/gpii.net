@@ -17,7 +17,7 @@ cd ~/code/gpii.net/web/sites/default
 
 echo "backing up production database"
 # dump the current database
-# lando db-export saa-db-dev.sql.gz
+#lando db-export saa-db-dev.sql.gz 
 
 echo "syncing database from @gpiiprod"
 

@@ -917,8 +917,6 @@ body.front, body.page-node-1903 {
   }
 }
 
-// @@ this still needs some work to deal with different widths
-
 #feedback-wrap {  
   .block-webform {
     text-align: left;
@@ -1328,20 +1326,6 @@ a.tree-label {
  */
 
 .group-feed3 {
-  .widget_stars .blue_button {
-    background-color: $color-gpii-sai-primary;
-    &:focus, &:hover {
-      outline: none;
-      text-shadow: none;
-      background-color: darken($color-gpii-sai-primary, 6%);
-    }
-  }
-
-  h2, h2 > span.widgetStrings {
-    margin-top: 1.42857143rem;
-    margin-bottom: 0.71428571rem;
-    font-size: 1.4rem;
-  }
 
   .help-block {
     font-size: 0.9rem;
@@ -1351,6 +1335,7 @@ a.tree-label {
     height:2.5rem;
     -webkit-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out;
+    margin: 0.4em 0 0.75rem;
   }
 
   textarea:focus, textarea:active {
@@ -2482,7 +2467,7 @@ div.discontinued {
   }
 }
 
-.page-node-5571, .page-node-6163 { // delete 5571 after sync
+.page-node-6163 { 
   h3 {
     font-size: 1.8em;
     font-weight: bold;
