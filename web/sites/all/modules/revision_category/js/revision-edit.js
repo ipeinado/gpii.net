@@ -8,7 +8,7 @@
         // disable the save button until required fields are set
         $('#product-node-form #edit-submit').prop('disabled', true).css('color', '#999999').css('cursor', 'not-allowed');
 
-        $('#edit-log').on('keyup blur', function() {
+        $('#edit-log, #edit-category').on('keyup change', function() {
             var currentString = $('#edit-log').val();
             var revisionType = $('#edit-category').children('option:selected').val();
             if (currentString.length > 2 && revisionType != '' )  {
