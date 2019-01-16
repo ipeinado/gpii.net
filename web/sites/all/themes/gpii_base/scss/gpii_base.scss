@@ -376,10 +376,10 @@ body > div.skiptranslate {
     }
   }
 
-  html.force-mobile-layout & {
-    //float: right;
-    //margin-right: calc(3rem + 6px);
-  }
+  // html.force-mobile-layout & {
+  //   //float: right;
+  //   //margin-right: calc(3rem + 6px);
+  // }
 
   @media (max-width: $screen-xs-max) {
     //float: right;
