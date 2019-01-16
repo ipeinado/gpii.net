@@ -45,6 +45,9 @@ function gpii_saa_custom_permission() {
     'access browse virtual stores' => array(
       'title' => t('Access browse virtual stores pages.'),
     ),
+    'access similar_search' => array(
+      'title' => t('Access similar search pages.'),
+    ),
     'order openmarketplace products' => array(
       'title' => t('Order products in the Open Marketplace.'),
     )
@@ -446,6 +449,12 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'access arguments' => array('order openmarketplace products'),
         'description' => t('Update an order.'),
         'type' => MENU_CALLBACK,
+      );
+      $items['search/similar/%'] = array(
+        'title' => 'Search Similar Products',
+        'page callback' => 'gpii_saa_custom_similar',
+        'page arguments' => array(2),
+        'access arguments' => array('access similar search'),
       );
 
       return $items;
@@ -1588,7 +1597,7 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
-      'gpii_saa_custom_os_migrate' => array(
+    'gpii_saa_custom_os_migrate' => array(
       'type' => 'entity',
       'label' => t('Migrate OS Compatibility Taxonomy'),
       'behavior' => array('changes_property'),
@@ -1596,7 +1605,6 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
-    
   );
 }
 
@@ -2566,4 +2574,43 @@ class gpii_saa_custom_field_handler_latest_revision extends views_handler_field 
     $value = $this->get_value($values);
     return revisioning_get_latest_revision_id($value);
   }
+}
+
+
+function gpii_saa_custom_similar($nid) {
+  $product = node_load($nid);
+
+  dpm($product);
+
+  drupal_set_title('Find products that are smilar to ' . $product->title, CHECK_PLAIN);
+
+  $markup = '<p>' . $product->title . ' includes the following features. Which features are you interested in?</p>';
+
+  // create a form that allows users to check the features they are interested in 
+
+
+  # the options to display in our checkboxes @@ not working
+  $features = array(
+    'pepperoni' => t('Pepperoni'),
+    'black_olives' => t('Black olives'), 
+    'veggies' => t('Veggies')
+  );
+  $form = array();
+
+  $form['features'] = array(
+    '#type' => 'checkboxes',
+    // '#title' => t('Features'),
+    '#required' => FALSE,
+    //'#default_value' =>  $_SESSION['gpii_saa_custom_package_form'][4],
+    '#description' => t('Select the features you are interested in.'),
+    '#options' => $features,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Search'),
+    '#submit' => array('gpii_saa_custom_similar_submit'),
+  );
+
+  return $form;
 }
