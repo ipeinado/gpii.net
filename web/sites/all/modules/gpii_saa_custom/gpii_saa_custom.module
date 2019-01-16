@@ -1580,6 +1580,14 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    'gpii_saa_custom_mark_latest_active' => array(
+      'type' => 'entity',
+      'label' => t('Set UL Status to ACTIVE'),
+      'behavior' => array('changes_property'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
       'gpii_saa_custom_os_migrate' => array(
       'type' => 'entity',
       'label' => t('Migrate OS Compatibility Taxonomy'),
@@ -1588,6 +1596,7 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    
   );
 }
 
@@ -1678,22 +1687,40 @@ function gpii_saa_custom_mark_latest_new(&$entity) {
   return gpii_saa_custom_update_status_vbo($entity, 'NEW');
 }
 
+function gpii_saa_custom_mark_latest_active(&$entity) {
+  // call the gpii_saa_custom_mark_latest_new_vbo function
+  return gpii_saa_custom_update_status_vbo($entity, 'ACTIVE');
+}
+
 function gpii_saa_custom_update_status_vbo(&$entity, $status) {
 
+  switch ($status) {
+    case 'NEW':
+      $status_value = 0;
+        break;
+    case 'ACTIVE':
+        $status_value = 1;
+        break;
+}
   // get the latest revision and save it
   $revision_id = revisioning_get_latest_revision_id($entity->nid);
-  $latest = node_load($value->nid, $revision_id, reset);
-  
-  //watchdog('gpii_saa_custom', 'A new revision of node ' . $entity->nid . ' has been created. The latest revision is ' . $revision_id . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
-  $latest->field_status['und'][0]['value'] = 0;
-  $latest->revision = TRUE;
-  $latest->revision_moderation = TRUE;
-  $latest-> log = 'Batch updated to ' . $status . '.';
-  node_save($latest);
 
-  //also update the value for the current revision and pass it back to VBO
+  if($entity->vid != $revision_id) {
+    $latest = node_load($value->nid, $revision_id, reset);
+    //watchdog('gpii_saa_custom', 'A new revision of node ' . $entity->nid . ' has been created. The latest revision is ' . $revision_id . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+    $latest->field_status['und'][0]['value'] = $status_value;
+    $latest->revision = TRUE;
+    $latest->revision_moderation = TRUE;
+    $latest->log = 'Batch updated to ' . $status . '.';
+    $latest->category = 'minor';
+    node_save($latest);
+  }
 
-  $entity->field_status['und'][0]['value'] = 0;
+  //also update the value for the currently revision and pass it back to VBO
+
+  $entity->field_status['und'][0]['value'] = $status_value;
+  $entity->log = 'Batch updated to ' . $status . '.';
+  $entity->category = 'minor';
   return $entity;
 }
 
