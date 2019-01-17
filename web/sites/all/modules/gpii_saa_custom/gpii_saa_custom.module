@@ -452,9 +452,10 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       );
       $items['search/similar/%'] = array(
         'title' => 'Search Similar Products',
-        'page callback' => 'gpii_saa_custom_similar',
-        'page arguments' => array(2),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('gpii_saa_custom_similar', 2),
         'access arguments' => array('access similar search'),
+        'type' => MENU_CALLBACK,
       );
 
       return $items;
@@ -2577,40 +2578,92 @@ class gpii_saa_custom_field_handler_latest_revision extends views_handler_field 
 }
 
 
-function gpii_saa_custom_similar($nid) {
+function gpii_saa_custom_similar($form, &$form_state, $nid) {
   $product = node_load($nid);
 
-  dpm($product);
+  //dpm($product);
 
-  drupal_set_title('Find products that are smilar to ' . $product->title, CHECK_PLAIN);
+  drupal_set_title('Find products that are similar to ' . $product->title, CHECK_PLAIN);
 
-  $markup = '<p>' . $product->title . ' includes the following features. Which features are you interested in?</p>';
-
+  
   // create a form that allows users to check the features they are interested in 
 
 
   # the options to display in our checkboxes @@ not working
-  $features = array(
-    'pepperoni' => t('Pepperoni'),
-    'black_olives' => t('Black olives'), 
-    'veggies' => t('Veggies')
-  );
-  $form = array();
+  // $features = array(
+  //   'pepperoni' => t('Pepperoni'),
+  //   'black_olives' => t('Black olives'), 
+  //   'veggies' => t('Veggies')
+  // );
 
+  // Set up a variable that includes all of the features that are associated with 
+  // original product.
+
+  $features = array();
+
+  foreach ($product->field_features['und'] as $key => $value) {
+    $term = taxonomy_term_load($value['tid']);
+    $features[$value['tid']] = t($term->name);
+  }
+
+  $form = array();
+dpm(implode(", edit-features-", array_keys($features)));
   $form['features'] = array(
     '#type' => 'checkboxes',
-    // '#title' => t('Features'),
+    '#title' => t('Features'),
     '#required' => FALSE,
     //'#default_value' =>  $_SESSION['gpii_saa_custom_package_form'][4],
-    '#description' => t('Select the features you are interested in.'),
+    '#description' => t($product->title . ' includes the following features. Which features are you interested in?'),
+    '#description_display' => 'before',
     '#options' => $features,
+    '#checkall' => TRUE,
+    // @@ need to figure out why defaults aren't working 
+    '#default_value' => 'edit-features-' . implode(", edit-features-", array_keys($features)),
   );
 
-  $form['submit'] = array(
+  $form['actions']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Search'),
     '#submit' => array('gpii_saa_custom_similar_submit'),
   );
+  $form['actions']['reset'] = array(
+    '#type' => 'submit',
+    '#value' => t('Reset'),
+    '#submit' => array('gpii_saa_custom_similar_reset'),
+  );
+
+  $form['features'] = form_process_checkboxes($form['features']);
+  //dpm($form);
 
   return $form;
 }
+
+/**
+ * Validates the form.
+ */
+
+function gpii_saa_custom_similar_validate($form, &$form_state) {
+  // nothing to validate here, but we might want to check for results before submitting
+
+}
+
+function gpii_saa_custom_similar_submit($form, &$form_state) {
+
+  drupal_set_message('Test.');
+  dpm($form_state);
+      // //kpr($form_state);
+      $form_state["rebuild"] = TRUE;
+
+      // module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.open_marketplace');
+      // $order = _gpii_saa_custom_create_order($order_values);
+
+      return;
+
+
+  }
+
+  function gpii_saa_custom_similar_reset($form, &$form_state) {
+    $form_state['rebuild'] = FALSE;
+    return;
+  }
+
