@@ -45,7 +45,7 @@ function gpii_saa_custom_permission() {
     'access browse virtual stores' => array(
       'title' => t('Access browse virtual stores pages.'),
     ),
-    'access similar_search' => array(
+    'access similar search' => array(
       'title' => t('Access similar search pages.'),
     ),
     'order openmarketplace products' => array(
