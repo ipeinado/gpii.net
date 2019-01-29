@@ -11,6 +11,12 @@ CKEDITOR.addTemplates( 'default', {
 
 	// The templates definitions.
 	templates: [ {
+		title: 'Discontinued',
+		image: 'template1.gif',
+		description: 'Simple discontinued message.',
+		html: '<div class="discontinued">This product has been discontinued.</div>'
+	},
+		{
 		title: 'Image and Title',
 		image: 'template1.gif',
 		description: 'One main image with a title and text that surround the image.',
