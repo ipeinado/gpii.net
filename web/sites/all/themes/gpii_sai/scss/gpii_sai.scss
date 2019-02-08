@@ -1754,7 +1754,7 @@ a.tree-label {
   }
 }
 
-#field-fc-task-values {
+#field-fc-task-values, #edit-field-fc-task {
   .field-multiple-drag {
     a.tabledrag-handle, .handle {
       text-decoration: none;
@@ -1765,15 +1765,25 @@ a.tree-label {
   td {
     border-top: none; 
   }
-  td:not(.field-multiple-drag) {
+  td:not(.field-multiple-drag, .fieldset-wrapper) {
     display: flex; 
     align-items: center; 
-    button {
-      margin-left: 1.5rem;
-      height: 3em;
+  }
+  .fieldset-wrapper {
+    position: absolute;
+    top: -2em;
+    min-width: 8em;
+  }
+  fieldset {
+    display: inline;
+    legend {
+      display: none;
     }
   }
-}
+  button {
+    float: right;
+  }
+} 
 
 .views-field-field-fc-task {
   ul {
@@ -1787,21 +1797,9 @@ a.tree-label {
     }
 
   }
+
 }
 
-.views-field-field-fc-task {
-  ul {
-    li {
-      margin: 0;
-      padding-bottom: 1rem;
-      div.field-collection-item-field-fc-task:before, div {
-        display: inline;
-        content: unset;
-      }
-    }
-
-  }
-}
 .field-name-field-notes {
   background: #FFFDD9; 
   border-color: $color-gpii-gray;
@@ -2679,3 +2677,4 @@ div.discontinued {
 }
 
  /** End Assigned Tasks View */
+

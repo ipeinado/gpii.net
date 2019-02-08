@@ -2,7 +2,6 @@ name: gpii-sites
 recipe: drupal7
 config:
   webroot: web
-  #via: nginx
   xdebug: true
   conf: 
     # Tell Lando to use additional PHP settings.
@@ -11,8 +10,7 @@ config:
     # php: .vscode/php.ini
 services:
   database2:
-    type: mysql
-    version: 5.7
+    type: mysql:5.7
     portforward: true
     hostnames:
       -database2
@@ -26,7 +24,6 @@ services:
     portforward: 9999
     config:
       conf: web/sites/all/modules/search_api_solr/solr-conf/6.x
-
 proxy:
   appserver: 
     - gpii.lndo.site
@@ -35,5 +32,3 @@ proxy:
     - dev.gpii.net
     - dev.ds.gpii.net
     - dev.ul.gpii.net
-
-
