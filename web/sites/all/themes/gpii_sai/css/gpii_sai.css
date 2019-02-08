@@ -1259,15 +1259,15 @@ a.tree-label {
   .view-editorial-progress-todo h3 {
     font-size: 1.2em; }
 
-#field-fc-task-values .field-multiple-drag a.tabledrag-handle, #field-fc-task-values .field-multiple-drag .handle {
+#field-fc-task-values .field-multiple-drag a.tabledrag-handle, #field-fc-task-values .field-multiple-drag .handle, #edit-field-fc-task .field-multiple-drag a.tabledrag-handle, #edit-field-fc-task .field-multiple-drag .handle {
   text-decoration: none;
   height: auto;
   width: auto; }
 
-#field-fc-task-values td {
+#field-fc-task-values td, #edit-field-fc-task td {
   border-top: none; }
 
-#field-fc-task-values td:not(.field-multiple-drag) {
+#field-fc-task-values td:not(.field-multiple-drag, .fieldset-wrapper), #edit-field-fc-task td:not(.field-multiple-drag, .fieldset-wrapper) {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1276,16 +1276,19 @@ a.tree-label {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center; }
-  #field-fc-task-values td:not(.field-multiple-drag) button {
-    margin-left: 1.5rem;
-    height: 3em; }
 
-.views-field-field-fc-task ul li {
-  margin: 0;
-  padding-bottom: 1rem; }
-  .views-field-field-fc-task ul li div.field-collection-item-field-fc-task:before, .views-field-field-fc-task ul li div {
-    display: inline;
-    content: unset; }
+#field-fc-task-values .fieldset-wrapper, #edit-field-fc-task .fieldset-wrapper {
+  position: absolute;
+  top: -2em;
+  min-width: 8em; }
+
+#field-fc-task-values fieldset, #edit-field-fc-task fieldset {
+  display: inline; }
+  #field-fc-task-values fieldset legend, #edit-field-fc-task fieldset legend {
+    display: none; }
+
+#field-fc-task-values button, #edit-field-fc-task button {
+  float: right; }
 
 .views-field-field-fc-task ul li {
   margin: 0;
