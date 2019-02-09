@@ -1979,22 +1979,29 @@ div.discontinued {
   display: -ms-grid;
   display: grid;
   grid-gap: 0;
-  -ms-grid-columns: 25% 25% 25% 25%;
-      grid-template-columns: 25% 25% 25% 25%;
+  -ms-grid-columns: 40% 40% 20%;
+      grid-template-columns: 40% 40% 20%;
   background-color: #fff;
   color: #444; }
 
 .view-assigned-tasks.view-display-id-page_1 #edit-combine-wrapper {
-  -ms-grid-column-span: 2;
+  -ms-grid-column-span: 1;
   -ms-grid-column: 1;
-      grid-column: 1 / span 2;
+      grid-column: 1 / span 1;
   -ms-grid-row: row;
       grid-row: row; }
 
 .view-assigned-tasks.view-display-id-page_1 #edit-uid-wrapper {
-  -ms-grid-column-span: 2;
+  -ms-grid-column-span: 1;
+  -ms-grid-column: 2;
+      grid-column: 2 / span 1;
+  -ms-grid-row: row;
+      grid-row: row; }
+
+.view-assigned-tasks.view-display-id-page_1 #edit-flagged-wrapper {
+  -ms-grid-column-span: 1;
   -ms-grid-column: 3;
-      grid-column: 3 / span 2;
+      grid-column: 3 / span 1;
   -ms-grid-row: row;
       grid-row: row; }
 
