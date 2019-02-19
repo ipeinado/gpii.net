@@ -150,7 +150,7 @@ function revision_category_revision_taxonomy_to_current($node) {
     // load current published and set to new Taxonomy
     $currentPublished = node_load($node->nid);
 
-    $currentPublished->field_product_category = $node->field_product_category;
+    $currentPublished->field_product_categories1 = $node->field_product_categories1;
     $currentPublished->field_features = $node->field_features;
     $currentPublished->field_operating_system = $node->field_operating_system;
     $currentPublished->field_languages_supported = $node->field_languages_supported;
