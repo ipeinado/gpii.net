@@ -23,7 +23,7 @@ services:
     type: solr:6.6
     portforward: 9999
     config:
-      conf: web/sites/all/modules/search_api_solr/solr-conf/6.x
+      dir: solr-config
 proxy:
   appserver: 
     - gpii.lndo.site
