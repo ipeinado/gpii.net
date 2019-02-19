@@ -117,21 +117,21 @@ function revision_category_node_presave($node) {
                 if ($node->is_current) {
                     //drupal_set_message('Category "' . $node->category . '" requires no action. Edit will automatically be published since this product was already published.');
                     if (!empty($node->revision_operation)) {
-                        $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : (($node->send_notification) ? 2 : 0) ;
+                        $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 1;
+                    }
+
+                    // If editing the published version and will end up creating new revision with moderation 
+                    if ($node->revision_operation == 2) {
+                        revision_category_revision_taxonomy_to_current($node);
                     }
                 }
                 else {
                     // drupal_set_message('Category "' . $node->category . '" requires no action.');
-                    // // load current published and set to new Taxonomy
-                    // $currentPublished = node_load($node->nid);
+                    revision_category_revision_taxonomy_to_current($node);
 
-                    // $currentPublished->field_product_category = $node->field_product_category;
-
-                    // node_save($currentPublished);
-
-                    // if (!empty($node->revision_operation)) {
-                    //     $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
-                    // }
+                    if (!empty($node->revision_operation)) {
+                        $node->revision_operation = ($manualSelectEnabled) ? $node->revision_operation : 2;
+                    }
                 }
                 break;
             
@@ -142,6 +142,24 @@ function revision_category_node_presave($node) {
     }
     
 }
+
+/**
+ * Merges changes to taxonomy into the current published version
+ */
+function revision_category_revision_taxonomy_to_current($node) {
+    // load current published and set to new Taxonomy
+    $currentPublished = node_load($node->nid);
+
+    $currentPublished->field_product_category = $node->field_product_category;
+    $currentPublished->field_features = $node->field_features;
+    $currentPublished->field_operating_system = $node->field_operating_system;
+    $currentPublished->field_languages_supported = $node->field_languages_supported;
+    $currentPublished->field_trouble_with = $node->field_trouble_with;
+    $currentPublished->field_product_type = $node->field_product_type;
+    $currentPublished->field_license = $node->field_license;
+
+    node_save($currentPublished);
+} 
 
 /**
  * Implements hook_views_api().
@@ -160,5 +178,5 @@ function revision_category_views_api() {
 
 function revision_category_init() {
     drupal_add_js(drupal_get_path('module', 'revision_category') . '/js/revision-edit.js');
-   }
+}
    
