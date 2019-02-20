@@ -19,6 +19,8 @@ services:
       user: drupal7
       password: drupal7
       database: ul
+    config:
+      confd: lando_config/mysql
   solr:
     type: solr:6.6
     portforward: 9999
