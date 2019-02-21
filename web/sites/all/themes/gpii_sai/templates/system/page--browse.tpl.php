@@ -244,7 +244,7 @@
       $output = drupal_render($block);
       print $output;
     ?>
-    HEELLOOOO!!!
+
     </div>
     <footer id="footer" class="footer container-fluid">
       <?php if ($region_info['footer']['has_columns']): ?>
