@@ -417,6 +417,7 @@ function theme_checkbox_tree($variables) {
  */
 function theme_checkbox_tree_level($variables) {
   $element = $variables['element'];
+  $element2 = $variables['element'];
   $sm = '';
   if (array_key_exists('#level_start_minimized', $element) && $element['#level_start_minimized']) {
     $sm = " style='display: none;'";
@@ -447,6 +448,7 @@ function theme_checkbox_tree_level($variables) {
 function theme_checkbox_tree_item($variables) {
   $element = $variables['element'];
   $children = element_children($element);
+  $primary = element_children($element);
   $output = "";
 
   $sm = $element['#level_start_minimized'] ? ' term-reference-tree-collapsed' : '';
@@ -458,8 +460,47 @@ function theme_checkbox_tree_item($variables) {
     $output .= "<div class='no-term-reference-tree-button'></div>";
   }
 
+  if (!array_key_exists('#primary', $element)) {
+    $element['#primary'] = get_primary_features();
+  }
+ 
+ 
   foreach ($children as $child) {
+
+    if ($element[$child]['#array_parents'][0] === 'field_features') {
+      $primary = $element[$child];
+
+      // BBC: unset this item so that we don't end up rendering our way down the tree more than we need to
+      if ($primary['#type'] === 'checkbox_tree_level') {
+        unset ($primary);
+        //dpm($element);  
+      }
+      
+      if (isset($primary)) {
+        if (isset($primary['#title'])) {
+          $primary['#title'] = $primary['#title'] . ' (primary)';
+          $primary['#attributes']['class'][] = 'invisible-label';
+        }
+        
+        $primary['#id'] = str_replace("features","features-primary", $primary['#id']);
+        if (isset($primary['#name'])) {
+          $primary['#name'] = str_replace("features","features_primary", $primary['#name']);
+        }
+        //dpm($primary['#on_value']);
+        if (isset($primary['#on_value']) && in_array($primary['#on_value'], $element['#primary'])) {
+          $primary['#checked'] = TRUE;
+        }
+        else {
+          $primary['#checked'] = FALSE;
+        }
+        //dpm($primary);
+        
+      }
+
+      $output .= drupal_render($primary);
+    }
     $output .= drupal_render($element[$child]);
+    
   }
 
   return $output;

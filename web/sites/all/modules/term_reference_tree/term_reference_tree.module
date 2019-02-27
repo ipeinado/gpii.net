@@ -230,4 +230,25 @@ function _term_reference_tree_get_options(&$terms, &$allowed, $filter) {
     }
   }
   return $options;
+
+}
+
+function get_primary_features() {
+  // BBC: set up primary taxonomy terms ids as an array for use in checked status as tree is built
+  $nid = arg(1);
+  $checked_features = array();
+  if (isset($nid) && is_numeric($nid)) {
+    //dpm($nid);
+    $node = node_load($nid);
+    $primary_features = field_get_items('node', $node, 'field_features_primary');
+    //dpm($primary_features);
+  }
+  
+  if (isset($primary_features)) {
+    foreach($primary_features as $feature) {
+      $checked_features[] = $feature['tid'];
+    }
+  }
+  
+  return $checked_features;
 }

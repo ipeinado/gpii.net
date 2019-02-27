@@ -318,6 +318,12 @@ function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id) {
       '#submit' => array('gpii_saa_custom_form_cancel', 'node_form_submit_build_node'),
       '#limit_validation_errors' => array(),
     );
+
+    // we can't unset this entirely as it causes values to not get saved, 
+    // probably need to zero it out each time so it defers to the custom widget?
+    unset($form['field_features_primary']['und']['#default_value']);
+    $form['field_features_primary']['#attributes']['class'][] = 'element-invisible';
+    //dsm($form);  // pretty print array using Krumo to messages
   }
 
   if ($form_id == 'payment_form_standalone') {

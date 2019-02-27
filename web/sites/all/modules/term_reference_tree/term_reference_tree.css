@@ -38,7 +38,7 @@
 }
 
 .no-term-reference-tree-button {
-  background-color: #ddd;
+  /* background-color: #ddd; BBC: remove default background color  */
 }
 
 .term-reference-tree-button.term-reference-tree-collapsed {

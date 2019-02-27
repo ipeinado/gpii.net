@@ -988,3 +988,9 @@ div.add-or-remove-shortcuts {
   -webkit-border-radius: 8px;
   border-radius: 8px;
 }
+/* Term Reference Tree customizations for primary/secondary widget */
+
+input.invisible-label + label {
+  position: absolute;
+  left: -1000em;
+}
