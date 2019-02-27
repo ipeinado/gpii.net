@@ -40,7 +40,7 @@ lando drush -y vset system.performance css.preprocess 0
 lando drush --yes dis googleanalytics
 
 # # enable modules
-lando drush --yes en reroute_email search_api_override patchinfo stage_file_proxy
+lando drush --yes en reroute_email search_api_override patchinfo stage_file_proxy devel admin_devel ds_devel
 
 # # adjust variables
 # lando drush vset --yes file_private_path '' # set to null to avoid errors in local environments (ex. /var/www/clients/client3/web18/private)
