@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * manufacturers_and_products.features.inc
