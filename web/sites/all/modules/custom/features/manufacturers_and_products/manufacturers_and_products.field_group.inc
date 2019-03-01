@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * manufacturers_and_products.field_group.inc
@@ -81,6 +82,7 @@ function manufacturers_and_products_field_group_info() {
     'weight' => '37',
     'children' => array(
       0 => 'field_features',
+      1 => 'field_features_primary',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
@@ -121,6 +123,33 @@ function manufacturers_and_products_field_group_info() {
     ),
   );
   $field_groups['group_field_os|node|product|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_languages_supported|node|product|form';
+  $field_group->group_name = 'group_languages_supported';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'product';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_taxonomies';
+  $field_group->data = array(
+    'label' => 'Lang',
+    'weight' => '39',
+    'children' => array(
+      0 => 'field_languages_supported',
+    ),
+    'format_type' => 'htab',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-languages-supported field-group-htab',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $field_groups['group_languages_supported|node|product|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = TRUE; /* Edit this to true to make a default field_group disabled initially */
@@ -187,11 +216,12 @@ function manufacturers_and_products_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Taxonomies',
-    'weight' => '22',
+    'weight' => '21',
     'children' => array(
-      0 => 'group_product_category',
-      1 => 'group_features',
-      2 => 'group_field_os',
+      0 => 'group_features',
+      1 => 'group_field_os',
+      2 => 'group_product_category',
+      3 => 'group_languages_supported',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -207,6 +237,7 @@ function manufacturers_and_products_field_group_info() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Features');
+  t('Lang');
   t('Needs Work');
   t('Needs and Wants');
   t('OS');

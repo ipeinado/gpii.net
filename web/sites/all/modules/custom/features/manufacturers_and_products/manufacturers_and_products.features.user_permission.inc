@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * manufacturers_and_products.features.user_permission.inc
@@ -56,6 +57,25 @@ function manufacturers_and_products_user_default_permissions() {
   $permissions['create field_product_categories'] = array(
     'name' => 'create field_product_categories',
     'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'create field_product_count'.
+  $permissions['create field_product_count'] = array(
+    'name' => 'create field_product_count',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'create field_short_description'.
+  $permissions['create field_short_description'] = array(
+    'name' => 'create field_short_description',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
@@ -119,6 +139,25 @@ function manufacturers_and_products_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'edit field_product_count'.
+  $permissions['edit field_product_count'] = array(
+    'name' => 'edit field_product_count',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit field_short_description'.
+  $permissions['edit field_short_description'] = array(
+    'name' => 'edit field_short_description',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit field_source'.
   $permissions['edit field_source'] = array(
     'name' => 'edit field_source',
@@ -169,6 +208,26 @@ function manufacturers_and_products_user_default_permissions() {
   $permissions['edit own field_product_categories'] = array(
     'name' => 'edit own field_product_categories',
     'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_product_count'.
+  $permissions['edit own field_product_count'] = array(
+    'name' => 'edit own field_product_count',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_short_description'.
+  $permissions['edit own field_short_description'] = array(
+    'name' => 'edit own field_short_description',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
+      'Contribution Editor' => 'Contribution Editor',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
@@ -236,6 +295,30 @@ function manufacturers_and_products_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'view field_product_count'.
+  $permissions['view field_product_count'] = array(
+    'name' => 'view field_product_count',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+      'non-authenticated user' => 'non-authenticated user',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view field_short_description'.
+  $permissions['view field_short_description'] = array(
+    'name' => 'view field_short_description',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+      'non-authenticated user' => 'non-authenticated user',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'view field_source'.
   $permissions['view field_source'] = array(
     'name' => 'view field_source',
@@ -285,6 +368,28 @@ function manufacturers_and_products_user_default_permissions() {
   $permissions['view own field_product_categories'] = array(
     'name' => 'view own field_product_categories',
     'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_product_count'.
+  $permissions['view own field_product_count'] = array(
+    'name' => 'view own field_product_count',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_short_description'.
+  $permissions['view own field_short_description'] = array(
+    'name' => 'view own field_short_description',
+    'roles' => array(
+      'Comment moderator' => 'Comment moderator',
+      'Content Admin' => 'Content Admin',
+      'Contribution Editor' => 'Contribution Editor',
+      'Translator' => 'Translator',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',

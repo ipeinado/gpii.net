@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * manufacturers_and_products.features.field_instance.inc
@@ -661,6 +662,45 @@ function manufacturers_and_products_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-manufacturer-field_product_count'.
+  $field_instances['node-manufacturer-field_product_count'] = array(
+    'bundle' => 'manufacturer',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'computed_field',
+        'settings' => array(),
+        'type' => 'computed_field_plain',
+        'weight' => 34,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_product_count',
+    'label' => 'Product Count',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'after',
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'computed_field',
+      'settings' => array(),
+      'type' => 'computed',
+      'weight' => 42,
+    ),
+  );
+
   // Exported field_instance:
   // 'node-manufacturer-field_regional_contact_informati'.
   $field_instances['node-manufacturer-field_regional_contact_informati'] = array(
@@ -898,7 +938,7 @@ function manufacturers_and_products_field_default_field_instances() {
           'thousand_separator' => ',',
         ),
         'type' => 'number_decimal',
-        'weight' => 5,
+        'weight' => 4,
       ),
       'search_results' => array(
         'label' => 'inline',
@@ -1253,7 +1293,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 35,
+        'weight' => 41,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -1286,7 +1326,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 17,
+      'weight' => 19,
     ),
   );
 
@@ -1357,6 +1397,140 @@ function manufacturers_and_products_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-product-field_features_primary'.
+  $field_instances['node-product-field_features_primary'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'default_value_label_token' => 0,
+    'deleted' => 0,
+    'description' => 'This field creates a primary feature relationship from product records to the features taxonomy. Tags in this field indicate a primary feature of the product (e.g. this feature is largely the reason the product exists). ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'i18n_taxonomy',
+        'settings' => array(),
+        'type' => 'i18n_taxonomy_term_reference_link',
+        'weight' => 24,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'ds',
+        'settings' => array(
+          'taxonomy_term_link' => TRUE,
+          'taxonomy_term_separator' => ', ',
+        ),
+        'type' => 'ds_taxonomy_separator',
+        'weight' => 7,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_features_primary',
+    'label' => 'Primary Features',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'after',
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'term_reference_tree',
+      'settings' => array(
+        'cascading_selection' => 0,
+        'filter_view' => '',
+        'leaves_only' => 0,
+        'max_depth' => '',
+        'parent_term_id' => '',
+        'select_all_helper' => 0,
+        'select_parents' => 1,
+        'start_minimized' => 1,
+        'token_display' => '',
+        'track_list' => 1,
+        'unselect_children' => 1,
+      ),
+      'type' => 'term_reference_tree',
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-product-field_languages_supported'.
+  $field_instances['node-product-field_languages_supported'] = array(
+    'bundle' => 'product',
+    'default_value' => NULL,
+    'default_value_label_token' => 0,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'i18n_taxonomy',
+        'settings' => array(),
+        'type' => 'i18n_taxonomy_term_reference_link',
+        'weight' => 23,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 36,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_languages_supported',
+    'label' => 'Languages Supported',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'after',
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'term_reference_tree',
+      'settings' => array(
+        'cascading_selection' => 0,
+        'filter_view' => '',
+        'leaves_only' => 0,
+        'max_depth' => '',
+        'parent_term_id' => '',
+        'select_all_helper' => 0,
+        'select_parents' => 0,
+        'start_minimized' => 0,
+        'token_display' => '',
+        'track_list' => 0,
+        'unselect_children' => 0,
+      ),
+      'type' => 'term_reference_tree',
+      'weight' => 27,
+    ),
+  );
+
   // Exported field_instance: 'node-product-field_license'.
   $field_instances['node-product-field_license'] = array(
     'bundle' => 'product',
@@ -1375,7 +1549,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 39,
+        'weight' => 44,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -1401,7 +1575,9 @@ function manufacturers_and_products_field_default_field_instances() {
     'widget' => array(
       'active' => 1,
       'module' => 'options',
-      'settings' => array(),
+      'settings' => array(
+        'checkall' => FALSE,
+      ),
       'type' => 'options_buttons',
       'weight' => 14,
     ),
@@ -1432,7 +1608,7 @@ function manufacturers_and_products_field_default_field_instances() {
           'link' => 1,
         ),
         'type' => 'entityreference_label',
-        'weight' => 16,
+        'weight' => 19,
       ),
       'search_results' => array(
         'label' => 'inline',
@@ -1487,7 +1663,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 17,
+        'weight' => 20,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -1541,7 +1717,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'search_results' => array(
         'label' => 'inline',
@@ -1612,7 +1788,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 38,
+        'weight' => 43,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -1665,7 +1841,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => 39,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -1792,7 +1968,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 40,
+        'weight' => 45,
       ),
       'search_results' => array(
         'label' => 'inline',
@@ -1824,7 +2000,7 @@ function manufacturers_and_products_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -1850,7 +2026,7 @@ function manufacturers_and_products_field_default_field_instances() {
           'token_display_unselected' => '',
         ),
         'type' => 'term_reference_tree',
-        'weight' => 7,
+        'weight' => 6,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -1920,7 +2096,7 @@ function manufacturers_and_products_field_default_field_instances() {
           'thumbnail_style' => 'magnific_popup_thumbnail',
         ),
         'type' => 'magnific_popup_file_field_formatter',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'search_results' => array(
         'label' => 'hidden',
@@ -2048,7 +2224,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
-        'weight' => 3,
+        'weight' => 2,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -2074,7 +2250,9 @@ function manufacturers_and_products_field_default_field_instances() {
     'widget' => array(
       'active' => 1,
       'module' => 'options',
-      'settings' => array(),
+      'settings' => array(
+        'checkall' => FALSE,
+      ),
       'type' => 'options_buttons',
       'weight' => 13,
     ),
@@ -2102,7 +2280,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 42,
+        'weight' => 48,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -2162,7 +2340,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 43,
+        'weight' => 49,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -2215,7 +2393,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 32,
+        'weight' => 40,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -2256,7 +2434,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'unselect_children' => 1,
       ),
       'type' => 'term_reference_tree',
-      'weight' => 21,
+      'weight' => 23,
     ),
   );
 
@@ -2282,7 +2460,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 41,
+        'weight' => 46,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -2313,7 +2491,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'size' => 80,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 18,
     ),
   );
 
@@ -2339,7 +2517,7 @@ function manufacturers_and_products_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 36,
+        'weight' => 42,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -2394,28 +2572,27 @@ function manufacturers_and_products_field_default_field_instances() {
         'weight' => 7,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'taxonomy_term',
     'field_name' => 'description_field',
     'label' => 'Description',
-    'required' => FALSE,
+    'required' => 0,
     'settings' => array(
+      'description_display' => 'after',
       'display_summary' => 0,
       'entity_translation_sync' => FALSE,
-      'hide_label' => array(
-        'entity' => 0,
-        'page' => 0,
-      ),
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 20,
+        'rows' => 5,
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => -5,
+      'weight' => 1,
     ),
   );
 
@@ -2429,17 +2606,56 @@ function manufacturers_and_products_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 1,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'taxonomy_term',
     'field_name' => 'field_qasearch_question',
     'label' => 'Question',
     'required' => 0,
     'settings' => array(
+      'description_display' => 'after',
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 8,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'taxonomy_term-product_category1-field_short_description'.
+  $field_instances['taxonomy_term-product_category1-field_short_description'] = array(
+    'bundle' => 'product_category1',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Short description of the term that will appear in the tooltip in power search and in the Q&A pages',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_short_description',
+    'label' => 'Short Description',
+    'required' => 0,
+    'settings' => array(
+      'description_display' => 'after',
       'entity_translation_sync' => FALSE,
       'text_processing' => 0,
       'user_register_form' => FALSE,
@@ -2448,10 +2664,10 @@ function manufacturers_and_products_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 2,
+        'size' => 60,
       ),
-      'type' => 'text_textarea',
-      'weight' => 31,
+      'type' => 'text_textfield',
+      'weight' => 2,
     ),
   );
 
@@ -2564,6 +2780,7 @@ function manufacturers_and_products_field_default_field_instances() {
   t('Features');
   t('Image');
   t('Include notes related to outstanding to-dos or ideas for future improvement here. ');
+  t('Languages Supported');
   t('License');
   t('Main Features');
   t('Manufacturer Reference');
@@ -2578,19 +2795,24 @@ function manufacturers_and_products_field_default_field_instances() {
   t('Overview');
   t('Phone');
   t('Phone 2');
+  t('Primary Features');
   t('Primary Specifications');
   t('Product Categories');
+  t('Product Count');
   t('Product Image');
   t('Product Type');
   t('Question');
   t('Reference to the manufacturer record for this product. ');
   t('Regional Contact Information');
   t('Select the features that are applicable for this product. ');
+  t('Short Description');
+  t('Short description of the term that will appear in the tooltip in power search and in the Q&A pages');
   t('The name of the manufacturer.');
   t('The source of this record. If the record is provided by a source database, this field will be set to a unique string identifying the source. ');
   t('The status of this record. Refer to <a href="https://ul.gpii.net/api/docs/#statuses>unified listing statuses</a> for a more detailed description of this field. If set to "deleted," please do not publish or otherwise edit the record. 
 
 ');
+  t('This field creates a primary feature relationship from product records to the features taxonomy. Tags in this field indicate a primary feature of the product (e.g. this feature is largely the reason the product exists). ');
   t('This is the node ID for a product that this record duplicates. It should only be updated programmatically as part of the duplicate identification process. ');
   t('Title');
   t('Trouble With');
