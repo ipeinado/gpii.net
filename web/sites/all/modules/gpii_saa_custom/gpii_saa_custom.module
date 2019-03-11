@@ -1852,14 +1852,16 @@ function gpii_saa_custom_import_sai_uids(&$entity) {
       $entity->field_uid['und'][0]['value'] = $uid;
       
 
-      // add the value to the latest draft as well
+      // if there's a pending revision for this node, add the UID value to the latest draft as well
       $revision_id = revisioning_get_latest_revision_id($entity->nid);
       $latest = node_load($value->nid, $revision_id, reset);
-      $latest->field_uid['und'][0]['value'] = $uid;
-      $latest->revision = TRUE;
-      $latest->revision_moderation = TRUE;
-      $latest-> log = 'UID Import Batch Update.';
-      node_save($latest);
+      if ($latest->is_pending == TRUE) {
+        $latest->field_uid['und'][0]['value'] = $uid;
+        $latest->revision = TRUE;
+        $latest->revision_moderation = TRUE;
+        $latest-> log = 'UID Import Batch Update.';
+        node_save($latest);
+      }
 
 
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been assigned UID ' . $uid  . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
