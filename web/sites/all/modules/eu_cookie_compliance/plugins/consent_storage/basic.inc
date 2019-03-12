@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Basic consent storage.
