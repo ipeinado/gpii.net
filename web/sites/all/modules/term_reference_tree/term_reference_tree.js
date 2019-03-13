@@ -288,7 +288,9 @@ function checkMaxChoices(item, checkbox) {
           ( item.has('input[type=checkbox]').size() > 0 ) ? 'checkbox' : 'radio';
 
       if(checkbox.is(':checked')) {
-        checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[type=checkbox]').each(function() {
+        var control_id = checkbox.attr('id');
+        var level_up_control_id = control_id.split('-').slice(0, length - 3).join('-');
+        checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[id^="' + level_up_control_id + '"]').each(function() {
           this.checked = true;
 
           if(track_list_container) {
