@@ -1,0 +1,26 @@
+diff --git a/handlers/views_handler_filter_combine.inc b/handlers/views_handler_filter_combine.inc
+index c1afcf5..11b55db 100644
+--- a/handlers/views_handler_filter_combine.inc
++++ b/handlers/views_handler_filter_combine.inc
+@@ -119,7 +119,7 @@ class views_handler_filter_combine extends views_handler_filter_string {
+       $words = $phrase ? array($words) : preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);
+       $placeholder = $this->placeholder();
+       foreach ($words as $word) {
+-        $where->where($field . " LIKE $placeholder", array($placeholder => '%' . db_like(trim($word, " ,!?")) . '%'));
++        $where->where($field . " REGEXP $placeholder", array($placeholder => '([[:<:]]|^)'. trim($word, " ,!?") . '([[:>:]]|$)'));
+       }
+     }
+ 
+diff --git a/handlers/views_handler_filter_string.inc b/handlers/views_handler_filter_string.inc
+index c50eff4..4244269 100644
+--- a/handlers/views_handler_filter_string.inc
++++ b/handlers/views_handler_filter_string.inc
+@@ -277,7 +277,7 @@ class views_handler_filter_string extends views_handler_filter {
+       $words = $phrase ? array($words) : preg_split('/ /', $words, -1, PREG_SPLIT_NO_EMPTY);
+       foreach ($words as $word) {
+         $placeholder = $this->placeholder();
+-        $where->condition($field, '%' . db_like(trim($word, " ,!?")) . '%', 'LIKE');
++        $where->condition($field, '([[:<:]]|^)'. trim($word, " ,!?") . '([[:>:]]|$)', 'REGEXP');
+       }
+     }
+ 

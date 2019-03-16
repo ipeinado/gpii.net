@@ -2517,10 +2517,10 @@ function views_process_check_options($element, &$form_state) {
  *   The string which should be trimmed.
  */
 function views_trim_text($alter, $value) {
-	//added decode_entity and check plain to get the actual value of special characters
+  //added decode_entity and check plain to get the actual value of special characters
 	$encoded_value = decode_entities(($value));	
-    if (drupal_strlen(($encoded_value)) > $alter['max_length']) {
-    $value = drupal_substr(($encoded_value), 0, $alter['max_length']);
+  if (drupal_strlen(($encoded_value)) > $alter['max_length']) {
+  $value = drupal_substr(($encoded_value), 0, $alter['max_length']);
     // @todo Replace this with cleanstring of CTools.
     if (!empty($alter['word_boundary'])) {
       $regex = "(.*)\b.+";
@@ -2536,7 +2536,7 @@ function views_trim_text($alter, $value) {
       }
     }
     // Remove scraps of HTML entities from the end of a strings.
-  	//remove the below line as value can have special characters also
+    //remove the below line as value can have special characters also
     // $value = rtrim(preg_replace('/(?:<(?!.+>)|&(?!.+;)).*$/us', '', $value));
 
     if (!empty($alter['ellipsis'])) {
