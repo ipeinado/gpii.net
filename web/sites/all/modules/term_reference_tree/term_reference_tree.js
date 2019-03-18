@@ -141,7 +141,10 @@ Drupal.behaviors.termReferenceTree = {
         var event_target = $(event.target);
         var control_id = event_target.attr('id');
         if (event_target.is(':checked') && control_id.match(/primary/g)) {
-          event_target.parent().next().children('input[type^="checkbox"]').click().trigger('change');
+          var secondary = event_target.parent().next().children('input[type^="checkbox"]');
+          if (!secondary.is(':checked')) {
+            secondary.click().trigger('change');
+          }
         }
       });
 
