@@ -185,8 +185,7 @@
   font-size: 1.8666rem;
   font-weight: 600; }
   #navbar .navbar-header p.lead a, #navbar .navbar-header p.lead a:active, #navbar .navbar-header p.lead a:hover, #navbar .navbar-header p.lead a:focus {
-    color: #A72534;
-    font-size: inherit; }
+    color: #A72534; }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: #A72534; }
