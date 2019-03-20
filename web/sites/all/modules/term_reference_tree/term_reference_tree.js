@@ -136,6 +136,18 @@ Drupal.behaviors.termReferenceTree = {
         //End process checkbox changes.
       } //End Want a cascading or unselecting checking.
 
+      // When primary checkboxes are checked check secondary checkbox as well
+      $(this).find('.form-checkbox').change(function(event) {
+        var event_target = $(event.target);
+        var control_id = event_target.attr('id');
+        if (event_target.is(':checked') && control_id.match(/primary/g)) {
+          var secondary = event_target.parent().next().children('input[type^="checkbox"]');
+          if (!secondary.is(':checked')) {
+            secondary.click().trigger('change');
+          }
+        }
+      });
+
       //On page load, check if the user wants a Select all helper. If so,
       //prepend the helper to the begining of the list.
       if($(this).hasClass('select-all-helper')) {
@@ -288,19 +300,24 @@ function checkMaxChoices(item, checkbox) {
           ( item.has('input[type=checkbox]').size() > 0 ) ? 'checkbox' : 'radio';
 
       if(checkbox.is(':checked')) {
-        checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[type=checkbox]').each(function() {
-          this.checked = true;
+        var control_id = checkbox.attr('id');
+        // only apply to normal and secondary trees
+        if (!control_id.match(/primary/g)) {
+          var level_up_control_id = control_id.split('-').slice(0, length - 3).join('-');
+          checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[id^="' + level_up_control_id + '"]').each(function() {
+            this.checked = true;
 
-          if(track_list_container) {
-            label_element = $(this).next();
-            addItemToTrackList(
-              track_list_container,         //Where to add new item.
-              label_element.html(),         //Text of new item.
-              $(label_element).attr('for'), //Id of control new item is for.
-              input_type                    //checkbox or radio
-            );
-          }
-        });
+            if(track_list_container) {
+              label_element = $(this).next();
+              addItemToTrackList(
+                track_list_container,         //Where to add new item.
+                label_element.html(),         //Text of new item.
+                $(label_element).attr('for'), //Id of control new item is for.
+                input_type                    //checkbox or radio
+              );
+            }
+          });
+        }
       }
     }
   }

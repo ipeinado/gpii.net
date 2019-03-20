@@ -14,3 +14,4 @@ patch[] = https://www.drupal.org/node/2271719 Issue 2271719, Patch #11
 patch[] = https://www.drupal.org/node/1514794 Issue 1514794, Patch #27
 patch[] = https://www.drupal.org/project/term_reference_tree/issues/1189530 Issue 1189530, Patch #17
 patch[] = https://www.drupal.org/project/term_reference_tree/issues/1547220 Issue 1547220, Patch #5
+patch[] = Custom code on lines 139-146 and 301-304
