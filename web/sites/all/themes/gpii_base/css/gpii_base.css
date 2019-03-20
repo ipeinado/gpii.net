@@ -6760,7 +6760,7 @@ body.i18n-de #gpii-translate-toggle_container {
     .navbar.navbar-default .navbar-header p.lead {
       font-size: 1.6rem;
       padding-top: 1.5rem;
-      margin: 0 0.5rem;
+      margin: 0 0.5rem 0 3rem;
       font-weight: 600; }
       @media (min-width: 768px) {
         .navbar.navbar-default .navbar-header p.lead {
