@@ -48,6 +48,9 @@ function gpii_saa_custom_permission() {
     'access similar search' => array(
       'title' => t('Access similar search pages.'),
     ),
+    'access taxonomy edit form' => array(
+      'title' => t('Access taxonomy edit form.'),
+    ),
     'order openmarketplace products' => array(
       'title' => t('Order products in the Open Marketplace.'),
     )
@@ -464,8 +467,113 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'access arguments' => array('access similar search'),
         'type' => MENU_CALLBACK,
       );
+      $items['product/taxonomy/edit/%node'] = array(
+        'title' => 'Edit Product Taxonomy',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('gpii_saa_custom_taxonomy_edit', 3),
+        'access arguments' => array('access taxonomy edit form'),
+        'type' => MENU_CALLBACK,
+      );
 
       return $items;
+    }
+
+
+    /**
+     * Builds an edit for for taxonomy adjustments
+     */
+
+    function gpii_saa_custom_taxonomy_edit($form, &$form_state, $node) {
+      // Save the node to the form state for use in the submit function
+      $form_state['node'] = $node;
+
+      // Set a field where the title can be edited
+      $form['title'] = array
+      (
+        '#type' => 'textfield',
+        '#title' => t('Product Title'),
+        '#default_value' => $node->title,
+        '#required' => TRUE,
+      );
+
+      $features_vocabulary = new stdClass();
+      $features_vocabulary->vid = 5;
+      $features_vocabulary->name = 'Features';
+      $features_vocabulary->machine_name = 'features';
+      $features_vocabulary->hierarchy = '1';
+
+
+      // @@ this is mostly working, but need to fix issue with select parents not working, clean up CSS and and set default values
+      $form['field_features'] = array(
+        '#type' => 'checkbox_tree',
+        '#tree' => TRUE,
+        '#field_name' => 'field_features',
+        '#attributes' => array(
+          'class' => array(
+            'field-type-taxonomy-term-reference',
+            'field-name-field-features',
+            'field-widget-term-reference-tree'
+          ),
+        ),
+        '#delta' => 0,
+        '#value' => array(),
+        '#attached' => array(
+          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+        ),
+        '#title' => t('Features'),
+        '#max_choices' => '-1',
+        '#max_depth' => '',
+        '#tree' => TRUE,
+        '#leaves_only' => 0,
+        '#filter_view' => '',
+        '#parent_tid' => 0,
+        '#track_list' => 1,
+        '#select_parents' => 1,
+        '#unselect_children' => 1,
+        '#cascading_selection' => 0,
+        '#start_minimized' => 1,
+        '#vocabulary' => $features_vocabulary,
+        '#default_value' => $node->field_features['und'],
+        '#token_display' => '',
+        '#value_key' => 'tid',
+        '#required' => FALSE,
+      );
+
+      $form['submit'] = array
+      (
+        '#type' => 'submit',
+        '#value' => t('Save'),
+      );
+
+      return $form;
+
+    }
+
+    function gpii_saa_custom_taxonomy_edit_submit($form, &$form_state) {
+      // Retrieve the node
+      $node = $form_state['node'];
+
+      // get the latest revision and save it
+      // $revision_id = revisioning_get_latest_revision_id($entity->nid);
+      // $latest = node_load($value->nid, $revision_id, reset);
+
+      // Set the submitted title to the node
+      $node->title = $form_state['values']['title'];
+      $node->field_features['und'] = array(
+        array('tid' => 4033)
+      );
+
+      // Save the node
+      $node->revision = TRUE;
+      $node->revision_moderation = FALSE;
+      $node-> log = 'Taxonomy Edits';
+      $node->category = 'tax_only';
+      echo '<pre>';
+      print_r($form_state);
+      echo '</pre>';
+      drupal_exit();
+      node_save($node);
     }
 
     /**
