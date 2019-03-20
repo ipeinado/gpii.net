@@ -218,7 +218,7 @@ function theme_term_tree_list($variables) {
  * display.
  */
 function _term_reference_tree_output_list_level(&$element, &$tree) {
-  if (isset($tree['children']) && is_array($tree['children']) && count($tree['children'] > 0)) {
+  if (isset($tree['children']) && is_array($tree['children']) && (count($tree['children']) > 0)) {
     $output = '<ul class="term">';
     $settings = $element['#display']['settings'];
     $tokens_selected = $settings['token_display_selected'];
