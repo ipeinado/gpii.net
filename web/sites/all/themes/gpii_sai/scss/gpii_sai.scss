@@ -1125,8 +1125,9 @@ body.node-type-product {
 
 
 .tree-classic li {
-  &:focus, &:active        {
-    outline: #484848 dotted thin;
+  &:focus, &:active      {
+    //outline: #484848 dotted thin; 
+    text-decoration: underline; 
     //background-color: lighten($color-gpii-sai-primary, 75%); // go with #f4f4f4 if pink doesn't fly;
   }
 }
@@ -1329,6 +1330,9 @@ a.tree-label {
       color: #000;
       &:not(.btn):visited {
         color: #000;
+      }
+      &:hover, &:focus {
+        text-decoration: underline !important;
       }
     }
   }

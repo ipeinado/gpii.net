@@ -815,7 +815,7 @@ body.node-type-product .term-tree-list .selected {
  * Advanced Search Overrides
  */
 .tree-classic li:focus, .tree-classic li:active {
-  outline: #484848 dotted thin; }
+  text-decoration: underline; }
 
 .tree-classic {
   padding-left: 1.5rem; }
@@ -983,6 +983,8 @@ a.tree-label {
   color: #000; }
   #saa-app .tree-classic a:not(.btn):visited {
     color: #000; }
+  #saa-app .tree-classic a:hover, #saa-app .tree-classic a:focus {
+    text-decoration: underline !important; }
 
 #saa-app .pagination {
   text-transform: lowercase; }

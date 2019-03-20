@@ -6462,20 +6462,20 @@ h1 {
   font-family: 'Roboto Slab', 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 2.35rem;
-  line-height: 2.35rem; }
+  line-height: 3rem; }
 
 h2 {
   font-weight: 600;
   font-size: 1.75rem;
-  line-height: 1.75rem; }
+  line-height: 2rem; }
 
 h3 {
   font-size: 1.4rem;
-  line-height: 1.4rem; }
+  line-height: 2rem; }
 
 h4 {
   font-size: 1.125rem;
-  line-height: 1.222rem; }
+  line-height: 1.5rem; }
 
 body.navbar-administration.navbar-is-fixed-top {
   border-top: 6rem solid transparent; }
@@ -6841,7 +6841,9 @@ body.i18n-de #gpii-translate-toggle_container {
   text-decoration: underline; }
 
 #block-system-main .field-type-taxonomy-term-reference a {
-  text-decoration: none !important; }
+  text-decoration: none; }
+  #block-system-main .field-type-taxonomy-term-reference a:hover, #block-system-main .field-type-taxonomy-term-reference a:focus {
+    text-decoration: underline; }
 
 #footer {
   border-bottom: 0.85rem solid #2783c6;
