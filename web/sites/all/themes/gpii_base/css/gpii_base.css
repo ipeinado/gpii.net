@@ -6492,9 +6492,14 @@ body.admin-menu .flc-prefsEditor-separatedPanel {
   top: 29px; }
 
 .navbar-fixed-top {
-  z-index: 10000000; }
+  z-index: 10000000;
+  position: relative; }
+  @media (min-width: 768px) {
+    .navbar-fixed-top {
+      position: relative; } }
   @media (min-width: 992px) {
     .navbar-fixed-top {
+      position: fixed;
       z-index: 499; } }
 
 #navbar nav {
