@@ -1,0 +1,206 @@
+<?php
+
+/**
+ * Implements hook_node_update().
+ */
+function ul_notifications_node_update($node) {
+  if ($node->type == 'product') {
+
+    $context = message_subscribe_get_basic_context('node', $node);
+
+    $context = ul_notifications_add_node_entity_references('node', $node, $context);
+
+    $subscriber_lists = ul_notifications_sort_subscribers('node', $node, $context);
+
+    // If a product is updated send email to those who are subscribed to the product
+    if (key_exists('product',$subscriber_lists)) {
+      $message_product = message_create('update_product', array('uid' => $node->uid));
+      $wrapper = entity_metadata_wrapper('message', $message_product);
+      $wrapper->field_node_ref->set($node);
+      $subscribe_options = array(
+        'uids' => $subscriber_lists['product']
+      );  
+      if (module_exists('message_subscribe')) { 
+        message_subscribe_send_message('node', $node, $message_product, array(), $subscribe_options, $context); 
+      }
+    }
+      
+    // If a product is updated send email to those who are subscribed to the company
+    if (key_exists('company',$subscriber_lists)) {
+      $message_company = message_create('update_company', array('uid' => $node->uid));
+      $wrapper = entity_metadata_wrapper('message', $message_company);
+      $wrapper->field_node_ref->set($node);
+      $subscribe_options = array(
+        'uids' => $subscriber_lists['company']
+      ); 
+      if (module_exists('message_subscribe')) { 
+        message_subscribe_send_message('node', $node, $message_company, array(), $subscribe_options, $context); 
+      }
+    }
+
+    // If a product is updated send email to those who are subscribed to the category
+    if (key_exists('category',$subscriber_lists)) {
+      $message_category = message_create('update_category', array('uid' => $node->uid));
+      $wrapper = entity_metadata_wrapper('message', $message_category);
+      $wrapper->field_node_ref->set($node);
+      $subscribe_options = array(
+        'uids' => $subscriber_lists['category']
+      ); 
+      if (module_exists('message_subscribe')) { 
+        message_subscribe_send_message('node', $node, $message_category, array(), $subscribe_options, $context); 
+      }
+    }
+  }
+}
+
+function ul_notifications_add_node_entity_references($entity_type, $entity, $context) {
+  // Add entity referenced nodes to context
+  if (module_exists('entityreference')) {
+    foreach (array_keys(field_info_instances($entity_type, $entity->type)) as $field_name) {
+      $field = field_info_field($field_name);
+
+      if ($field['type'] == 'entityreference' && $field['settings']['target_type'] == 'node') {
+        $wrapper = entity_metadata_wrapper($entity_type, $entity);
+        if ($nids = $wrapper->{$field_name}->value(array('identifier' => TRUE))) {
+          $nids = $field['cardinality'] == 1 ? array($nids) : $nids;
+          foreach ($nids as $nid) {
+            $context['node'][$nid] = $nid;
+          }
+        }
+      }
+    }
+  }
+  return $context;
+}
+
+function ul_notifications_sort_subscribers($entity_type, $entity, $context) {
+  $sorted_subscribers = array();
+
+  // Separate subscribers out by their flags. Use the first only to send one message only. Which flag shows first is based on the order of the flags settings page.
+  foreach (message_subscribe_get_subscribers($entity_type, $entity, message_create(''), array(), $context) as $uid => $value) {
+    $flag_array = explode('_', $value['flags'][0]);
+    $list_id = $flag_array[1];
+    if (!key_exists($list_id, $sorted_subscribers)) {
+      $sorted_subscribers[$list_id] = array();
+    }
+    
+    $sorted_subscribers[$list_id][$uid] = $value;
+  }
+  return $sorted_subscribers;
+}
+
+/**
+ * Implements hook_flag_default_flags().
+ */
+function ul_notifications_flag_default_flags() {
+  $flags = array();
+  // Exported flag: "Product".
+  $flags['subscribe_product'] = array(
+    'entity_type' => 'node',
+    'title' => 'Product',
+    'global' => 0,
+    'types' => array(
+      0 => 'product',
+    ),
+    'flag_short' => 'Follow Product',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unfollow Product',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => -10,
+    'show_in_links' => array(
+      'full' => 'full',
+      'teaser' => 'teaser',
+      'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
+      'token' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'i18n' => 0,
+    'api_version' => 3,
+  );
+  // Exported flag: "Company".
+  $flags['subscribe_company'] = array(
+    'entity_type' => 'node',
+    'title' => 'Company',
+    'global' => 0,
+    'types' => array(
+      0 => 'company',
+    ),
+    'flag_short' => 'Follow Company',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unfollow Company',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => -9,
+    'show_in_links' => array(
+      'full' => 'full',
+      'teaser' => 'teaser',
+      'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
+      'token' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'i18n' => 0,
+    'api_version' => 3,
+  );
+  // Exported flag: "Category".
+  $flags['subscribe_category'] = array(
+    'entity_type' => 'taxonomy_term',
+    'title' => 'Category',
+    'global' => 0,
+    'types' => array(
+      0 => 'product_category',
+    ),
+    'flag_short' => 'Follow Category',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unfollow Category',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => -8,
+    'show_in_links' => array(
+      'full' => 'full',
+      'token' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'api_version' => 3,
+  );
+
+  if (FLAG_API_VERSION == 2) {
+
+    $flags['subscribe_product']['api_version'] = $flags['subscribe_company']['api_version'] = $flags['subscribe_category']['api_version'] = 2;
+
+    $flags['subscribe_product']['content_type'] = 'node';
+    $flags['subscribe_company']['content_type'] = 'node';
+    $flags['subscribe_category']['content_type'] = 'taxonomy_term';
+
+    $flags['subscribe_product']['roles'] = $flags['subscribe_product']['import_roles'];
+    $flags['subscribe_company']['roles'] = $flags['subscribe_company']['import_roles'];
+    $flags['subscribe_category']['roles'] = $flags['subscribe_category']['import_roles'];
+
+    unset($flags['subscribe_product']['import_r4oles'], $flags['subscribe_company']['import_roles'], $flags['subscribe_category']['import_roles']);
+    unset($flags['subscribe_product']['entity_type'], $flags['subscribe_company']['entity_type'], $flags['subscribe_category']['entity_type']);
+  }
+
+  return $flags;
+}

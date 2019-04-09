@@ -1,0 +1,19 @@
+name = UL Notifications
+description = "Uses Message Stack to send UL notifications."
+core = 7.x
+package = Custom
+
+dependencies[] = message
+dependencies[] = message_subscribe
+dependencies[] = entity_token
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = token
+features[features_api][] = api:2
+features[field_base][] = field_node_ref
+features[field_instance][] = ul-notifications_update_product-field_node_ref
+features[field_instance][] = ul-notifications_update_company-field_node_ref
+features[field_instance][] = ul-notifications_update_category-field_node_ref
+features[message_type][] = update_product
+features[message_type][] = update_company
+features[message_type][] = update_category
