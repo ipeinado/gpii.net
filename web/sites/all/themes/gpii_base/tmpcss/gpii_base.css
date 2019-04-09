@@ -6870,38 +6870,36 @@ body.i18n-de #gpii-translate-toggle_container {
     margin-bottom: 2.5rem; }
   #feedback-wrap .block-webform {
     padding-bottom: 4rem;
-    background-color: #eceeec;
-    text-align: center; }
+    background-color: #eceeec; }
     #feedback-wrap .block-webform .container {
       margin-top: 0; }
-  #feedback-wrap .webform-component--comments {
-    padding-top: 1.5rem; }
-    #feedback-wrap .webform-component--comments label {
-      width: 8em;
-      text-align: right;
-      display: inline-block; }
-    #feedback-wrap .webform-component--comments .form-textarea-wrapper, #feedback-wrap .webform-component--comments textarea {
-      width: 35em; }
-  #feedback-wrap .webform-component-email {
-    max-width: 1120px;
-    position: relative;
-    display: block; }
-    #feedback-wrap .webform-component-email label {
-      width: 10em;
-      text-align: right;
-      position: relative;
-      display: inline-block;
-      padding-top: 2em; }
-    #feedback-wrap .webform-component-email .help-block {
-      color: #000;
-      position: relative;
-      left: 0.7rem;
-      top: -1rem; }
-    #feedback-wrap .webform-component-email input {
-      position: relative;
-      left: 5.4em;
-      top: -2rem;
-      width: 35em; }
+    #feedback-wrap .block-webform .webform-component--comments {
+      margin-top: 1rem; }
+    #feedback-wrap .block-webform .webform-component--comments, #feedback-wrap .block-webform .webform-component-email {
+      display: block; }
+    #feedback-wrap .block-webform .webform-container-inline label, #feedback-wrap .block-webform .webform-container-inline.webform-component-textarea .form-textarea-wrapper, #feedback-wrap .block-webform textarea {
+      width: 100%;
+      display: block; }
+  @media (min-width: 768px) {
+    #feedback-wrap .block-webform form > div:first-child .webform-component--comments, #feedback-wrap .block-webform form > div:first-child .webform-component-email, #feedback-wrap .block-webform form > div:first-child .webform-component--email {
+      display: grid;
+      grid-template-columns: 20% 70%;
+      grid-template-rows: auto;
+      grid-column-gap: 1rem;
+      grid-row-gap: 0.5rem;
+      grid-template-areas: "label input" "null help" "submit submit"; }
+      #feedback-wrap .block-webform form > div:first-child .webform-component--comments label, #feedback-wrap .block-webform form > div:first-child .webform-component-email label, #feedback-wrap .block-webform form > div:first-child .webform-component--email label {
+        grid-column-start: label;
+        text-align: right; }
+      #feedback-wrap .block-webform form > div:first-child .webform-component--comments textarea, #feedback-wrap .block-webform form > div:first-child .webform-component--comments input, #feedback-wrap .block-webform form > div:first-child .webform-component-email textarea, #feedback-wrap .block-webform form > div:first-child .webform-component-email input, #feedback-wrap .block-webform form > div:first-child .webform-component--email textarea, #feedback-wrap .block-webform form > div:first-child .webform-component--email input {
+        grid-column-start: input; }
+      #feedback-wrap .block-webform form > div:first-child .webform-component--comments .help-block, #feedback-wrap .block-webform form > div:first-child .webform-component--comments .description, #feedback-wrap .block-webform form > div:first-child .webform-component-email .help-block, #feedback-wrap .block-webform form > div:first-child .webform-component-email .description, #feedback-wrap .block-webform form > div:first-child .webform-component--email .help-block, #feedback-wrap .block-webform form > div:first-child .webform-component--email .description {
+        grid-column-start: help;
+        grid-row-start: help;
+        margin-top: 0; }
+    #feedback-wrap .block-webform form > div:first-child .form-actions {
+      margin-top: 0.5rem;
+      text-align: center; } }
 
 html {
   position: relative;
