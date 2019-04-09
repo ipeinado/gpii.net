@@ -188,8 +188,7 @@
   font-size: 1.8666rem;
   font-weight: 600; }
   #navbar .navbar-header p.lead a, #navbar .navbar-header p.lead a:active, #navbar .navbar-header p.lead a:hover, #navbar .navbar-header p.lead a:focus {
-    color: #A72534;
-    font-size: inherit; }
+    color: #A72534; }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: #A72534; }
@@ -669,62 +668,6 @@ body.front, body.page-node-1903 {
   #widget_stars_comments_part.widget_stars #histogram td > div {
     float: left; }
 
-#feedback-wrap .block-webform {
-  text-align: left; }
-
-#feedback-wrap .webform-component--comments label {
-  text-align: left;
-  margin-left: 0.25rem;
-  display: block; }
-
-#feedback-wrap .webform-component-email .description {
-  margin-top: 1rem; }
-
-#feedback-wrap .webform-component-email label {
-  display: block;
-  text-align: left;
-  width: 100%;
-  padding-top: 1rem;
-  margin-left: 0.25rem; }
-
-#feedback-wrap .webform-component-email input {
-  display: block;
-  left: auto;
-  top: auto;
-  margin-bottom: 1rem; }
-
-@media (min-width: 768px) {
-  #feedback-wrap .block-webform {
-    text-align: center; }
-  #feedback-wrap .webform-component--comments label {
-    text-align: right;
-    display: inline-block;
-    width: 10em;
-    margin: 0; }
-  #feedback-wrap .webform-component-email .description {
-    margin: 1rem 0 0.5rem;
-    padding-left: 11em; }
-  #feedback-wrap .webform-component-email label {
-    display: inline-block;
-    padding-top: 0;
-    width: 10em;
-    text-align: right;
-    margin: 0; }
-  #feedback-wrap .webform-component-email input {
-    display: inline-block;
-    left: 0;
-    top: 0;
-    margin-bottom: 1rem;
-    width: 35em; } }
-
-@media (min-width: 1200px) {
-  #feedback-wrap .webform-component--comments label {
-    width: 10em; }
-  #feedback-wrap .webform-component-email .description {
-    padding-left: 12em; }
-  #feedback-wrap .webform-component-email label {
-    width: 11em; } }
-
 .page-search-facet .block-facetapi ul, .page-search-similar-results .block-facetapi ul {
   list-style-type: none;
   padding-left: 1rem; }
@@ -816,7 +759,7 @@ body.node-type-product .term-tree-list .selected {
  * Advanced Search Overrides
  */
 .tree-classic li:focus, .tree-classic li:active {
-  outline: #484848 dotted thin; }
+  text-decoration: underline; }
 
 .tree-classic {
   padding-left: 1.5rem; }
@@ -984,6 +927,8 @@ a.tree-label {
   color: #000; }
   #saa-app .tree-classic a:not(.btn):visited {
     color: #000; }
+  #saa-app .tree-classic a:hover, #saa-app .tree-classic a:focus {
+    text-decoration: underline !important; }
 
 #saa-app .pagination {
   text-transform: lowercase; }

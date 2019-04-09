@@ -5,8 +5,8 @@ core = 7.x
 dependencies[] = user_restrictions
 configure = admin/config/people/user-restrictions
 
-; Information added by Drupal.org packaging script on 2018-08-05
-version = "7.x-1.1-rc2"
+; Information added by Drupal.org packaging script on 2018-11-05
+version = "7.x-1.1"
 core = "7.x"
 project = "user_restrictions"
-datestamp = "1533513487"
+datestamp = "1541453003"

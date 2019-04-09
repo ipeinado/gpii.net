@@ -249,8 +249,7 @@
         font-size: 1.8666rem;
         font-weight: 600;
       a, a:active, a:hover, a:focus {
-        color: $color-gpii-sai-primary;
-        font-size: inherit;
+        color: $color-gpii-sai-primary; 
       }
     }
   }
@@ -917,88 +916,6 @@ body.front, body.page-node-1903 {
   }
 }
 
-#feedback-wrap {  
-  .block-webform {
-    text-align: left;
-  }
-  .webform-component--comments {
-    label {
-      text-align: left;
-      margin-left: 0.25rem;
-      display: block;
-    }
-  }
-  .webform-component-email { 
-    .description {
-      margin-top: 1rem;
-    }
-    label {
-      display: block;
-      text-align: left;
-      width: 100%;
-      padding-top: 1rem;
-      margin-left: 0.25rem;
-    }
-    input { 
-      display: block; 
-      left: auto;
-      top: auto;
-      margin-bottom: 1rem;
-    } 
-  }
-  @media (min-width: $screen-sm) { 
-    .block-webform {
-      text-align: center;
-    }
-    .webform-component--comments {
-      label {
-        text-align: right;
-        display: inline-block;
-        width: 10em;
-        margin: 0; 
-      }
-    }
-    .webform-component-email { 
-      .description {
-        margin: 1rem 0 0.5rem;
-        padding-left: 11em;
-      }
-      label {
-        display: inline-block;
-        padding-top: 0;
-        width: 10em;
-        text-align: right;
-        margin: 0;
-      }
-      input {
-        display: inline-block;
-        left: 0;
-        top: 0;
-        margin-bottom: 1rem;
-        width: 35em;
-      }
-    }
-    
-  }
-  @media (min-width: $screen-lg) { 
-    
-    .webform-component--comments {
-      label {
-        width: 10em;
-      }
-    }
-    .webform-component-email { 
-      .description {
-        padding-left: 12em;
-      }
-      label {
-        width: 11em;
-      }
-    }
-    
-  }
-}
-
 
 // #############################################################################
 // Misc.
@@ -1126,8 +1043,9 @@ body.node-type-product {
 
 
 .tree-classic li {
-  &:focus, &:active        {
-    outline: #484848 dotted thin;
+  &:focus, &:active      {
+    //outline: #484848 dotted thin; 
+    text-decoration: underline; 
     //background-color: lighten($color-gpii-sai-primary, 75%); // go with #f4f4f4 if pink doesn't fly;
   }
 }
@@ -1330,6 +1248,9 @@ a.tree-label {
       color: #000;
       &:not(.btn):visited {
         color: #000;
+      }
+      &:hover, &:focus {
+        text-decoration: underline !important;
       }
     }
   }
