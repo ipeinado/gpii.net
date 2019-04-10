@@ -235,7 +235,14 @@ function _term_reference_tree_get_options(&$terms, &$allowed, $filter) {
 
 function get_primary_features() {
   // BBC: set up primary taxonomy terms ids as an array for use in checked status as tree is built
-  $nid = arg(1);
+  // if we're on an the dedicated taxonomy edit page, then use argument 3, else assume we're dealing ith the main edit page. 
+  if (arg(1) == 'taxonomy') {
+    $nid = arg(3);
+  }
+  else {
+    $nid = arg(1);
+  }
+  
   $checked_features = array();
   if (isset($nid) && is_numeric($nid)) {
     //dpm($nid);
