@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ul_notifications.features.inc
@@ -25,9 +26,9 @@ function ul_notifications_views_api($module = NULL, $api = NULL) {
  */
 function ul_notifications_default_message_type() {
   $items = array();
-  $items['update_product'] = entity_import('message_type', '{
-    "name" : "update_product",
-    "description" : "Update Product",
+  $items['update_category'] = entity_import('message_type', '{
+    "name" : "update_category",
+    "description" : "Update Category",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",
@@ -39,14 +40,14 @@ function ul_notifications_default_message_type() {
     "arguments" : null,
     "message_text" : { "und" : [
         {
-          "value" : "A product was updated",
+          "value" : "A product was updated in the category you follow",
           "format" : "filtered_html",
-          "safe_value" : "\u003Cp\u003EA product was updated\u003C\/p\u003E\n"
+          "safe_value" : "\\u003Cp\\u003EA product was updated in the category you follow\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "A product was updated [message:user:name] email: [message:user:mail]\r\nThe product [message:field-node-ref:title] was updated to:\r\n[message:field-node-ref:node-teaser]",
+          "value" : "[message:user:name] email: [message:user:mail]\\r\\nThe product [message:field-node-ref:title] was updated to:\\r\\n[message:field-node-ref:node-teaser]",
           "format" : "filtered_html",
-          "safe_value" : "\u003Cp\u003EA product was updated [message:user:name] email: [message:user:mail]\u003Cbr \/\u003E\nThe product [message:field-node-ref:title] was updated to:\u003Cbr \/\u003E\n[message:field-node-ref:node-teaser]\u003C\/p\u003E\n"
+          "safe_value" : "\\u003Cp\\u003E[message:user:name] email: [message:user:mail]\\u003Cbr \\/\\u003E\\nThe product [message:field-node-ref:title] was updated to:\\u003Cbr \\/\\u003E\\n[message:field-node-ref:node-teaser]\\u003C\\/p\\u003E\\n"
         }
       ]
     },
@@ -68,20 +69,20 @@ function ul_notifications_default_message_type() {
         {
           "value" : "A product was updated in the company you follow",
           "format" : "filtered_html",
-          "safe_value" : "\u003Cp\u003EA product was updated in the company you follow\u003C\/p\u003E\n"
+          "safe_value" : "\\u003Cp\\u003EA product was updated in the company you follow\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "[message:user:name] email: [message:user:mail]\r\nThe product [message:field-node-ref:title] made by [message:field-node-ref:field-company:title] was updated to:\r\n[message:field-node-ref:node-teaser]",
+          "value" : "[message:user:name] email: [message:user:mail]\\r\\nThe product [message:field-node-ref:title] made by [message:field-node-ref:field-company:title] was updated to:\\r\\n[message:field-node-ref:node-teaser]",
           "format" : "filtered_html",
-          "safe_value" : "\u003Cp\u003E[message:user:name] email: [message:user:mail]\u003Cbr \/\u003E\nThe product [message:field-node-ref:title] made by [message:field-node-ref:field-company:title] was updated to:\u003Cbr \/\u003E\n[message:field-node-ref:node-teaser]\u003C\/p\u003E\n"
+          "safe_value" : "\\u003Cp\\u003E[message:user:name] email: [message:user:mail]\\u003Cbr \\/\\u003E\\nThe product [message:field-node-ref:title] made by [message:field-node-ref:field-company:title] was updated to:\\u003Cbr \\/\\u003E\\n[message:field-node-ref:node-teaser]\\u003C\\/p\\u003E\\n"
         }
       ]
     },
     "rdf_mapping" : []
   }');
-  $items['update_category'] = entity_import('message_type', '{
-    "name" : "update_category",
-    "description" : "Update Category",
+  $items['update_product'] = entity_import('message_type', '{
+    "name" : "update_product",
+    "description" : "Update Product",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",
@@ -93,19 +94,18 @@ function ul_notifications_default_message_type() {
     "arguments" : null,
     "message_text" : { "und" : [
         {
-          "value" : "A product was updated in the category you follow",
+          "value" : "A product was updated",
           "format" : "filtered_html",
-          "safe_value" : "\u003Cp\u003EA product was updated in the category you follow\u003C\/p\u003E\n"
+          "safe_value" : "\\u003Cp\\u003EA product was updated\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "[message:user:name] email: [message:user:mail]\r\nThe product [message:field-node-ref:title] was updated to:\r\n[message:field-node-ref:node-teaser]",
+          "value" : "A product was updated [message:user:name] email: [message:user:mail]\\r\\nThe product [message:field-node-ref:title] was updated to:\\r\\n[message:field-node-ref:node-teaser]",
           "format" : "filtered_html",
-          "safe_value" : "\u003Cp\u003E[message:user:name] email: [message:user:mail]\u003Cbr \/\u003E\nThe product [message:field-node-ref:title] was updated to:\u003Cbr \/\u003E\n[message:field-node-ref:node-teaser]\u003C\/p\u003E\n"
+          "safe_value" : "\\u003Cp\\u003EA product was updated [message:user:name] email: [message:user:mail]\\u003Cbr \\/\\u003E\\nThe product [message:field-node-ref:title] was updated to:\\u003Cbr \\/\\u003E\\n[message:field-node-ref:node-teaser]\\u003C\\/p\\u003E\\n"
         }
       ]
     },
     "rdf_mapping" : []
   }');
-  
   return $items;
 }

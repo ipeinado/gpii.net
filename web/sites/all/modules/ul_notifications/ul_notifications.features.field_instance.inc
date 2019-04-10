@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * ul_notifications.features.field_instance.inc
@@ -10,9 +11,9 @@
 function ul_notifications_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'ul-notifications_update_product-field_node_ref'
-  $field_instances['ul-notifications_update_product-field_node_ref'] = array(
-    'bundle' => 'update_product',
+  // Exported field_instance: 'message-update_category-field_node_ref'.
+  $field_instances['message-update_category-field_node_ref'] = array(
+    'bundle' => 'update_category',
     'default_value' => NULL,
     'default_value_function' => '',
     'deleted' => 0,
@@ -29,6 +30,18 @@ function ul_notifications_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 3,
+      ),
+      'message_notify_email_body' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'message_notify_email_subject' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'message',
@@ -59,8 +72,8 @@ function ul_notifications_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'ul-notifications_update_company-field_node_ref'
-  $field_instances['ul-notifications_update_company-field_node_ref'] = array(
+  // Exported field_instance: 'message-update_company-field_node_ref'.
+  $field_instances['message-update_company-field_node_ref'] = array(
     'bundle' => 'update_company',
     'default_value' => NULL,
     'default_value_function' => '',
@@ -79,6 +92,18 @@ function ul_notifications_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 3,
       ),
+      'message_notify_email_body' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'message_notify_email_subject' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
     ),
     'entity_type' => 'message',
     'field_name' => 'field_node_ref',
@@ -108,9 +133,9 @@ function ul_notifications_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'ul-notifications_update_category-field_node_ref'
-  $field_instances['ul-notifications_update_category-field_node_ref'] = array(
-    'bundle' => 'update_category',
+  // Exported field_instance: 'message-update_product-field_node_ref'.
+  $field_instances['message-update_product-field_node_ref'] = array(
+    'bundle' => 'update_product',
     'default_value' => NULL,
     'default_value_function' => '',
     'deleted' => 0,
@@ -127,6 +152,18 @@ function ul_notifications_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 3,
+      ),
+      'message_notify_email_body' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'message_notify_email_subject' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'message',
