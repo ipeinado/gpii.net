@@ -1808,3 +1808,14 @@ div.discontinued {
   margin-left: 0.5rem; }
 
 /** End Assigned Tasks View */
+/** Guided Shopping **/
+body.page-guided-shopping .question {
+  margin-bottom: 1.5rem; }
+
+body.page-guided-shopping .showall {
+  margin-bottom: 1.5rem; }
+
+body.page-guided-shopping .categories-list .btn-default {
+  display: inline;
+  padding: 0.25rem 0.5rem;
+  margin-left: 1rem; }

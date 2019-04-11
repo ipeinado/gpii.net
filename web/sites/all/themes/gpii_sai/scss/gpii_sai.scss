@@ -2603,3 +2603,21 @@ div.discontinued {
 
  /** End Assigned Tasks View */
 
+ /** Guided Shopping **/@at-root
+
+ body.page-guided-shopping {
+   .question {
+     margin-bottom: 1.5rem;
+   }
+   .showall {
+     margin-bottom: 1.5rem; 
+   }
+   .categories-list {
+     .btn-default {
+       display: inline;
+       padding: 0.25rem 0.5rem;
+       margin-left: 1rem;
+     }
+   }
+ }
+
