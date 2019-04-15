@@ -2613,11 +2613,18 @@ div.discontinued {
      margin-bottom: 1.5rem; 
    }
    .categories-list {
+     a:first-of-type {
+       font-weight: 600;
+     }
      .btn-default {
        display: inline;
        padding: 0.25rem 0.5rem;
        margin-left: 1rem;
      }
    }
+
+   .categories-list > li:before {
+    color: $color-gpii-sai-primary;
+  }
  }
 

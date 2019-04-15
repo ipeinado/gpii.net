@@ -1815,7 +1815,13 @@ body.page-guided-shopping .question {
 body.page-guided-shopping .showall {
   margin-bottom: 1.5rem; }
 
+body.page-guided-shopping .categories-list a:first-of-type {
+  font-weight: 600; }
+
 body.page-guided-shopping .categories-list .btn-default {
   display: inline;
   padding: 0.25rem 0.5rem;
   margin-left: 1rem; }
+
+body.page-guided-shopping .categories-list > li:before {
+  color: #A72534; }
