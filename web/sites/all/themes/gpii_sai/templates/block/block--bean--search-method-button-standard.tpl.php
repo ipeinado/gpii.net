@@ -90,11 +90,42 @@
       <div class="col-lg-16 col-md-16 col-sm-24 search-method-input">
 
       <?php
-        $blockObject = block_load('views', '-exp-search-page');
-        $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-        $output = drupal_render($block);
-        print $output;
+        // $blockObject = block_load('views', '-exp-search-page');
+        // $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+        // $output = drupal_render($block);
+        // print $output;
+
+        // View now has multiple exposed filters and needs to be manually specified
       ?>
+        
+        <section id="block-views-exp-search-page" class="block block-views standard-search-filters contextual-links-region clearfix">
+          <form action="/search" method="get" id="views-exposed-form-search-page" accept-charset="UTF-8" class="hideSubmitButton-processed"><div>
+
+          <div class="views-exposed-form">
+            <div class="views-exposed-widgets clearfix">
+              <div id="edit-search-api-views-fulltext-wrapper" class="views-exposed-widget views-widget-filter-search_api_views_fulltext">
+                <label for="edit-search-api-views-fulltext">
+                Enter a few words that describe what you're looking for in the box below.
+                </label>
+                <div class="views-widget">
+                  <div class="form-item form-type-textfield form-item-search-api-views-fulltext" role="search">
+                    <div class="input-group">
+                      <input class="form-control form-text" data-search-api-autocomplete-search="search_api_views_search" data-min-autocomplete-length="3" type="text" id="edit-search-api-views-fulltext" name="search_api_views_fulltext" value="test" size="30" maxlength="128" autocomplete="OFF" aria-autocomplete="list">
+                    </div>
+                    <input type="hidden" id="edit-search-api-views-fulltext-autocomplete" value="http://dev.ul.gpii.net/index.php?q=search_api_autocomplete/search_api_views_search/-" disabled="disabled" class="autocomplete autocomplete-processed">
+                    <span class="element-invisible" aria-live="assertive" id="edit-search-api-views-fulltext-autocomplete-aria-live"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="views-exposed-widget views-submit-button">
+                <button type="submit" id="edit-submit-search" name="" value="Search" class="btn btn-primary form-submit">Search</button>
+              </div>
+            </div>
+          </div>
+
+          </div></form>
+        </section>
+
       </div>
     </div>
   </div>
