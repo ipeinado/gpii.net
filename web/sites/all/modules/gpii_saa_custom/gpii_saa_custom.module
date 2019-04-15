@@ -513,7 +513,18 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $features_vocabulary->hierarchy = '1';
 
 
-      // @@ this is mostly working, but need to fix issue with select parents not working, clean up CSS and and set default values
+      
+      // dpm($node->field_features['und']);
+      // dpm($node->field_features_primary['und']);
+
+      $secondary_features = $node->field_features['und'];
+      $secondary_features_selected = array();
+      foreach ($secondary_features as $key => $value) {
+        # This needs to create an array where ther value and tid are identical
+        $secondary_features_selected[$value['tid']] = $value['tid'];
+      }
+      //dpm($secondary_features_selected);
+
       $form['field_features'] = array(
         '#type' => 'checkbox_tree',
         '#tree' => TRUE,
@@ -544,7 +555,49 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#cascading_selection' => 0,
         '#start_minimized' => 1,
         '#vocabulary' => $features_vocabulary,
-        '#default_value' => $node->field_features['und'],
+        '#default_value' => $secondary_features_selected,
+        '#token_display' => '',
+        '#value_key' => 'tid',
+        '#required' => FALSE,
+      );
+      $primary_features = $node->field_features_primary['und'];
+      $primary_features_selected = array();
+      foreach ($primary_features as $key => $value) {
+        # This needs to create an array where ther value and tid are identical
+        $primary_features_selected[$value['tid']] = $value['tid'];
+      }
+      $form['field_features_primary'] = array(
+        '#type' => 'checkbox_tree',
+        '#tree' => TRUE,
+        '#field_name' => 'field_features_primary',
+        '#attributes' => array(
+          'class' => array(
+            //'element-invisible',
+            'field-type-taxonomy-term-reference',
+            'field-name-field-features',
+            'field-widget-term-reference-tree'
+          ),
+        ),
+        '#delta' => 0,
+        '#value' => array(),
+        '#attached' => array(
+          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+        ),
+        '#title' => t('Primary Features'),
+        '#max_choices' => '-1',
+        '#max_depth' => '',
+        '#tree' => TRUE,
+        '#leaves_only' => 0,
+        '#filter_view' => '',
+        '#parent_tid' => 0,
+        '#track_list' => 1,
+        '#select_parents' => 1,
+        '#unselect_children' => 1,
+        '#cascading_selection' => 0,
+        '#start_minimized' => 1,
+        '#vocabulary' => $features_vocabulary,
+        '#default_value' => $primary_features_selected,
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
@@ -570,24 +623,24 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
       // Set the submitted title to the node
       $node->title = $form_state['values']['title'];
-      $node->field_features['und'] = array(
-        array('tid' => 4033)
-      );
+      // @@ defaults are working, but seem not to be passed in for save
+      $node->field_features = $form_state['values']['field_features'];
+      $node->field_features_primary = $form_state['values']['field_features_primary'];
 
       // Save the node
       $node->revision = TRUE;
       $node->revision_moderation = FALSE;
       $node-> log = 'Taxonomy Edits';
       $node->category = 'tax_only';
-      echo '<pre>';
-      print_r($form_state);
-      echo '</pre>';
-      drupal_exit();
+      // echo '<pre>';
+      // print_r($form_state['values']['field_features_primary']);
+      // echo '</pre>';
+      // drupal_exit();
       node_save($node);
     }
 
     /**
-     * Builds a form that subscribers can use to create new packages.
+     * Builds a form that users can use to create new orders.
      */
     function gpii_saa_custom_order_form($form, &$form_state, $nid) {
       // Use the values from $form_state['storage'] to determine what to do with regard to rendering the form

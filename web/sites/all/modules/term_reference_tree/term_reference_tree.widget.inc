@@ -454,7 +454,7 @@ function theme_checkbox_tree_item($variables) {
   $sm = $element['#level_start_minimized'] ? ' term-reference-tree-collapsed' : '';
 
   if (is_array($children) && count($children) > 1) {
-    $output .= "<div class='term-reference-tree-button$sm'></div>";
+    $output .= "<div class='term-reference-tree-button'></div>";
   }
   elseif (!$element['#leaves_only']) {
     $output .= "<div class='no-term-reference-tree-button'></div>";
@@ -487,6 +487,7 @@ function theme_checkbox_tree_item($variables) {
           $primary['#name'] = str_replace("features","features_primary", $primary['#name']);
         }
         //dpm($primary['#on_value']);
+        //dpm($element['#primary']);
         if (isset($primary['#on_value']) && in_array($primary['#on_value'], $element['#primary'])) {
           $primary['#checked'] = TRUE;
         }

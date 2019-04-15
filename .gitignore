@@ -16,6 +16,7 @@ web/sites/all/themes/devspace/node_modules/*
 web/sites/all/themes/devspace/tmpcss/*
 web/sites/all/themes/*/node_modules/*
 web/sites/all/themes/*tmpcss/*
+web/sites/all/translations/*
 
 # Ignore local symlinks
 web/sites/default
@@ -39,3 +40,5 @@ web/sites/vendor/composer/LICENSE
 web/sites/vendor/composer/autoload_real.php
 web/sites/vendor/composer/installed.json
 .vscode/last.sql
+web/sites/ngrok.io
+web/sites/all/translations/devel-7.x-1.6.de.po
