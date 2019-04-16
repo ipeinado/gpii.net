@@ -335,6 +335,16 @@ function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['save']['#attributes'] = array('class' => array('btn-primary'));
     $form['payment_line_items']['#markup'] = '<h2>Payment Summary</h2>' . $form['payment_line_items']['#markup'];
   }
+
+  if ($form_id == 'views_exposed_form') {
+    foreach ($form_state['input'] as $input_key => $value) {
+      // If there is an argument in input that is not in the keys of the form
+      // then that argument must be added as a hidden field to the form.
+      if (!isset($form[$input_key])) {
+        _persist_url_params_param_from_array($form, $input_key, $input_key, $value);
+      }
+    }
+  }
 }
 
 
@@ -2905,3 +2915,23 @@ function gpii_saa_custom_similar_submit($form, &$form_state) {
     return;
   }
 
+/**
+ * Converts an array that was previously parsed from the url arguments
+ * to an array of hidden values that will be added to the form so these arguments
+ * are not lost in form submission.
+ */
+function _persist_url_params_param_from_array(&$form, $root_key, $key, $value, $array_key = '') {
+  if (!is_array($value)) {
+    $form[$key] = array(
+      '#type' => 'hidden',
+      '#value' => $value,
+      '#name' => "$root_key$array_key",
+    );
+  }
+  else {
+    $form[$key] = array();
+    foreach ($value as $val_key => $val_value) {
+      _persist_url_params_param_from_array($form[$key], $root_key, $val_key, $val_value, $array_key . "[$val_key]");
+    }
+  }
+}
