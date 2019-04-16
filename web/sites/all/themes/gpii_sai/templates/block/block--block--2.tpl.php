@@ -145,15 +145,19 @@
 
         if (related_terms_from_php.length >= 1) {
           var related_params = parseQueryString(query);
-          var reg = /f\[(\d+)\]/g;
+          var reg1 = /f\[(\d+)\]/g;
+          var reg2 = /field_product_categories/;
           var f_index = -1; // facet index
           Object.keys(related_params).forEach(key => {
             let value = related_params[key];
-            key.replace(reg, function (g0, g1) {
+            key.replace(reg1, function (g0, g1) {
               if (g1 > f_index) {
                 f_index = g1;
               }
             });
+            if (reg2.test(key)) {
+                delete related_params[key];
+            }
           });
           f_index++;
           related_params['search_api_views_fulltext'] = '';
