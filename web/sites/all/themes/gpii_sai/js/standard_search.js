@@ -53,15 +53,19 @@ var query = decodeURIComponent(url[1]);
             if (filter_id == 'edit-show-discontinued') {
                 if ($(this).is(':checked')) {
                     $('#block-views-exp-search-page #edit-field-status-1').prop('checked', false);
-                    $('#block-views-exp-search-page #edit-field-status-2').prop('checked', true);
+                    $('#block-views-exp-search-page #edit-field-status-2').prop('checked', true).trigger('change');
                 }
                 else {
-                    $('#block-views-exp-search-page #edit-field-status-1').prop('checked', true);
                     $('#block-views-exp-search-page #edit-field-status-2').prop('checked', false);
+                    $('#block-views-exp-search-page #edit-field-status-1').prop('checked', true).trigger('change');
                 }
             }
+            else if (filter_id == 'edit-sort-by' && $('#block-block-2 #' + filter_id).val() == 'search_api_aggregation_2') {
+                $('#block-views-exp-search-page #edit-sort-order').val('ASC');
+                $('#block-views-exp-search-page #' + filter_id).val($(this).val()).trigger('change');
+            }
             else {
-                $('#block-views-exp-search-page #' + filter_id).val($(this).val());
+                $('#block-views-exp-search-page #' + filter_id).val($(this).val()).trigger('change');
             }
         });
     });

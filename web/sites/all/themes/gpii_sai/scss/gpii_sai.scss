@@ -490,8 +490,14 @@ body.page-search {
     .views-widget-filter-field_status,
     .views-widget-sort-by,
     .views-widget-sort-order,
-    .views-widget-per-page {
+    .views-widget-per-page,
+    .views-widget-filter-field_product_categories1,
+    .views-widget-filter-field_product_categories1_1 {
       display: none;
+    }
+
+    #edit-reset {
+      right: -2.2rem;
     }
   }
 
@@ -523,7 +529,7 @@ body.page-search {
 
     .form-item {
       padding: 0 2.5rem;
-    }
+    } 
 
     .views-exposed-widget:nth-child(-n+3) {
       padding: 0;
