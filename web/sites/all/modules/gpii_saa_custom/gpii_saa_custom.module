@@ -613,7 +613,8 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
       // Set the submitted title to the node
       $node->title = $form_state['values']['title'];
-      // @@ defaults are working, but seem not to be passed in for save
+      // @@ defaults are working, but seem not to be passed in for save, 
+      // looks like we need to find a way to differentiate primary from secondary so taht we can correctly save the results
       $node->field_features = $form_state['values']['field_features'];
       $node->field_features_primary = $form_state['values']['field_features_primary'];
 
@@ -622,11 +623,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $node->revision_moderation = FALSE;
       $node-> log = 'Taxonomy Edits';
       $node->category = 'tax_only';
-      // echo '<pre>';
-      // print_r($form_state['values']['field_features_primary']);
-      // echo '</pre>';
-      // drupal_exit();
-      node_save($node);
+      echo '<pre>';
+      print_r($form_state['values']['field_features']);
+      echo '</pre>';
+      drupal_exit();
+      //node_save($node);
     }
 
     /**
@@ -1491,10 +1492,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         foreach ($record as $key => $value) {
           $output[] = (object) array_filter((array) $value);
         }
-
-
-        // @@ combine body with main_features, primary_specs, options, and more_info
-
         
         // combine the various description fields back into a single body field so that they can be digested by the UL API and external systems
         foreach ($output as $key => $value) {
