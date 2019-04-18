@@ -48,8 +48,12 @@ var query = decodeURIComponent(url[1]);
             
             var target = $("#block-views-exp-search-page #" + button.attr('data-edit'));
             var value = $(this).attr('value');
-            if (wrapper.hasClass('remote-sort-by') && value == 'search_api_aggregation_2') {
-                $('#block-block-2 .remote-sort-order a[value="ASC"]').trigger('click');
+            var order = 'DESC';
+            if (wrapper.hasClass('remote-sort-by')) {
+                if (value == 'search_api_aggregation_2') {
+                    order = 'ASC';
+                }
+                $('#block-block-2 .remote-sort-order a[value="' + order + '"]').trigger('click');
             }
             target.val(value).trigger('change');
 
