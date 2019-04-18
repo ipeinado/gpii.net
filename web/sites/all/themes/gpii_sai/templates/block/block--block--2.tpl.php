@@ -90,6 +90,7 @@
 
         var related_terms_from_php = {};
 
+        // related_terms_from_php will be set by php bellow this comment. If it is not set, there was no related terms.
         <?php 
 
           $search_term = $_GET['search_api_views_fulltext'];
@@ -176,48 +177,55 @@
       });
     }(jQuery));
   </script>
-  <div class="views-exposed-form">
-    <div class="views-exposed-widgets clearfix">
-      <div class="views-exposed-widget views-widget-sort-by">
-        <div class="form-item form-type-select form-item-sort-by">
-          <label for="edit-sort-by">Sort: </label>
-          <select class="form-control form-select" id="edit-sort-by" name="sort_by">
-            <option value="search_api_relevance">Relevance</option>
-            <option value="search_api_aggregation_2">Alphabetical</option>
-          </select>
-        </div>
+  <div class="remote-filters">
+
+    <div class="btn-group" role="group">
+
+      <div class="btn-group remote-wrapper remote-sort-by" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-edit="edit-sort-by">
+          Sort: <span class="current-value">Relevance</span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a value="search_api_relevance">Relevance</a></li>
+          <li><a value="search_api_aggregation_2">Alphabetical</a></li>
+        </ul>
       </div>
 
-      <div class="views-exposed-widget views-widget-sort-order">
-        <div class="form-item form-type-select form-item-sort-order">
-          <select class="form-control form-select" id="edit-sort-order" name="sort_order">
-            <option value="ASC">Ascending</option>
-            <option selected="selected" value="DESC">Descending</option>
-          </select>
-        </div>
+      <div class="btn-group remote-wrapper remote-sort-order" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-edit="edit-sort-order">
+          <span class="current-value">Descending</span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a value="ASC">Ascending</a></li>
+          <li><a value="DESC">Descending</a></li>
+        </ul>
       </div>
 
-      <div class="views-exposed-widget views-widget-per-page">
-        <div class="form-item form-type-select form-item-items-per-page">
-          <label for="edit-items-per-page">Count: </label>
-          <select class="form-control form-select" id="edit-items-per-page" name="items_per_page">
-            <option value="15">15</option>
-            <option selected="selected" value="25">25</option>
-            <option value="50">50</option><option value="100">100</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="views-exposed-widget views-widget-show-discontinued">
-        <div class="form-item form-type-checkbox">
-          <label for="edit-show-discontinued">
-            <input class="form-checkbox" type="checkbox" id="edit-show-discontinued" name="show_discontinued" />
-            Show discontinued items
-          </label>
-        </div>
+      <div class="btn-group remote-wrapper remote-items-per-page" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-edit="edit-items-per-page">
+          Count: <span class="current-value">25</span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a value="15">15</a></li>
+          <li><a value="25">25</a></li>
+          <li><a value="50">50</a></li>
+          <li><a value="100">100</a></li>
+        </ul>
       </div>
 
     </div>
+
+    <div class="checkbox remote-wrapper remote-show-discontinued">
+      <label>
+        <input type="checkbox"> Show discontinued items
+      </label>
+    </div>
+
+    <div class="btn-group" role="group">
+      <button type="submit" class="btn btn-primary remote-submit" data-edit="edit-submit-search">Search</button>
+      <button type="submit" class="btn btn-default remote-reset" data-edit="edit-reset">Reset</button>
+    </div>
+
   </div>
 
 </section>

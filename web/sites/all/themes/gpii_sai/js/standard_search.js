@@ -39,35 +39,48 @@ var query = decodeURIComponent(url[1]);
             location.href = base_url + "?" + new_query;
         });
 
-        // set the initial values
-        $('#block-block-2 #edit-sort-by').val($('#block-views-exp-search-page #edit-sort-by').val());
-        $('#block-block-2 #edit-sort-order').val($('#block-views-exp-search-page #edit-sort-order').val());
-        $('#block-block-2 #edit-items-per-page').val($('#block-views-exp-search-page #edit-items-per-page').val());
-        if ($('#block-views-exp-search-page #edit-field-status-2').is(':checked')) {
-            $('#block-block-2 #edit-show-discontinued').prop('checked', true);
-        }
+        // Event for Dropdowns
+        $('#block-block-2 .remote-wrapper ul').on('click', 'a', function() {
+            var wrapper = $(this).parents('.remote-wrapper');
+            var button = wrapper.children('button');
+            var label = $(this).text();
+            button.children('.current-value').text(label);
+            
+            var target = $("#block-views-exp-search-page #" + button.attr('data-edit'));
+            var value = $(this).attr('value');
+            if (wrapper.hasClass('remote-sort-by') && value == 'search_api_aggregation_2') {
+                $('#block-block-2 .remote-sort-order a[value="ASC"]').trigger('click');
+            }
+            target.val(value).trigger('change');
 
-        // change values when changed by user
-        $('#block-block-2 select, #block-block-2 input').on('change', function() {
-            var filter_id = $(this).attr('id');
-            if (filter_id == 'edit-show-discontinued') {
-                if ($(this).is(':checked')) {
-                    $('#block-views-exp-search-page #edit-field-status-1').prop('checked', false);
-                    $('#block-views-exp-search-page #edit-field-status-2').prop('checked', true).trigger('change');
+        });
+
+        // Event for Checkboxes
+        $('#block-block-2 .checkbox').on('change', 'input', function() {
+            var wrapper = $(this).parents('.remote-wrapper');
+            var checkbox = wrapper.find('input');
+            if (wrapper.hasClass('remote-show-discontinued')) {
+                if (checkbox.is(':checked')) {
+                    $('#block-views-exp-search-page #edit-field-status-2').trigger('click');
                 }
                 else {
-                    $('#block-views-exp-search-page #edit-field-status-2').prop('checked', false);
-                    $('#block-views-exp-search-page #edit-field-status-1').prop('checked', true).trigger('change');
+                    $('#block-views-exp-search-page #edit-field-status-1').trigger('click');
                 }
             }
-            else if (filter_id == 'edit-sort-by' && $('#block-block-2 #' + filter_id).val() == 'search_api_aggregation_2') {
-                $('#block-views-exp-search-page #edit-sort-order').val('ASC');
-                $('#block-views-exp-search-page #' + filter_id).val($(this).val()).trigger('change');
-            }
-            else {
-                $('#block-views-exp-search-page #' + filter_id).val($(this).val()).trigger('change');
-            }
         });
+
+        // Event for Buttons
+        $('#block-block-2 button:not(.dropdown-toggle)').on('click', function() {
+            $("#" + $(this).attr('data-edit')).trigger('click');
+        });
+
+        // set the initial values
+        $('#block-block-2 .remote-sort-by a[value="' + $('#block-views-exp-search-page #edit-sort-by').val() + '"]').trigger('click');
+        $('#block-block-2 .remote-sort-order a[value="' + $('#block-views-exp-search-page #edit-sort-order').val() + '"]').trigger('click');
+        $('#block-block-2 .remote-items-per-page a[value="' + $('#block-views-exp-search-page #edit-items-per-page').val() + '"]').trigger('click');
+        if ($('#block-views-exp-search-page #edit-field-status-2').is(':checked')) {
+            $('#block-block-2 .remote-show-discontinued').trigger('click');
+        }
     });
 
 }(jQuery));
