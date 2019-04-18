@@ -2118,7 +2118,7 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
       
       if (isset($latest->field_duplicate_nid['und'][0]['value'])) {
         //dpm($latest->field_duplicate_nid['und'][0]['value']);
-
+        
         // If the record is a duplicate, go ahead and programmatically create the redirect
         // First, create an object with our redirect parameters
         $redirect = new stdClass();
@@ -2132,8 +2132,21 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
 
         watchdog('gpii_saa_custom', 'Created redirect from node/' . $latest->nid . ' to node/' . $latest->field_duplicate_nid['und'][0]['value'] . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
 
-        // Next, save the redirect
-        redirect_save($redirect);
+        // make sure the redirect doesn't already exist 
+
+        //dpm(redirect_load_by_source($redirect->source));
+
+        $existing_redirect = redirect_load_by_source($redirect->source);
+
+        if($existing_redirect->status) {
+          // do nothing
+         }
+         else {
+          // save the redirect
+          redirect_save($redirect);
+         }
+
+        
 
         // we also want to create a redirect for links coming in from the UL API (ex. https://ul.gpii.net/uid/1519224321322-58025810)
         $redirect = new stdClass();
@@ -2147,7 +2160,16 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
 
         watchdog('gpii_saa_custom', 'Created redirect from uid/' . $latest->field_uid['und'][0]['value'] . ' to node/' . $latest->field_duplicate_nid['und'][0]['value'] . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
 
-        redirect_save($redirect);
+        $existing_redirect = redirect_load_by_source($redirect->source);
+
+        if($existing_redirect->status) {
+          // do nothing
+         }
+         else {
+          // save the redirect
+          redirect_save($redirect);
+         }
+        
 
       }
       
