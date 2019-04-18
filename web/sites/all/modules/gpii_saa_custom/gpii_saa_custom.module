@@ -2203,7 +2203,7 @@ function gpii_saa_custom_delete_records_vbo($uid) {
   $curl = curl_init();
 
   curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.ul.gpii.net/api/product/unified/" . $uid,
+    CURLOPT_URL => "https://api.ul.gpii.net/api/product/unified/" . $uid . "?noRedirect=true", // use noRedirect to ensure that we're getting status on the correct source record
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
