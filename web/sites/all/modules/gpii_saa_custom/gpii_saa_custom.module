@@ -948,6 +948,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
                 'lang' => $value->language,
                 'OriginalUrl' => $value->sourceData->OriginalUrl,
                 'EnglishUrl' => $value->sourceData->EnglishUrl,
+                'SourceUrl' => $value->sourceData->{'Link-to-Product-Page'},
                 'name' => $value->name
                 );
             }
@@ -967,6 +968,10 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               $EnglishUrl =  filter_var($links[0]['EnglishUrl'], FILTER_VALIDATE_URL);
             }
 
+            if (isset($links[0]['SourceUrl'])) {
+              $SourceUrl =  filter_var($links[0]['SourceUrl'], FILTER_VALIDATE_URL);
+            }
+
             if (isset($OriginalUrl)) {
               drupal_goto($OriginalUrl, array('external' => TRUE), 303);
             }
@@ -974,6 +979,10 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             elseif (isset($EnglishUrl)) {
                drupal_goto($EnglishUrl, array('external' => TRUE), 303);
             }
+
+            elseif (isset($SourceUrl)) {
+              drupal_goto($SourceUrl, array('external' => TRUE), 303);
+           }
 
             else {
               drupal_set_message(t('Error: Invalid Link. Please return to the previous page.'), 'error', FALSE);
