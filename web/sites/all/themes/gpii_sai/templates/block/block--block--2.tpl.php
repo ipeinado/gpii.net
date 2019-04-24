@@ -232,4 +232,8 @@
 
   </div>
 
+  <?php if ($_GET['field_product_categories1_1']): ?>
+    <p><strong>Note: </strong>Some products in this list have been excluded. Please reset your search to view all categories.</p> 
+  <?php endif;?>
+
 </section>
