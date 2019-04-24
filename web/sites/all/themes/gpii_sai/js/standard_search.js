@@ -83,7 +83,7 @@ var query = decodeURIComponent(url[1]);
         $('#block-block-2 .remote-sort-order a[value="' + $('#block-views-exp-search-page #edit-sort-order').val() + '"]').trigger('click');
         $('#block-block-2 .remote-items-per-page a[value="' + $('#block-views-exp-search-page #edit-items-per-page').val() + '"]').trigger('click');
         if ($('#block-views-exp-search-page #edit-field-status-2').is(':checked')) {
-            $('#block-block-2 .remote-show-discontinued').trigger('click');
+            $('#block-block-2 .remote-show-discontinued input').trigger('click');
         }
     });
 
