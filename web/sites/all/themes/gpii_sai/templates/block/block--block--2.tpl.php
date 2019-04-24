@@ -90,7 +90,7 @@
 
         var related_terms_from_php = {};
 
-        // related_terms_from_php will be set by php bellow this comment. If it is not set, there was no related terms.
+        // related_terms_from_php will be set here. If it is not set, there were no related terms.
         <?php 
 
           $search_term = $_GET['search_api_views_fulltext'];
@@ -118,7 +118,11 @@
           
           $query_string = urldecode(http_build_query($query));
           $query_string = preg_replace('/\[\d+\]/', '', $query_string);
-          $solr_url = "http://192.168.123.32:8983/solr/unified_listing";
+          
+          // get the active search_api_solr information
+          $solr = search_api_server_load_multiple(FALSE, $conditions);
+          $solr_url = $solr['stg06']->options['scheme'] . '://' . $solr['stg06']->options['host'] . ':' . $solr['stg06']->options['port'] . $solr['stg06']->options['path'];
+          
           $search_url = $solr_url . "/select?" . $query_string;
 
           if ($search_term . '' != '') {

@@ -246,7 +246,7 @@ body.page-search .view-search {
 
 @media (min-width: 992px) {
   #block-views-exp-search-page {
-    width: 85%; } }
+    width: 100%; } }
 
 #block-views-exp-search-page label {
   font-weight: 600; }
@@ -255,8 +255,7 @@ body.page-search .view-search {
   line-height: 1.3em; }
 
 #block-views-exp-search-page #edit-search-api-views-fulltext-wrapper {
-  width: -webkit-calc(100% - 2rem);
-  width: calc(100% - 2rem);
+  width: 100%;
   padding: .5em 0 0; }
 
 #block-views-exp-search-page .form-control {
@@ -316,63 +315,74 @@ body.page-search .view-search {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
+    -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
     -webkit-box-align: start;
     -webkit-align-items: flex-start;
         -ms-flex-align: start;
             align-items: flex-start; }
   .page-search .current-search-item-active-items li {
-    background-color: #8D3435;
+    background-color: #A72534;
     margin-bottom: 5px;
     margin-right: 12px;
     padding: 1px 6px;
     position: relative;
     color: white;
     font-weight: bold;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px; }
-  .page-search .current-search-item-active-items li:after {
-    left: 100%;
-    top: 0%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-left-color: #8D3435;
-    border-width: 11px;
-    margin-top: 0px; }
+    border-radius: 4px;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1.25em;
+        grid-template-columns: 1fr 1.25em; }
   .page-search .current-search-item-active-items li a {
     position: relative;
-    visibility: hidden; }
+    color: #A72534;
+    -ms-grid-column: 2;
+        grid-column: 2;
+    -ms-grid-row: 1;
+        grid-row: 1;
+    padding-right: 12px; }
   .page-search .current-search-item-active-items li a:after {
     position: absolute;
-    visibility: visible;
-    top: 0;
-    left: 0;
+    top: 2px;
+    right: 2px;
     margin-top: -1px;
-    content: "x";
+    content: "\f00d";
     color: white;
-    font-weight: bold; }
+    font-size: .9em;
+    text-decoration: none;
+    font-family: "Font Awesome 5 Pro"; }
   .page-search #block-views-exp-search-page .views-exposed-widget:not(.views-widget-filter-search_api_views_fulltext) {
     display: none; }
   .page-search #block-views-exp-search-page .views-widget-filter-search_api_views_fulltext input {
     border-right: 1px solid #ccc;
     border-radius: 4px; }
-  .page-search #block-block-2 .remote-filters {
-    border-top: 3px solid black;
-    padding-top: 10px; }
-    .page-search #block-block-2 .remote-filters > * {
-      float: left;
-      margin-right: 15px; }
-    .page-search #block-block-2 .remote-filters > :nth-child(3) {
-      float: right;
-      clear: both; }
+  .page-search #block-block-2 {
+    border-top: 3px solid black; }
+    .page-search #block-block-2 .remote-filters {
+      margin-top: -3.4em;
+      display: -ms-grid;
+      display: grid;
+      -ms-grid-columns: auto 1fr;
+          grid-template-columns: auto 1fr;
+      -ms-grid-rows: auto;
+          grid-template-rows: auto;
+      grid-column-gap: 1rem;
+      grid-row-gap: 1.8rem;
+      grid-template-areas: "col1 col1 col2 col2"   "filters filters filters filters"; }
+      .page-search #block-block-2 .remote-filters .btn-group:nth-child(1) {
+        -ms-grid-row: filters;
+            grid-row-start: filters; }
+      .page-search #block-block-2 .remote-filters .remote-show-discontinued {
+        -ms-grid-row: filters;
+            grid-row: filters; }
+      .page-search #block-block-2 .remote-filters .btn-group:nth-child(3) {
+        -ms-grid-row: col1;
+            grid-row-start: col1;
+        grid-column-end: col2; }
 
 /* Operating Systems facet filter styles */
 .facetapi-facet-field-operating-system {
