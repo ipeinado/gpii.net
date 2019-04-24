@@ -329,7 +329,6 @@ a {
 
 body.page-search {
   .view-search {
-
     margin-top: 1rem;
   }
 
@@ -361,7 +360,7 @@ body.page-search {
 
 #block-views-exp-search-page {
   @media (min-width: $screen-md) {
-    width: 85%;
+    width: 100%;
   }
 
   label {
@@ -371,7 +370,7 @@ body.page-search {
     line-height: 1.3em;
   }
   #edit-search-api-views-fulltext-wrapper {
-    width: calc(100% - 2rem);
+    width: 100%;
     padding: .5em 0 0;
   }
   .form-control {
@@ -439,50 +438,41 @@ body.page-search {
     list-style: none;
     padding: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
   }
 
   .current-search-item-active-items li {
-    background-color: #8D3435;
+    background-color: $color-gpii-sai-primary;
     margin-bottom: 5px;
     margin-right: 12px;
     padding: 1px 6px;
     position: relative;
-    color: white;
+    color: white; 
     font-weight: bold;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-  }
-
-  .current-search-item-active-items li:after {
-    left: 100%;
-    top: 0%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-left-color: #8D3435;
-    border-width: 11px;
-    margin-top: 0px;
+    border-radius: 4px;
+    display: grid;  
+    grid-template-columns: 1fr 1.25em; 
   }
 
   .current-search-item-active-items li a {
     position: relative;
-    visibility: hidden;
+    color: $color-gpii-sai-primary;
+    grid-column: 2;
+    grid-row: 1;
+    padding-right: 12px;
   }
 
   .current-search-item-active-items li a:after {
     position: absolute;
-    visibility: visible;
-    top: 0;
-    left: 0;
+    top: 2px;
+    right: 2px;
     margin-top: -1px;
-    content: "x";
+    content: "\f00d";
     color: white;
-    font-weight: bold;
+    font-size: .9em;
+    text-decoration: none;
+    font-family: "Font Awesome 5 Pro";
   }
 
   /* hide redundant remote filters */
@@ -500,19 +490,30 @@ body.page-search {
 
   /* remote filters block styles */
   #block-block-2 {
-
+    border-top: 3px solid black;
     .remote-filters {
-      border-top: 3px solid black;
-      padding-top: 10px;
-
-      > * {
-        float: left;
-        margin-right: 15px;
+      margin-top: -3.4em;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto;
+      grid-column-gap: 1rem;
+      grid-row-gap: 1.8rem;
+      grid-template-areas: 
+        "col1 col1 col2 col2"  
+        "filters filters filters filters"; 
+           
+      .btn-group:nth-child(1) {
+        
+        grid-row-start: filters; 
       }
-
-      > :nth-child(3) {
-        float: right;
-        clear: both;
+      .remote-show-discontinued {
+        grid-row: filters;
+      }
+      .btn-group:nth-child(3) {   
+        grid-row-start: col1;
+        grid-column-end: col2;
+        
+        
       }
     }
   }
@@ -2727,9 +2728,11 @@ div.discontinued {
  /** Guided Shopping **/@at-root
 
  body.page-guided-shopping {
-   .question {
-     margin-bottom: 1.5rem;
+   h2.question {
+     margin-bottom: 2rem;
+     font-size: 1.6em;
    }
+
    .showall {
      margin-bottom: 1.5rem; 
    }
