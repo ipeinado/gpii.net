@@ -61,6 +61,8 @@ var query = decodeURIComponent(url[1]);
             }
             $('.fullpage-loading').show();
             target.val(value).trigger('change');
+            // since results per page doesn't support auto-submit, we also have to click the search button here
+            $('#block-views-exp-search-page #edit-submit-search').trigger('click'); 
 
         });
 
