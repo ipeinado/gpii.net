@@ -89,7 +89,7 @@ var query = decodeURIComponent(url[1]);
         });
 
         // Event for submit and facet filters to pull up the full screen overlay
-        $('#block-views-exp-search-page #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button').on('click', function() {
+        $('#block-views-exp-search-page #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button, #block-current-search-standard a').on('click', function() {
             $('.fullpage-loading').show();
         });
 
