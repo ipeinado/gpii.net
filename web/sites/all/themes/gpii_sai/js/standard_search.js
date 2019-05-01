@@ -19,6 +19,8 @@ var query = decodeURIComponent(url[1]);
 
     $(document).ready(function(){
 
+        $('body.page-search').append('<div class="fullpage-loading"><div class="lds-dual-ring"></div></div>');
+
         // Adding custom elements to Operating Systems facet filter block
         var helpText = '<p>Show <strong>only<\/strong> products that are compatible with the following operating systems.</p>';
         var clearButton = '<a class="btn btn-default btn-sm clear-button" role="button">Clear Operating Systems</a>';
@@ -53,8 +55,11 @@ var query = decodeURIComponent(url[1]);
                 if (value == 'search_api_aggregation_2') {
                     order = 'ASC';
                 }
-                $('#block-block-2 .remote-sort-order a[value="' + order + '"]').trigger('click');
+                $('#block-block-2 .remote-sort-order span.current-value').text('Ascending');
+                $('#block-views-exp-search-page #edit-sort-order').val(order);
+               
             }
+            $('.fullpage-loading').show();
             target.val(value).trigger('change');
 
         });
@@ -64,7 +69,9 @@ var query = decodeURIComponent(url[1]);
             var wrapper = $(this).parents('.remote-wrapper');
             var checkbox = wrapper.find('input');
             if (wrapper.hasClass('remote-show-discontinued')) {
+                $('.fullpage-loading').show();
                 if (checkbox.is(':checked')) {
+                    
                     $('#block-views-exp-search-page #edit-field-status-2').trigger('click');
                 }
                 else {
@@ -75,15 +82,21 @@ var query = decodeURIComponent(url[1]);
 
         // Event for Buttons
         $('#block-block-2 button:not(.dropdown-toggle)').on('click', function() {
+            $('.fullpage-loading').show();
             $("#" + $(this).attr('data-edit')).trigger('click');
         });
 
+        // Event for submit and facet filters to pull up the full screen overlay
+        $('#block-views-exp-search-page #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button').on('click', function() {
+            $('.fullpage-loading').show();
+        });
+
         // set the initial values
-        $('#block-block-2 .remote-sort-by a[value="' + $('#block-views-exp-search-page #edit-sort-by').val() + '"]').trigger('click');
-        $('#block-block-2 .remote-sort-order a[value="' + $('#block-views-exp-search-page #edit-sort-order').val() + '"]').trigger('click');
-        $('#block-block-2 .remote-items-per-page a[value="' + $('#block-views-exp-search-page #edit-items-per-page').val() + '"]').trigger('click');
+        $('#block-block-2 .remote-sort-by span.current-value').html($('#block-views-exp-search-page #edit-sort-by option:selected').text());
+        $('#block-block-2 .remote-sort-order span.current-value').html($('#block-views-exp-search-page #edit-sort-order option:selected').text());
+        $('#block-block-2 .remote-items-per-page span.current-value').html($('#block-views-exp-search-page #edit-items-per-page').val());
         if ($('#block-views-exp-search-page #edit-field-status-2').is(':checked')) {
-            $('#block-block-2 .remote-show-discontinued input').trigger('click');
+            $('#block-block-2 .remote-show-discontinued input').prop('checked', true);
         }
     });
 

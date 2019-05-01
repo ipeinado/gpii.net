@@ -385,8 +385,9 @@ body.page-search {
   .form-submit {
     height: 3rem;
     position: absolute;
+    top: 0.7rem;
     bottom: 0.5rem;
-    right: 2rem;
+    right: 0;
     z-index: 200;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -423,6 +424,53 @@ body.page-search {
 }
 
 .page-search {
+  .fullpage-loading {
+    display: none;
+    height: 100%;
+    width: 100%;
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0; 
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.8); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    
+    .lds-dual-ring {
+      display: inline-block;
+      position: relative;
+      top: calc(50% - 64px);
+      left: calc(50% - 64px);
+      width: 64px; 
+      height: 64px;
+    }
+    .lds-dual-ring:after {
+      content: " ";
+      display: block;
+      width: 46px;
+      height: 46px;
+      margin: 1px;
+      border-radius: 50%;
+      border: 5px solid $color-gpii-med-gray;
+      border-color: $color-gpii-med-gray transparent $color-gpii-med-gray transparent;
+      animation: lds-dual-ring 1.2s linear infinite;  
+    }
+  }
+  
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .view-search {
+    .view-header {
+      border-bottom: 1px solid $color-gpii-gray; 
+    }
+  }
   /* Styles for active facet filters */
   #block-current-search-standard {
     padding: 0;
@@ -469,7 +517,7 @@ body.page-search {
     right: 2px;
     margin-top: -1px;
     content: "\f00d";
-    color: white;
+    color: white; 
     font-size: .9em;
     text-decoration: none;
     font-family: "Font Awesome 5 Pro";
@@ -479,6 +527,9 @@ body.page-search {
   #block-views-exp-search-page {
     .views-exposed-widget:not(.views-widget-filter-search_api_views_fulltext) {
       display: none;
+    }
+    .views-exposed-widget.views-submit-button {
+      display: block; 
     }
 
     .views-widget-filter-search_api_views_fulltext input{
@@ -490,17 +541,17 @@ body.page-search {
 
   /* remote filters block styles */
   #block-block-2 {
-    border-top: 3px solid black;
+    border-top: 3px solid black; 
     .remote-filters {
-      margin-top: -3.4em;
+      margin-bottom: 0.5rem;
       display: grid;
       grid-template-columns: auto 1fr;
       grid-template-rows: auto;
       grid-column-gap: 1rem;
-      grid-row-gap: 1.8rem;
+      grid-row-gap: 1rem;
       grid-template-areas: 
         "col1 col1 col2 col2"  
-        "filters filters filters filters"; 
+        "filters filters filters filters";  
            
       .btn-group:nth-child(1) {
         
@@ -534,6 +585,7 @@ body.page-search {
 }
 
 .related-search-terms {
+  margin-top: 1rem;
   display: none;
 
   .panel-body {

@@ -181,13 +181,14 @@
       });
     }(jQuery));
   </script>
+  <p class="element-invisible">Note: The sort, count and disconinued filters listed below will cause the page to reload. </p>
   <div class="remote-filters">
 
     <div class="btn-group" role="group">
-
+      
       <div class="btn-group remote-wrapper remote-sort-by" role="group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-edit="edit-sort-by">
-          Sort: <span class="current-value">Relevance</span> <span class="caret"></span>
+          Sort: <span class="current-value">Relevance</span> <span class="caret"></span> 
         </button>
         <ul class="dropdown-menu">
           <li><a value="search_api_relevance">Relevance</a></li>
@@ -223,11 +224,6 @@
       <label>
         <input type="checkbox"> Show discontinued items
       </label>
-    </div>
-
-    <div class="btn-group" role="group">
-      <button type="submit" class="btn btn-primary remote-submit" data-edit="edit-submit-search">Search</button>
-      <button type="submit" class="btn btn-default remote-reset" data-edit="edit-reset">Reset</button>
     </div>
 
   </div>
