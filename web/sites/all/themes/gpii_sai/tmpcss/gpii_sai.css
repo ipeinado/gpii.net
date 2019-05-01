@@ -319,8 +319,8 @@ body.page-search .view-search {
     .page-search .fullpage-loading .lds-dual-ring {
       display: inline-block;
       position: relative;
-      top: calc(50% - 64px);
-      left: calc(50% - 64px);
+      top: calc(50% - 46px);
+      left: calc(50% - 46px);
       width: 64px;
       height: 64px; }
     .page-search .fullpage-loading .lds-dual-ring:after {
@@ -588,9 +588,6 @@ body.front, body.page-node-1903 {
   body.front h1.page-header, body.page-node-1903 h1.page-header {
     display: none; }
 
-/**
- * Experimental custom button with pure CSS transition/animation
- */
 /* centers the button in the DOM*/
 .gpii-add-product-button-wrapper {
   display: flex;
