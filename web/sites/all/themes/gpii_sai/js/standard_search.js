@@ -23,7 +23,7 @@ var query = decodeURIComponent(url[1]);
 
         // Adding custom elements to Operating Systems facet filter block
         var helpText = '<p>Show <strong>only<\/strong> products that are compatible with the following operating systems.</p>';
-        var clearButton = '<a class="btn btn-default btn-sm clear-button" role="button">Clear Operating Systems</a>';
+        var clearButton = '<a class="btn btn-default btn-sm clear-button" role="button">Clear Selected Operating Systems</a>';
 
         $('.facetapi-facet-field-operating-system').before(helpText, clearButton);
 
