@@ -19,11 +19,21 @@ var query = decodeURIComponent(url[1]);
 
     $(document).ready(function(){
 
+        // Check for the presence of any active query and no previously saved keywords. Hide the results and pager if not found
+        var url = window.location.search;
+        if (url.length === 0 && !$('#edit-search-api-views-fulltext').value ) {
+            $('.view-search .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
+            $('.st-search h2.resultcount').text('0 Results');
+            $('#block-block-2').append('<p style="margin-top: 0.5rem">Please enter one or more search terms to start your search.</p>');
+            
+        }
+
+
         $('body.page-search').append('<div class="fullpage-loading"><div class="lds-dual-ring"></div></div>');
 
-        // Adding custom elements to Operating Systems facet filter block
+        //Adding custom elements to Operating Systems facet filter block
         var helpText = '<p>Show <strong>only<\/strong> products that are compatible with the following operating systems.</p>';
-        var clearButton = '<a class="btn btn-default btn-sm clear-button" role="button">Clear Selected Operating Systems</a>';
+        var clearButton = '<p><button class="btn btn-default btn-sm clear-button">Clear Selected Operating Systems</button></p>';
 
         $('.facetapi-facet-field-operating-system').before(helpText, clearButton);
 
@@ -48,7 +58,7 @@ var query = decodeURIComponent(url[1]);
             var label = $(this).text();
             button.children('.current-value').text(label);
             
-            var target = $("#block-views-exp-search-page #" + button.attr('data-edit'));
+            var target = $("#views-exposed-form-search-page #" + button.attr('data-edit'));
             var value = $(this).attr('value');
             var order = 'DESC';
             if (wrapper.hasClass('remote-sort-by')) {
@@ -56,13 +66,13 @@ var query = decodeURIComponent(url[1]);
                     order = 'ASC';
                 }
                 $('#block-block-2 .remote-sort-order span.current-value').text('Ascending');
-                $('#block-views-exp-search-page #edit-sort-order').val(order);
+                $('#views-exposed-form-search-page #edit-sort-order').val(order);
                
             }
             $('.fullpage-loading').show();
             target.val(value).trigger('change');
             // since results per page doesn't support auto-submit, we also have to click the search button here
-            $('#block-views-exp-search-page #edit-submit-search').trigger('click'); 
+            $('#views-exposed-form-search-page #edit-submit-search').trigger('click'); 
 
         });
 
@@ -74,10 +84,10 @@ var query = decodeURIComponent(url[1]);
                 $('.fullpage-loading').show();
                 if (checkbox.is(':checked')) {
                     
-                    $('#block-views-exp-search-page #edit-field-status-2').trigger('click');
+                    $('#views-exposed-form-search-page #edit-product-status-2').trigger('');
                 }
                 else {
-                    $('#block-views-exp-search-page #edit-field-status-1').trigger('click');
+                    $('#views-exposed-form-search-page #edit-product-status-1').trigger('click');
                 }
             }
         });
@@ -89,15 +99,15 @@ var query = decodeURIComponent(url[1]);
         });
 
         // Event for submit and facet filters to pull up the full screen overlay
-        $('#block-views-exp-search-page #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button, #block-current-search-standard a').on('click', function() {
+        $('#views-exposed-form-search-page #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button, #block-current-search-standard a').on('click keypress', function() {
             $('.fullpage-loading').show();
         });
 
         // set the initial values
-        $('#block-block-2 .remote-sort-by span.current-value').html($('#block-views-exp-search-page #edit-sort-by option:selected').text());
-        $('#block-block-2 .remote-sort-order span.current-value').html($('#block-views-exp-search-page #edit-sort-order option:selected').text());
-        $('#block-block-2 .remote-items-per-page span.current-value').html($('#block-views-exp-search-page #edit-items-per-page').val());
-        if ($('#block-views-exp-search-page #edit-field-status-2').is(':checked')) {
+        $('#block-block-2 .remote-sort-by span.current-value').html($('#views-exposed-form-search-page #edit-sort-by option:selected').text());
+        $('#block-block-2 .remote-sort-order span.current-value').html($('#views-exposed-form-search-page #edit-sort-order option:selected').text());
+        $('#block-block-2 .remote-items-per-page span.current-value').html($('#views-exposed-form-search-page #edit-items-per-page').val());
+        if ($('#views-exposed-form-search-page #edit-product-status-2').is(':checked')) {
             $('#block-block-2 .remote-show-discontinued input').prop('checked', true);
         }
     });

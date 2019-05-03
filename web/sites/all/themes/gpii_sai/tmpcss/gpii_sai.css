@@ -75,9 +75,11 @@
   background-color: #eeeeee;
   margin-top: 40px;
   padding: 10px 30px; }
+  #block-bean-saa-social-media a {
+    margin-right: 15px;
+    background-color: #fff; }
   #block-bean-saa-social-media .img-responsive {
-    display: inline;
-    margin-right: 15px; }
+    display: inline; }
 
 #block-block-6 {
   margin-top: 40px;
@@ -220,12 +222,13 @@ a {
 .field-name-accessible-read-more a.read-more > .fa {
   padding-left: 0.25rem; }
 
-#block-current-search-standard {
-  padding-bottom: 1rem; }
-  #block-current-search-standard h2 {
-    color: #A72534;
-    font-size: 1.8rem;
-    font-weight: 600; }
+#block-current-search-standard p.search-performance {
+  margin-top: 0.5rem; }
+
+#block-current-search-standard h2 {
+  color: #A72534;
+  font-size: 1.8rem;
+  font-weight: 600; }
 
 body.page-search .view-search {
   margin-top: 1rem; }
@@ -326,8 +329,8 @@ body.page-search .view-search {
     .page-search .fullpage-loading .lds-dual-ring:after {
       content: " ";
       display: block;
-      width: 46px;
-      height: 46px;
+      width: 64px;
+      height: 64px;
       margin: 1px;
       border-radius: 50%;
       border: 5px solid #b2b2b2;
@@ -341,8 +344,6 @@ body.page-search .view-search {
     transform: rotate(360deg); } }
   .page-search .view-search .view-header {
     border-bottom: 1px solid #e5e5e5; }
-  .page-search #block-current-search-standard {
-    padding: 0; }
   .page-search #block-current-search-standard h2.block-title {
     color: black;
     font-weight: normal;
@@ -380,11 +381,11 @@ body.page-search .view-search {
     font-size: .9em;
     text-decoration: none;
     font-family: "Font Awesome 5 Pro"; }
-  .page-search #block-views-exp-search-page .views-exposed-widget:not(.views-widget-filter-search_api_views_fulltext) {
+  .page-search #views-exposed-form-search-page .views-exposed-widget:not(.views-widget-filter-search_api_views_fulltext) {
     display: none; }
-  .page-search #block-views-exp-search-page .views-exposed-widget.views-submit-button {
+  .page-search #views-exposed-form-search-page .views-exposed-widget.views-submit-button, .page-search #views-exposed-form-search-page .views-exposed-widget.views-reset-button {
     display: block; }
-  .page-search #block-views-exp-search-page .views-widget-filter-search_api_views_fulltext input {
+  .page-search #views-exposed-form-search-page .views-widget-filter-search_api_views_fulltext input {
     border-right: 1px solid #ccc;
     border-radius: 4px; }
   .page-search #block-block-2 {
@@ -405,15 +406,47 @@ body.page-search .view-search {
         grid-row-start: col1;
         grid-column-end: col2; }
 
+.page-search .view-search .st-search {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-column-gap: 3rem;
+  grid-row-gap: 0rem; }
+
+.page-search .view-search #block-views-exp-search-page {
+  grid-column: 1 / span 3;
+  grid-row: 1 / 1; }
+
+.page-search .view-search .block-facetapi {
+  grid-row: 1 / span 6;
+  grid-column: 4 / span 1; }
+
+.page-search .view-search h2 {
+  grid-row: 2 / 2;
+  grid-column: 1 / span 3; }
+
+.page-search .view-search #block-block-2 {
+  grid-row: 3 / 4;
+  grid-column: 1 / span 3; }
+
+.page-search .view-search #block-current-search-standard {
+  grid-row: 4 / 4;
+  grid-column: 1 / span 3; }
+
+.page-search .view-search .related-search-terms {
+  grid-row: 5 / 5;
+  grid-column: 1 / span 3; }
+
+.page-search .view-search .view-results, .page-search .view-search .view-empty {
+  grid-row: 6 / 6;
+  grid-column: 1 / span 3; }
+
 /* Operating Systems facet filter styles */
 .facetapi-facet-field-operating-system {
   list-style: none;
   padding: 0; }
   .facetapi-facet-field-operating-system input[type=checkbox] {
     margin-right: .5em; }
-
-.block-facetapi .clear-button {
-  margin-bottom: 10px; }
 
 .related-search-terms {
   margin-top: 1rem;
@@ -1116,7 +1149,6 @@ a.tree-label {
   .region-highlighted {
     z-index: 0; }
   .region-hero {
-    background-color: transparent !important;
     overflow: visible;
     top: 10rem;
     left: 0;

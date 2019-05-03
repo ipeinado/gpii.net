@@ -166,6 +166,7 @@
           });
           f_index++;
           related_params['search_api_views_fulltext'] = '';
+          console.log(related_params);
 
           $.each(related_terms_from_php, function(i, item) {
             related_params['f[' + f_index + ']'] = 'field_product_categories1:' + item.tid;
@@ -228,8 +229,5 @@
 
   </div>
 
-  <?php if ($_GET['field_product_categories1_1']): ?>
-    <p><strong>Note: </strong>Some products in this list have been excluded. Please reset your search to view all categories.</p> 
-  <?php endif;?>
 
 </section>
