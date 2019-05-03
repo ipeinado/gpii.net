@@ -30,7 +30,7 @@ var query = decodeURIComponent(url[1]);
         }
 
 
-        $('body.page-search').append('<div class="fullpage-loading"><div class="lds-dual-ring"></div></div>');
+        $('body.page-search').append('<div class="fullpage-loading"><div class="lds-dual-ring"></div></div><div aria-live="assertive">Reloading</div>');
 
         //Adding custom elements to Operating Systems facet filter block
         var helpText = '<p>Show <strong>only<\/strong> products that are compatible with the following operating systems.</p>';
@@ -85,7 +85,7 @@ var query = decodeURIComponent(url[1]);
                 $('.fullpage-loading').show();
                 if (checkbox.is(':checked')) {
                     
-                    $('#views-exposed-form-search-page #edit-product-status-2').trigger('');
+                    $('#views-exposed-form-search-page #edit-product-status-2').trigger('click');
                 }
                 else {
                     $('#views-exposed-form-search-page #edit-product-status-1').trigger('click');
