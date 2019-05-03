@@ -21,7 +21,8 @@ var query = decodeURIComponent(url[1]);
 
         // Check for the presence of any active query and no previously saved keywords. Hide the results and pager if not found
         var url = window.location.search;
-        if (url.length === 0 && !$('#edit-search-api-views-fulltext').value ) {
+        
+        if (url.length === 0 && !$('#edit-search-api-views-fulltext').val() ) {
             $('.view-search .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
             $('.st-search h2.resultcount').text('0 Results');
             $('#block-block-2').append('<p style="margin-top: 0.5rem">Please enter one or more search terms to start your search.</p>');
