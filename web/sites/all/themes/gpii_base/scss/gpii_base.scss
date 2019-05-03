@@ -801,9 +801,9 @@ html {
       color: #ffffff;
       font-size: 0.96rem;
       font-weight: bold;
-      &,
+      &,  
       &:hover {
-        background-color: $color-gpii-blue;
+        background-color: darken($color-gpii-blue, 15%);
       }
     }
   }
