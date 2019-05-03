@@ -110,7 +110,7 @@
                 <div class="views-widget">
                   <div class="form-item form-type-textfield form-item-search-api-views-fulltext" role="search">
                     <div class="input-group">
-                      <input class="form-control form-text" data-search-api-autocomplete-search="search_api_views_search" data-min-autocomplete-length="3" type="text" id="edit-search-api-views-fulltext" name="search_api_views_fulltext" value="test" size="30" maxlength="128" autocomplete="OFF" aria-autocomplete="list">
+                      <input class="form-control form-text" data-search-api-autocomplete-search="search_api_views_search" data-min-autocomplete-length="3" type="text" id="edit-search-api-views-fulltext" name="search_api_views_fulltext" value="" size="30" maxlength="128" autocomplete="OFF" aria-autocomplete="list">
                     </div>
                     <input type="hidden" id="edit-search-api-views-fulltext-autocomplete" value="http://dev.ul.gpii.net/index.php?q=search_api_autocomplete/search_api_views_search/-" disabled="disabled" class="autocomplete autocomplete-processed">
                     <span class="element-invisible" aria-live="assertive" id="edit-search-api-views-fulltext-autocomplete-aria-live"></span>
