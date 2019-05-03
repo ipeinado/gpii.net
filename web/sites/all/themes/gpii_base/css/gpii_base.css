@@ -7047,7 +7047,7 @@ body.not-logged-in .navbar-nav.secondary > li.last > a {
   font-size: 0.96rem;
   font-weight: bold; }
   body.not-logged-in .navbar-nav.secondary > li.last > a, body.not-logged-in .navbar-nav.secondary > li.last > a:hover {
-    background-color: #2783c6; }
+    background-color: #1a5986; }
 
 @media (min-width: 768px) {
   html:not(.force-mobile-layout) .navbar-nav.secondary {
