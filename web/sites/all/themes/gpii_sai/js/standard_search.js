@@ -42,13 +42,13 @@ var query = decodeURIComponent(url[1]);
         $('.block-facetapi .clear-button').on('click', function (e) {
             var params = parseQueryString(query);
             var reg = /field_operating_system/;
-            Object.keys(params).forEach(key => {
+            Object.keys(params).forEach(function(key) {
                 let value = params[key];
                 if (reg.test(value)) {
                     delete params[key];
                 }
             });
-            var new_query = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+            var new_query = Object.keys(params).map(function(key) {key + '=' + params[key]}).join('&');
             location.href = base_url + "?" + new_query;
         });
 
