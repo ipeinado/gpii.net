@@ -270,8 +270,7 @@ body.page-search .view-search {
 #block-views-exp-search-page .form-submit {
   height: 3rem;
   position: absolute;
-  top: 0.7rem;
-  bottom: 0.5rem;
+  bottom: 1rem;
   right: 0;
   z-index: 200;
   border-top-left-radius: 0;
@@ -406,40 +405,34 @@ body.page-search .view-search {
         grid-row-start: col1;
         grid-column-end: col2; }
 
-.page-search .view-search .st-search {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  grid-column-gap: 3rem;
-  grid-row-gap: 0rem; }
-
-.page-search .view-search #block-views-exp-search-page {
-  grid-column: 1 / span 3;
-  grid-row: 1 / 1; }
-
-.page-search .view-search .block-facetapi {
-  grid-row: 1 / span 6;
-  grid-column: 4 / span 1; }
-
-.page-search .view-search h2 {
-  grid-row: 2 / 2;
-  grid-column: 1 / span 3; }
-
-.page-search .view-search #block-block-2 {
-  grid-row: 3 / 4;
-  grid-column: 1 / span 3; }
-
-.page-search .view-search .related-search-terms {
-  grid-row: 4 / 4;
-  grid-column: 1 / span 3; }
-
-.page-search .view-search #block-current-search-standard {
-  grid-row: 5 / 5;
-  grid-column: 1 / span 3; }
-
-.page-search .view-search .view-results, .page-search .view-search .view-empty {
-  grid-row: 6 / 6;
-  grid-column: 1 / span 3; }
+@media (min-width: 992px) {
+  .page-search .view-search .st-search {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-column-gap: 3rem;
+    grid-row-gap: 0rem; }
+  .page-search .view-search #block-views-exp-search-page {
+    grid-column: 1 / span 3;
+    grid-row: 1 / 1; }
+  .page-search .view-search .block-facetapi {
+    grid-row: 1 / span 6;
+    grid-column: 4 / span 1; }
+  .page-search .view-search h2 {
+    grid-row: 2 / 2;
+    grid-column: 1 / span 3; }
+  .page-search .view-search #block-block-2 {
+    grid-row: 3 / 4;
+    grid-column: 1 / span 3; }
+  .page-search .view-search .related-search-terms {
+    grid-row: 4 / 4;
+    grid-column: 1 / span 3; }
+  .page-search .view-search #block-current-search-standard {
+    grid-row: 5 / 5;
+    grid-column: 1 / span 3; }
+  .page-search .view-search .view-results, .page-search .view-search .view-empty {
+    grid-row: 6 / 6;
+    grid-column: 1 / span 3; } }
 
 /* Operating Systems facet filter styles */
 .facetapi-facet-field-operating-system {
