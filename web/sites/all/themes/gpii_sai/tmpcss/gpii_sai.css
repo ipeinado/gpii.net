@@ -429,11 +429,11 @@ body.page-search .view-search {
   grid-row: 3 / 4;
   grid-column: 1 / span 3; }
 
-.page-search .view-search #block-current-search-standard {
+.page-search .view-search .related-search-terms {
   grid-row: 4 / 4;
   grid-column: 1 / span 3; }
 
-.page-search .view-search .related-search-terms {
+.page-search .view-search #block-current-search-standard {
   grid-row: 5 / 5;
   grid-column: 1 / span 3; }
 
