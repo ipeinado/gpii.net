@@ -124,22 +124,43 @@
           $solr_url = $solr['stg06']->options['scheme'] . '://' . $solr['stg06']->options['host'] . ':' . $solr['stg06']->options['port'] . $solr['stg06']->options['path'];
           
           $search_url = $solr_url . "/select?" . $query_string;
-
+          //dpm($search_url);
           if ($search_term . '' != '') {
             $results = json_decode(file_get_contents($search_url));
-
+            //dpm($results);
             $items = $results->response->docs;
 
             if (count($items) >= 1) {
               $related_terms = [];
 
               foreach ($items as $item) {
-                $term_id = $item->item_id;
-                $term = taxonomy_term_load($term_id);
-                array_push($related_terms, [
-                    'tid' => $term->tid,
-                    'name' => $term->name,
-                    ]);
+                if ($item->score > .02) { // @@ Solr 6.6 changes relevance scores significantly, so this will need to be bumped up
+                  $term_id = $item->item_id;
+                  $term = taxonomy_term_load($term_id);
+                  
+                  unset($facet_field);
+                  
+                  switch ($term->vid) {
+                    case 11:
+                      $facet_field = 'field_product_categories1';
+                      break;
+                    case 8:
+                      $facet_field = 'field_trouble_with';
+                      break;
+                    case 5: 
+                      $facet_field = 'field_features';
+                      break;
+                    case 12:
+                      $facet_field = 'field_operating_system';
+                      break;
+                  }
+
+                  array_push($related_terms, [
+                      'tid' => $term->tid,
+                      'name' => $term->name,
+                      'facet' => $facet_field,
+                      ]);
+                }  
               }
 
               echo "related_terms_from_php = " . json_encode($related_terms) . ";";
@@ -166,10 +187,9 @@
           });
           f_index++;
           related_params['search_api_views_fulltext'] = '';
-          console.log(related_params);
 
           $.each(related_terms_from_php, function(i, item) {
-            related_params['f[' + f_index + ']'] = 'field_product_categories1:' + item.tid;
+            related_params['f[' + f_index + ']'] = item.facet + ':' + item.tid;
             var new_query = Object.keys(related_params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(related_params[key])).join('&');
 
             var anchor = $('<a></a>').text(item.name).attr('href', base_url + "?" + new_query);
