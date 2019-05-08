@@ -1215,6 +1215,9 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
                     case 'Vlibank': 
                       $country = 'Netherlands';
                       break;
+                    // case 'EASTIN Admin': 
+                    //   $country = 'European Union';
+                    //   break;
                   }
                   if (isset($country)) {
                     $markup .= ' (' . $country . ')';
