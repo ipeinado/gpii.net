@@ -1055,7 +1055,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $markup .= '<a href="/node/' . $product->nid . '">' . $product->title . '</a>';
           }
 
-          $markup .= ' is listed in the following federated databases:</p>';
+          $markup .= ' is shared by these parterning resources:</p>';
       }
 
 
@@ -1072,7 +1072,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 3,
+            CURLOPT_TIMEOUT => 4,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
@@ -1096,7 +1096,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           }
 
         $response = json_decode($response);
-        //kpr($response->sources);
+        //dpm($response->sources);
 
         $sources = $response->sources;
 
@@ -1109,7 +1109,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
         // if a source is specified
         if ($source) {
-          $markup =  '<p><a href="/node/' . $product->nid . '">' . $product->title . '</a> is a consolidation of the follwing <strong>' . check_url($source) . '</strong> source records:</p>';
+          $markup =  '<p><a href="/node/' . $product->nid . '">' . $product->title . '</a> is a consolidation of the following <strong>' . check_url($source) . '</strong> source records:</p>';
           $links = array();
           foreach ($sources as $key => $value) {
             // need to add code that counts records and redirects automatically here
@@ -1189,12 +1189,42 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             if (($value->source != 'sai') && (in_array($value->source, $sourceDBs) != 1)) {
               $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a>';
 
-                if (isset($value->language)) {
-                  $markup .= ' (' . strtoupper(substr($value->language, 0, 2)) . ')';
+                if (isset($value->source)) {
+                  //dpm($value->source);
+
+                  $db = $value->source;
+                  switch ($db) {
+                    case 'ATAust': 
+                      $country = 'Australia';
+                      break;
+                    case 'AbleData': 
+                      $country = 'United States';
+                      break;
+                    case 'Handicat': 
+                      $country = 'Spain';
+                      break;
+                    case 'Hjælpemiddelbasen': 
+                      $country = 'Denmark';
+                      break;
+                    case 'Rehadat': 
+                      $country = 'Germany';
+                      break;
+                    case 'Siva': 
+                      $country = 'Italy';
+                      break;
+                    case 'Vlibank': 
+                      $country = 'Netherlands';
+                      break;
+                  }
+                  if (isset($country)) {
+                    $markup .= ' (' . $country . ')';
+                  }
+                  
                 }
 
 
                 $markup .= '</li>';
+                unset($country);
             }
 
             // add the source to the $sourceDBs array
