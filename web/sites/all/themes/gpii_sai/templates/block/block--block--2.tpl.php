@@ -128,13 +128,14 @@
           if ($search_term . '' != '') {
             $results = json_decode(file_get_contents($search_url));
             //dpm($results);
-            $items = $results->response->docs;
-
+            // limit suggestions to maximum of 16
+            $items = array_slice($results->response->docs, 0, 16);
+            //dpm($items);
             if (count($items) >= 1) {
               $related_terms = [];
 
               foreach ($items as $item) {
-                if ($item->score > .02) { // @@ Solr 6.6 changes relevance scores significantly, so this will need to be bumped up
+                if ($item->score > .02) { // @@ Solr 6.6 changes relevance scores significantly, so this will need to be bumped up when we switch over
                   $term_id = $item->item_id;
                   $term = taxonomy_term_load($term_id);
                   
