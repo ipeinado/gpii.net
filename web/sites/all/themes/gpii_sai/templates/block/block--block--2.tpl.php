@@ -105,7 +105,7 @@
             ],
             "fl": "item_id,score",
             "fq": [
-              "*:* AND -(is_node_count:"0")",
+              "*:* AND -(is_node_count:\"0\")",
               "bs_status:\"true\"",
               "index_id:\"categories\"",
               "hash:3927w6"
