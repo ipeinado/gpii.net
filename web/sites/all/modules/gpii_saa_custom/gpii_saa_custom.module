@@ -517,53 +517,53 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       // dpm($node->field_features['und']);
       // dpm($node->field_features_primary['und']);
 
-      $secondary_features = $node->field_features['und'];
-      $secondary_features_selected = array();
-      foreach ($secondary_features as $key => $value) {
-        # This needs to create an array where ther value and tid are identical
-        $secondary_features_selected[$value['tid']] = $value['tid'];
-      }
+      // $secondary_features = $node->field_features['und'];
+      // $secondary_features_selected = array();
+      // foreach ($secondary_features as $key => $value) {
+      //   # This needs to create an array where ther value and tid are identical
+      //   $secondary_features_selected[$value['tid']] = $value['tid'];
+      // }
       //dpm($secondary_features_selected);
 
-      $form['field_features'] = array(
-        '#type' => 'checkbox_tree',
-        '#tree' => TRUE,
-        '#field_name' => 'field_features',
-        '#attributes' => array(
-          'class' => array(
-            'field-type-taxonomy-term-reference',
-            'field-name-field-features',
-            'field-widget-term-reference-tree'
-          ),
-        ),
-        '#delta' => 0,
-        '#value' => array(),
-        '#attached' => array(
-          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-        ),
-        '#title' => t('Features'),
-        '#max_choices' => '-1',
-        '#max_depth' => '',
-        '#tree' => TRUE,
-        '#leaves_only' => 0,
-        '#filter_view' => '',
-        '#parent_tid' => 0,
-        '#track_list' => 1,
-        '#select_parents' => 1,
-        '#unselect_children' => 1,
-        '#cascading_selection' => 0,
-        '#start_minimized' => 1,
-        '#vocabulary' => $features_vocabulary,
-        '#default_value' => $secondary_features_selected,
-        '#token_display' => '',
-        '#value_key' => 'tid',
-        '#required' => FALSE,
-      );
+      // $form['field_features'] = array(
+      //   '#type' => 'checkbox_tree',
+      //   '#tree' => TRUE,
+      //   '#field_name' => 'field_features',
+      //   '#attributes' => array(
+      //     'class' => array(
+      //       'field-type-taxonomy-term-reference',
+      //       'field-name-field-features',
+      //       'field-widget-term-reference-tree'
+      //     ),
+      //   ),
+      //   '#delta' => 0,
+      //   '#value' => array(),
+      //   '#attached' => array(
+      //     'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+      //     'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+      //   ),
+      //   '#title' => t('Features'),
+      //   '#max_choices' => '-1',
+      //   '#max_depth' => '',
+      //   '#tree' => TRUE,
+      //   '#leaves_only' => 0,
+      //   '#filter_view' => '',
+      //   '#parent_tid' => 0,
+      //   '#track_list' => 1,
+      //   '#select_parents' => 1,
+      //   '#unselect_children' => 1,
+      //   '#cascading_selection' => 0,
+      //   '#start_minimized' => 1,
+      //   '#vocabulary' => $features_vocabulary,
+      //   '#default_value' => $secondary_features_selected,
+      //   '#token_display' => '',
+      //   '#value_key' => 'tid',
+      //   '#required' => FALSE,
+      // );
       $primary_features = $node->field_features_primary['und'];
       $primary_features_selected = array();
       foreach ($primary_features as $key => $value) {
-        # This needs to create an array where ther value and tid are identical
+        # This needs to create an array where the value and tid are identical
         $primary_features_selected[$value['tid']] = $value['tid'];
       }
       $form['field_features_primary'] = array(
@@ -581,9 +581,9 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#delta' => 0,
         '#value' => array(),
         '#attached' => array(
-          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-        ),
+              'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+              'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+            ),
         '#title' => t('Primary Features'),
         '#max_choices' => '-1',
         '#max_depth' => '',
@@ -623,22 +623,35 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
       // Set the submitted title to the node
       $node->title = $form_state['values']['title'];
-      // @@ defaults are working, but seem not to be passed in for save, 
-      // looks like we need to find a way to differentiate primary from secondary so taht we can correctly save the results
-      $node->field_features = $form_state['values']['field_features'];
-      $node->field_features_primary = $form_state['values']['field_features_primary'];
+      // for term reference tree fields, we need to walk the array from the form 
+      // state to find matching keys and values, then write the values in the format that node_save expects
+      $primary_terms_selected = array();
+      array_walk_recursive($form_state['values']['field_features_primary'], function($value, $key) use(&$primary_terms_selected) {
+        if ($value == $key) {
+          // echo $key . '--';
+          // echo $value . '<br />';
+          $primary_terms_selected['und'][]['tid'] .= $key;
+        }
+    });
+      
+      $node->field_features_primary = $primary_terms_selected;
 
       // Save the node
       $node->revision = TRUE;
       $node->revision_moderation = FALSE;
       $node-> log = 'Taxonomy Edits';
       $node->category = 'tax_only';
-      echo '<pre>';
-      print_r($form_state['values']['field_features']);
-      echo '</pre>';
-      drupal_exit();
-      //node_save($node);
+
+      // dpm($form_state['values']['field_features_primary']);
+      // dpm($primary_terms);
+      // print '<pre>';
+      // print_r($node->field_features_primary);
+      // print_r($primary_terms_selected);
+      // print '</pre>';
+      // drupal_exit();
+      node_save($node);
     }
+
 
     /**
      * Builds a form that users can use to create new orders.
@@ -1055,7 +1068,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $markup .= '<a href="/node/' . $product->nid . '">' . $product->title . '</a>';
           }
 
-          $markup .= ' is shared by these parterning resources:</p>';
+          $markup .= ' is also listed in these collaborating sites:</p>';
       }
 
 
@@ -1201,7 +1214,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
                       $country = 'United States';
                       break;
                     case 'Handicat': 
-                      $country = 'Spain';
+                      $country = 'France';
                       break;
                     case 'Hjælpemiddelbasen': 
                       $country = 'Denmark';
@@ -1213,11 +1226,14 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
                       $country = 'Italy';
                       break;
                     case 'Vlibank': 
-                      $country = 'Netherlands';
+                      $country = 'Belgium';
                       break;
-                    // case 'EASTIN Admin': 
-                    //   $country = 'European Union';
-                    //   break;
+                    case 'GARI': 
+                      $country = 'International';
+                      break;
+                    case 'EASTIN Admin': 
+                      $country = 'European Union';
+                      break;
                   }
                   if (isset($country)) {
                     $markup .= ' (' . $country . ')';
