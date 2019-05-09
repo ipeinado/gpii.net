@@ -105,6 +105,7 @@
             ],
             "fl": "item_id,score",
             "fq": [
+              "*:* AND -(is_node_count:"0")",
               "bs_status:\"true\"",
               "index_id:\"categories\"",
               "hash:3927w6"
@@ -112,12 +113,13 @@
             "start": "0",
             "rows": "25",
             "json.nl": "map",
-            "q": "\"' . $search_term . '\"",
+            "q": "' . $search_term . '",
             "wt": "json"
           }');
           
           $query_string = urldecode(http_build_query($query));
           $query_string = preg_replace('/\[\d+\]/', '', $query_string);
+          $query_string = preg_replace('/\s/', '%20', $query_string);
           
           // get the active search_api_solr information
           $solr = search_api_server_load_multiple(FALSE, $conditions);
