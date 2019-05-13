@@ -13,7 +13,7 @@ function term_reference_tree_field_widget_info() {
         'default value' => FIELD_BEHAVIOR_DEFAULT,
       ),
       'settings' => array(
-        'start_minimized' => 0,
+        'start_minimized' => 1,
         'leaves_only' => 0,
         'filter_view' => '',
         'select_parents' => 0,
@@ -366,6 +366,7 @@ function term_reference_tree_process_checkbox_tree($element, $form_state) {
  * @ingroup themeable
  */
 function theme_checkbox_tree($variables) {
+  
   $element = $variables['element'];
   $element['#children'] = drupal_render_children($element);
 
@@ -454,7 +455,7 @@ function theme_checkbox_tree_item($variables) {
   $sm = $element['#level_start_minimized'] ? ' term-reference-tree-collapsed' : '';
 
   if (is_array($children) && count($children) > 1) {
-    $output .= "<div class='term-reference-tree-button'></div>";
+    $output .= "<div class='term-reference-tree-button" . $sm . "'></div>";
   }
   elseif (!$element['#leaves_only']) {
     $output .= "<div class='no-term-reference-tree-button'></div>";
