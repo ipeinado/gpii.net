@@ -772,7 +772,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
-        '#description' => t('Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second cehckbox) features.'),
+        '#description' => t('Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second checkbox) features.'),
         '#description_display' => 'before',
       );
 
