@@ -536,6 +536,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
             ),
         '#title' => t('Product Categories'),
+        '#prefix' => t('<h2>Product Categories</h2>'),
         '#max_choices' => '-1',
         '#max_depth' => '',
         '#tree' => TRUE,
@@ -554,17 +555,173 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#required' => FALSE,
       );
 
-      /**
-       * Primary and Secondary Features Vocabulary (custom widget)
-       */
+
+      // Operating System
+
+      // build a vocabulary variable for use by the form below
+      $os_vocabulary = new stdClass();
+      $os_vocabulary->vid = 12;
+      $os_vocabulary->name = 'Operating System Compatibility';
+      $os_vocabulary->machine_name = 'os_compatibility';
+      $os_vocabulary->hierarchy = '0';
+
+      $operating_system = $node->field_operating_system['und'];
+      $operating_system_selected = array();
+      foreach ($operating_system as $key => $value) {
+        # This needs to create an array where the value and tid are identical
+        $operating_system_selected[$value['tid']] = $value['tid'];
+      }
+
+      $form['field_operating_system'] = array(
+        '#type' => 'checkbox_tree',
+        '#tree' => FALSE,
+        '#field_name' => 'field_operating_system',
+        '#attributes' => array(
+          'class' => array(
+            'field-type-taxonomy-term-reference',
+            'field-name-field-operating-system',
+            'field-widget-term-reference-tree'
+          ),
+        ),
+        '#delta' => 0,
+        '#value' => array(),
+        '#attached' => array(
+          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+        ),
+        '#title' => t('Operating System'),
+        '#prefix' => t('<h2>Operating System</h2>'),
+        '#max_choices' => '-1',
+        '#max_depth' => '',
+        '#leaves_only' => 0,
+        '#filter_view' => '',
+        '#parent_tid' => 0,
+        '#track_list' => 0,
+        '#select_parents' => 0,
+        '#unselect_children' => 0,
+        '#cascading_selection' => 0,
+        '#level_start_minimized' => 1,
+        '#vocabulary' => $os_vocabulary,
+        '#default_value' => $operating_system_selected,
+        '#token_display' => '',
+        '#value_key' => 'tid',
+        '#required' => FALSE,
+      );
 
 
+      // Languages Supported
 
-    
+      // build a vocabulary variable for use by the form below
+      $languages_vocabulary = new stdClass();
+      $languages_vocabulary->vid = 13;
+      $languages_vocabulary->name = 'Supported Languages';
+      $languages_vocabulary->machine_name = 'supported_languages';
+      $languages_vocabulary->hierarchy = '0';
+
+      $supported_languages = $node->field_languages_supported['und'];
+      $supported_languages_selected = array();
+      foreach ($supported_languages as $key => $value) {
+        # This needs to create an array where the value and tid are identical
+        $supported_languages_selected[$value['tid']] = $value['tid'];
+      }
+
+      $form['field_languages_supported'] = array(
+        '#type' => 'checkbox_tree',
+        '#tree' => FALSE,
+        '#field_name' => 'field_languages_supported',
+        '#attributes' => array(
+          'class' => array(
+            'field-type-taxonomy-term-reference',
+            'field-name-field-languages-supported',
+            'field-widget-term-reference-tree'
+          ),
+        ),
+        '#delta' => 0,
+        '#value' => array(),
+        '#attached' => array(
+          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+        ),
+        '#title' => t('Supported Languages'),
+        '#prefix' => t('<h2>Supported Languages</h2>'),
+        '#max_choices' => '-1',
+        '#max_depth' => '',
+        '#leaves_only' => 0,
+        '#filter_view' => '',
+        '#parent_tid' => 0,
+        '#track_list' => 0,
+        '#select_parents' => 0,
+        '#unselect_children' => 0,
+        '#cascading_selection' => 0,
+        '#level_start_minimized' => 1,
+        '#vocabulary' => $languages_vocabulary,
+        '#default_value' => $supported_languages_selected,
+        '#token_display' => '',
+        '#value_key' => 'tid',
+        '#required' => FALSE,
+      );
+
+
+        // build a vocabulary variable for use by the form below
+        $license_vocabulary = new stdClass();
+        $license_vocabulary->vid = 9;
+        $license_vocabulary->name = 'License Type';
+        $license_vocabulary->machine_name = 'license_type';
+        $license_vocabulary->hierarchy = '0';
+
+        $license_type = $node->field_license['und'];
+        $license_type_selected = array();
+        foreach ($license_type as $key => $value) {
+          # This needs to create an array where the value and tid are identical
+          $license_type_selected[$value['tid']] = $value['tid'];
+        }
+
+        $form['field_license'] = array(
+          '#type' => 'checkbox_tree',
+          '#tree' => FALSE,
+          '#field_name' => 'field_license',
+          '#attributes' => array(
+            'class' => array(
+              'field-type-taxonomy-term-reference',
+              'field-name-field-license',
+              'field-widget-term-reference-tree'
+            ),
+          ),
+          '#delta' => 0,
+          '#value' => array(),
+          '#attached' => array(
+            'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+            'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+          ),
+          '#title' => t('License Type'),
+          '#prefix' => t('<h2>License Type</h2>'),
+          '#max_choices' => '-1',
+          '#max_depth' => '',
+          '#leaves_only' => 0,
+          '#filter_view' => '',
+          '#parent_tid' => 0,
+          '#track_list' => 0,
+          '#select_parents' => 0,
+          '#unselect_children' => 0,
+          '#cascading_selection' => 0,
+          '#level_start_minimized' => 1,
+          '#vocabulary' => $license_vocabulary,
+          '#default_value' => $license_type_selected,
+          '#token_display' => '',
+          '#value_key' => 'tid',
+          '#required' => FALSE,
+        );
+
+
 
       $form['col2start'] = array(
         '#markup' => '</div><div class="col col-md-10">'
       );
+
+
+      /**
+       * Primary and Secondary Features Vocabulary (custom widget)
+       */
 
       $features_vocabulary = new stdClass();
       $features_vocabulary->vid = 5;
@@ -597,7 +754,8 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
           'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
         ),
-        '#title' => t('Features'),
+        '#title' => t('Primary and Secondary Features'),
+        '#prefix' => t('<h2>Features</h2>'),
         '#max_choices' => '-1',
         '#max_depth' => '',
         '#tree' => TRUE,
@@ -614,6 +772,8 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
+        '#description' => t('Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second cehckbox) features.'),
+        '#description_display' => 'before',
       );
 
       $primary_features = $node->field_features_primary['und'];
@@ -629,7 +789,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#attributes' => array(
           'class' => array(
             'field-type-taxonomy-term-reference',
-            'field-name-field-features',
+            'field-name-field-features-primary',
             'field-widget-term-reference-tree'
           ),
         ),
@@ -642,7 +802,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#title' => t('Primary Features'),
         '#max_choices' => '-1',
         '#max_depth' => '',
-        '#tree' => TRUE,
         '#leaves_only' => 0,
         '#filter_view' => '',
         '#parent_tid' => 0,
@@ -671,7 +830,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $form['row2end'] = array(
         '#markup' => '</div></div></div>'
       );
-// @@ add three additional taxonomies and push for review
+
 
       return $form;
 
@@ -684,7 +843,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       // If a moderated revision exists, we need to get the latest revision and save it too
       $revision_id = revisioning_get_latest_revision_id($node->nid);
         
-      
       // for term reference tree fields, we need to walk the array from the form 
       // state to find matching keys and values, then write the values in the format that node_save expects
 
@@ -699,6 +857,37 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       });
 
       $node->field_product_categories1 = $cateogry_terms_selected;
+
+      // operating system
+      $operating_system_selected = array();
+      array_walk_recursive($form_state['values']['field_operating_system'], function($value, $key) use(&$operating_system_selected) {
+        if ($value == $key) {
+          $operating_system_selected['und'][]['tid'] .= $key;
+        }
+      });
+
+      $node->field_operating_system = $operating_system_selected;
+
+      // languages supported
+      $languages_selected = array();
+      array_walk_recursive($form_state['values']['field_languages_supported'], function($value, $key) use(&$languages_selected) {
+        if ($value == $key) {
+          $languages_selected['und'][]['tid'] .= $key;
+        }
+      });
+
+      $node->field_languages_supported = $languages_selected;
+
+      // license_type
+
+      $license_type = array();
+      array_walk_recursive($form_state['values']['field_license'], function($value, $key) use(&$license_selected) {
+        if ($value == $key) {
+          $license_selected['und'][]['tid'] .= $key;
+        }
+      });
+
+      $node->field_license = $license_selected;
 
       // primary features
       $primary_terms_selected = array();
@@ -719,7 +908,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       });
 
       $node->field_features = $secondary_terms_selected;
-      $node->field_features_primary = $primary_terms_selected;
+      $node->field_features_primary = gpii_saa_custom_super_unique($primary_terms_selected);
 
       // Save the node
       $node->revision = TRUE;
@@ -737,7 +926,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       node_save($node);
 
 
-
       if ($revision_id != $node->vid) {
         $latest = node_load($node->nid, $revision_id, reset);
 
@@ -748,12 +936,33 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         $latest->category = 'tax_only';
 
         $latest->field_product_categories1 = $cateogry_terms_selected;
+        $latest->field_operating_system = $operating_system_selected;
+        $latest->field_languages_supported = $languages_selected;
+        $latest->field_license = $license_selected;
         $latest->field_features = $secondary_terms_selected;
-        $latest->field_features_primary = $primary_terms_selected;
+        $latest->field_features_primary = gpii_saa_custom_super_unique($primary_terms_selected);
         node_save($latest);
       }
     }
 
+    /** 
+     * Custom function to walk a multidimensional array and return only unique values
+     * based on https://www.php.net/manual/en/function.array-unique.php
+     */
+
+    function gpii_saa_custom_super_unique($array) {
+      $result = array_map("unserialize", array_unique(array_map("serialize", $array)));
+
+      foreach ($result as $key => $value)
+      {
+        if ( is_array($value) )
+        {
+          $result[$key] = gpii_saa_custom_super_unique($value);
+        }
+      }
+
+      return $result;
+    }
 
     /**
      * Builds a form that users can use to create new orders.

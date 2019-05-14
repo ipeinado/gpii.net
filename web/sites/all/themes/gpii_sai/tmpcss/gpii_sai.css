@@ -1983,6 +1983,9 @@ body.page-product-taxonomy-edit label.option {
 body.page-product-taxonomy-edit .form-item-field-features-primary {
   display: none; }
 
-body.page-product-taxonomy-edit input.invisible-label + label {
+body.page-product-taxonomy-edit input.invisible-label + label, body.page-product-taxonomy-edit .form-type-checkbox-tree label:first-child {
   position: absolute;
   left: -1000em; }
+
+body.page-product-taxonomy-edit button {
+  margin-left: 2rem; }

@@ -2786,9 +2786,15 @@ div.discontinued {
    .form-item-field-features-primary {
      display: none;
    }
-   input.invisible-label + label {
+   input.invisible-label + label, .form-type-checkbox-tree label:first-child {
     position: absolute;
-    left: -1000em;
+    left: -1000em;  
   }
+
+  button {
+    margin-left: 2rem;
+  }
+
+
 
  } 
