@@ -2778,3 +2778,17 @@ div.discontinued {
   }
  }
 
+
+ body.page-product-taxonomy-edit {
+   label.option {
+     font-weight: normal;  
+   }
+   .form-item-field-features-primary {
+     display: none;
+   }
+   input.invisible-label + label {
+    position: absolute;
+    left: -1000em;
+  }
+
+ } 

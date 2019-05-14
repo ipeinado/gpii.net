@@ -2148,4 +2148,14 @@ body.page-guided-shopping .categories-list .btn-default {
 body.page-guided-shopping .categories-list > li:before {
   color: #A72534; }
 
+body.page-product-taxonomy-edit label.option {
+  font-weight: normal; }
+
+body.page-product-taxonomy-edit .form-item-field-features-primary {
+  display: none; }
+
+body.page-product-taxonomy-edit input.invisible-label + label {
+  position: absolute;
+  left: -1000em; }
+
 /*# sourceMappingURL=gpii_sai.css.map */

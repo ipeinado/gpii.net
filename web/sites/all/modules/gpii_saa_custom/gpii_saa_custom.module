@@ -498,12 +498,72 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $form_state['node'] = $node;
 
       // Set a field where the title can be edited
-      $form['title'] = array
-      (
-        '#type' => 'textfield',
-        '#title' => t('Product Title'),
-        '#default_value' => $node->title,
-        '#required' => TRUE,
+
+      $form['row1start'] = array(
+        '#markup' => '<div class="row"><div class="col col-md-10">'
+      );
+      
+      // build a vocabulary variable for use by the form below
+      $category_vocabulary = new stdClass();
+      $category_vocabulary->vid = 11;
+      $category_vocabulary->name = 'Features';
+      $category_vocabulary->machine_name = 'product_category1';
+      $category_vocabulary->hierarchy = '1';
+
+      // create an array that represents selected values for the given array
+      $product_categories = $node->field_product_categories1['und'];
+      $product_categories_selected = array();
+      foreach ($product_categories as $key => $value) {
+        # This needs to create an array where the value and tid are identical
+        $product_categories_selected[$value['tid']] = $value['tid'];
+      }
+
+      $form['field_product_categories1'] = array(
+        '#type' => 'checkbox_tree',
+        '#tree' => TRUE,
+        '#field_name' => 'field_product_categories1',
+        '#attributes' => array(
+          'class' => array(
+            'field-type-taxonomy-term-reference',
+            'field-name-field-product-categories1',
+            'field-widget-term-reference-tree'
+          ),
+        ),
+        '#delta' => 0,
+        '#value' => array(),
+        '#attached' => array(
+              'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+              'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+            ),
+        '#title' => t('Product Categories'),
+        '#max_choices' => '-1',
+        '#max_depth' => '',
+        '#tree' => TRUE,
+        '#leaves_only' => 0,
+        '#filter_view' => '',
+        '#parent_tid' => 0,
+        '#track_list' => 1,
+        '#select_parents' => 1,
+        '#unselect_children' => 1,
+        '#cascading_selection' => 0,
+        '#start_minimized' => 1,
+        '#vocabulary' => $category_vocabulary,
+        '#default_value' => $product_categories_selected,
+        '#token_display' => '',
+        '#value_key' => 'tid',
+        '#required' => FALSE,
+      );
+
+      /**
+       * Primary and Secondary Features Vocabulary (custom widget)
+       */
+
+
+
+    
+
+      $form['col2start'] = array(
+        '#markup' => '</div><div class="col col-md-10">'
       );
 
       $features_vocabulary = new stdClass();
@@ -513,53 +573,49 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $features_vocabulary->hierarchy = '1';
 
 
-      
-      // dpm($node->field_features['und']);
-      // dpm($node->field_features_primary['und']);
+      $secondary_features = $node->field_features['und'];
+      $secondary_features_selected = array();
+      foreach ($secondary_features as $key => $value) {
+        # This needs to create an array where ther value and tid are identical
+        $secondary_features_selected[$value['tid']] = $value['tid'];
+      }
 
-      // $secondary_features = $node->field_features['und'];
-      // $secondary_features_selected = array();
-      // foreach ($secondary_features as $key => $value) {
-      //   # This needs to create an array where ther value and tid are identical
-      //   $secondary_features_selected[$value['tid']] = $value['tid'];
-      // }
-      //dpm($secondary_features_selected);
+      $form['field_features'] = array(
+        '#type' => 'checkbox_tree',
+        '#tree' => TRUE,
+        '#field_name' => 'field_features',
+        '#attributes' => array(
+          'class' => array(
+            'field-type-taxonomy-term-reference',
+            'field-name-field-features',
+            'field-widget-term-reference-tree'
+          ),
+        ),
+        '#delta' => 0,
+        '#value' => array(),
+        '#attached' => array(
+          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+        ),
+        '#title' => t('Features'),
+        '#max_choices' => '-1',
+        '#max_depth' => '',
+        '#tree' => TRUE,
+        '#leaves_only' => 0,
+        '#filter_view' => '',
+        '#parent_tid' => 0,
+        '#track_list' => 1,
+        '#select_parents' => 1,
+        '#unselect_children' => 1,
+        '#cascading_selection' => 0,
+        '#start_minimized' => 1,
+        '#vocabulary' => $features_vocabulary,
+        '#default_value' => $secondary_features_selected,
+        '#token_display' => '',
+        '#value_key' => 'tid',
+        '#required' => FALSE,
+      );
 
-      // $form['field_features'] = array(
-      //   '#type' => 'checkbox_tree',
-      //   '#tree' => TRUE,
-      //   '#field_name' => 'field_features',
-      //   '#attributes' => array(
-      //     'class' => array(
-      //       'field-type-taxonomy-term-reference',
-      //       'field-name-field-features',
-      //       'field-widget-term-reference-tree'
-      //     ),
-      //   ),
-      //   '#delta' => 0,
-      //   '#value' => array(),
-      //   '#attached' => array(
-      //     'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-      //     'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-      //   ),
-      //   '#title' => t('Features'),
-      //   '#max_choices' => '-1',
-      //   '#max_depth' => '',
-      //   '#tree' => TRUE,
-      //   '#leaves_only' => 0,
-      //   '#filter_view' => '',
-      //   '#parent_tid' => 0,
-      //   '#track_list' => 1,
-      //   '#select_parents' => 1,
-      //   '#unselect_children' => 1,
-      //   '#cascading_selection' => 0,
-      //   '#start_minimized' => 1,
-      //   '#vocabulary' => $features_vocabulary,
-      //   '#default_value' => $secondary_features_selected,
-      //   '#token_display' => '',
-      //   '#value_key' => 'tid',
-      //   '#required' => FALSE,
-      // );
       $primary_features = $node->field_features_primary['und'];
       $primary_features_selected = array();
       foreach ($primary_features as $key => $value) {
@@ -572,7 +628,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#field_name' => 'field_features_primary',
         '#attributes' => array(
           'class' => array(
-            //'element-invisible',
             'field-type-taxonomy-term-reference',
             'field-name-field-features',
             'field-widget-term-reference-tree'
@@ -595,45 +650,75 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#select_parents' => 1,
         '#unselect_children' => 1,
         '#cascading_selection' => 0,
-        '#start_minimized' => 1,
+        '#level_start_minimized' => 1,
         '#vocabulary' => $features_vocabulary,
-        '#default_value' => $primary_features_selected,
+        '#default_value' => '',
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
       );
 
+      $form['row1end'] = array(
+        '#markup' => '</div><div class="col col-md-4"><div data-spy="affix" data-offset-top="0" data-offset-bottom="100">'
+      );
+
       $form['submit'] = array
       (
         '#type' => 'submit',
-        '#value' => t('Save'),
+        '#value' => t('Update Tags'),
+        '#attributes' => array('class' => array('btn-primary'))
       );
+      $form['row2end'] = array(
+        '#markup' => '</div></div></div>'
+      );
+// @@ add three additional taxonomies and push for review
 
       return $form;
 
     }
 
     function gpii_saa_custom_taxonomy_edit_submit($form, &$form_state) {
-      // Retrieve the node
+      // Get the node object
       $node = $form_state['node'];
 
-      // get the latest revision and save it
-      // $revision_id = revisioning_get_latest_revision_id($entity->nid);
-      // $latest = node_load($value->nid, $revision_id, reset);
-
-      // Set the submitted title to the node
-      $node->title = $form_state['values']['title'];
+      // If a moderated revision exists, we need to get the latest revision and save it too
+      $revision_id = revisioning_get_latest_revision_id($node->nid);
+        
+      
       // for term reference tree fields, we need to walk the array from the form 
       // state to find matching keys and values, then write the values in the format that node_save expects
-      $primary_terms_selected = array();
-      array_walk_recursive($form_state['values']['field_features_primary'], function($value, $key) use(&$primary_terms_selected) {
+
+      // product categories
+      $cateogry_terms_selected = array();
+      array_walk_recursive($form_state['values']['field_product_categories1'], function($value, $key) use(&$cateogry_terms_selected) {
         if ($value == $key) {
           // echo $key . '--';
           // echo $value . '<br />';
+          $cateogry_terms_selected['und'][]['tid'] .= $key;
+        }
+      });
+
+      $node->field_product_categories1 = $cateogry_terms_selected;
+
+      // primary features
+      $primary_terms_selected = array();
+      array_walk_recursive($form_state['values']['field_features_primary'], function($value, $key) use(&$primary_terms_selected) {
+        if ($value == $key) {
+
           $primary_terms_selected['und'][]['tid'] .= $key;
         }
-    });
-      
+      });
+
+      // secondary features
+      $secondary_terms_selected = array();
+      array_walk_recursive($form_state['values']['field_features'], function($value, $key) use(&$secondary_terms_selected) {
+        if ($value == $key) {
+
+          $secondary_terms_selected['und'][]['tid'] .= $key;
+        }
+      });
+
+      $node->field_features = $secondary_terms_selected;
       $node->field_features_primary = $primary_terms_selected;
 
       // Save the node
@@ -650,6 +735,23 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       // print '</pre>';
       // drupal_exit();
       node_save($node);
+
+
+
+      if ($revision_id != $node->vid) {
+        $latest = node_load($node->nid, $revision_id, reset);
+
+        // Save the node
+        $latest->revision = TRUE;
+        $latest->revision_moderation = TRUE;
+        $latest-> log = 'Taxonomy Edits';
+        $latest->category = 'tax_only';
+
+        $latest->field_product_categories1 = $cateogry_terms_selected;
+        $latest->field_features = $secondary_terms_selected;
+        $latest->field_features_primary = $primary_terms_selected;
+        node_save($latest);
+      }
     }
 
 
