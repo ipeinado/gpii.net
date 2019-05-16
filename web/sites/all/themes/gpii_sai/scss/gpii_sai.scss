@@ -2783,18 +2783,61 @@ div.discontinued {
    #main-content {
      margin-top: 0; 
    }
-  .affix-top.product-description {
-    width: 100%;
-  } 
-  .affix-bottom.product-description {
-    width: 100%;
-    bottom: 0;
+
+  // Disable bootstrap affix until we're above md-min
+   .affix {
+     position: static;
+   }
+
+   @media (min-width: $screen-md-min) {
+    .affix {
+      position: relative;
+    }
+    .product-description {
+      background-color: #fff;
+      z-index: 1000;
+      padding: 1rem;
+      border-radius: 10px 10px 10px 10px; 
+      border: 1px solid $color-gpii-dark-gray;
+      .label {
+        text-transform: uppercase;
+        font-size: 110%;
+        float: right;
+        margin-bottom: 1rem;
+      }
+      img {
+        margin: auto;
+      }
+      .label + p, img {
+        margin-top: 2rem;
+      }
+    }
+    .affix-top.product-description {
+      width: 100%;
+    } 
+    .affix-bottom.product-description {
+      width: 100%;
+      bottom: 25em;
+      position: absolute;
+    }
+    .affix.product-description {
+      width: 23%;
+      left: 1%;  
+      top: 12em;  
+      height: 70vh;  
+      overflow: scroll;
+    }  
+    .submit-buttons {
+      z-index: 1000;
+    }
+    .affix.submit-buttons {
+      bottom: 4rem; 
+    }
+    .affix-bottom.submit-buttons {
+      bottom: 25em;
+      position: absolute;
+    }
   }
-  .affix.product-description {
-    width: 23%;
-    left: 1%; 
-    top: 25em; 
-   }  
    label.option {
      font-weight: normal;  
    }
@@ -2817,7 +2860,5 @@ div.discontinued {
   #main-container {
     width: 100%; 
   }
-
-
 
  } 

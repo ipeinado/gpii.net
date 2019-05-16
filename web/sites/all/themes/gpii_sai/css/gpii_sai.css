@@ -2151,17 +2151,46 @@ body.page-guided-shopping .categories-list > li:before {
 body.page-product-taxonomy-edit #main-content {
   margin-top: 0; }
 
-body.page-product-taxonomy-edit .affix-top.product-description {
-  width: 100%; }
+body.page-product-taxonomy-edit .affix {
+  position: static; }
 
-body.page-product-taxonomy-edit .affix-bottom.product-description {
-  width: 100%;
-  bottom: 0; }
-
-body.page-product-taxonomy-edit .affix.product-description {
-  width: 23%;
-  left: 1%;
-  top: 25em; }
+@media (min-width: 992px) {
+  body.page-product-taxonomy-edit .affix {
+    position: relative; }
+  body.page-product-taxonomy-edit .product-description {
+    background-color: #fff;
+    z-index: 1000;
+    padding: 1rem;
+    border-radius: 10px 10px 10px 10px;
+    border: 1px solid #2c3849; }
+    body.page-product-taxonomy-edit .product-description .label {
+      text-transform: uppercase;
+      font-size: 110%;
+      float: right;
+      margin-bottom: 1rem; }
+    body.page-product-taxonomy-edit .product-description img {
+      margin: auto; }
+    body.page-product-taxonomy-edit .product-description .label + p, body.page-product-taxonomy-edit .product-description img {
+      margin-top: 2rem; }
+  body.page-product-taxonomy-edit .affix-top.product-description {
+    width: 100%; }
+  body.page-product-taxonomy-edit .affix-bottom.product-description {
+    width: 100%;
+    bottom: 25em;
+    position: absolute; }
+  body.page-product-taxonomy-edit .affix.product-description {
+    width: 23%;
+    left: 1%;
+    top: 12em;
+    height: 70vh;
+    overflow: scroll; }
+  body.page-product-taxonomy-edit .submit-buttons {
+    z-index: 1000; }
+  body.page-product-taxonomy-edit .affix.submit-buttons {
+    bottom: 4rem; }
+  body.page-product-taxonomy-edit .affix-bottom.submit-buttons {
+    bottom: 25em;
+    position: absolute; } }
 
 body.page-product-taxonomy-edit label.option {
   font-weight: normal; }
