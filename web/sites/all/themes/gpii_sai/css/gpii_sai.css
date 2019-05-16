@@ -2148,8 +2148,27 @@ body.page-guided-shopping .categories-list .btn-default {
 body.page-guided-shopping .categories-list > li:before {
   color: #A72534; }
 
+body.page-product-taxonomy-edit #main-content {
+  margin-top: 0; }
+
+body.page-product-taxonomy-edit .affix-top.product-description {
+  width: 100%; }
+
+body.page-product-taxonomy-edit .affix-bottom.product-description {
+  width: 100%;
+  bottom: 0; }
+
+body.page-product-taxonomy-edit .affix.product-description {
+  width: 23%;
+  left: 1%;
+  top: 25em; }
+
 body.page-product-taxonomy-edit label.option {
   font-weight: normal; }
+
+body.page-product-taxonomy-edit .description {
+  margin-bottom: 1rem;
+  font-size: 90%; }
 
 body.page-product-taxonomy-edit .form-item-field-features-primary {
   display: none; }
@@ -2160,5 +2179,8 @@ body.page-product-taxonomy-edit input.invisible-label + label, body.page-product
 
 body.page-product-taxonomy-edit button {
   margin-left: 2rem; }
+
+body.page-product-taxonomy-edit #main-container {
+  width: 100%; }
 
 /*# sourceMappingURL=gpii_sai.css.map */

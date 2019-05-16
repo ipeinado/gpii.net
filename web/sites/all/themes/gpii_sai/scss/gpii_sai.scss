@@ -2766,9 +2766,9 @@ div.discontinued {
      a:first-of-type {
        font-weight: 600;
      }
-     .btn-default {
+     .btn-default { 
        display: inline;
-       padding: 0.25rem 0.5rem;
+       padding: 0.25rem 0.5rem; 
        margin-left: 1rem;
      }
    }
@@ -2776,12 +2776,31 @@ div.discontinued {
    .categories-list > li:before {
     color: $color-gpii-sai-primary;
   }
- }
+ } 
 
 
  body.page-product-taxonomy-edit {
+   #main-content {
+     margin-top: 0; 
+   }
+  .affix-top.product-description {
+    width: 100%;
+  } 
+  .affix-bottom.product-description {
+    width: 100%;
+    bottom: 0;
+  }
+  .affix.product-description {
+    width: 23%;
+    left: 1%; 
+    top: 25em; 
+   }  
    label.option {
      font-weight: normal;  
+   }
+   .description {
+     margin-bottom: 1rem; 
+     font-size: 90%;
    }
    .form-item-field-features-primary {
      display: none;
@@ -2793,6 +2812,10 @@ div.discontinued {
 
   button {
     margin-left: 2rem;
+  }
+
+  #main-container {
+    width: 100%; 
   }
 
 

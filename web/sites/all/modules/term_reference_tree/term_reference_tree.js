@@ -301,12 +301,10 @@ function checkMaxChoices(item, checkbox) {
 
       if(checkbox.is(':checked')) {
         var control_id = checkbox.attr('id');
-        // only apply to normal and secondary trees
-        if (!control_id.match(/primary/g)) {
-          var level_up_control_id = control_id.split('-').slice(0, length - 3).join('-');
+        var level_up_control_id = control_id.split('-').slice(0, -3).join('-');
+
           checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[id^="' + level_up_control_id + '"]').each(function() {
             this.checked = true;
-
             if(track_list_container) {
               label_element = $(this).next();
               addItemToTrackList(
@@ -317,7 +315,7 @@ function checkMaxChoices(item, checkbox) {
               );
             }
           });
-        }
+        
       }
     }
   }
