@@ -2789,9 +2789,9 @@ div.discontinued {
      position: static;
    }
 
-   @media (min-width: $screen-md-min) {
+   @media (min-width: $screen-md-min) {  
     .affix {
-      position: relative;
+      position: fixed;
     }
     .product-description {
       background-color: #fff;

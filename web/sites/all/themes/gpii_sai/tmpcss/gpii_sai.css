@@ -1985,7 +1985,7 @@ body.page-product-taxonomy-edit .affix {
 
 @media (min-width: 992px) {
   body.page-product-taxonomy-edit .affix {
-    position: relative; }
+    position: fixed; }
   body.page-product-taxonomy-edit .product-description {
     background-color: #fff;
     z-index: 1000;
