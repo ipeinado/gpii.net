@@ -304,11 +304,9 @@ function checkMaxChoices(item, checkbox) {
         var current_level_id = control_id;
         checkbox.parents('ul.term-reference-tree-level li').each(function() {
 
-          current_level_id = current_level_id.split('-').slice(0, -3).join('-');
-
           $(this).children('div.form-item').children('input[id^="' + current_level_id + '"]').each(function () {
             this.checked = true;
-
+            
             if(track_list_container) {
               label_element = $(this).next();
               addItemToTrackList(
@@ -316,10 +314,12 @@ function checkMaxChoices(item, checkbox) {
                 label_element.html(),         //Text of new item.
                 $(label_element).attr('for'), //Id of control new item is for.
                 input_type                    //checkbox or radio
-              );
-            }
-            
-          });
+                );
+              }
+              
+            });
+
+            current_level_id = current_level_id.split('-').slice(0, -3).join('-');
         });
       }
     }
