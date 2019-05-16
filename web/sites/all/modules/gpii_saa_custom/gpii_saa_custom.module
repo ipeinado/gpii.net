@@ -519,15 +519,13 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
           $prefix = '<span class="label label-primary">';
           $suffix = '</span>';
         }
-
-          $description = field_get_items('node', $node, $value);
-
+        $description = field_get_items('node', $node, $value);
         $prod_description .= $prefix . render(field_view_value('node', $node, $value, $description[0])) . $suffix;
       }     
       
       //dpm($prod_description);
       $form['row1start'] = array(
-        '#markup' => '<div class="row"><div class="col col-md-6"><div class="product-description" data-spy="affix" data-offset-top="0">' . $prod_description . '</div></div><div class="col col-md-7">'
+        '#markup' => '<div class="row"><div class="col col-md-6"><div class="product-description" data-spy="affix" data-offset-top="0">' . $prod_description . '</div><br /><!-- add a break for safari --></div><div class="col col-md-7">'
       );
       
       // build a vocabulary variable for use by the form below

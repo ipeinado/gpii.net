@@ -1983,7 +1983,7 @@ body.page-product-taxonomy-edit #main-content {
 body.page-product-taxonomy-edit .product-description {
   background-color: #fff;
   z-index: 1000;
-  padding: 2rem 1rem;
+  padding: 1rem;
   border-radius: 10px 10px 10px 10px;
   border: 1px solid #2c3849; }
   body.page-product-taxonomy-edit .product-description .label {
