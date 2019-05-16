@@ -513,13 +513,21 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       $prod_description = '';
 
       foreach ($description_fields as $value) {
-        $description = field_get_items('node', $node, $value);
-        $prod_description .= render(field_view_value('node', $node, $value, $description[0]));
+        $prefix = '';
+        $suffix = '';
+        if ($value == 'field_status') {
+          $prefix = '<span class="label label-primary">';
+          $suffix = '</span>';
+        }
+
+          $description = field_get_items('node', $node, $value);
+
+        $prod_description .= $prefix . render(field_view_value('node', $node, $value, $description[0])) . $suffix;
       }     
       
       //dpm($prod_description);
       $form['row1start'] = array(
-        '#markup' => '<div class="row"><div class="col col-md-6"><div class="product-description" data-spy="affix" data-offset-top="0" data-offset-bottom="500">' . $prod_description . '</div></div><div class="col col-md-7">'
+        '#markup' => '<div class="row"><div class="col col-md-6"><div class="product-description" data-spy="affix" data-offset-top="0">' . $prod_description . '</div></div><div class="col col-md-7">'
       );
       
       // build a vocabulary variable for use by the form below
@@ -837,7 +845,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       );
 
       $form['row1end'] = array(
-        '#markup' => '</div><div class="col col-md-4"><div data-spy="affix" data-offset-top="0" data-offset-bottom="100">'
+        '#markup' => '</div><div class="col col-md-4"><div class="submit-buttons" data-spy="affix" data-offset-top="0" data-offset-bottom="10">'
       );
 
       $form['submit'] = array
