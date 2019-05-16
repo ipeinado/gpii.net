@@ -115,7 +115,7 @@ Drupal.behaviors.termReferenceTree = {
         $(this).find('.form-checkbox').change(function(event) {
           var event_target = $(event.target);
           var control_id = event_target.attr('id');
-          var children = event_target.parent().next().children().children('div.form-type-checkbox').children('input[id^="' + control_id + '-children"]');
+          var children = event_target.parent().parent().children('ul').children().children('div.form-type-checkbox').children('input[id^="' + control_id + '-children"]');
           if(event_target.is(':checked')) {
             //cascadingSelection ONLY: Checkbox checked - check children if none were checked.
             if(cascadingSelection && !$(children).filter(':checked').length) {
@@ -301,10 +301,14 @@ function checkMaxChoices(item, checkbox) {
 
       if(checkbox.is(':checked')) {
         var control_id = checkbox.attr('id');
-        var level_up_control_id = control_id.split('-').slice(0, -3).join('-');
+        var current_level_id = control_id;
+        checkbox.parents('ul.term-reference-tree-level li').each(function() {
 
-          checkbox.parents('ul.term-reference-tree-level li').children('div.form-item').children('input[id^="' + level_up_control_id + '"]').each(function() {
+          current_level_id = current_level_id.split('-').slice(0, -3).join('-');
+
+          $(this).children('div.form-item').children('input[id^="' + current_level_id + '"]').each(function () {
             this.checked = true;
+
             if(track_list_container) {
               label_element = $(this).next();
               addItemToTrackList(
@@ -314,8 +318,9 @@ function checkMaxChoices(item, checkbox) {
                 input_type                    //checkbox or radio
               );
             }
+            
           });
-        
+        });
       }
     }
   }
