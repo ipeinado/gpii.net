@@ -484,10 +484,31 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'access arguments' => array('access taxonomy edit form'),
         'type' => MENU_CALLBACK,
       );
-
+      $items['node/%tagedit/tags'] = array(
+        'title' => 'Edit Tags',
+        'page callback' => 'gpii_saa_custom_contextual_redirect',
+        'page arguments' => array(1),
+        'access arguments' => array('access taxonomy edit form'),
+        'type' => MENU_LOCAL_TASK,
+        'weight' => 0,
+      );
+      
       return $items;
     }
 
+    // Add an Edit Tags tab to the product pages for editors with permission
+    function tagedit_load($arg) {
+      $node = node_load($arg);
+      if ($node->type == 'product') return $node; 
+      return FALSE;
+    }
+
+    // Redirect users to the correct page with a destination parameter intact
+    function gpii_saa_custom_contextual_redirect($nid) {
+      $nid = $nid->nid;
+      $query = array('query' => array('destination' => 'node/'.$nid));
+      drupal_goto('product/taxonomy/edit/'. $nid, $query);
+    }
 
     /**
      * Builds an edit for for taxonomy adjustments
@@ -495,7 +516,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
     function gpii_saa_custom_taxonomy_edit($form, &$form_state, $node) {
 
-      drupal_set_title('Tags for ' . $node->title);
+      drupal_set_title('Update Tags for ' . $node->title);
 
       // Save the node to the form state for use in the submit function
       $form_state['node'] = $node;
