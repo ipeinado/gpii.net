@@ -552,7 +552,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       // build a vocabulary variable for use by the form below
       $category_vocabulary = new stdClass();
       $category_vocabulary->vid = 11;
-      $category_vocabulary->name = 'Features';
+      $category_vocabulary->name = 'Product Category';
       $category_vocabulary->machine_name = 'product_category1';
       $category_vocabulary->hierarchy = '1';
 
@@ -599,6 +599,8 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
+        '#description' => t('<p>Select the product categories that are applicable for this product. </p><p><a role="button" class="btn btn-default btn-sm expandbutton">Expand All Categories</a></p>'),
+        '#description_display' => 'before',
       );
 
 
@@ -818,9 +820,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
-        '#description' => t('Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second checkbox) features.'),
+        '#description' => t('<p>Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second checkbox) features.</p></p> <a role="button" class="btn btn-default btn-sm expandbutton">Expand All Features</a></p>'),
         '#description_display' => 'before',
       );
+
+      
 
       $primary_features = $node->field_features_primary['und'];
       $primary_features_selected = array();

@@ -11,12 +11,25 @@ Drupal.behaviors.termReferenceTree = {
       $(this).siblings('ul').slideToggle('fast');
     });
 
-    // An expand all button (unimplemented)
-    /*
+    // Handle the expand/collapse all buttons 
+    // BBC: This was unimplemented in the term_reference_tree module and is custom for the update tags endpoint (added May 2019)
+    
     $('.expandbutton').click(function() {
-      $(this).siblings('.term-reference-tree-button').trigger('click');
+      var id = $(this).closest('div').next().attr("id");
+      var origbuttontext = $(this).text();
+      var buttontext = $(this).text().split(" ").splice(-1);
+      //console.log(origbuttontext.indexOf("Expand") >= 0);
+      if (origbuttontext.indexOf("Expand") >= 0) {
+        $('#' + id).find('.term-reference-tree-collapsed').trigger('click'); 
+        $(this).text("Collapse All " + buttontext );
+      } 
+      else {
+        $('#' + id).find('.term-reference-tree-button').trigger('click'); 
+        $(this).text("Expand All " + buttontext);
+      }
+
     });
-    */
+    
 
 
     $('.term-reference-tree', context).once('term-reference-tree', function() {
