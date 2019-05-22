@@ -2862,3 +2862,37 @@ div.discontinued {
   }
 
  } 
+
+ // Guided Shopping Outline
+
+ #block-gpii-saa-custom-guided-shopping-tree {
+   div.field {
+     margin-bottom: 1rem;
+   }
+
+   .field-name-field-qasearch-question, .field-name-field-question-head {
+     .field-label {
+       display: none;
+     }
+   }
+
+   .questiondata { 
+     margin-left: 0rem;
+     margin-top: 0.25rem;
+     padding-left: 0.5rem;
+     border-left: 3px solid $color-gpii-light-gray;
+   }
+
+   & > ul:first-of-type {
+     border-top: 1px solid $gray-lighter;
+     padding-top: 1rem;
+   }
+
+   .taxonomy-link {
+    font-weight: bold;
+   }
+   ul {
+     margin-left: 0;
+     padding-left: 1.5rem;
+   }
+ }
