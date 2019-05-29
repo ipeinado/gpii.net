@@ -57,7 +57,7 @@ var query = decodeURIComponent(url[1]);
       });
       var new_query = Object.keys(params)
         .map(function(key) {
-          key + '=' + params[key];
+          return key + '=' + params[key];
         })
         .join('&');
       location.href = base_url + '?' + new_query;
