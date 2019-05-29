@@ -431,10 +431,28 @@ function theme_checkbox_tree_level($variables) {
 
   $output = "<ul class='term-reference-tree-level '$sm>";
   $children = element_children($element);
+  
   foreach ($children as $child) {
-    $output .= "<li>";
+    // BBC: Load the short description fild values so we can display them as tooltips. This
+    // adds a good deal of load time, but helps the tagging team choose correct categories a bit more easily.
+    $termdata = taxonomy_term_load($child);
+    // dpm($termdata);
+    // drupal_exit();
+    $shortdesc_field = field_get_items('taxonomy_term', $termdata, 'field_short_description');
+    $shortdesc = field_view_value('taxonomy_term', $termdata, 'field_short_description', $shortdesc_field[0]);
+    $shortdesc = render($shortdesc);
+
+    // if we have a short description value, we show it with title attribute. 
+    // note that bootstrap tooltips don't work very well here because the list is nested
+    if ($shortdesc['#markup'] != '') {
+      $output .= '<li title="' . $shortdesc . '">'; 
+    }
+    else {
+      $output .= '<li>';
+    }
+
     $output .= drupal_render($element[$child]);
-    $output .= "</li>";
+    $output .= '</li>';
   }
 
   $output .= "</ul>";
