@@ -3127,6 +3127,25 @@ function gpii_saa_custom_preprocess(&$variables, $hook) {
 }
 
 /**
+* Implements template_preprocess_page().
+*/
+function gpii_saa_custom_preprocess_page(&$variables) {
+	
+	if (isset($variables['theme_hook_suggestions'][0]) && $variables['theme_hook_suggestions'][0] == 'page__guided_shopping_search') {
+		// $breadcrumb = $variables['page']['content']['system_main']['breadcrumb'];
+    // dsm($variables);
+    
+    $term_id = $_GET[field_product_categories1][0];
+
+    $breadcrumb = _build_breadcrumb($term_id);
+    $variables['breadcrumb'] = theme('item_list', array('items' => $breadcrumb, 'type' => 'ol', 'attributes' => array('class' => 'breadcrumb')));
+    
+    $term_name = taxonomy_term_load($term_id)->name;
+    drupal_set_title(drupal_get_title() . ': ' . $term_name);
+	}
+}
+
+/**
  * Hook feeds so that we avoid the possibility of accidentally overwriting term names when imports are run. Note that in order for intial import to work correctly, both the term ID and the term name need to be an exact match.
  */
 
