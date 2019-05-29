@@ -72,6 +72,9 @@ function gpii_saa_custom_block_info() {
   $blocks['trouble_tree'] = array(
     'info' => t('Trouble Tree'),
   );
+  $blocks['guided_shopping_tree'] = array(
+    'info' => t('Guided Shopping Tree'),
+    );
   $blocks['test_tree'] = array(
     'info' => t('Test Tree'),
   );
@@ -94,6 +97,9 @@ function gpii_saa_custom_block_view($delta='') {
       break;
     case 'trouble_tree' :
       $block['content'] = trouble_tree_view();
+      break;
+    case 'guided_shopping_tree' :
+      $block['content'] = guided_shopping_tree_view();
       break;
     case 'test_tree' :
       $block['content'] = test_tree_view();
@@ -214,6 +220,52 @@ EOD;
   return $block;
 }
 
+function guided_shopping_tree_view() {
+$block = array();
+$markup = <<<EOD
+<!-- taxonomy term links -->
+EOD;
+  $vid = 11;
+  $vdisplay = 'block_1';
+  $primaryCategory = taxonomy_get_tree($vid, 0, 1);
+  //dpm($primaryCategory);
+
+  foreach ($primaryCategory as $termid) {
+    $destination = drupal_get_destination();
+    $link = '/reports/term-utilization/' . $termid->tid;
+       $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
+       //dpm(count($count));
+       if ($count > 0) {
+        $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . '</h2>';
+       }
+       else {
+        $markup .= '<h2>' . t($termid->name) . '</h2>';
+       }
+
+       $termdata = taxonomy_term_load($termid->tid);
+       //dpm($termdata);
+       $shortdesc = field_view_field('taxonomy_term', $termdata, 'field_short_description');
+       $question = field_view_field('taxonomy_term', $termdata, 'field_qasearch_question');
+       $questionhead = field_view_field('taxonomy_term', $termdata, 'field_question_head');
+
+       $markup .= render($shortdesc);
+       $markup .= render($question);
+       $markup .= render($questionhead);
+
+       $markup .= gpii_saa_custom_list_child_shopping_terms($vid, $termid->tid, $vdisplay);
+  }
+
+  // Block output in HTML with div wrapper
+  $block = array(
+      '#prefix' => '<div class="gpii-product-tree">',
+      '#type' => 'markup',
+      '#markup' => $markup,
+      '#suffix' => '</div>',
+  );
+
+  return $block;
+}
+
 function test_tree_view() {
 $block = array();
 $markup = <<<EOD
@@ -274,6 +326,54 @@ function gpii_saa_custom_list_child_terms($vid, $tid, $vdisplay) {
   return $li;
 
 }
+
+function gpii_saa_custom_list_child_shopping_terms($vid, $tid, $vdisplay) {
+  $li = '';
+  $destination = drupal_get_destination();
+  $children = taxonomy_get_tree($vid, $tid, 1);
+  if ($children) {
+    $li .= '<ul>';
+    foreach ($children as $key => $value) {
+     $link = '/reports/term-utilization/' . $value->tid;
+     $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $value->tid));
+     //dpm(count($count));
+
+      $edit_link = l(t('Edit term'), $base_url . '/taxonomy/term/' . $value->tid . '/edit', array('attributes' => array('class' => 'btn btn-default btn-xs',), 'query' => array('destination' => '/content/guided-shopping-outline'),));
+
+      
+      $termdata = taxonomy_term_load($value->tid);
+      //dpm($termdata);
+      $shortdesc_field = field_get_items('taxonomy_term', $termdata, 'field_short_description');
+      $shortdesc = field_view_value('taxonomy_term', $termdata, 'field_short_description', $shortdesc_field[0]);
+      
+      $question = field_view_field('taxonomy_term', $termdata, 'field_qasearch_question');
+      $questionhead = field_view_field('taxonomy_term', $termdata, 'field_question_head');
+      
+      if ($question || $questionhead) {
+        $markup = '<div class="questiondata">';
+        $markup .= render($question);
+        $markup .= render($questionhead);
+        $markup .= '</div>';
+      }
+      
+
+     if ($count > 0) {
+      $li .= '<li>' . l(t($value->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') - ' . render($shortdesc) . ' ' . $edit_link . $markup .  gpii_saa_custom_list_child_shopping_terms($vid, $value->tid, $vdisplay) . '</li>';
+     }
+     else {
+      $li .= '<li>' . t($value->name) . $edit_link . $markup . '</li>';
+     }
+
+     
+    }
+     $li .= '</ul>';
+  }
+
+  return $li;
+
+}
+
+
 
 function gpii_saa_custom_child_termrefs_table($vid, $tid, $vdisplay) {
   $output = '';
@@ -484,10 +584,31 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'access arguments' => array('access taxonomy edit form'),
         'type' => MENU_CALLBACK,
       );
-
+      $items['node/%tagedit/tags'] = array(
+        'title' => 'Edit Tags',
+        'page callback' => 'gpii_saa_custom_contextual_redirect',
+        'page arguments' => array(1),
+        'access arguments' => array('access taxonomy edit form'),
+        'type' => MENU_LOCAL_TASK,
+        'weight' => 0,
+      );
+      
       return $items;
     }
 
+    // Add an Edit Tags tab to the product pages for editors with permission
+    function tagedit_load($arg) {
+      $node = node_load($arg);
+      if ($node->type == 'product') return $node; 
+      return FALSE;
+    }
+
+    // Redirect users to the correct page with a destination parameter intact
+    function gpii_saa_custom_contextual_redirect($nid) {
+      $nid = $nid->nid;
+      $query = array('query' => array('destination' => 'node/'.$nid));
+      drupal_goto('product/taxonomy/edit/'. $nid, $query);
+    }
 
     /**
      * Builds an edit for for taxonomy adjustments
@@ -495,7 +616,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
     function gpii_saa_custom_taxonomy_edit($form, &$form_state, $node) {
 
-      drupal_set_title('Tags for ' . $node->title);
+      drupal_set_title('Update Tags for ' . $node->title);
 
       // Save the node to the form state for use in the submit function
       $form_state['node'] = $node;
@@ -531,7 +652,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       // build a vocabulary variable for use by the form below
       $category_vocabulary = new stdClass();
       $category_vocabulary->vid = 11;
-      $category_vocabulary->name = 'Features';
+      $category_vocabulary->name = 'Product Category';
       $category_vocabulary->machine_name = 'product_category1';
       $category_vocabulary->hierarchy = '1';
 
@@ -578,6 +699,8 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
+        '#description' => t('<p>Select the product categories that are applicable for this product. </p><p><a role="button" class="btn btn-default btn-sm expandbutton">Expand All Categories</a></p>'),
+        '#description_display' => 'before',
       );
 
 
@@ -797,9 +920,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         '#token_display' => '',
         '#value_key' => 'tid',
         '#required' => FALSE,
-        '#description' => t('Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second checkbox) features.'),
+        '#description' => t('<p>Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second checkbox) features.</p></p> <a role="button" class="btn btn-default btn-sm expandbutton">Expand All Features</a></p>'),
         '#description_display' => 'before',
       );
+
+      
 
       $primary_features = $node->field_features_primary['und'];
       $primary_features_selected = array();
@@ -1404,7 +1529,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $markup .= '<a href="/node/' . $product->nid . '">' . $product->title . '</a>';
           }
 
-          $markup .= ' is also listed in these collaborating sites:</p>';
+          $markup .= ' is also listed in these partner sites:</p>';
       }
 
 
@@ -3141,7 +3266,7 @@ function gpii_saa_custom_preprocess_page(&$variables) {
     $variables['breadcrumb'] = theme('item_list', array('items' => $breadcrumb, 'type' => 'ol', 'attributes' => array('class' => 'breadcrumb')));
     
     $term_name = taxonomy_term_load($term_id)->name;
-    drupal_set_title(drupal_get_title() . ': ' . $term_name);
+    drupal_set_title('Products that match: ' . $term_name);
 	}
 }
 
