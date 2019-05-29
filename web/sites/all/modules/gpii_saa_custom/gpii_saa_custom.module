@@ -3266,7 +3266,7 @@ function gpii_saa_custom_preprocess_page(&$variables) {
     $variables['breadcrumb'] = theme('item_list', array('items' => $breadcrumb, 'type' => 'ol', 'attributes' => array('class' => 'breadcrumb')));
     
     $term_name = taxonomy_term_load($term_id)->name;
-    drupal_set_title(drupal_get_title() . ': ' . $term_name);
+    drupal_set_title('Products that match: ' . $term_name);
 	}
 }
 
