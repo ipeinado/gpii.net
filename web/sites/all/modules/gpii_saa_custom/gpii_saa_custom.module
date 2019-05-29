@@ -1529,7 +1529,7 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $markup .= '<a href="/node/' . $product->nid . '">' . $product->title . '</a>';
           }
 
-          $markup .= ' is also listed in these collaborating sites:</p>';
+          $markup .= ' is also listed in these partner sites:</p>';
       }
 
 
