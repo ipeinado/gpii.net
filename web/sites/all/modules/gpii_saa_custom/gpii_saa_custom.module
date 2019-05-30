@@ -1944,6 +1944,9 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
             $summary = views_trim_text($alter, $body);
             $value->body = $summary;
           }
+          if (isset($value->discontinued_message)) {
+            $value->body = '<div class="discontinued">' . $value->discontinued_message . "</div>" . $value->body;
+          }
           if (isset($value->status)) {
             if ($value->status == 2) {
               $value->discontinued = 1;
