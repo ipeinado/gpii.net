@@ -1925,11 +1925,32 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         foreach ($record as $key => $value) {
           $output[] = (object) array_filter((array) $value);
         }
+        
 
         // trim the body field by calling text_summary and clean up the markup
         foreach ($output as $key => $value) {
+          
+          // add the discontinued message - ideally these would pull from the select list labels, but that seems to slow things down
+          $discontinued_message = '';
+          if (isset($value->discontinued_message)) {
+
+            switch ($value->discontinued_message) {
+              case 'disc_not_supported':
+                $discmessage = 'This product has been discontinued and is no longer supported and serviced by the manufacturer.';
+                break;
+              case 'disc_simple':
+                $discmessage = 'This product has been discontinued.';
+                break;
+            }
+
+            if ($discmessage != '') {
+              $discontinued_message = '<div class="discontinued">' . $discmessage . "</div>";
+            }
+            
+          }
+
           if (isset($value->body_summary)) {
-            $value->body = $value->body_summary;
+            $value->body = $discontinued_message . $value->body_summary;
           }
 
           elseif (isset($value->body)) {
@@ -1940,13 +1961,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
               'html' => TRUE, //Boolean
               );
 
-            $body = $value->body;
+            $body = $discontinued_message . $value->body;
             $summary = views_trim_text($alter, $body);
             $value->body = $summary;
           }
-          if (isset($value->discontinued_message)) {
-            $value->body = '<div class="discontinued">' . $value->discontinued_message . "</div>" . $value->body;
-          }
+          
           if (isset($value->status)) {
             if ($value->status == 2) {
               $value->discontinued = 1;
