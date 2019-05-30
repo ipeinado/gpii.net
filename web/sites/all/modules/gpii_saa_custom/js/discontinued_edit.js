@@ -11,7 +11,7 @@
     status.on('change', function() {
       setDiscontinuedDisplay();
       if (status.val() != 2) {
-        dis_msg_none.click();
+        dis_msg_none.prop('checked', true);
       }
     });
 
