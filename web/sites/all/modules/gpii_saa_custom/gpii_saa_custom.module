@@ -427,6 +427,9 @@ function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_features_primary']['und']['#default_value']);
     $form['field_features_primary']['#attributes']['class'][] = 'element-invisible';
     //dsm($form);  // pretty print array using Krumo to messages
+
+    // adds js to control the discontinued message field edit flow
+    $form['#attached']['js'][] = drupal_get_path('module', 'gpii_saa_custom') . '/js/discontinued_edit.js';
   }
 
   if ($form_id == 'payment_form_standalone') {
@@ -446,7 +449,6 @@ function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id) {
     }
   }
 }
-
 
 /**
  * Custom cancel button callback.
