@@ -2964,49 +2964,79 @@ function gpii_saa_custom_delete_records_vbo($uid) {
 function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
   // be sure that the record has some terms from the needs and wants tree associated with it before proceeding
   //dpm('Needs Count: ' . count($entity->field_features['und']));
-  if (count($entity->field_features['und']) > 0) {
+
+  if (count($entity->field_features_primary['und']) > 0) {
 
     // call gpii_saa_custom_sync_needs_to_trouble() with the entity's nid to handle the updates
-    $trouble_terms = gpii_saa_custom_sync_needs_to_trouble_vbo($entity->field_features['und']);
-
-    //dpm(implode(', ', $trouble_terms));
+    $trouble_terms = gpii_saa_custom_sync_needs_to_trouble_vbo($entity->field_features_primary['und']);
 
     // if we get an array of trouble taxonomy terms back, go through and each of them to the entity and save
-    if (isset($trouble_terms)) {
-      // remove any old trouble taxonomy refs
-      unset($entity->field_trouble_with['und']);
+    if (count($trouble_terms) > 0) {
 
-      // create an empty array to hold parents of terms referenced
+      $original_terms = array();
+      // Get current trouble with terms to compare to
+      foreach ($entity->field_trouble_with['und'] as $value) {
+        $original_terms[] = $value['tid'];
+      }
+
+      // will hold parents of terms referenced
       $parents = array();
+
+      // Get parent terms
+      $trouble_terms = array_unique($trouble_terms);
       foreach ($trouble_terms as $key => $value) {
-        //dpm($key . '-' . $value);
         // Set lineage no longer works because virutal stores need to reference only some children
         // Therefore, check to see if the trouble term has parents and set those too. We only have to check once because this tree is only 2 levels deep.
         $parent = taxonomy_get_parents($value);
-
+        
         // add the parent key to an array by getting the key of the array of objects returned by taxonomy_get_parents
         $parents[] = key($parent);
-
-        $entity->field_trouble_with['und'][] = array('tid' => $value);
       }
-
-
-      // add the parent terms
+      
       $parents = array_unique($parents);
-      if (count($parents) > 0) {
-        foreach ($parents as $key => $value) {
+      // join to create complete list
+      $new_terms = array_merge($trouble_terms, $parents);
+      $diff_terms = array_merge(array_diff($original_terms,$new_terms),array_diff($new_terms,$original_terms));
+      
+      if (count($diff_terms) > 0) {
+
+        // clear old terms
+        unset($entity->field_trouble_with['und']);
+
+        // format new terms into entity
+        $formated_terms = array();
+        foreach ($new_terms as $key => $value) {
           // be sure we're not sending a null value (else drupal integrity constraint violation 1048 column 'tid' cannot be null)
           if ($value != NULL) {
-            $entity->field_trouble_with['und'][] = array('tid' => $value);
+            $formated_terms[] = array('tid' => $value);
           }
         }
-      }
 
-      watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been updated.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+        $entity->field_trouble_with['und'] = $formated_terms;
+
+        // Save node current version
+        $revision_id = revisioning_get_latest_revision_id($entity->nid);
+        node_save($entity->nid);
+
+        // Save draft if exists
+        if ($revision_id != $entity->vid) {
+          $latest = node_load($entity->nid, $revision_id, reset);
+  
+          $latest->revision = TRUE;
+          $latest->revision_moderation = TRUE;
+          $latest-> log = 'Taxonomy Edits';
+          $latest->category = 'tax_only';
+  
+          $latest->field_trouble_with['und'] = $formated_terms;
+          node_save($latest);
+        }
+
+        watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been updated.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+      }
     }
 
     // return the modified entity to VBO for processing
-    return $entity;
+    return;
   }
 
   return;
@@ -3015,6 +3045,8 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
 
 
 function gpii_saa_custom_sync_needs_to_trouble_vbo($features) {
+
+  $trouble_terms = [];
 
   foreach ($features as $key => $value) {
     // query the trouble view with the term ID to find out which terms from the
