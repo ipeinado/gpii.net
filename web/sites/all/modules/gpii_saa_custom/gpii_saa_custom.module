@@ -3022,7 +3022,7 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
         $entity->category = 'tax_only';
 
         $entity->field_trouble_with['und'] = $formated_terms;
-        node_save($entity->nid);
+        node_save($entity);
 
         // Save draft if exists
         if ($revision_id != $entity->vid) {
