@@ -3024,7 +3024,7 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
   
           $latest->revision = TRUE;
           $latest->revision_moderation = TRUE;
-          $latest-> log = 'Taxonomy Edits';
+          $latest->log = 'Trouble Taxonomy Sync';
           $latest->category = 'tax_only';
   
           $latest->field_trouble_with['und'] = $formated_terms;
