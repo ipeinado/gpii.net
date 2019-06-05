@@ -3016,6 +3016,10 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
 
         // Save node current version
         $revision_id = revisioning_get_latest_revision_id($entity->nid);
+        $node->revision = TRUE;
+        $node->revision_moderation = TRUE;
+        $node->log = 'Trouble Taxonomy Sync';
+        $node->category = 'tax_only';
         node_save($entity->nid);
 
         // Save draft if exists
