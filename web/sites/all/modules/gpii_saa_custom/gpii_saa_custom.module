@@ -2307,7 +2307,8 @@ function gpii_saa_custom_action_info() {
     'gpii_saa_custom_sync_needs_to_trouble' => array(
       'type' => 'entity',
       'label' => t('Update and sync trouble taxonomy terms'),
-      'behavior' => array('changes_property'),
+      // The behavior is set to a filled string to prevent the default behavior of running node_save()
+      'behavior' => array('blank text'), //array('changes_property'),
       'configurable' => FALSE,
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
@@ -2987,8 +2988,10 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
 
       $original_terms = array();
       // Get current trouble with terms to compare to
-      foreach ($entity->field_trouble_with['und'] as $value) {
-        $original_terms[] = $value['tid'];
+      if (isset($entity->field_trouble_with['und'])) {
+        foreach ($entity->field_trouble_with['und'] as $value) {
+          $original_terms[] = $value['tid'];
+        }
       }
 
       // will hold parents of terms referenced
@@ -3009,6 +3012,8 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
       // join to create complete list
       $new_terms = array_merge($trouble_terms, $parents);
       $diff_terms = array_merge(array_diff($original_terms,$new_terms),array_diff($new_terms,$original_terms));
+
+      watchdog('gpii_saa_custom', 'Diff Terms' . implode(', ', $diff_terms), array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
       
       if (count($diff_terms) > 0) {
 
@@ -3029,6 +3034,7 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
         
         // Save node current version
         $entity->revision = TRUE;
+        $entity->revision_operation = 1;
         $entity->revision_moderation = TRUE;
         $entity->log = 'Trouble Taxonomy Sync';
         $entity->category = 'tax_only';
@@ -3038,9 +3044,10 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
 
         // Save draft if exists
         if ($revision_id != $entity->vid) {
-          $latest = node_load($entity->nid, $revision_id, reset);
+          $latest = node_load($entity->nid, $revision_id, true);
   
           $latest->revision = TRUE;
+          $latest->revision_operation = 2;
           $latest->revision_moderation = TRUE;
           $latest->log = 'Trouble Taxonomy Sync';
           $latest->category = 'tax_only';
@@ -3054,10 +3061,10 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
     }
 
     // return the modified entity to VBO for processing
-    return;
+    // return;
   }
 
-  return;
+  // return;
 
 }
 
