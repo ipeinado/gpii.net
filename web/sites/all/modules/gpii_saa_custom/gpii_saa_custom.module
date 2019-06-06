@@ -998,8 +998,11 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 
       // If a moderated revision exists, we need to get the latest revision and save it too
       $revision_id = revisioning_get_latest_revision_id($node->nid);
+      
+      // check for a pending revision before we run node_save and set a variable to determine whether we udpate both 
+      // the current and the latest revision
 
-      if ($node->is_current != TRUE) {
+      if ($revision_id > $node->vid ) {
         $pending_revision = TRUE;
       }
       else {
