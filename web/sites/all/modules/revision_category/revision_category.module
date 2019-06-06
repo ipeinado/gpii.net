@@ -121,8 +121,10 @@ function revision_category_node_presave($node) {
                     }
 
                     // If editing the published version and will end up creating new revision with moderation 
-                    if ($node->revision_operation == 2) {
-                        revision_category_revision_taxonomy_to_current($node);
+                    if (!empty($node->revision_operation)) {
+                        if ($node->revision_operation == 2) {
+                            revision_category_revision_taxonomy_to_current($node);
+                        }
                     }
                 }
                 else {
