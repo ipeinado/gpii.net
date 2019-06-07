@@ -3035,6 +3035,13 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
         
         $revision_id = revisioning_get_latest_revision_id($entity->nid);
         
+        if ($revision_id > $entity->vid ) {
+          $pending_revision = TRUE;
+        }
+        else {
+          $pending_revision = FALSE;
+        }
+
         // Save node current version
         $entity->revision = TRUE;
         $entity->revision_operation = 1;
@@ -3046,7 +3053,7 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
         node_save($entity);
 
         // Save draft if exists
-        if ($revision_id != $entity->vid) {
+        if ($pending_revision == TRUE) {
           $latest = node_load($entity->nid, $revision_id, true);
   
           $latest->revision = TRUE;
