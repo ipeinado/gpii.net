@@ -33,7 +33,7 @@ var query = decodeURIComponent(url[1]);
       );
     }
 
-    $('body.page-search, body.page-guided-shopping-search').append(
+    $('body.page-search, body.page-guided-shopping-search, body.page-search-similar').append(
       '<div class="fullpage-loading"><div class="lds-dual-ring"></div></div><div aria-live="assertive">Reloading</div>'
     );
 

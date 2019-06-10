@@ -572,13 +572,6 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'description' => t('Update an order.'),
         'type' => MENU_CALLBACK,
       );
-      $items['search/similar/%'] = array(
-        'title' => 'Search Similar Products',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('gpii_saa_custom_similar', 2),
-        'access arguments' => array('access similar search'),
-        'type' => MENU_CALLBACK,
-      );
       $items['product/taxonomy/edit/%node'] = array(
         'title' => 'Edit Product Taxonomy',
         'page callback' => 'drupal_get_form',
@@ -3382,168 +3375,6 @@ class gpii_saa_custom_field_handler_latest_revision extends views_handler_field 
   }
 }
 
-
-function gpii_saa_custom_similar($form, &$form_state, $nid) {
-  $product = node_load($nid);
-
-  //dpm($product);
-
-  drupal_set_title('[DRAFT] Find Similar Products');
-
-  
-  // create a form that allows users to check the features they are interested in 
-
-  // Set up a variable that includes all of the features that are associated with 
-  // original product.
-
-  $features = array();
-  foreach ($product->field_features['und'] as $key => $value) {
-    $term = taxonomy_term_load($value['tid']);
-    $features[$value['tid']] = t($term->name);
-  }
-
-  // same for product categories
-
-  $category = array();
-  foreach ($product->field_product_categories1['und'] as $key => $value) {
-    $term = taxonomy_term_load($value['tid']);
-    $category[$value['tid']] = t($term->name);
-  }
-
-  /**
-   * default_value doesn't work as advertised for checkboxes, so we use the form state to figure out if the user has 
-   * already submitted this form. If they have, we use values from their session. If not, we force the checked attribute 
-   * so that all options are checked by default. 
-   */
-
-  // dpm(count($_SESSION['gpii_saa_custom_similar'][$nid][0]));
-  // dpm(count(array_filter($form_state['input']['features'])));
-  $features_statecount = count(array_filter($form_state['input']['features']));
-  unset($checked);
-  // check all the checkboxes if there's no form state for this item
-  if ($features_statecount == 0) {
-    $checked = array('checked' => TRUE);
-    unset($features_statecount);
-  }
-
-  $categories_statecount = count(array_filter($form_state['input']['categories']));
-  unset($checked_cat);
-  // check all the checkboxes if there's no form state for this item
-  if ($categories_statecount == 0) {
-    $checked_cat = array('checked' => TRUE);
-    unset($categories_statecount);
-  }
-  drupal_set_message(t('This is a rough-draft prototype for the similar products search feature. This page could either be presented as an intermediate step on the way to search results or as a modal. To use, adjust the form below and select "Search". Then, select "View example results" at the end of the page to proceed to an example results page.'), 'status', FALSE);
-
-  $form = array();
-  $form['intro'] = array(
-    '#markup' => render(node_view($product, 'search_results'))
-
-  );
-  $form['categories'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Product Categories'),
-    '#required' => FALSE,
-    '#description' => t($product->title . ' is listed in the following categories. Which categories are you interested in?'),
-    '#description_display' => 'before',
-    '#options' => $category,
-    '#checkall' => TRUE,
-    '#attributes' => $checked_cat,
-  );
-
-  $form['features'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Features'),
-    '#required' => FALSE,
-    '#description' => t($product->title . ' includes the following features. Which features are you interested in?'),
-    '#description_display' => 'before',
-    '#options' => $features,
-    '#checkall' => TRUE,
-    '#attributes' => $checked,
-  );
-
-  $form['nid'] = array(
-    '#type' => 'hidden',
-    '#value' => $nid, 
-  );
-
-  $form['actions']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Search'),
-    '#submit' => array('gpii_saa_custom_similar_submit'),
-  );
-  $form['actions']['reset'] = array(
-    '#type' => 'submit',
-    '#value' => t('Reset'),
-    '#submit' => array('gpii_saa_custom_similar_reset'),
-  );
-
-  $form['resultlink'] = array(
-    '#markup' => '<div class="resultlink">' . $_SESSION['gpii_saa_custom_similar'][$nid]['resultlink'] . '</div>', 
-  );
-
-
-
-  return $form;
-}
-
-/**
- * Validates the form.
- */
-
-function gpii_saa_custom_similar_validate($form, &$form_state) {
-  // nothing to validate here, but we might want to check for results before submitting
-
-}
-
-function gpii_saa_custom_similar_submit($form, &$form_state) {
-
-  //dpm($form_state);
-      //kpr($form_state);
-      $form_state["rebuild"] = TRUE;
-
-       // Set the form values in the session so that they're remembered next time around
-       $nid = $form_state['values']['nid'];
-       
-       $categories = $form_state['values']['categories'];
-       $features = $form_state['values']['features'];
-
-       $resultlink = '<a class="btn btn-lg btn-info" href="/search/similar/results?';
-       $termcount = 0;
-
-       foreach ($categories as $key => $value) {
-         if($value != 0) {
-          $resultlink .= 'f%5B' . $termcount . '%5D=field_product_categories1%3A' . $value . '&';
-          $termcount ++;
-         }
-       }
-       foreach ($features as $key => $value) {
-        if($value != 0) {
-          $resultlink .= 'f%5B' . $termcount . '%5D=field_features%3A' . $value . '&';
-          $termcount ++;
-        }
-      }
-
-      $resultlink .= '">View example results</a></p>'; 
-
-
-       $form_state['values']['categories'];
-       $form_state['values']['features'];
-
-       $_SESSION['gpii_saa_custom_similar'][$nid] = array(
-        'resultlink' => $resultlink
-       );
-
-      return;
-
-
-  }
-
-  function gpii_saa_custom_similar_reset($form, &$form_state) {
-    $form_state['rebuild'] = FALSE;
-    return;
-  }
-
 /**
  * Converts an array that was previously parsed from the url arguments
  * to an array of hidden values that will be added to the form so these arguments
@@ -3563,4 +3394,126 @@ function _persist_url_params_param_from_array(&$form, $root_key, $key, $value, $
       _persist_url_params_param_from_array($form[$key], $root_key, $val_key, $val_value, $array_key . "[$val_key]");
     }
   }
+}
+
+function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) {
+
+  $facet_array = $_GET['f'];
+
+  // For each set item in the node's taxonomy create new array containing needed information
+  $term_info = array();
+  foreach($taxonomy_field as $key => $value) {
+    $tid = $value['tid'];
+    $term = taxonomy_term_load($tid);
+    
+    $leaf = array_search($tid, array_column($tree, 'tid'));
+
+    $facet_info = gpii_saa_custom_get_facept_link_info($tid, $_GET['q'], $_GET['f'], $field_name);
+
+    $term_info[$tid] = array(
+        'name' => t($term->name),
+        'parents' => $tree[$leaf]->parents,
+        'depth' => $tree[$leaf]->depth,
+        'facet_link' => $facet_info['facet_link'],
+        'facet_checked' => $facet_info['facet_checked']
+    );
+  }
+
+  $custom_tree = '';
+
+  $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';
+
+  $previous_depth = 0;
+  $i = 0;
+  $len = count($term_info);
+  foreach ($term_info as $tid => $term) {
+    // Close children up to level 0 when tree goes back to level 0
+    if ($previous_depth >= 1 && $term['depth'] == 0) {
+      for ($c = 0; $c < $previous_depth; $c++) {
+        $custom_tree .= '</li></ul>';
+      }
+    }
+
+    // Close previous term if current term is on save level
+    if ($previous_depth == $term['depth'] && $term['depth'] != 0) {
+      $custom_tree .= '</li>';
+    }
+
+    // Close children and current level when level goes back up but not all the way to level 0
+    if ($previous_depth != $term['depth'] && $term['depth'] != 0 && $term['depth'] < $previous_depth) {
+      for ($d = 0; $d < ($previous_depth - $term['depth']); $d++) {
+        $custom_tree .= '</li></ul>';
+      }
+      $custom_tree .= '</li>';
+    }
+    
+    // All children have been closed reset depth
+    if ($term['depth'] == 0 || $term['depth'] < $previous_depth) {
+      $previous_depth = $term['depth'];
+    }
+
+    if ($term['depth'] <= 0 || $previous_depth == $term['depth']) {
+      $custom_tree .= '<li class="expanded">';
+    }
+    
+    if ($term['depth'] >= 1 && $previous_depth != $term['depth']) {
+      $custom_tree .= '<ul><li class="expanded">';
+    }
+    
+    // Display contents of term
+    $custom_tree .= '<label class="element-invisible" for="facetapi-link--' . $tid . '--checkbox"> Apply ' . $term['name'] . ' </label>';
+    $checked = ($term['facet_checked']) ? 'checked="checked"' : '';
+    $custom_tree .= '<input type="checkbox" class="facetapi-checkbox" id="facetapi-link--' . $tid . '--checkbox" ' . $checked . '/>';
+    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-inactive" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
+    // $custom_tree .= $term['depth'] . ' - ' . $term['name'] . ' - ' . $previous_depth;
+
+    $i++;
+
+    // at end of array close all possible elements
+    if ($i == $len) {
+      for ($d = 0; $d < $term['depth']; $d++) {
+        $custom_tree .= '</li></ul>';
+      }
+      $custom_tree .= '</li>';
+    }
+    
+    $previous_depth = $term['depth'];
+  }
+  
+  $custom_tree .= '</ul>';
+
+  return $custom_tree;
+}
+
+/**
+ * This function expects an array with Key being a tid.
+ * It will then itterate through and using the _GET variable generate links to either add or remove
+ * the respected term from the query.
+ * If a term exists in the _GET query then it will remove the term otherwise it will add it.
+ * This will create a toggle type experience.
+ */
+function gpii_saa_custom_get_facept_link_info($tid, $url_base, $facet_array, $field_name) {
+
+  $facet_info = [];
+  
+  $get_copy = $_GET;
+  unset($get_copy['q']);
+
+  $match_array = preg_grep('/' . $tid . '/', $facet_array);
+
+  if (count($match_array) > 0) {
+    unset($get_copy['f'][key($match_array)]);
+    $get_copy['f'] = array_values($get_copy['f']);
+
+    $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
+    $facet_info['facet_checked'] = true;
+  }
+  else {
+    $get_copy['f'][] = $field_name . ':' . $tid;
+
+    $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
+    $facet_info['facet_checked'] = false;
+  }
+
+  return $facet_info;  
 }
