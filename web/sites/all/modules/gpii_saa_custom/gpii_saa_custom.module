@@ -3344,6 +3344,13 @@ function gpii_saa_custom_preprocess_page(&$variables) {
     
     $term_name = taxonomy_term_load($term_id)->name;
     drupal_set_title('Products that match: ' . $term_name);
+  }
+  
+  if (isset($variables['theme_hook_suggestions'][1]) && $variables['theme_hook_suggestions'][1] == 'page__search__similar') {
+    $path_args = explode('/', current_path());
+    $nid = $path_args[count($path_args) - 1];
+    $node = node_load($nid);
+    drupal_set_title('Search Proudcts Similar to: ' . $node->title);
 	}
 }
 

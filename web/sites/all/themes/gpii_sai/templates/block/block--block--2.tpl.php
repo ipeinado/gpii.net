@@ -96,80 +96,82 @@
         // related_terms_from_php will be set here. If it is not set, there were no related terms.
         <?php 
 
-          $search_term = $_GET['search_api_views_fulltext'];
+          if (isset($_GET['search_api_views_fulltext'])) {
+            $search_term = $_GET['search_api_views_fulltext'];
 
-          $query = json_decode('{
-            "qf": [
-              "tm_field_alternative_vocabulary_2^2",
-              "tm_field_alternative_vocabulary_3^0.5",
-              "tm_field_alternative_vocabulary_4^0.2",
-              "tm_field_alternative_vocabulary_5^0.1",
-              "tm_name^21"
-            ],
-            "fl": "item_id,score",
-            "fq": [
-              "*:* AND -(is_node_count:\"0\")",
-              "bs_status:\"true\"",
-              "index_id:\"categories\"",
-              "hash:3927w6"
-            ],
-            "start": "0",
-            "rows": "25",
-            "json.nl": "map",
-            "q": "' . $search_term . '",
-            "wt": "json"
-          }');
-          
-          $query_string = urldecode(http_build_query($query));
-          $query_string = preg_replace('/\[\d+\]/', '', $query_string);
-          $query_string = preg_replace('/\s/', '%20', $query_string);
-          
-          // get the active search_api_solr information
-          $solr = search_api_server_load_multiple(FALSE, $conditions);
-          $solr_url = $solr['stg06']->options['scheme'] . '://' . $solr['stg06']->options['host'] . ':' . $solr['stg06']->options['port'] . $solr['stg06']->options['path'];
-          
-          $search_url = $solr_url . "/select?" . $query_string;
-          //dpm($search_url);
-          if ($search_term . '' != '') {
-            $results = json_decode(file_get_contents($search_url));
-            //dpm($results);
-            // limit suggestions to maximum of 16
-            $items = array_slice($results->response->docs, 0, 16);
-            //dpm($items);
-            if (count($items) >= 1) {
-              $related_terms = [];
+            $query = json_decode('{
+              "qf": [
+                "tm_field_alternative_vocabulary_2^2",
+                "tm_field_alternative_vocabulary_3^0.5",
+                "tm_field_alternative_vocabulary_4^0.2",
+                "tm_field_alternative_vocabulary_5^0.1",
+                "tm_name^21"
+              ],
+              "fl": "item_id,score",
+              "fq": [
+                "*:* AND -(is_node_count:\"0\")",
+                "bs_status:\"true\"",
+                "index_id:\"categories\"",
+                "hash:3927w6"
+              ],
+              "start": "0",
+              "rows": "25",
+              "json.nl": "map",
+              "q": "' . $search_term . '",
+              "wt": "json"
+            }');
+            
+            $query_string = urldecode(http_build_query($query));
+            $query_string = preg_replace('/\[\d+\]/', '', $query_string);
+            $query_string = preg_replace('/\s/', '%20', $query_string);
+            
+            // get the active search_api_solr information
+            $solr = search_api_server_load_multiple(FALSE, $conditions);
+            $solr_url = $solr['stg06']->options['scheme'] . '://' . $solr['stg06']->options['host'] . ':' . $solr['stg06']->options['port'] . $solr['stg06']->options['path'];
+            
+            $search_url = $solr_url . "/select?" . $query_string;
+            //dpm($search_url);
+            if ($search_term . '' != '') {
+              $results = json_decode(file_get_contents($search_url));
+              //dpm($results);
+              // limit suggestions to maximum of 16
+              $items = array_slice($results->response->docs, 0, 16);
+              //dpm($items);
+              if (count($items) >= 1) {
+                $related_terms = [];
 
-              foreach ($items as $item) {
-                if ($item->score > .02) { // @@ Solr 6.6 changes relevance scores significantly, so this will need to be bumped up when we switch over
-                  $term_id = $item->item_id;
-                  $term = taxonomy_term_load($term_id);
-                  
-                  unset($facet_field);
-                  
-                  switch ($term->vid) {
-                    case 11:
-                      $facet_field = 'field_product_categories1';
-                      break;
-                    case 8:
-                      $facet_field = 'field_trouble_with';
-                      break;
-                    case 5: 
-                      $facet_field = 'field_features';
-                      break;
-                    case 12:
-                      $facet_field = 'field_operating_system';
-                      break;
-                  }
+                foreach ($items as $item) {
+                  if ($item->score > .02) { // @@ Solr 6.6 changes relevance scores significantly, so this will need to be bumped up when we switch over
+                    $term_id = $item->item_id;
+                    $term = taxonomy_term_load($term_id);
+                    
+                    unset($facet_field);
+                    
+                    switch ($term->vid) {
+                      case 11:
+                        $facet_field = 'field_product_categories1';
+                        break;
+                      case 8:
+                        $facet_field = 'field_trouble_with';
+                        break;
+                      case 5: 
+                        $facet_field = 'field_features';
+                        break;
+                      case 12:
+                        $facet_field = 'field_operating_system';
+                        break;
+                    }
 
-                  array_push($related_terms, [
-                      'tid' => $term->tid,
-                      'name' => $term->name,
-                      'facet' => $facet_field,
-                      ]);
-                }  
+                    array_push($related_terms, [
+                        'tid' => $term->tid,
+                        'name' => $term->name,
+                        'facet' => $facet_field,
+                        ]);
+                  }  
+                }
+
+                echo "related_terms_from_php = " . json_encode($related_terms) . ";";
               }
-
-              echo "related_terms_from_php = " . json_encode($related_terms) . ";";
             }
           }
 

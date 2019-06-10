@@ -8,11 +8,13 @@
     );
 
     // Event for submit and facet filters to pull up the full screen overlay
-    $(
-      '.views-exposed-form #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button, #block-current-search-standard a'
-    ).on('click keypress', function() {
-      $('.fullpage-loading').show();
-    });
+    $('.views-exposed-form,' + '.facetapi-facetapi-checkbox-links,' + '#block-current-search-standard').on(
+      'click keypress',
+      'input, a, .clear-button, #edit-submit-search',
+      function() {
+        $('.fullpage-loading').show();
+      }
+    );
 
     // Check for the presence of any active query and no previously saved keywords. Hide the results and pager if not found
     var url = window.location.search;
@@ -42,7 +44,6 @@
         $('#block-block-2 .remote-sort-order span.current-value').text('Ascending');
         $('.views-exposed-form #edit-sort-order').val(order);
       }
-      $('.fullpage-loading').show();
       target.val(value).trigger('change');
       // since results per page doesn't support auto-submit, we also have to click the search button here
       $('.views-exposed-form #edit-submit-search').trigger('click');
@@ -53,7 +54,6 @@
       var wrapper = $(this).parents('.remote-wrapper');
       var checkbox = wrapper.find('input');
       if (wrapper.hasClass('remote-show-discontinued')) {
-        $('.fullpage-loading').show();
         if (checkbox.is(':checked')) {
           $('.views-exposed-form #edit-product-status-2').trigger('click');
         } else {
@@ -64,7 +64,6 @@
 
     // Event for Buttons
     $('#block-block-2 button:not(.dropdown-toggle)').on('click', function() {
-      $('.fullpage-loading').show();
       $('#' + $(this).attr('data-edit')).trigger('click');
     });
 

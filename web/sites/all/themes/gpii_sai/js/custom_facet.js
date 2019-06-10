@@ -2,6 +2,13 @@
   'use strict';
 
   // functions below have been pulled from the facetapi.js and modified for wanted behavior.
+  var Redirect = function(href) {
+    this.href = href;
+  };
+
+  Redirect.prototype.gotoHref = function() {
+    window.location.href = this.href;
+  };
 
   function makeCheckboxes(facet_id) {
     var $facet = $('#' + facet_id),
@@ -29,7 +36,7 @@
       checkbox = $('<input type="checkbox" class="facetapi-checkbox" id="' + id + '" />'),
       // Get the href of the link that is this DOM object.
       href = $link.attr('href'),
-      redirect = new Drupal.facetapi.Redirect(href);
+      redirect = new Redirect(href);
 
     checkbox.click(function(e) {
       redirect.gotoHref();
@@ -37,7 +44,7 @@
 
     if (active) {
       checkbox.attr('checked', true);
-      // Add the checkbox and label, hide the link.
+      // Add the checkbox and label.
       $link.before(label).before(checkbox);
     } else {
       $link.before(label).before(checkbox);
