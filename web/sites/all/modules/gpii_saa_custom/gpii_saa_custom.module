@@ -984,10 +984,24 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
     function gpii_saa_custom_taxonomy_edit_submit($form, &$form_state) {
       // Get the node object
       $node = $form_state['node'];
+      // print '<pre>';
+      // print_r($node);
+      // print '</pre>';
+      // drupal_exit();
 
       // If a moderated revision exists, we need to get the latest revision and save it too
       $revision_id = revisioning_get_latest_revision_id($node->nid);
-        
+      
+      // check for a pending revision before we run node_save and set a variable to determine whether we udpate both 
+      // the current and the latest revision
+
+      if ($revision_id > $node->vid ) {
+        $pending_revision = TRUE;
+      }
+      else {
+        $pending_revision = FALSE;
+      }
+
       // for term reference tree fields, we need to walk the array from the form 
       // state to find matching keys and values, then write the values in the format that node_save expects
 
@@ -1070,8 +1084,9 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
       // drupal_exit();
       node_save($node);
 
+      
 
-      if ($revision_id != $node->vid) {
+      if ($pending_revision == TRUE) {
         $latest = node_load($node->nid, $revision_id, reset);
 
         // Save the node
