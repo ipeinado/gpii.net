@@ -1,27 +1,19 @@
-var parseQueryString = function(queryString) {
-  var params = [],
-    queries,
-    temp,
-    i,
-    l;
-  // Split into key/value pairs
-  queries = queryString.split('&');
-  // Convert the array of strings into an object
-  for (i = 0, l = queries.length; i < l; i++) {
-    temp = queries[i].split('=');
-    params[temp[0]] = temp[1];
-  }
-  return params;
-};
-
-var url = window.location.href.split('?');
-var base_url = url[0];
-var query = decodeURIComponent(url[1]);
-
 (function($) {
   'use strict';
 
   $(document).ready(function() {
+    // Add page loading element
+    $('body.page-search').append(
+      '<div class="fullpage-loading"><div class="lds-dual-ring"></div></div><div aria-live="assertive">Reloading</div>'
+    );
+
+    // Event for submit and facet filters to pull up the full screen overlay
+    $(
+      '.views-exposed-form #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button, #block-current-search-standard a'
+    ).on('click keypress', function() {
+      $('.fullpage-loading').show();
+    });
+
     // Check for the presence of any active query and no previously saved keywords. Hide the results and pager if not found
     var url = window.location.search;
 
@@ -32,36 +24,6 @@ var query = decodeURIComponent(url[1]);
         '<p style="margin-top: 0.5rem">Please enter one or more search terms to start your search.</p>'
       );
     }
-
-    $('body.page-search, body.page-guided-shopping-search, body.page-search-similar').append(
-      '<div class="fullpage-loading"><div class="lds-dual-ring"></div></div><div aria-live="assertive">Reloading</div>'
-    );
-
-    //Adding custom elements to Operating Systems facet filter block
-    var helpText =
-      '<p>Show <strong>only</strong> products that are compatible with the following operating systems.</p>';
-    var clearButton =
-      '<p><button class="btn btn-default btn-sm clear-button">Clear Selected Operating Systems</button></p>';
-
-    $('.facetapi-facet-field-operating-system').before(helpText, clearButton);
-
-    // Remove all facet related GET params from url and request
-    $('.block-facetapi .clear-button').on('click', function(e) {
-      var params = parseQueryString(query);
-      var reg = /field_operating_system/;
-      Object.keys(params).forEach(function(key) {
-        let value = params[key];
-        if (reg.test(value)) {
-          delete params[key];
-        }
-      });
-      var new_query = Object.keys(params)
-        .map(function(key) {
-          return key + '=' + params[key];
-        })
-        .join('&');
-      location.href = base_url + '?' + new_query;
-    });
 
     // Event for Dropdowns
     $('#block-block-2 .remote-wrapper ul').on('click', 'a', function() {
@@ -104,13 +66,6 @@ var query = decodeURIComponent(url[1]);
     $('#block-block-2 button:not(.dropdown-toggle)').on('click', function() {
       $('.fullpage-loading').show();
       $('#' + $(this).attr('data-edit')).trigger('click');
-    });
-
-    // Event for submit and facet filters to pull up the full screen overlay
-    $(
-      '.views-exposed-form #edit-submit-search, .facetapi-facetapi-checkbox-links input, .facetapi-facetapi-checkbox-links a, .clear-button, #block-current-search-standard a'
-    ).on('click keypress', function() {
-      $('.fullpage-loading').show();
     });
 
     // set the initial values

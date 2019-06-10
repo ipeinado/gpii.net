@@ -81,7 +81,10 @@
   <?php print render($title_suffix); ?>
 
   <?php // print $content ?>
-  <?php drupal_add_js(drupal_get_path('theme', 'gpii_sai') . '/js/standard_search.js'); ?>
+  <?php 
+    drupal_add_js(drupal_get_path('theme', 'gpii_sai') . '/js/search.js');
+    drupal_add_js(drupal_get_path('theme', 'gpii_sai') . '/js/os_facet.js'); 
+  ?>
   <script>
     (function ($) {
       'use strict';

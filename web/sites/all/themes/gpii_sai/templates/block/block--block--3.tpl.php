@@ -81,6 +81,7 @@
   <?php print render($title_suffix); ?>
 
   <?php // print $content ?>
+  <?php drupal_add_js(drupal_get_path('theme', 'gpii_sai') . '/js/custom_facet.js'); ?>
   <?php
 
     $path_args = explode('/', current_path());

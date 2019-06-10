@@ -3420,7 +3420,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
   foreach($taxonomy_field as $key => $value) {
     $tid = $value['tid'];
     $term = taxonomy_term_load($tid);
-    
+
     $leaf = array_search($tid, array_column($tree, 'tid'));
 
     $facet_info = gpii_saa_custom_get_facept_link_info($tid, $_GET['q'], $_GET['f'], $field_name);
@@ -3476,11 +3476,8 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
     }
     
     // Display contents of term
-    $custom_tree .= '<label class="element-invisible" for="facetapi-link--' . $tid . '--checkbox"> Apply ' . $term['name'] . ' </label>';
-    $checked = ($term['facet_checked']) ? 'checked="checked"' : '';
-    $custom_tree .= '<input type="checkbox" class="facetapi-checkbox" id="facetapi-link--' . $tid . '--checkbox" ' . $checked . '/>';
-    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-inactive" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
-    // $custom_tree .= $term['depth'] . ' - ' . $term['name'] . ' - ' . $previous_depth;
+    $checked = ($term['facet_checked']) ? 'facetapi-active' : 'facetapi-inactive';
+    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
 
     $i++;
 
