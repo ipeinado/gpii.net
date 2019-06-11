@@ -10,7 +10,7 @@
     // Event for submit and facet filters to pull up the full screen overlay
     $('.views-exposed-form,' + '.facetapi-facetapi-checkbox-links,' + '#block-current-search-standard').on(
       'click keypress',
-      'input, a, .clear-button, #edit-submit-search',
+      'input:not([type^="text"]), a, .clear-button, #edit-submit-search',
       function() {
         $('.fullpage-loading').show();
       }
