@@ -3349,8 +3349,13 @@ function gpii_saa_custom_preprocess_page(&$variables) {
   if (isset($variables['theme_hook_suggestions'][1]) && $variables['theme_hook_suggestions'][1] == 'page__search__similar') {
     $path_args = explode('/', current_path());
     $nid = $path_args[count($path_args) - 1];
+    
+    if (!isset($_GET['f'])) {
+      gpii_saa_custom_search_similar_redirect($nid);
+    }
+    
     $node = node_load($nid);
-    drupal_set_title('Search Proudcts Similar to: ' . $node->title);
+    drupal_set_title('Search Prouducts Similar to: ' . $node->title);
 	}
 }
 
@@ -3418,10 +3423,18 @@ function _persist_url_params_param_from_array(&$form, $root_key, $key, $value, $
   }
 }
 
+function gpii_saa_custom_search_similar_redirect($nid) {
+  $node = node_load($nid);
+  $query = [];
+  $product_categories = gpii_saa_custom_format_taxonomy_into_facet_query_array($node->field_product_categories1['und'], 'field_product_categories1');
+  $features_primary = gpii_saa_custom_format_taxonomy_into_facet_query_array($node->field_features_primary['und'], 'field_features_primary');
+  $facets = array_merge($product_categories, $features_primary);
+  $query['f'] = $facets;
+  $options['query'] = $query;
+  drupal_goto('search/similar/' . $nid, $options);
+}
+
 function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) {
-
-  $facet_array = $_GET['f'];
-
   // For each set item in the node's taxonomy create new array containing needed information
   $term_info = array();
   foreach($taxonomy_field as $key => $value) {
@@ -3430,25 +3443,29 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
 
     $leaf = array_search($tid, array_column($tree, 'tid'));
 
-    $facet_info = gpii_saa_custom_get_facept_link_info($tid, $_GET['q'], $_GET['f'], $field_name);
-
     $term_info[$tid] = array(
         'name' => t($term->name),
         'parents' => $tree[$leaf]->parents,
-        'depth' => $tree[$leaf]->depth,
-        'facet_link' => $facet_info['facet_link'],
-        'facet_checked' => $facet_info['facet_checked']
+        'depth' => $tree[$leaf]->depth
     );
+  }
+
+  // set custom facet info
+  foreach($term_info as $tid => $value) {
+    $facet_info = gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field);
+    $term_info[$tid]['facet_link'] = $facet_info['facet_link'];
+    $term_info[$tid]['facet_checked'] = $facet_info['facet_checked'];
   }
 
   $custom_tree = '';
 
   $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';
 
-  $previous_depth = 0;
+  $previous_term = [];
   $i = 0;
   $len = count($term_info);
   foreach ($term_info as $tid => $term) {
+    $previous_depth = $previous_term['depth'];
     // Close children up to level 0 when tree goes back to level 0
     if ($previous_depth >= 1 && $term['depth'] == 0) {
       for ($c = 0; $c < $previous_depth; $c++) {
@@ -3484,7 +3501,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
     
     // Display contents of term
     $checked = ($term['facet_checked']) ? 'facetapi-active' : 'facetapi-inactive';
-    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
+    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . ' - ' . $tid . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
 
     $i++;
 
@@ -3496,7 +3513,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
       $custom_tree .= '</li>';
     }
     
-    $previous_depth = $term['depth'];
+    $previous_term = $term;
   }
   
   $custom_tree .= '</ul>';
@@ -3511,28 +3528,79 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
  * If a term exists in the _GET query then it will remove the term otherwise it will add it.
  * This will create a toggle type experience.
  */
-function gpii_saa_custom_get_facept_link_info($tid, $url_base, $facet_array, $field_name) {
+function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field) {
 
   $facet_info = [];
   
+  $url_base = $_GET['q'];
+  $facet_array = $_GET['f'];
+
   $get_copy = $_GET;
   unset($get_copy['q']);
 
-  $match_array = preg_grep('/' . $tid . '/', $facet_array);
+  if (isset($facet_array)) {
+    $match_array = preg_grep('/' . $tid . '/', $facet_array);
 
-  if (count($match_array) > 0) {
-    unset($get_copy['f'][key($match_array)]);
-    $get_copy['f'] = array_values($get_copy['f']);
+    if (count($match_array) > 0) {
+      unset($get_copy['f'][key($match_array)]);
+      $get_copy['f'] = array_values($get_copy['f']);
 
-    $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
-    $facet_info['facet_checked'] = true;
+      $get_copy['f'] = gpii_saa_custom_cascade_facet_links($get_copy['f'], $tid, $term_info, $field_name, $taxonomy_field);
+
+      $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
+      $facet_info['facet_checked'] = true;
+    }
+    else {
+      $get_copy['f'][] = $field_name . ':' . $tid;
+
+      $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
+      $facet_info['facet_checked'] = false;
+    }
   }
-  else {
-    $get_copy['f'][] = $field_name . ':' . $tid;
 
-    $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
-    $facet_info['facet_checked'] = false;
+  return $facet_info;
+}
+
+function gpii_saa_custom_cascade_facet_links($facet_array, $tid, $term_info, $field_name, $taxonomy_field) {
+
+  // Collect children tids to search for to remove
+  // will cause the illusion of live cascading
+  $term_children_tids = array();
+  $at_term = false;
+  $past_last_child = false;
+  foreach ($taxonomy_field as $key => $value) {
+    $current_tid = $value['tid'];
+    if ($at_term && !$past_last_child) {
+      if ($term_info[$current_tid]['depth'] > $term_info[$tid]['depth']) {
+        $term_children_tids[] = $current_tid;
+      }
+      else if ($term_info[$tid]['depth'] == $term_info[$current_tid]['depth'] || $term_info[$current_tid]['depth'] < $term_info[$tid]['depth']) {
+        $past_last_child = true;
+      }
+    }
+
+    if ($tid == $current_tid) {
+      $at_term = true;
+    }
   }
 
-  return $facet_info;  
+  // check for the children in the facet_array and if they exist remove them
+  foreach ($term_children_tids as $child_tid) {
+    $match_array = preg_grep('/' . $child_tid . '/', $facet_array);
+
+    if (count($match_array) > 0) {
+      unset($facet_array[key($match_array)]);
+      $facet_array = array_values($facet_array);
+    }
+  }
+
+  return $facet_array;
+}
+
+function gpii_saa_custom_format_taxonomy_into_facet_query_array($taxonomy_field, $field_name) {
+  $facet_query = [];
+  foreach($taxonomy_field as $key => $value) {
+    $facet_query[] = $field_name . ':' . $value['tid'];
+  }
+  return $facet_query;
 }
