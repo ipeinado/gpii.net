@@ -222,6 +222,7 @@
         <ul class="dropdown-menu">
           <li><a value="search_api_relevance">Relevance</a></li>
           <li><a value="search_api_aggregation_2">Alphabetical</a></li>
+          <li><a value="changed">Last Updated</a></li>
         </ul>
       </div>
 
