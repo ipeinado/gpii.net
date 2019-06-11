@@ -91,7 +91,7 @@
     $vid = taxonomy_vocabulary_machine_name_load('product_category1')->vid;
     $tree = taxonomy_get_tree($vid, 0, null, false);
 
-    $custom_tree = gpii_saa_custom_build_custom_tree($node->field_product_categories1['und'], $tree, 'field_product_categories1');
+    $custom_tree = gpii_saa_custom_build_custom_tree($node->field_product_categories1['und'], $tree, 'field_product_categories1', array('cascade' => true));
 
     print $custom_tree;
   ?>

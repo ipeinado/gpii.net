@@ -3434,7 +3434,7 @@ function gpii_saa_custom_search_similar_redirect($nid) {
   drupal_goto('search/similar/' . $nid, $options);
 }
 
-function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) {
+function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, $options) {
   // For each set item in the node's taxonomy create new array containing needed information
   $term_info = array();
   foreach($taxonomy_field as $key => $value) {
@@ -3452,7 +3452,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
 
   // set custom facet info
   foreach($term_info as $tid => $value) {
-    $facet_info = gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field);
+    $facet_info = gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field, $options['cascade'], $options['climb']);
     $term_info[$tid]['facet_link'] = $facet_info['facet_link'];
     $term_info[$tid]['facet_checked'] = $facet_info['facet_checked'];
   }
@@ -3501,7 +3501,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
     
     // Display contents of term
     $checked = ($term['facet_checked']) ? 'facetapi-active' : 'facetapi-inactive';
-    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . ' - ' . $tid . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
+    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
 
     $i++;
 
@@ -3528,7 +3528,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name) 
  * If a term exists in the _GET query then it will remove the term otherwise it will add it.
  * This will create a toggle type experience.
  */
-function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field) {
+function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field, $cascade = false, $climb = false) {
 
   $facet_info = [];
   
@@ -3545,7 +3545,9 @@ function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $ta
       unset($get_copy['f'][key($match_array)]);
       $get_copy['f'] = array_values($get_copy['f']);
 
-      $get_copy['f'] = gpii_saa_custom_cascade_facet_links($get_copy['f'], $tid, $term_info, $field_name, $taxonomy_field);
+      if ($cascade) {
+        $get_copy['f'] = gpii_saa_custom_cascade_facet_links($get_copy['f'], $tid, $term_info, $field_name, $taxonomy_field);
+      }
 
       $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
       $facet_info['facet_checked'] = true;

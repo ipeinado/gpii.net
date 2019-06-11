@@ -91,7 +91,7 @@
     $vid = taxonomy_vocabulary_machine_name_load('features')->vid;
     $tree = taxonomy_get_tree($vid, 0, null, false);
 
-    $custom_tree = gpii_saa_custom_build_custom_tree($node->field_features_primary['und'], $tree, 'field_features_primary');
+    $custom_tree = gpii_saa_custom_build_custom_tree($node->field_features_primary['und'], $tree, 'field_features_primary', array('cascade' => true));
 
     print $custom_tree;
   ?>
