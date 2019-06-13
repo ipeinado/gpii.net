@@ -3032,7 +3032,7 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
           }
         }
 
-        
+
         $revision_id = revisioning_get_latest_revision_id($entity->nid);
         
         if ($revision_id > $entity->vid ) {
@@ -3070,12 +3070,23 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
       }
     }
 
-    // return the modified entity to VBO for processing
-    // return;
+    else {
+      // zero out the troubles taxonomy and resave the published version so that we don't have outliers from past sync algorithms and manual updates
+      unset($entity->field_trouble_with['und']);
+      // Save node current version
+      $entity->revision = TRUE;
+      $entity->revision_operation = 1;
+      $entity->revision_moderation = TRUE;
+      $entity->log = 'Trouble Taxonomy Sync';
+      $entity->category = 'tax_only';
+
+      $entity->field_trouble_with['und'] = $formated_terms;
+      node_save($entity);
+    }
+
+    // in this case, we're not going to return the modified entity to VBO for processing because we've already hadndled the node saves above
+
   }
-
-  // return;
-
 }
 
 
