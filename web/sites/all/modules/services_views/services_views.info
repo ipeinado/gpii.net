@@ -16,4 +16,4 @@ project = "services_views"
 datestamp = "1512141196"
 
 patch[] = https://www.drupal.org/node/2289431 Issue 2289431, Patch #8
-
+patch[] = https://www.drupal.org/project/services_views/issues/2910966#comment-12762311 Issue 2910966, Patch #18
