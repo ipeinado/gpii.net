@@ -664,25 +664,56 @@ body.page-search {
         grid-template-columns: 1fr 1fr 1fr;
       }
 
-      > .node-teaser {
+      .resultcount { 
         grid-row: 1 / span 1;
         grid-column: 1 / span 3;
       }
 
+      .alert {
+        grid-row: 2 / span 1;
+        grid-column: 1 / span 3;
+      }
+
       #block-block-3 {
-        grid-row: 2 / span 2;
+        grid-row: 3 / span 1;
         grid-column: 1 / span 1;
       }
 
       #block-block-4 {
-        grid-row: 2 / span 2;
+        grid-row: 3 / span 1;
         grid-column: 2 / span 1;
       }
 
       #block-facetapi-kasogbyww1delj6z3ohdnmu2yg0nrm0m {
-        grid-row: 2 / span 2;
+        grid-row: 3 / span 1;
         grid-column: 3 / span 1;
       }
+
+      #block-views-exp-search-page-2 {
+        grid-row: 4 / span 1;
+        grid-column: 1 / span 3;
+        .views-exposed-form, .views-exposed-widget {
+          float: right;
+          margin: 0 0 0.5rem 0;
+          padding: 0 0 0 0 ;
+        }
+        .form-submit {
+          position: relative;
+          #edit-submit-search {
+            float: right;
+          }
+        }
+      }
+
+      #block-block-2 {
+        grid-row: 5 / span 1;
+        grid-column: 1 / span 3;
+        
+      }
+    }
+    .view-results {
+      margin-top: 2rem;
+      
     }
   }
 }

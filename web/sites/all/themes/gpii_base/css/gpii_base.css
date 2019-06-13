@@ -6455,6 +6455,9 @@ body {
     html:not(.force-mobile-layout) body {
       border-top: 7rem solid transparent; } }
 
+.alert-warning {
+  color: #4c3816; }
+
 pre {
   font-size: 0.9rem; }
 

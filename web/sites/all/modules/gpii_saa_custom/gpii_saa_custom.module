@@ -3373,7 +3373,7 @@ function gpii_saa_custom_preprocess_page(&$variables) {
     }
     
     $node = node_load($nid);
-    drupal_set_title('Search Prouducts Similar to: ' . $node->title);
+    drupal_set_title('Products Similar to <em>' . $node->title . '</em>', PASS_THROUGH);
 	}
 }
 
@@ -3448,6 +3448,7 @@ function gpii_saa_custom_search_similar_redirect($nid) {
   $features_primary = gpii_saa_custom_format_taxonomy_into_facet_query_array($node->field_features_primary['und'], 'field_features_primary');
   $facets = array_merge($product_categories, $features_primary);
   $query['f'] = $facets;
+  $query['product_status'] = 1;
   $options['query'] = $query;
   drupal_goto('search/similar/' . $nid, $options);
 }
@@ -3476,66 +3477,67 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
   }
 
   $custom_tree = '';
+  if (count($term_info) != 0) {
 
-  $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';
+    $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';
 
-  $previous_term = [];
-  $i = 0;
-  $len = count($term_info);
-  foreach ($term_info as $tid => $term) {
-    $previous_depth = $previous_term['depth'];
-    // Close children up to level 0 when tree goes back to level 0
-    if ($previous_depth >= 1 && $term['depth'] == 0) {
-      for ($c = 0; $c < $previous_depth; $c++) {
-        $custom_tree .= '</li></ul>';
+    $previous_term = [];
+    $i = 0;
+    $len = count($term_info);
+    foreach ($term_info as $tid => $term) {
+      $previous_depth = $previous_term['depth'];
+      // Close children up to level 0 when tree goes back to level 0
+      if ($previous_depth >= 1 && $term['depth'] == 0) {
+        for ($c = 0; $c < $previous_depth; $c++) {
+          $custom_tree .= '</li></ul>';
+        }
       }
-    }
 
-    // Close previous term if current term is on save level
-    if ($previous_depth == $term['depth'] && $term['depth'] != 0) {
-      $custom_tree .= '</li>';
-    }
-
-    // Close children and current level when level goes back up but not all the way to level 0
-    if ($previous_depth != $term['depth'] && $term['depth'] != 0 && $term['depth'] < $previous_depth) {
-      for ($d = 0; $d < ($previous_depth - $term['depth']); $d++) {
-        $custom_tree .= '</li></ul>';
+      // Close previous term if current term is on save level
+      if ($previous_depth == $term['depth'] && $term['depth'] != 0) {
+        $custom_tree .= '</li>';
       }
-      $custom_tree .= '</li>';
-    }
-    
-    // All children have been closed reset depth
-    if ($term['depth'] == 0 || $term['depth'] < $previous_depth) {
-      $previous_depth = $term['depth'];
-    }
 
-    if ($term['depth'] <= 0 || $previous_depth == $term['depth']) {
-      $custom_tree .= '<li class="expanded">';
-    }
-    
-    if ($term['depth'] >= 1 && $previous_depth != $term['depth']) {
-      $custom_tree .= '<ul><li class="expanded">';
-    }
-    
-    // Display contents of term
-    $checked = ($term['facet_checked']) ? 'facetapi-active' : 'facetapi-inactive';
-    $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
-
-    $i++;
-
-    // at end of array close all possible elements
-    if ($i == $len) {
-      for ($d = 0; $d < $term['depth']; $d++) {
-        $custom_tree .= '</li></ul>';
+      // Close children and current level when level goes back up but not all the way to level 0
+      if ($previous_depth != $term['depth'] && $term['depth'] != 0 && $term['depth'] < $previous_depth) {
+        for ($d = 0; $d < ($previous_depth - $term['depth']); $d++) {
+          $custom_tree .= '</li></ul>';
+        }
+        $custom_tree .= '</li>';
       }
-      $custom_tree .= '</li>';
+      
+      // All children have been closed reset depth
+      if ($term['depth'] == 0 || $term['depth'] < $previous_depth) {
+        $previous_depth = $term['depth'];
+      }
+
+      if ($term['depth'] <= 0 || $previous_depth == $term['depth']) {
+        $custom_tree .= '<li class="expanded">';
+      }
+      
+      if ($term['depth'] >= 1 && $previous_depth != $term['depth']) {
+        $custom_tree .= '<ul><li class="expanded">';
+      }
+      
+      // Display contents of term
+      $checked = ($term['facet_checked']) ? 'facetapi-active' : 'facetapi-inactive';
+      $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
+
+      $i++;
+
+      // at end of array close all possible elements
+      if ($i == $len) {
+        for ($d = 0; $d < $term['depth']; $d++) {
+          $custom_tree .= '</li></ul>';
+        }
+        $custom_tree .= '</li>';
+      }
+      
+      $previous_term = $term;
     }
     
-    $previous_term = $term;
+    $custom_tree .= '</ul>';
   }
-  
-  $custom_tree .= '</ul>';
-
   return $custom_tree;
 }
 
