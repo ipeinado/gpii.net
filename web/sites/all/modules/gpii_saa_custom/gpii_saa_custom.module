@@ -587,6 +587,21 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
         'type' => MENU_LOCAL_TASK,
         'weight' => 0,
       );
+
+      $items['similar'] = array(
+        'title' => 'Find Similar Products',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('gpii_saa_custom_similar'),
+        'access arguments' => array('access similar search'),
+        'type' => MENU_CALLBACK,
+        'weight' => 0,
+      );
+      $items['similar/autocomplete'] = array(
+        'page callback' => '_gpii_saa_custom_similar_search_autocomplete',
+        'access arguments' => array('access similar search'),
+        'type' => MENU_CALLBACK
+      );
+        
       
       return $items;
     }
@@ -3127,6 +3142,40 @@ function gpii_saa_custom_init() {
   $path = drupal_get_path('module', 'gpii_saa_custom');
   drupal_add_js(array('isTranslator' => $isTranslator), 'setting');
   drupal_add_js($path . '/js/bundle.js');
+}
+
+
+function gpii_saa_custom_similar() {
+  // include browse virtual store functions
+  module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.similar');
+  return similar_search_form();
+}
+
+// adds autocomplete functionality to the similar search form
+// Issue: Currently throws a 500 error if you put in a / character
+function _gpii_saa_custom_similar_search_autocomplete($string) {
+
+  $matches = array();
+
+  // Some fantasy DB table which holds cities
+  $query = db_select('node', 'n');
+
+  // Select rows that match the string
+  $return = $query
+  ->fields('n', array('title', 'nid'))
+  ->condition('n.title', '%' . db_like($string) . '%', 'LIKE')
+  ->condition('n.status', 1)
+  ->range(0, 15)
+  ->execute();
+
+  // add matches to $matches  
+  foreach ($return as $row) {
+      $match = check_plain($row->title . ' - [nid: ' . $row->nid . ']' ) ;
+      $matches[$match] = $match;
+  }
+
+  // return for JS
+  drupal_json_output($matches);
 }
 
 /**
