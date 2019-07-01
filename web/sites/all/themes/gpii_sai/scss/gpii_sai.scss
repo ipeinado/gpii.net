@@ -455,7 +455,7 @@ body.page-search {
   }
 }
 
-.page-search {
+.page-search, .page-guided-shopping-search {
   .fullpage-loading {
     display: none;
     height: 100%;
@@ -557,7 +557,7 @@ body.page-search {
   }
 
   /* hide redundant remote filters */
-  #views-exposed-form-search-page,
+  #views-exposed-form-search-page, 
   #views-exposed-form-search-page-1,
   #views-exposed-form-search-page-2 {
     .views-exposed-widget:not(.views-widget-filter-search_api_views_fulltext) {
@@ -602,7 +602,7 @@ body.page-search {
   }
 }
 @media (min-width: $screen-md) {
-  .page-search {
+  .page-search, .page-guided-shopping-search {
     .view-search {
       .st-search {
         display: grid;
@@ -610,10 +610,10 @@ body.page-search {
         grid-template-rows: auto;
         grid-column-gap: 3rem;
         grid-row-gap: 0rem;
-        // grid-template-areas:
-        //   "keywords keywords keywords os"
-        //   "filters filters filters filters"
-        //   "related related related related";
+        grid-template-areas:
+          "keywords keywords keywords os"
+          "filters filters filters filters"
+          "related related related related";
 
         > * {
           grid-column: 1 / span 3;
