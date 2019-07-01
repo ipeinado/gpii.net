@@ -3165,6 +3165,7 @@ function _gpii_saa_custom_similar_search_autocomplete($string) {
   ->fields('n', array('title', 'nid'))
   ->condition('n.title', '%' . db_like($string) . '%', 'LIKE')
   ->condition('n.status', 1)
+  ->condition('n.type', 'product')
   ->range(0, 15)
   ->execute();
 
