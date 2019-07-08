@@ -28,7 +28,7 @@ function similar_search_submit($form, &$form_state) {
     $replace = array('');
     $matches = str_replace($find,$replace,$matches);
     //dpm($matches[0]);
-    drupal_goto('search/similar/' . $matches[0]);
+    drupal_goto('search/similar/' . trim($matches[0]));
 }
   
 

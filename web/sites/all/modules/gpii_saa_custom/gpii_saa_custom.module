@@ -3418,12 +3418,13 @@ function gpii_saa_custom_preprocess_page(&$variables) {
     $path_args = explode('/', current_path());
     $nid = $path_args[count($path_args) - 1];
     
-    if (!isset($_GET['f'])) {
-      gpii_saa_custom_search_similar_redirect($nid);
-    }
+    // This redirected users to another page if there were no filters set, but we decided to not do that anymore (July 3, 2019)
+    // if (!isset($_GET['f'])) {
+    //   gpii_saa_custom_search_similar_redirect($nid);
+    // }
     
     $node = node_load($nid);
-    drupal_set_title('Products Similar to <em>' . $node->title . '</em>', PASS_THROUGH);
+    drupal_set_title('Products Similar to <em><a href="/node/' . $node->nid . '">' . $node->title . '</em>', PASS_THROUGH);
 	}
 }
 
@@ -3607,8 +3608,7 @@ function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $ta
 
   $get_copy = $_GET;
   unset($get_copy['q']);
-
-  if (isset($facet_array)) {
+  //if (isset($facet_array)) {
     $match_array = preg_grep('/' . $tid . '/', $facet_array);
 
     if (count($match_array) > 0) {
@@ -3628,7 +3628,7 @@ function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $ta
       $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
       $facet_info['facet_checked'] = false;
     }
-  }
+  //}
 
   return $facet_info;
 }
@@ -3640,6 +3640,7 @@ function gpii_saa_custom_cascade_facet_links($facet_array, $tid, $term_info, $fi
   $term_children_tids = array();
   $at_term = false;
   $past_last_child = false;
+
   foreach ($taxonomy_field as $key => $value) {
     $current_tid = $value['tid'];
     if ($at_term && !$past_last_child) {
@@ -3665,7 +3666,7 @@ function gpii_saa_custom_cascade_facet_links($facet_array, $tid, $term_info, $fi
       $facet_array = array_values($facet_array);
     }
   }
-
+  
   return $facet_array;
 }
 

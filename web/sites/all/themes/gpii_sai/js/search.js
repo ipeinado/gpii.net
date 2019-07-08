@@ -4,7 +4,7 @@
   $(document).ready(function() {
     // Add page loading element
     $('body.page-search').append(
-      '<div class="fullpage-loading"><div class="lds-dual-ring"></div></div><div aria-live="assertive">Reloading</div>'
+      '<div class="fullpage-loading"><div class="lds-dual-ring"></div></div><div aria-live="assertive" class="sr-only">Reloading</div>'
     );
 
     // Event for submit and facet filters to pull up the full screen overlay
@@ -22,9 +22,17 @@
     if (url.length === 0 && !$('#edit-search-api-views-fulltext').val()) {
       $('.view-search .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
       $('.st-search h2.resultcount').text('0 Results');
-      $('#block-block-2').append(
-        '<p style="margin-top: 0.5rem">Please enter one or more search terms to start your search.</p>'
-      );
+      if ( $(body).hasClass('page-search-similar') ) {   
+        $('#block-block-2').append(
+          '<p style="margin-top: 0.5rem">Please choose one or more product category or feature to view results.</p>'
+        );
+      }
+      else {
+        $('#block-block-2').append(
+          '<p style="margin-top: 0.5rem">Please enter one or more search terms to start your search.</p>'
+        );
+      }
+      
     }
 
     // Event for Dropdowns

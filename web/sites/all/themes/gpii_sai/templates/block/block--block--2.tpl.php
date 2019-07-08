@@ -210,7 +210,7 @@
       });
     }(jQuery));
   </script>
-  <p class="element-invisible">Note: Changing the sort, count or discontinued filters will cause the page to reload. </p>
+  <p class="element-invisible">Note: Changing any of the the sort, count or discontinued filters below will cause the page to reload. </p>
   <div class="remote-filters">
 
     <div class="btn-group" role="group">

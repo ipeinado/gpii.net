@@ -54,5 +54,6 @@
   $(document).ready(function() {
     makeCheckboxes('block-block-3');
     makeCheckboxes('block-block-4');
+    $('#edit-submit-search').addClass('element-invisible');
   });
 })(jQuery);
