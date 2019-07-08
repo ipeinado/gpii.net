@@ -1,4 +1,5 @@
 <?php
+
 /**
  * hook_search_api_solr_query_alter
  *
@@ -6,9 +7,11 @@
  */
 
 require __DIR__ . '/../../../vendor/autoload.php';
+
 use Google\Cloud\Translate\TranslateClient;
 
-function gpii_saa_custom_search_api_solr_query_alter(&$call_args, $query) {
+function gpii_saa_custom_search_api_solr_query_alter(&$call_args, $query)
+{
   $pathArray = explode('/', request_path());
   $language = $pathArray[0];
   if ($language !== 'en') {
@@ -34,7 +37,8 @@ function gpii_saa_custom_search_api_solr_query_alter(&$call_args, $query) {
 /**
  * Implements hook_permission().
  */
-function gpii_saa_custom_permission() {
+function gpii_saa_custom_permission()
+{
   return array(
     'access advanced search data' => array(
       'title' => t('Access api data for advanced search'),
@@ -61,11 +65,12 @@ function gpii_saa_custom_permission() {
 /**
  * Implements hook_block_info().
  */
-function gpii_saa_custom_block_info() {
+function gpii_saa_custom_block_info()
+{
   $blocks = array();
   $blocks['product_tree'] = array(
     'info' => t('Product Tree'),
-    );
+  );
   $blocks['needs_tree'] = array(
     'info' => t('Needs Tree'),
   );
@@ -74,7 +79,7 @@ function gpii_saa_custom_block_info() {
   );
   $blocks['guided_shopping_tree'] = array(
     'info' => t('Guided Shopping Tree'),
-    );
+  );
   $blocks['test_tree'] = array(
     'info' => t('Test Tree'),
   );
@@ -85,23 +90,24 @@ function gpii_saa_custom_block_info() {
 /**
  * Implements hook_block_view().
  */
-function gpii_saa_custom_block_view($delta='') {
+function gpii_saa_custom_block_view($delta = '')
+{
   $block = array();
 
-  switch($delta) {
-    case 'product_tree' :
+  switch ($delta) {
+    case 'product_tree':
       $block['content'] = product_tree_view();
       break;
-    case 'needs_tree' :
+    case 'needs_tree':
       $block['content'] = needs_tree_view();
       break;
-    case 'trouble_tree' :
+    case 'trouble_tree':
       $block['content'] = trouble_tree_view();
       break;
-    case 'guided_shopping_tree' :
+    case 'guided_shopping_tree':
       $block['content'] = guided_shopping_tree_view();
       break;
-    case 'test_tree' :
+    case 'test_tree':
       $block['content'] = test_tree_view();
       break;
   }
@@ -114,9 +120,10 @@ function gpii_saa_custom_block_view($delta='') {
  */
 
 
-function product_tree_view() {
-$block = array();
-$markup = <<<EOD
+function product_tree_view()
+{
+  $block = array();
+  $markup = <<<EOD
 <!-- taxonomy term links -->
 EOD;
   $vid = 11;
@@ -127,32 +134,32 @@ EOD;
   foreach ($primaryCategory as $termid) {
     $destination = drupal_get_destination();
     $link = '/reports/term-utilization/' . $termid->tid;
-       $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
-       //dpm(count($count));
-       if ($count > 0) {
-        $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $termid->name . '\' as their terminal record."></i><span class="sr-only">Products with \'' . $termid->name . '\' as their terminal record.</span>'), '/reports/taxonomy/terminal/' . $termid->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</h2>';
-       }
-       else {
-        $markup .= '<h2>' . t($termid->name) . '</h2>';
-       }
+    $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
+    //dpm(count($count));
+    if ($count > 0) {
+      $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $termid->name . '\' as their terminal record."></i><span class="sr-only">Products with \'' . $termid->name . '\' as their terminal record.</span>'), '/reports/taxonomy/terminal/' . $termid->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</h2>';
+    } else {
+      $markup .= '<h2>' . t($termid->name) . '</h2>';
+    }
 
-       $markup .= gpii_saa_custom_list_child_terms($vid, $termid->tid, $vdisplay);
+    $markup .= gpii_saa_custom_list_child_terms($vid, $termid->tid, $vdisplay);
   }
 
   // Block output in HTML with div wrapper
   $block = array(
-      '#prefix' => '<div class="gpii-product-tree">',
-      '#type' => 'markup',
-      '#markup' => $markup,
-      '#suffix' => '</div>',
+    '#prefix' => '<div class="gpii-product-tree">',
+    '#type' => 'markup',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
   );
 
   return $block;
 }
 
-function needs_tree_view() {
-$block = array();
-$markup = <<<EOD
+function needs_tree_view()
+{
+  $block = array();
+  $markup = <<<EOD
 <!-- taxonomy term links -->
 EOD;
   $vid = 5;
@@ -162,32 +169,32 @@ EOD;
 
   foreach ($primaryCategory as $termid) {
     $link = '/reports/term-utilization/' . $termid->tid;
-       $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
-       //dpm(count($count));
-       if ($count > 0) {
-        $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')</h2>';
-       }
-       else {
-        $markup .= '<h2>' . t($termid->name) . '</h2>';
-       }
+    $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
+    //dpm(count($count));
+    if ($count > 0) {
+      $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')</h2>';
+    } else {
+      $markup .= '<h2>' . t($termid->name) . '</h2>';
+    }
 
-       $markup .= gpii_saa_custom_list_child_terms($vid, $termid->tid, $vdisplay);
+    $markup .= gpii_saa_custom_list_child_terms($vid, $termid->tid, $vdisplay);
   }
 
   // Block output in HTML with div wrapper
   $block = array(
-      '#prefix' => '<div class="gpii-product-tree">',
-      '#type' => 'markup',
-      '#markup' => $markup,
-      '#suffix' => '</div>',
+    '#prefix' => '<div class="gpii-product-tree">',
+    '#type' => 'markup',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
   );
 
   return $block;
 }
 
-function trouble_tree_view() {
-$block = array();
-$markup = <<<EOD
+function trouble_tree_view()
+{
+  $block = array();
+  $markup = <<<EOD
 <!-- taxonomy term links -->
 EOD;
   $vid = 8;
@@ -197,32 +204,32 @@ EOD;
 
   foreach ($primaryCategory as $termid) {
     $link = taxonomy_term_uri($termid);
-       $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
-       //dpm(count($count));
-       if ($count > 0) {
-        $markup .= '<h2>' . l(t($termid->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')</h2>';
-       }
-       else {
-        $markup .= '<h2>' . t($termid->name) . '</h2>';
-       }
+    $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
+    //dpm(count($count));
+    if ($count > 0) {
+      $markup .= '<h2>' . l(t($termid->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')</h2>';
+    } else {
+      $markup .= '<h2>' . t($termid->name) . '</h2>';
+    }
 
-       $markup .= gpii_saa_custom_child_termrefs_table($vid, $termid->tid, 'default');
+    $markup .= gpii_saa_custom_child_termrefs_table($vid, $termid->tid, 'default');
   }
 
   // Block output in HTML with div wrapper
   $block = array(
-      '#prefix' => '<div class="gpii-product-tree">',
-      '#type' => 'markup',
-      '#markup' => $markup,
-      '#suffix' => '</div>',
+    '#prefix' => '<div class="gpii-product-tree">',
+    '#type' => 'markup',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
   );
 
   return $block;
 }
 
-function guided_shopping_tree_view() {
-$block = array();
-$markup = <<<EOD
+function guided_shopping_tree_view()
+{
+  $block = array();
+  $markup = <<<EOD
 <!-- taxonomy term links -->
 EOD;
   $vid = 11;
@@ -233,42 +240,42 @@ EOD;
   foreach ($primaryCategory as $termid) {
     $destination = drupal_get_destination();
     $link = '/reports/term-utilization/' . $termid->tid;
-       $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
-       //dpm(count($count));
-       if ($count > 0) {
-        $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . '</h2>';
-       }
-       else {
-        $markup .= '<h2>' . t($termid->name) . '</h2>';
-       }
+    $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
+    //dpm(count($count));
+    if ($count > 0) {
+      $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . '</h2>';
+    } else {
+      $markup .= '<h2>' . t($termid->name) . '</h2>';
+    }
 
-       $termdata = taxonomy_term_load($termid->tid);
-       //dpm($termdata);
-       $shortdesc = field_view_field('taxonomy_term', $termdata, 'field_short_description');
-       $question = field_view_field('taxonomy_term', $termdata, 'field_qasearch_question');
-       $questionhead = field_view_field('taxonomy_term', $termdata, 'field_question_head');
+    $termdata = taxonomy_term_load($termid->tid);
+    //dpm($termdata);
+    $shortdesc = field_view_field('taxonomy_term', $termdata, 'field_short_description');
+    $question = field_view_field('taxonomy_term', $termdata, 'field_qasearch_question');
+    $questionhead = field_view_field('taxonomy_term', $termdata, 'field_question_head');
 
-       $markup .= render($shortdesc);
-       $markup .= render($question);
-       $markup .= render($questionhead);
+    $markup .= render($shortdesc);
+    $markup .= render($question);
+    $markup .= render($questionhead);
 
-       $markup .= gpii_saa_custom_list_child_shopping_terms($vid, $termid->tid, $vdisplay);
+    $markup .= gpii_saa_custom_list_child_shopping_terms($vid, $termid->tid, $vdisplay);
   }
 
   // Block output in HTML with div wrapper
   $block = array(
-      '#prefix' => '<div class="gpii-product-tree">',
-      '#type' => 'markup',
-      '#markup' => $markup,
-      '#suffix' => '</div>',
+    '#prefix' => '<div class="gpii-product-tree">',
+    '#type' => 'markup',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
   );
 
   return $block;
 }
 
-function test_tree_view() {
-$block = array();
-$markup = <<<EOD
+function test_tree_view()
+{
+  $block = array();
+  $markup = <<<EOD
 <!-- taxonomy term links -->
 EOD;
   $vid = 3;
@@ -279,137 +286,130 @@ EOD;
   foreach ($primaryCategory as $termid) {
     $destination = drupal_get_destination();
     $link = '/reports/term-utilization/' . $termid->tid;
-       $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
-       //dpm(count($count));
-       if ($count > 0) {
-        $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $value->name . '\' as their terminal record."></i><span class="sr-only">Products with \'' . $value->name . '\' as their terminal record.</span>'), '/reports/taxonomy/terminal/' . $value->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</h2>';
-       }
-       else {
-        $markup .= '<h2>' . t($termid->name) . '</h2>';
-       }
+    $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $termid->tid));
+    //dpm(count($count));
+    if ($count > 0) {
+      $markup .= '<h2>' . l(t($termid->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ')' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $value->name . '\' as their terminal record."></i><span class="sr-only">Products with \'' . $value->name . '\' as their terminal record.</span>'), '/reports/taxonomy/terminal/' . $value->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</h2>';
+    } else {
+      $markup .= '<h2>' . t($termid->name) . '</h2>';
+    }
 
-       $markup .= gpii_saa_custom_list_child_terms($vid, $termid->tid, $vdisplay);
+    $markup .= gpii_saa_custom_list_child_terms($vid, $termid->tid, $vdisplay);
   }
 
   // Block output in HTML with div wrapper
   $block = array(
-      '#prefix' => '<div class="gpii-product-tree">',
-      '#type' => 'markup',
-      '#markup' => $markup,
-      '#suffix' => '</div>',
+    '#prefix' => '<div class="gpii-product-tree">',
+    '#type' => 'markup',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
   );
 
   return $block;
 }
 
-function gpii_saa_custom_list_child_terms($vid, $tid, $vdisplay) {
+function gpii_saa_custom_list_child_terms($vid, $tid, $vdisplay)
+{
   $li = '';
   $destination = drupal_get_destination();
   $children = taxonomy_get_tree($vid, $tid, 1);
   if ($children) {
     $li .= '<ul>';
     foreach ($children as $key => $value) {
-     $link = '/reports/term-utilization/' . $value->tid;
-     $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $value->tid));
-     //dpm(count($count));
-     if ($count > 0) {
-      $li .= '<li>' . l(t($value->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $value->name . '\' as their terminal record."></i><span class="sr-only">Products with \'' . $value->name . '\' as their terminal record.</span>'), '/reports/taxonomy/terminal/' . $value->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</li>' .  gpii_saa_custom_list_child_terms($vid, $value->tid, $vdisplay);
-     }
-     else {
-      $li .= '<li>' . t($value->name) . '</li>';
-     }
-
+      $link = '/reports/term-utilization/' . $value->tid;
+      $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $value->tid));
+      //dpm(count($count));
+      if ($count > 0) {
+        $li .= '<li>' . l(t($value->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') ' . l(t('<i class="fa fa-crosshairs" title="Products with \'' . $value->name . '\' as their terminal record."></i><span class="sr-only">Products with \'' . $value->name . '\' as their terminal record.</span>'), '/reports/taxonomy/terminal/' . $value->tid, array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('taxonomy-link')), 'html' => TRUE)) . '</li>' .  gpii_saa_custom_list_child_terms($vid, $value->tid, $vdisplay);
+      } else {
+        $li .= '<li>' . t($value->name) . '</li>';
+      }
     }
-     $li .= '</ul>';
+    $li .= '</ul>';
   }
 
   return $li;
-
 }
 
-function gpii_saa_custom_list_child_shopping_terms($vid, $tid, $vdisplay) {
+function gpii_saa_custom_list_child_shopping_terms($vid, $tid, $vdisplay)
+{
   $li = '';
   $destination = drupal_get_destination();
   $children = taxonomy_get_tree($vid, $tid, 1);
   if ($children) {
     $li .= '<ul>';
     foreach ($children as $key => $value) {
-     $link = '/reports/term-utilization/' . $value->tid;
-     $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $value->tid));
-     //dpm(count($count));
+      $link = '/reports/term-utilization/' . $value->tid;
+      $count = count(views_get_view_result('taxonomy_by_tid', $vdisplay, $value->tid));
+      //dpm(count($count));
 
       $edit_link = l(t('Edit term'), $base_url . '/taxonomy/term/' . $value->tid . '/edit', array('attributes' => array('class' => 'btn btn-default btn-xs',), 'query' => array('destination' => '/content/guided-shopping-outline'),));
 
-      
+
       $termdata = taxonomy_term_load($value->tid);
       //dpm($termdata);
       $shortdesc_field = field_get_items('taxonomy_term', $termdata, 'field_short_description');
       $shortdesc = field_view_value('taxonomy_term', $termdata, 'field_short_description', $shortdesc_field[0]);
-      
+
       $question = field_view_field('taxonomy_term', $termdata, 'field_qasearch_question');
       $questionhead = field_view_field('taxonomy_term', $termdata, 'field_question_head');
-      
+
       if ($question || $questionhead) {
         $markup = '<div class="questiondata">';
         $markup .= render($question);
         $markup .= render($questionhead);
         $markup .= '</div>';
       }
-      
 
-     if ($count > 0) {
-      $li .= '<li>' . l(t($value->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') - ' . render($shortdesc) . ' ' . $edit_link . $markup .  gpii_saa_custom_list_child_shopping_terms($vid, $value->tid, $vdisplay) . '</li>';
-     }
-     else {
-      $li .= '<li>' . t($value->name) . $edit_link . $markup . '</li>';
-     }
 
-     
+      if ($count > 0) {
+        $li .= '<li>' . l(t($value->name), $link, array('attributes' => array('class' => array('taxonomy-link')))) . ' (' . t($count) . ') - ' . render($shortdesc) . ' ' . $edit_link . $markup .  gpii_saa_custom_list_child_shopping_terms($vid, $value->tid, $vdisplay) . '</li>';
+      } else {
+        $li .= '<li>' . t($value->name) . $edit_link . $markup . '</li>';
+      }
     }
-     $li .= '</ul>';
+    $li .= '</ul>';
   }
 
   return $li;
-
 }
 
 
 
-function gpii_saa_custom_child_termrefs_table($vid, $tid, $vdisplay) {
+function gpii_saa_custom_child_termrefs_table($vid, $tid, $vdisplay)
+{
   $output = '';
   $children = taxonomy_get_tree($vid, $tid, 1);
   if ($children) {
     $output .= '<table class="table table-striped table-bordered table-responsive"><tr><th>Term</th><th>Related</th></tr>';
     foreach ($children as $key => $value) {
-     $link = taxonomy_term_uri($value);
-     $destination = drupal_get_destination();
-     $editlink = l(t('Edit'), '/taxonomy/term/' . $value->tid . '/edit', array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('btn btn-sm btn-default pull-right'))));
+      $link = taxonomy_term_uri($value);
+      $destination = drupal_get_destination();
+      $editlink = l(t('Edit'), '/taxonomy/term/' . $value->tid . '/edit', array('query' => array('destination' => $destination['destination']), 'attributes' => array('class' => array('btn btn-sm btn-default pull-right'))));
 
 
-     $result = views_embed_view('get_related_terms', $vdisplay, $value->tid);
-     // dpm($result);
-     // dpm(strpos($result, '<ul class="term">'));
-     if (strpos($result, '<ul class="term">') !== false) {
-      $output .= '<tr><td>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' ' . $editlink . '</td><td>' . $result . '</td></tr>' .  gpii_saa_custom_child_termrefs_table($vid, $value->tid, $vdisplay);
-      unset($count);
-     }
-     else {
-      $output .= '<td>' . t($value->name) .  ' ' . $editlink . '</td><td>No related terms found. </td></tr>';
-     }
-
+      $result = views_embed_view('get_related_terms', $vdisplay, $value->tid);
+      // dpm($result);
+      // dpm(strpos($result, '<ul class="term">'));
+      if (strpos($result, '<ul class="term">') !== false) {
+        $output .= '<tr><td>' . l(t($value->name), $link['path'], array('attributes' => array('class' => array('taxonomy-link')))) . ' ' . $editlink . '</td><td>' . $result . '</td></tr>' .  gpii_saa_custom_child_termrefs_table($vid, $value->tid, $vdisplay);
+        unset($count);
+      } else {
+        $output .= '<td>' . t($value->name) .  ' ' . $editlink . '</td><td>No related terms found. </td></tr>';
+      }
     }
-     $output .= '</table>';
+    $output .= '</table>';
   }
 
   return $output;
-
 }
 
 
 /**
  * Implements hook_form_alter().
  */
-function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id) {
+function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id)
+{
   // add a "Cancel" button to product edit forms.
   if ($form_id == 'product_node_form') {
     // Add a cancel button.
@@ -453,7 +453,8 @@ function gpii_saa_custom_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Custom cancel button callback.
  */
-function gpii_saa_custom_form_cancel($form, &$form_state) {
+function gpii_saa_custom_form_cancel($form, &$form_state)
+{
   // if there's no destination parameter, return to the view published/draft tab
   $url = $_GET['destination'] ? $_GET['destination'] : 'node/' . arg(1);
   drupal_goto($url);
@@ -463,7 +464,8 @@ function gpii_saa_custom_form_cancel($form, &$form_state) {
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
-function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_state) {
+function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_state)
+{
   // grab a more modern version of jQuery UI
   $path = libraries_get_path('jquery.ui');
   $form['#attached']['js'][] = $path . '/jquery-ui.min.js';
@@ -479,1745 +481,1725 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
 }
 
 
-    /**
-    * Implements hook_menu().
-     * This is experimental code to look at whether we can bypass services and kick out some JSON that doesn't take forever and a day to load.
-    */
-    function gpii_saa_custom_menu() {
-      // $items['api/v1/productapi'] = array( // used for testing and manipulating objects before converting to JSON
-      //   'title' => 'Products API Experimentation',
-      //   'page callback' => 'gpii_saa_custom_products_json',
-      //   'access arguments' => array('administer content'),
-      // );
-      $items['api/v1/products/adv-search'] = array(
-        'title' => 'Products Advanced Search Endpoint',
-        'page callback' => 'gpii_saa_custom_products_advsearch',
-        'access arguments' => array('access advanced search data'),
-      );
-      $items['api/v1/products/all'] = array(
-        'title' => 'Products Endpoint',
-        'page callback' => 'gpii_saa_custom_products_ulisting',
-        'access arguments' => array('access advanced search data'),
-      );
-      $items['api/v1/deleted'] = array(
-        'title' => 'Deleted Products Endpoint',
-        'page callback' => 'gpii_saa_custom_deleted_ulisting',
-        'access arguments' => array('access advanced search data'),
-      );
-      $items['api/v1/abledata'] = array(
-        'title' => 'Deleted Products Endpoint',
-        'page callback' => 'gpii_saa_custom_abledata_report',
-        'access arguments' => array('access advanced search data'),
-      );
-      $items['browse'] = array(
-        'title' => 'Browse Virtual Stores',
-        'page callback' => 'gpii_saa_custom_virtual_stores',
-        'access arguments' => array('access browse virtual stores'),
-      );
-      $items['browse/category/%'] = array(
-        'title' => 'Virtual Store Category',
-        'page callback' => 'gpii_saa_custom_virtual_category',
-        'page arguments' => array(2),
-        'access arguments' => array('access browse virtual stores'),
-      );
-      $items['browse/shelf/%'] = array(
-        'title' => 'Virtual Store Shelf',
-        'page callback' => 'gpii_saa_custom_virtual_shelf',
-        'page arguments' => array(2),
-        'access arguments' => array('access browse virtual stores'),
-      );
-      $items['reports/taxonomy/terminal/%'] = array(
-        'title' => 'Terminal Taxonomy Report',
-        'page callback' => 'gpii_saa_custom_term_terminal',
-        'page arguments' => array(3),
-        'access arguments' => array('access terminal taxonomy report'),
-      );
-      $items['testing/sync/photos/%'] = array(
-        'title' => 'Image Import Test',
-        'page callback' => 'gpii_saa_custom_image_import',
-        'page arguments' => array(3),
-        'access arguments' => array('access terminal taxonomy report'),
-      );
-      $items['testing/sync/uids/%'] = array(
-        'title' => 'UID Import Test',
-        'page callback' => 'gpii_saa_custom_uid_import',
-        'page arguments' => array(3),
-        'access arguments' => array('access terminal taxonomy report'),
-      );
-      $items['sources/%'] = array(
-        'title' => 'Database Sources',
-        'page callback' => 'gpii_saa_custom_list_sources',
-        'page arguments' => array(1),
-        'access arguments' => array('access advanced search data'),
-      );
-      $items['uid/%'] = array(
-        'title' => 'UID Redirect',
-        'page callback' => 'gpii_saa_custom_uid_redirect',
-        'page arguments' => array(1),
-        'access arguments' => array('access content'),
-      );
-      $items['orders/add/%'] = array(
-        'title' => t('Place an order'),
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('gpii_saa_custom_order_form', 2),
-        'access arguments' => array('order openmarketplace products'),
-        'description' => t('Place an order.'),
-        'type' => MENU_CALLBACK,
-      );
-      $items['orders/update/%'] = array(
-        'title' => t('Update an order'),
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('gpii_saa_custom_order_update', 2),
-        'access arguments' => array('order openmarketplace products'),
-        'description' => t('Update an order.'),
-        'type' => MENU_CALLBACK,
-      );
-      $items['product/taxonomy/edit/%node'] = array(
-        'title' => 'Edit Product Taxonomy',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('gpii_saa_custom_taxonomy_edit', 3),
-        'access arguments' => array('access taxonomy edit form'),
-        'type' => MENU_CALLBACK,
-      );
-      $items['node/%tagedit/tags'] = array(
-        'title' => 'Edit Tags',
-        'page callback' => 'gpii_saa_custom_contextual_redirect',
-        'page arguments' => array(1),
-        'access arguments' => array('access taxonomy edit form'),
-        'type' => MENU_LOCAL_TASK,
-        'weight' => 0,
-      );
+/**
+ * Implements hook_menu().
+ * This is experimental code to look at whether we can bypass services and kick out some JSON that doesn't take forever and a day to load.
+ */
+function gpii_saa_custom_menu()
+{
+  // $items['api/v1/productapi'] = array( // used for testing and manipulating objects before converting to JSON
+  //   'title' => 'Products API Experimentation',
+  //   'page callback' => 'gpii_saa_custom_products_json',
+  //   'access arguments' => array('administer content'),
+  // );
+  $items['api/v1/products/adv-search'] = array(
+    'title' => 'Products Advanced Search Endpoint',
+    'page callback' => 'gpii_saa_custom_products_advsearch',
+    'access arguments' => array('access advanced search data'),
+  );
+  $items['api/v1/products/all'] = array(
+    'title' => 'Products Endpoint',
+    'page callback' => 'gpii_saa_custom_products_ulisting',
+    'access arguments' => array('access advanced search data'),
+  );
+  $items['api/v1/deleted'] = array(
+    'title' => 'Deleted Products Endpoint',
+    'page callback' => 'gpii_saa_custom_deleted_ulisting',
+    'access arguments' => array('access advanced search data'),
+  );
+  $items['api/v1/abledata'] = array(
+    'title' => 'Deleted Products Endpoint',
+    'page callback' => 'gpii_saa_custom_abledata_report',
+    'access arguments' => array('access advanced search data'),
+  );
+  $items['browse'] = array(
+    'title' => 'Browse Virtual Stores',
+    'page callback' => 'gpii_saa_custom_virtual_stores',
+    'access arguments' => array('access browse virtual stores'),
+  );
+  $items['browse/category/%'] = array(
+    'title' => 'Virtual Store Category',
+    'page callback' => 'gpii_saa_custom_virtual_category',
+    'page arguments' => array(2),
+    'access arguments' => array('access browse virtual stores'),
+  );
+  $items['browse/shelf/%'] = array(
+    'title' => 'Virtual Store Shelf',
+    'page callback' => 'gpii_saa_custom_virtual_shelf',
+    'page arguments' => array(2),
+    'access arguments' => array('access browse virtual stores'),
+  );
+  $items['reports/taxonomy/terminal/%'] = array(
+    'title' => 'Terminal Taxonomy Report',
+    'page callback' => 'gpii_saa_custom_term_terminal',
+    'page arguments' => array(3),
+    'access arguments' => array('access terminal taxonomy report'),
+  );
+  $items['testing/sync/photos/%'] = array(
+    'title' => 'Image Import Test',
+    'page callback' => 'gpii_saa_custom_image_import',
+    'page arguments' => array(3),
+    'access arguments' => array('access terminal taxonomy report'),
+  );
+  $items['testing/sync/uids/%'] = array(
+    'title' => 'UID Import Test',
+    'page callback' => 'gpii_saa_custom_uid_import',
+    'page arguments' => array(3),
+    'access arguments' => array('access terminal taxonomy report'),
+  );
+  $items['sources/%'] = array(
+    'title' => 'Database Sources',
+    'page callback' => 'gpii_saa_custom_list_sources',
+    'page arguments' => array(1),
+    'access arguments' => array('access advanced search data'),
+  );
+  $items['uid/%'] = array(
+    'title' => 'UID Redirect',
+    'page callback' => 'gpii_saa_custom_uid_redirect',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+  $items['orders/add/%'] = array(
+    'title' => t('Place an order'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('gpii_saa_custom_order_form', 2),
+    'access arguments' => array('order openmarketplace products'),
+    'description' => t('Place an order.'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['orders/update/%'] = array(
+    'title' => t('Update an order'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('gpii_saa_custom_order_update', 2),
+    'access arguments' => array('order openmarketplace products'),
+    'description' => t('Update an order.'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['product/taxonomy/edit/%node'] = array(
+    'title' => 'Edit Product Taxonomy',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('gpii_saa_custom_taxonomy_edit', 3),
+    'access arguments' => array('access taxonomy edit form'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['node/%tagedit/tags'] = array(
+    'title' => 'Edit Tags',
+    'page callback' => 'gpii_saa_custom_contextual_redirect',
+    'page arguments' => array(1),
+    'access arguments' => array('access taxonomy edit form'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 0,
+  );
 
-      $items['similar'] = array(
-        'title' => 'Find Similar Products',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('gpii_saa_custom_similar'),
-        'access arguments' => array('access similar search'),
-        'type' => MENU_CALLBACK,
-        'weight' => 0,
-      );
-      $items['similar/autocomplete'] = array(
-        'page callback' => '_gpii_saa_custom_similar_search_autocomplete',
-        'access arguments' => array('access similar search'),
-        'type' => MENU_CALLBACK
-      );
-        
-      
-      return $items;
+  $items['similar'] = array(
+    'title' => 'Find Similar Products',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('gpii_saa_custom_similar'),
+    'access arguments' => array('access similar search'),
+    'type' => MENU_CALLBACK,
+    'weight' => 0,
+  );
+  $items['similar/autocomplete'] = array(
+    'page callback' => '_gpii_saa_custom_similar_search_autocomplete',
+    'access arguments' => array('access similar search'),
+    'type' => MENU_CALLBACK
+  );
+
+
+  return $items;
+}
+
+// Add an Edit Tags tab to the product pages for editors with permission
+function tagedit_load($arg)
+{
+  $node = node_load($arg);
+  if ($node->type == 'product') return $node;
+  return FALSE;
+}
+
+// Redirect users to the correct page with a destination parameter intact
+function gpii_saa_custom_contextual_redirect($nid)
+{
+  $nid = $nid->nid;
+  $query = array('query' => array('destination' => 'node/' . $nid));
+  drupal_goto('product/taxonomy/edit/' . $nid, $query);
+}
+
+/**
+ * Builds an edit for for taxonomy adjustments
+ */
+
+function gpii_saa_custom_taxonomy_edit($form, &$form_state, $node)
+{
+
+  drupal_set_title('Update Tags for ' . $node->title);
+
+  // Save the node to the form state for use in the submit function
+  $form_state['node'] = $node;
+
+  // Set a field where the title can be edited
+  $description_fields = array(
+    'field_status',
+    'field_product_image',
+    'body',
+    'ield_desc_main_features',
+    'field_desc_options',
+    'field_desc_more_info'
+  );
+
+  $prod_description = '';
+
+  foreach ($description_fields as $value) {
+    $prefix = '';
+    $suffix = '';
+    if ($value == 'field_status') {
+      $prefix = '<span class="label label-primary">';
+      $suffix = '</span>';
+    }
+    $description = field_get_items('node', $node, $value);
+    $prod_description .= $prefix . render(field_view_value('node', $node, $value, $description[0])) . $suffix;
+  }
+
+  //dpm($prod_description);
+  $form['row1start'] = array(
+    '#markup' => '<div class="row"><div class="col col-md-6"><div class="product-description" data-spy="affix" data-offset-top="0">' . $prod_description . '</div><br /><!-- add a break for safari --></div><div class="col col-md-7">'
+  );
+
+  // build a vocabulary variable for use by the form below
+  $category_vocabulary = new stdClass();
+  $category_vocabulary->vid = 11;
+  $category_vocabulary->name = 'Product Category';
+  $category_vocabulary->machine_name = 'product_category1';
+  $category_vocabulary->hierarchy = '1';
+
+  // create an array that represents selected values for the given array
+  $product_categories = $node->field_product_categories1['und'];
+  $product_categories_selected = array();
+  foreach ($product_categories as $key => $value) {
+    # This needs to create an array where the value and tid are identical
+    $product_categories_selected[$value['tid']] = $value['tid'];
+  }
+
+  $form['field_product_categories1'] = array(
+    '#type' => 'checkbox_tree',
+    '#tree' => TRUE,
+    '#field_name' => 'field_product_categories1',
+    '#attributes' => array(
+      'class' => array(
+        'field-type-taxonomy-term-reference',
+        'field-name-field-product-categories1',
+        'field-widget-term-reference-tree'
+      ),
+    ),
+    '#delta' => 0,
+    '#value' => array(),
+    '#attached' => array(
+      'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+      'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+    ),
+    '#title' => t('Product Categories'),
+    '#prefix' => t('<h2>Product Categories</h2>'),
+    '#max_choices' => '-1',
+    '#max_depth' => '',
+    '#tree' => TRUE,
+    '#leaves_only' => 0,
+    '#filter_view' => '',
+    '#parent_tid' => 0,
+    '#track_list' => 1,
+    '#select_parents' => 1,
+    '#unselect_children' => 1,
+    '#cascading_selection' => 0,
+    '#start_minimized' => 1,
+    '#vocabulary' => $category_vocabulary,
+    '#default_value' => $product_categories_selected,
+    '#token_display' => '',
+    '#value_key' => 'tid',
+    '#required' => FALSE,
+    '#description' => t('<p>Select the product categories that are applicable for this product. </p><p><a role="button" class="btn btn-default btn-sm expandbutton">Expand All Categories</a></p>'),
+    '#description_display' => 'before',
+  );
+
+
+  // Operating System
+
+  // build a vocabulary variable for use by the form below
+  $os_vocabulary = new stdClass();
+  $os_vocabulary->vid = 12;
+  $os_vocabulary->name = 'Operating System Compatibility';
+  $os_vocabulary->machine_name = 'os_compatibility';
+  $os_vocabulary->hierarchy = '0';
+
+  $operating_system = $node->field_operating_system['und'];
+  $operating_system_selected = array();
+  foreach ($operating_system as $key => $value) {
+    # This needs to create an array where the value and tid are identical
+    $operating_system_selected[$value['tid']] = $value['tid'];
+  }
+
+  $form['field_operating_system'] = array(
+    '#type' => 'checkbox_tree',
+    '#tree' => FALSE,
+    '#field_name' => 'field_operating_system',
+    '#attributes' => array(
+      'class' => array(
+        'field-type-taxonomy-term-reference',
+        'field-name-field-operating-system',
+        'field-widget-term-reference-tree'
+      ),
+    ),
+    '#delta' => 0,
+    '#value' => array(),
+    '#attached' => array(
+      'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+      'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+    ),
+    '#title' => t('Operating System'),
+    '#prefix' => t('<h2>Operating System</h2>'),
+    '#max_choices' => '-1',
+    '#max_depth' => '',
+    '#leaves_only' => 0,
+    '#filter_view' => '',
+    '#parent_tid' => 0,
+    '#track_list' => 0,
+    '#select_parents' => 0,
+    '#unselect_children' => 0,
+    '#cascading_selection' => 0,
+    '#level_start_minimized' => 1,
+    '#vocabulary' => $os_vocabulary,
+    '#default_value' => $operating_system_selected,
+    '#token_display' => '',
+    '#value_key' => 'tid',
+    '#required' => FALSE,
+  );
+
+
+  // Languages Supported
+
+  // build a vocabulary variable for use by the form below
+  $languages_vocabulary = new stdClass();
+  $languages_vocabulary->vid = 13;
+  $languages_vocabulary->name = 'Supported Languages';
+  $languages_vocabulary->machine_name = 'supported_languages';
+  $languages_vocabulary->hierarchy = '0';
+
+  $supported_languages = $node->field_languages_supported['und'];
+  $supported_languages_selected = array();
+  foreach ($supported_languages as $key => $value) {
+    # This needs to create an array where the value and tid are identical
+    $supported_languages_selected[$value['tid']] = $value['tid'];
+  }
+
+  $form['field_languages_supported'] = array(
+    '#type' => 'checkbox_tree',
+    '#tree' => FALSE,
+    '#field_name' => 'field_languages_supported',
+    '#attributes' => array(
+      'class' => array(
+        'field-type-taxonomy-term-reference',
+        'field-name-field-languages-supported',
+        'field-widget-term-reference-tree'
+      ),
+    ),
+    '#delta' => 0,
+    '#value' => array(),
+    '#attached' => array(
+      'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+      'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+    ),
+    '#title' => t('Supported Languages'),
+    '#prefix' => t('<h2>Supported Languages</h2>'),
+    '#max_choices' => '-1',
+    '#max_depth' => '',
+    '#leaves_only' => 0,
+    '#filter_view' => '',
+    '#parent_tid' => 0,
+    '#track_list' => 0,
+    '#select_parents' => 0,
+    '#unselect_children' => 0,
+    '#cascading_selection' => 0,
+    '#level_start_minimized' => 1,
+    '#vocabulary' => $languages_vocabulary,
+    '#default_value' => $supported_languages_selected,
+    '#token_display' => '',
+    '#value_key' => 'tid',
+    '#required' => FALSE,
+  );
+
+
+  // build a vocabulary variable for use by the form below
+  $license_vocabulary = new stdClass();
+  $license_vocabulary->vid = 9;
+  $license_vocabulary->name = 'License Type';
+  $license_vocabulary->machine_name = 'license_type';
+  $license_vocabulary->hierarchy = '0';
+
+  $license_type = $node->field_license['und'];
+  $license_type_selected = array();
+  foreach ($license_type as $key => $value) {
+    # This needs to create an array where the value and tid are identical
+    $license_type_selected[$value['tid']] = $value['tid'];
+  }
+
+  $form['field_license'] = array(
+    '#type' => 'checkbox_tree',
+    '#tree' => FALSE,
+    '#field_name' => 'field_license',
+    '#attributes' => array(
+      'class' => array(
+        'field-type-taxonomy-term-reference',
+        'field-name-field-license',
+        'field-widget-term-reference-tree'
+      ),
+    ),
+    '#delta' => 0,
+    '#value' => array(),
+    '#attached' => array(
+      'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+      'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+    ),
+    '#title' => t('License Type'),
+    '#prefix' => t('<h2>License Type</h2>'),
+    '#max_choices' => '-1',
+    '#max_depth' => '',
+    '#leaves_only' => 0,
+    '#filter_view' => '',
+    '#parent_tid' => 0,
+    '#track_list' => 0,
+    '#select_parents' => 0,
+    '#unselect_children' => 0,
+    '#cascading_selection' => 0,
+    '#level_start_minimized' => 1,
+    '#vocabulary' => $license_vocabulary,
+    '#default_value' => $license_type_selected,
+    '#token_display' => '',
+    '#value_key' => 'tid',
+    '#required' => FALSE,
+  );
+
+
+
+  $form['col2start'] = array(
+    '#markup' => '</div><div class="col col-md-7">'
+  );
+
+
+  /**
+   * Primary and Secondary Features Vocabulary (custom widget)
+   */
+
+  $features_vocabulary = new stdClass();
+  $features_vocabulary->vid = 5;
+  $features_vocabulary->name = 'Features';
+  $features_vocabulary->machine_name = 'features';
+  $features_vocabulary->hierarchy = '1';
+
+
+  $secondary_features = $node->field_features['und'];
+  $secondary_features_selected = array();
+  foreach ($secondary_features as $key => $value) {
+    # This needs to create an array where ther value and tid are identical
+    $secondary_features_selected[$value['tid']] = $value['tid'];
+  }
+
+  $form['field_features'] = array(
+    '#type' => 'checkbox_tree',
+    '#tree' => TRUE,
+    '#field_name' => 'field_features',
+    '#attributes' => array(
+      'class' => array(
+        'field-type-taxonomy-term-reference',
+        'field-name-field-features',
+        'field-widget-term-reference-tree'
+      ),
+    ),
+    '#delta' => 0,
+    '#value' => array(),
+    '#attached' => array(
+      'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+      'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+    ),
+    '#title' => t('Primary and Secondary Features'),
+    '#prefix' => t('<h2>Features</h2>'),
+    '#max_choices' => '-1',
+    '#max_depth' => '',
+    '#tree' => TRUE,
+    '#leaves_only' => 0,
+    '#filter_view' => '',
+    '#parent_tid' => 0,
+    '#track_list' => 1,
+    '#select_parents' => 1,
+    '#unselect_children' => 1,
+    '#cascading_selection' => 0,
+    '#start_minimized' => 1,
+    '#vocabulary' => $features_vocabulary,
+    '#default_value' => $secondary_features_selected,
+    '#token_display' => '',
+    '#value_key' => 'tid',
+    '#required' => FALSE,
+    '#description' => t('<p>Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second checkbox) features.</p></p> <a role="button" class="btn btn-default btn-sm expandbutton">Expand All Features</a></p>'),
+    '#description_display' => 'before',
+  );
+
+
+
+  $primary_features = $node->field_features_primary['und'];
+  $primary_features_selected = array();
+  foreach ($primary_features as $key => $value) {
+    # This needs to create an array where the value and tid are identical
+    $primary_features_selected[$value['tid']] = $value['tid'];
+  }
+  $form['field_features_primary'] = array(
+    '#type' => 'checkbox_tree',
+    '#tree' => TRUE,
+    '#field_name' => 'field_features_primary',
+    '#attributes' => array(
+      'class' => array(
+        'field-type-taxonomy-term-reference',
+        'field-name-field-features-primary',
+        'field-widget-term-reference-tree'
+      ),
+    ),
+    '#delta' => 0,
+    '#value' => array(),
+    '#attached' => array(
+      'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
+      'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
+    ),
+    '#title' => t('Primary Features'),
+    '#max_choices' => '-1',
+    '#max_depth' => '',
+    '#leaves_only' => 0,
+    '#filter_view' => '',
+    '#parent_tid' => 0,
+    '#track_list' => 1,
+    '#select_parents' => 1,
+    '#unselect_children' => 1,
+    '#cascading_selection' => 0,
+    '#level_start_minimized' => 1,
+    '#vocabulary' => $features_vocabulary,
+    '#default_value' => '',
+    '#token_display' => '',
+    '#value_key' => 'tid',
+    '#required' => FALSE,
+  );
+
+  $form['row1end'] = array(
+    '#markup' => '</div><div class="col col-md-4"><div class="submit-buttons" data-spy="affix" data-offset-top="0" data-offset-bottom="10">'
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update Tags'),
+    '#attributes' => array('class' => array('btn-primary'))
+  );
+  $form['row2end'] = array(
+    '#markup' => '</div></div></div>'
+  );
+
+
+  return $form;
+}
+
+function gpii_saa_custom_taxonomy_edit_submit($form, &$form_state)
+{
+  // Get the node object
+  $node = $form_state['node'];
+  // print '<pre>';
+  // print_r($node);
+  // print '</pre>';
+  // drupal_exit();
+
+  // If a moderated revision exists, we need to get the latest revision and save it too
+  $revision_id = revisioning_get_latest_revision_id($node->nid);
+
+  // check for a pending revision before we run node_save and set a variable to determine whether we udpate both 
+  // the current and the latest revision
+
+  if ($revision_id > $node->vid) {
+    $pending_revision = TRUE;
+  } else {
+    $pending_revision = FALSE;
+  }
+
+  // for term reference tree fields, we need to walk the array from the form 
+  // state to find matching keys and values, then write the values in the format that node_save expects
+
+  // product categories
+  $cateogry_terms_selected = array();
+  array_walk_recursive($form_state['values']['field_product_categories1'], function ($value, $key) use (&$cateogry_terms_selected) {
+    if ($value == $key) {
+      // echo $key . '--';
+      // echo $value . '<br />';
+      $cateogry_terms_selected['und'][]['tid'] .= $key;
+    }
+  });
+
+  $node->field_product_categories1 = $cateogry_terms_selected;
+
+  // operating system
+  $operating_system_selected = array();
+  array_walk_recursive($form_state['values']['field_operating_system'], function ($value, $key) use (&$operating_system_selected) {
+    if ($value == $key) {
+      $operating_system_selected['und'][]['tid'] .= $key;
+    }
+  });
+
+  $node->field_operating_system = $operating_system_selected;
+
+  // languages supported
+  $languages_selected = array();
+  array_walk_recursive($form_state['values']['field_languages_supported'], function ($value, $key) use (&$languages_selected) {
+    if ($value == $key) {
+      $languages_selected['und'][]['tid'] .= $key;
+    }
+  });
+
+  $node->field_languages_supported = $languages_selected;
+
+  // license_type
+
+  $license_type = array();
+  array_walk_recursive($form_state['values']['field_license'], function ($value, $key) use (&$license_selected) {
+    if ($value == $key) {
+      $license_selected['und'][]['tid'] .= $key;
+    }
+  });
+
+  $node->field_license = $license_selected;
+
+  // primary features
+  $primary_terms_selected = array();
+  array_walk_recursive($form_state['values']['field_features_primary'], function ($value, $key) use (&$primary_terms_selected) {
+    if ($value == $key) {
+
+      $primary_terms_selected['und'][]['tid'] .= $key;
+    }
+  });
+
+  // secondary features
+  $secondary_terms_selected = array();
+  array_walk_recursive($form_state['values']['field_features'], function ($value, $key) use (&$secondary_terms_selected) {
+    if ($value == $key) {
+
+      $secondary_terms_selected['und'][]['tid'] .= $key;
+    }
+  });
+
+  $node->field_features = $secondary_terms_selected;
+  $node->field_features_primary = gpii_saa_custom_super_unique($primary_terms_selected);
+
+  // Save the node
+  $node->revision = TRUE;
+  $node->revision_moderation = FALSE;
+  $node->log = 'Taxonomy Edits';
+  $node->category = 'tax_only';
+
+  // dpm($form_state['values']['field_features_primary']);
+  // dpm($primary_terms);
+  // print '<pre>';
+  // print_r($node->field_features_primary);
+  // print_r($primary_terms_selected);
+  // print '</pre>';
+  // drupal_exit();
+  node_save($node);
+
+
+
+  if ($pending_revision == TRUE) {
+    $latest = node_load($node->nid, $revision_id, reset);
+
+    // Save the node
+    $latest->revision = TRUE;
+    $latest->revision_moderation = TRUE;
+    $latest->log = 'Taxonomy Edits';
+    $latest->category = 'tax_only';
+
+    $latest->field_product_categories1 = $cateogry_terms_selected;
+    $latest->field_operating_system = $operating_system_selected;
+    $latest->field_languages_supported = $languages_selected;
+    $latest->field_license = $license_selected;
+    $latest->field_features = $secondary_terms_selected;
+    $latest->field_features_primary = gpii_saa_custom_super_unique($primary_terms_selected);
+    node_save($latest);
+  }
+}
+
+/** 
+ * Custom function to walk a multidimensional array and return only unique values
+ * based on https://www.php.net/manual/en/function.array-unique.php
+ */
+
+function gpii_saa_custom_super_unique($array)
+{
+  $result = array_map("unserialize", array_unique(array_map("serialize", $array)));
+
+  foreach ($result as $key => $value) {
+    if (is_array($value)) {
+      $result[$key] = gpii_saa_custom_super_unique($value);
+    }
+  }
+
+  return $result;
+}
+
+/**
+ * Builds a form that users can use to create new orders.
+ */
+function gpii_saa_custom_order_form($form, &$form_state, $nid)
+{
+  // Use the values from $form_state['storage'] to determine what to do with regard to rendering the form
+  if (isset($form_state['storage']['complete'])) {
+    return gpii_saa_custom_order_form_page_complete($_SESSION['gpii_saa_custom_order_form']);
+  }
+
+  if (!is_numeric($nid)) {
+    drupal_set_message(t('Your request was not valid. Please return to the previous page and try again.'), 'status', FALSE);
+
+    return;
+  }
+
+  $product = node_load($nid);
+
+  //dpm($product);
+
+  drupal_set_title('Order: ' . $product->title, CHECK_PLAIN);
+
+  $form['customerinfo'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Customer Information'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+
+  $form['customerinfo']['first_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First Name'),
+    '#required' => TRUE,
+    '#default_value' => $_SESSION['gpii_saa_custom_package_form'][0],
+    '#description' => t('Please enter your first name.'),
+  );
+
+  $form['customerinfo']['last_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Last Name'),
+    '#required' => TRUE,
+    '#default_value' => $_SESSION['gpii_saa_custom_package_form'][1],
+    '#description' => t('Please enter your last name.'),
+  );
+
+  $form['customerinfo']['email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+    '#required' => TRUE,
+    '#default_value' => $_SESSION['gpii_saa_custom_package_form'][2],
+    '#description' => t('Please enter your email address.'),
+  );
+
+
+  $form['order'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Order Information'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+
+  // @@ need to create field for product types
+  $form['order']['type'] = array(
+    '#type' => 'item',
+    '#title' => t('Product Type'),
+    '#markup' => t('<p>Software</p>'),
+  );
+
+
+  $form['order']['description'] = array(
+    '#type' => 'item',
+    '#title' => t('Description'),
+    '#default_value' => '1',
+    '#markup' => t('<p>Refer to <a href="/node/' . $product->nid . '">' . $product->title .  '</a> for additional information.</p>'),
+  );
+
+  $form['order']['cost'] = array(
+    '#type' => 'item',
+    '#title' => t('Price'),
+    '#default_value' => '1',
+    '#markup' => t('<p>$' . $product->field_product_price['und'][0]['value'] .  ''),
+  );
+
+  $form['order']['quantity'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Quantity'),
+    '#required' => TRUE,
+    '#default_value' =>  $_SESSION['gpii_saa_custom_package_form'][3],
+    '#description' => t('Please enter the number of items you would like to order.'),
+  );
+
+  $form['order']['notes'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Notes'),
+    '#required' => FALSE,
+    '#default_value' =>  $_SESSION['gpii_saa_custom_package_form'][4],
+    '#description' => t('Please include any additional notes or questions related to your order here.'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Next'),
+    '#submit' => array('gpii_saa_custom_order_form_submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * Validates the form.
+ */
+function gpii_saa_custom_order_form_validate($form, &$form_state)
+{
+  if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬]/', $form_state['values']['first_name'])) {
+    // one or more of the 'special characters' found in the Job number
+    form_set_error('first_name', t('Names can not include special charaters.'));
+  }
+
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('Please enter a valid email address.'));
+  }
+}
+
+function gpii_saa_custom_order_form_submit($form, &$form_state)
+{
+
+  drupal_set_message('Please review your order and complete your purchase by clicking on the "Check out with PayPal" button below.');
+  //dpm($form_state);
+  // foreach ($form_state['values'] as $key => $value) {
+  //   dsm($key . ': ' . $value);
+  // }
+
+  // Set the form values in the session so that they're remembered next time around
+
+  $_SESSION['gpii_saa_custom_package_form'] = array(
+    $form_state['values']['first_name'],
+    $form_state['values']['last_name'],
+    $form_state['values']['email'],
+    $form_state['values']['quantity'],
+    $form_state['values']['notes'],
+  );
+
+  //kpr($form_state);
+  $form_state["rebuild"] = TRUE;
+
+  //dpm($form_state['values']);
+
+  $order_values = array(
+    'first_name' => $form_state['values']['first_name'],
+    'last_name' => $form_state['values']['last_name'],
+    'email' => $form_state['values']['email'],
+    'quantity' => $form_state['values']['quantity'],
+    'product' => check_plain(arg(2)),
+    'notes' => $form_state['values']['notes'],
+  );
+
+  module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.open_marketplace');
+  $order = _gpii_saa_custom_create_order($order_values);
+
+  return;
+}
+
+
+/**
+ * Builds a form that subscribers can use to update new packages.
+ */
+function gpii_saa_custom_order_update($form, &$form_state, $nid)
+{
+  // Use the values from $form_state['storage'] to determine what to do with regard to rendering the form
+  if (isset($form_state['storage']['complete'])) {
+    return gpii_saa_custom_order_update_page_complete($_SESSION['gpii_saa_custom_order_form']);
+  }
+
+  if (!is_numeric($nid)) {
+    drupal_set_message(t('Your request was not valid. Please return to the previous page and try again.'), 'status', FALSE);
+
+    return;
+  }
+
+  $product = node_load($nid);
+
+  //dpm($product);
+
+  drupal_set_title('Update ' . $product->title, CHECK_PLAIN);
+
+  $form['customerinfo'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Customer Information'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+
+  $form['customerinfo']['first_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First Name'),
+    '#required' => TRUE,
+    '#default_value' => $product->field_first_name['und'][0]['safe_value'],
+    '#description' => t('Please enter your first name.'),
+  );
+
+  $form['customerinfo']['last_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Last Name'),
+    '#required' => TRUE,
+    '#default_value' => $product->field_last_name['und'][0]['safe_value'],
+    '#description' => t('Please enter your last name.'),
+  );
+
+  $form['customerinfo']['email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+    '#required' => TRUE,
+    '#default_value' => $product->field_email['und'][0]['email'],
+    '#description' => t('Please enter your email address.'),
+  );
+
+
+  $form['order'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Order Information'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+
+  // @@ need to create field for product types
+  $form['order']['type'] = array(
+    '#type' => 'item',
+    '#title' => t('Product Type'),
+    '#markup' => t('<p>Software</p>'),
+  );
+
+  $om_product = node_load($product->field_product_reference['und'][0]['target_id']);
+
+  $form['order']['description'] = array(
+    '#type' => 'item',
+    '#title' => t('Description'),
+    '#default_value' => '1',
+    '#markup' => t('<p>Refer to <a href="/node/' . $om_product->nid . '">' . $om_product->title .  '</a> for additional information.</p>'),
+  );
+
+  $form['order']['cost'] = array(
+    '#type' => 'item',
+    '#title' => t('Price'),
+    '#default_value' => '1',
+    '#markup' => t('<p>$' . $om_product->field_product_price['und'][0]['value'] .  ''),
+  );
+
+  $form['order']['quantity'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Quantity'),
+    '#required' => TRUE,
+    '#default_value' =>  $product->field_payment['und'][0]['quantity'],
+    '#description' => t('Please enter the number of items you would like to order.'),
+  );
+
+  $form['order']['notes'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Notes'),
+    '#required' => FALSE,
+    '#default_value' =>  $product->field_order_notes['und'][0]['value'],
+    '#description' => t('Please include any additional notes or questions related to your order here.'),
+  );
+
+  $form['productref'] = array(
+    '#type' => 'hidden',
+    '#value' => $product->field_product_reference['und'][0]['target_id']
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Next'),
+    '#submit' => array('gpii_saa_custom_order_update_submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * Validates the form.
+ */
+function gpii_saa_custom_order_update_validate($form, &$form_state)
+{
+  if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬]/', $form_state['values']['first_name'])) {
+    // one or more of the 'special characters' found in the Job number
+    form_set_error('first_name', t('Names can not include special charaters.'));
+  }
+
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('Please enter a valid email address.'));
+  }
+}
+
+function gpii_saa_custom_order_update_submit($form, &$form_state)
+{
+
+  drupal_set_message('Please review your order and complete your purchase by selecting the "Buy Now" button below.');
+  //dpm($form_state);
+  // foreach ($form_state['values'] as $key => $value) {
+  //   dsm($key . ': ' . $value);
+  // }
+
+  // Set the form values in the session so that they're remembered next time around
+
+  $_SESSION['gpii_saa_custom_package_form'] = array(
+    $form_state['values']['first_name'],
+    $form_state['values']['last_name'],
+    $form_state['values']['email'],
+    $form_state['values']['quantity'],
+    $form_state['values']['notes'],
+    $form_state['values']['productref'],
+
+  );
+
+  //kpr($form_state);
+  $form_state["rebuild"] = TRUE;
+
+  //dpm($form_state['values']);
+
+  $order_values = array(
+    'first_name' => $form_state['values']['first_name'],
+    'last_name' => $form_state['values']['last_name'],
+    'email' => $form_state['values']['email'],
+    'quantity' => $form_state['values']['quantity'],
+    'product' => $form_state['values']['productref'],
+    'notes' => $form_state['values']['notes'],
+  );
+
+  module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.open_marketplace');
+  $order = _gpii_saa_custom_update_order($order_values, arg(2));
+
+  return;
+}
+
+/**
+ * This callback is used to view a list of database source records that are related
+ * to a particular UID. It calls the api.ul.gpii.net API to retrieve a list of
+ * database sources for a given record and returns a list of results. If there is only
+ * one source and URL assoicated with the record, users are redirected automatically.
+ */
+
+function gpii_saa_custom_list_sources($uid)
+{
+
+  $query = new EntityFieldQuery();
+
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'product')
+    ->fieldCondition('field_uid', 'value', $uid, '=')
+    ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+  $result = $query->execute();
+
+  //dsm('NID: ' . key($result['node']));
+
+  $product = node_load(key($result['node']), NULL, true);
+  //dsm($product);
+
+  $source = filter_xss(arg(2));
+
+  // BBC: This needs some work. Basically, it adds a timestamp to the UL_API_LOGGEDIN variable and checks to see if it's less than three hours old so that we can avoid repeat logins.
+
+  if (variable_get('UL_API_LOGGEDIN') < (time() + 10800)) {
+    //dpm('LOGGED IN ALREADY ' . variable_get('UL_API_LOGGEDIN'));
+  } else {
+    // log into the API
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://api.ul.gpii.net/api/user/login",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_POSTFIELDS => "username=" . variable_get('UL_API_USERNAME') . "&password=" . variable_get('UL_API_PASSWORD'),
+      CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
+      CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
+      CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+
+      CURLOPT_HTTPHEADER => array(
+        "accept: application/json",
+        "content-type: application/x-www-form-urlencoded"
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+      //dpm("cURL Error #:" . $err);
+    } else {
+      //dpm($response);
+      variable_set('UL_API_LOGGEDIN', time());
+    }
+  }
+
+
+  if ($source) {
+    //$markup =  '<p>We have a source specified.</p>';
+  } else {
+    $markup = '<p>';
+
+    if (arg(0) == 'node') {
+      $markup .= 'This product ';
+    } else {
+      $markup .= '<a href="/node/' . $product->nid . '">' . $product->title . '</a>';
     }
 
-    // Add an Edit Tags tab to the product pages for editors with permission
-    function tagedit_load($arg) {
-      $node = node_load($arg);
-      if ($node->type == 'product') return $node; 
-      return FALSE;
+    $markup .= ' is also listed in these partner sites:</p>';
+  }
+
+
+  $markup .= '<ul>';
+  if (variable_get('UL_API_LOGGEDIN') < (time())) {
+
+
+    // Get the UID from the UL source record
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://api.ul.gpii.net/api/product/unified/" . $uid . "?includeSources=true",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 4,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
+      CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
+      CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+
+      CURLOPT_HTTPHEADER => array(
+        "accept: application/json"
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+      //dpm("cURL Error #:" . $err);
+    } else {
+      //dpm($response);
     }
 
-    // Redirect users to the correct page with a destination parameter intact
-    function gpii_saa_custom_contextual_redirect($nid) {
-      $nid = $nid->nid;
-      $query = array('query' => array('destination' => 'node/'.$nid));
-      drupal_goto('product/taxonomy/edit/'. $nid, $query);
+    $response = json_decode($response);
+    //dpm($response->sources);
+
+    $sources = $response->sources;
+
+    // remove any deleted sources from the array so that we don't send people to dead links
+    foreach ($sources as $key => $value) {
+      if ($value->status == "deleted") {
+        unset($sources[$key]);
+      }
     }
 
-    /**
-     * Builds an edit for for taxonomy adjustments
-     */
+    // if a source is specified
+    if ($source) {
+      $markup =  '<p><a href="/node/' . $product->nid . '">' . $product->title . '</a> is a consolidation of the following <strong>' . check_url($source) . '</strong> source records:</p>';
+      $links = array();
+      foreach ($sources as $key => $value) {
+        // need to add code that counts records and redirects automatically here
 
-    function gpii_saa_custom_taxonomy_edit($form, &$form_state, $node) {
-
-      drupal_set_title('Update Tags for ' . $node->title);
-
-      // Save the node to the form state for use in the submit function
-      $form_state['node'] = $node;
-
-      // Set a field where the title can be edited
-      $description_fields = array(
-        'field_status',
-        'field_product_image',
-        'body',
-        'ield_desc_main_features',
-        'field_desc_options',
-        'field_desc_more_info'
-      );
-
-      $prod_description = '';
-
-      foreach ($description_fields as $value) {
-        $prefix = '';
-        $suffix = '';
-        if ($value == 'field_status') {
-          $prefix = '<span class="label label-primary">';
-          $suffix = '</span>';
+        if ($value->source == $source) {
+          //dpm($value);
+          $links[] = array(
+            'lang' => $value->language,
+            'OriginalUrl' => $value->sourceData->OriginalUrl,
+            'EnglishUrl' => $value->sourceData->EnglishUrl,
+            'SourceUrl' => $value->sourceData->{'Link-to-Product-Page'},
+            'name' => $value->name
+          );
         }
-        $description = field_get_items('node', $node, $value);
-        $prod_description .= $prefix . render(field_view_value('node', $node, $value, $description[0])) . $suffix;
-      }     
-      
-      //dpm($prod_description);
-      $form['row1start'] = array(
-        '#markup' => '<div class="row"><div class="col col-md-6"><div class="product-description" data-spy="affix" data-offset-top="0">' . $prod_description . '</div><br /><!-- add a break for safari --></div><div class="col col-md-7">'
-      );
-      
-      // build a vocabulary variable for use by the form below
-      $category_vocabulary = new stdClass();
-      $category_vocabulary->vid = 11;
-      $category_vocabulary->name = 'Product Category';
-      $category_vocabulary->machine_name = 'product_category1';
-      $category_vocabulary->hierarchy = '1';
-
-      // create an array that represents selected values for the given array
-      $product_categories = $node->field_product_categories1['und'];
-      $product_categories_selected = array();
-      foreach ($product_categories as $key => $value) {
-        # This needs to create an array where the value and tid are identical
-        $product_categories_selected[$value['tid']] = $value['tid'];
       }
 
-      $form['field_product_categories1'] = array(
-        '#type' => 'checkbox_tree',
-        '#tree' => TRUE,
-        '#field_name' => 'field_product_categories1',
-        '#attributes' => array(
-          'class' => array(
-            'field-type-taxonomy-term-reference',
-            'field-name-field-product-categories1',
-            'field-widget-term-reference-tree'
-          ),
-        ),
-        '#delta' => 0,
-        '#value' => array(),
-        '#attached' => array(
-              'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-              'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-            ),
-        '#title' => t('Product Categories'),
-        '#prefix' => t('<h2>Product Categories</h2>'),
-        '#max_choices' => '-1',
-        '#max_depth' => '',
-        '#tree' => TRUE,
-        '#leaves_only' => 0,
-        '#filter_view' => '',
-        '#parent_tid' => 0,
-        '#track_list' => 1,
-        '#select_parents' => 1,
-        '#unselect_children' => 1,
-        '#cascading_selection' => 0,
-        '#start_minimized' => 1,
-        '#vocabulary' => $category_vocabulary,
-        '#default_value' => $product_categories_selected,
-        '#token_display' => '',
-        '#value_key' => 'tid',
-        '#required' => FALSE,
-        '#description' => t('<p>Select the product categories that are applicable for this product. </p><p><a role="button" class="btn btn-default btn-sm expandbutton">Expand All Categories</a></p>'),
-        '#description_display' => 'before',
-      );
+      //dpm($links);
 
+      // if we only have one source link, take the user right to it
 
-      // Operating System
+      if (count($links) == 1) {
 
-      // build a vocabulary variable for use by the form below
-      $os_vocabulary = new stdClass();
-      $os_vocabulary->vid = 12;
-      $os_vocabulary->name = 'Operating System Compatibility';
-      $os_vocabulary->machine_name = 'os_compatibility';
-      $os_vocabulary->hierarchy = '0';
-
-      $operating_system = $node->field_operating_system['und'];
-      $operating_system_selected = array();
-      foreach ($operating_system as $key => $value) {
-        # This needs to create an array where the value and tid are identical
-        $operating_system_selected[$value['tid']] = $value['tid'];
-      }
-
-      $form['field_operating_system'] = array(
-        '#type' => 'checkbox_tree',
-        '#tree' => FALSE,
-        '#field_name' => 'field_operating_system',
-        '#attributes' => array(
-          'class' => array(
-            'field-type-taxonomy-term-reference',
-            'field-name-field-operating-system',
-            'field-widget-term-reference-tree'
-          ),
-        ),
-        '#delta' => 0,
-        '#value' => array(),
-        '#attached' => array(
-          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-        ),
-        '#title' => t('Operating System'),
-        '#prefix' => t('<h2>Operating System</h2>'),
-        '#max_choices' => '-1',
-        '#max_depth' => '',
-        '#leaves_only' => 0,
-        '#filter_view' => '',
-        '#parent_tid' => 0,
-        '#track_list' => 0,
-        '#select_parents' => 0,
-        '#unselect_children' => 0,
-        '#cascading_selection' => 0,
-        '#level_start_minimized' => 1,
-        '#vocabulary' => $os_vocabulary,
-        '#default_value' => $operating_system_selected,
-        '#token_display' => '',
-        '#value_key' => 'tid',
-        '#required' => FALSE,
-      );
-
-
-      // Languages Supported
-
-      // build a vocabulary variable for use by the form below
-      $languages_vocabulary = new stdClass();
-      $languages_vocabulary->vid = 13;
-      $languages_vocabulary->name = 'Supported Languages';
-      $languages_vocabulary->machine_name = 'supported_languages';
-      $languages_vocabulary->hierarchy = '0';
-
-      $supported_languages = $node->field_languages_supported['und'];
-      $supported_languages_selected = array();
-      foreach ($supported_languages as $key => $value) {
-        # This needs to create an array where the value and tid are identical
-        $supported_languages_selected[$value['tid']] = $value['tid'];
-      }
-
-      $form['field_languages_supported'] = array(
-        '#type' => 'checkbox_tree',
-        '#tree' => FALSE,
-        '#field_name' => 'field_languages_supported',
-        '#attributes' => array(
-          'class' => array(
-            'field-type-taxonomy-term-reference',
-            'field-name-field-languages-supported',
-            'field-widget-term-reference-tree'
-          ),
-        ),
-        '#delta' => 0,
-        '#value' => array(),
-        '#attached' => array(
-          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-        ),
-        '#title' => t('Supported Languages'),
-        '#prefix' => t('<h2>Supported Languages</h2>'),
-        '#max_choices' => '-1',
-        '#max_depth' => '',
-        '#leaves_only' => 0,
-        '#filter_view' => '',
-        '#parent_tid' => 0,
-        '#track_list' => 0,
-        '#select_parents' => 0,
-        '#unselect_children' => 0,
-        '#cascading_selection' => 0,
-        '#level_start_minimized' => 1,
-        '#vocabulary' => $languages_vocabulary,
-        '#default_value' => $supported_languages_selected,
-        '#token_display' => '',
-        '#value_key' => 'tid',
-        '#required' => FALSE,
-      );
-
-
-        // build a vocabulary variable for use by the form below
-        $license_vocabulary = new stdClass();
-        $license_vocabulary->vid = 9;
-        $license_vocabulary->name = 'License Type';
-        $license_vocabulary->machine_name = 'license_type';
-        $license_vocabulary->hierarchy = '0';
-
-        $license_type = $node->field_license['und'];
-        $license_type_selected = array();
-        foreach ($license_type as $key => $value) {
-          # This needs to create an array where the value and tid are identical
-          $license_type_selected[$value['tid']] = $value['tid'];
+        //validate the URLs
+        if (isset($links[0]['OriginalUrl'])) {
+          $OriginalUrl = filter_var($links[0]['OriginalUrl'], FILTER_VALIDATE_URL);
+        }
+        if (isset($links[0]['EnglishUrl'])) {
+          $EnglishUrl =  filter_var($links[0]['EnglishUrl'], FILTER_VALIDATE_URL);
         }
 
-        $form['field_license'] = array(
-          '#type' => 'checkbox_tree',
-          '#tree' => FALSE,
-          '#field_name' => 'field_license',
-          '#attributes' => array(
-            'class' => array(
-              'field-type-taxonomy-term-reference',
-              'field-name-field-license',
-              'field-widget-term-reference-tree'
-            ),
-          ),
-          '#delta' => 0,
-          '#value' => array(),
-          '#attached' => array(
-            'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-            'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-          ),
-          '#title' => t('License Type'),
-          '#prefix' => t('<h2>License Type</h2>'),
-          '#max_choices' => '-1',
-          '#max_depth' => '',
-          '#leaves_only' => 0,
-          '#filter_view' => '',
-          '#parent_tid' => 0,
-          '#track_list' => 0,
-          '#select_parents' => 0,
-          '#unselect_children' => 0,
-          '#cascading_selection' => 0,
-          '#level_start_minimized' => 1,
-          '#vocabulary' => $license_vocabulary,
-          '#default_value' => $license_type_selected,
-          '#token_display' => '',
-          '#value_key' => 'tid',
-          '#required' => FALSE,
-        );
-
-
-
-      $form['col2start'] = array(
-        '#markup' => '</div><div class="col col-md-7">'
-      );
-
-
-      /**
-       * Primary and Secondary Features Vocabulary (custom widget)
-       */
-
-      $features_vocabulary = new stdClass();
-      $features_vocabulary->vid = 5;
-      $features_vocabulary->name = 'Features';
-      $features_vocabulary->machine_name = 'features';
-      $features_vocabulary->hierarchy = '1';
-
-
-      $secondary_features = $node->field_features['und'];
-      $secondary_features_selected = array();
-      foreach ($secondary_features as $key => $value) {
-        # This needs to create an array where ther value and tid are identical
-        $secondary_features_selected[$value['tid']] = $value['tid'];
-      }
-
-      $form['field_features'] = array(
-        '#type' => 'checkbox_tree',
-        '#tree' => TRUE,
-        '#field_name' => 'field_features',
-        '#attributes' => array(
-          'class' => array(
-            'field-type-taxonomy-term-reference',
-            'field-name-field-features',
-            'field-widget-term-reference-tree'
-          ),
-        ),
-        '#delta' => 0,
-        '#value' => array(),
-        '#attached' => array(
-          'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-          'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-        ),
-        '#title' => t('Primary and Secondary Features'),
-        '#prefix' => t('<h2>Features</h2>'),
-        '#max_choices' => '-1',
-        '#max_depth' => '',
-        '#tree' => TRUE,
-        '#leaves_only' => 0,
-        '#filter_view' => '',
-        '#parent_tid' => 0,
-        '#track_list' => 1,
-        '#select_parents' => 1,
-        '#unselect_children' => 1,
-        '#cascading_selection' => 0,
-        '#start_minimized' => 1,
-        '#vocabulary' => $features_vocabulary,
-        '#default_value' => $secondary_features_selected,
-        '#token_display' => '',
-        '#value_key' => 'tid',
-        '#required' => FALSE,
-        '#description' => t('<p>Select the features that are applicable for this product. This field tracks both <em>primary</em> (first checkbox) and <em>secondary</em> (second checkbox) features.</p></p> <a role="button" class="btn btn-default btn-sm expandbutton">Expand All Features</a></p>'),
-        '#description_display' => 'before',
-      );
-
-      
-
-      $primary_features = $node->field_features_primary['und'];
-      $primary_features_selected = array();
-      foreach ($primary_features as $key => $value) {
-        # This needs to create an array where the value and tid are identical
-        $primary_features_selected[$value['tid']] = $value['tid'];
-      }
-      $form['field_features_primary'] = array(
-        '#type' => 'checkbox_tree',
-        '#tree' => TRUE,
-        '#field_name' => 'field_features_primary',
-        '#attributes' => array(
-          'class' => array(
-            'field-type-taxonomy-term-reference',
-            'field-name-field-features-primary',
-            'field-widget-term-reference-tree'
-          ),
-        ),
-        '#delta' => 0,
-        '#value' => array(),
-        '#attached' => array(
-              'js' => array('sites/all/modules/term_reference_tree/term_reference_tree.js'),
-              'css' => array('sites/all/modules/term_reference_tree/term_reference_tree.css')
-            ),
-        '#title' => t('Primary Features'),
-        '#max_choices' => '-1',
-        '#max_depth' => '',
-        '#leaves_only' => 0,
-        '#filter_view' => '',
-        '#parent_tid' => 0,
-        '#track_list' => 1,
-        '#select_parents' => 1,
-        '#unselect_children' => 1,
-        '#cascading_selection' => 0,
-        '#level_start_minimized' => 1,
-        '#vocabulary' => $features_vocabulary,
-        '#default_value' => '',
-        '#token_display' => '',
-        '#value_key' => 'tid',
-        '#required' => FALSE,
-      );
-
-      $form['row1end'] = array(
-        '#markup' => '</div><div class="col col-md-4"><div class="submit-buttons" data-spy="affix" data-offset-top="0" data-offset-bottom="10">'
-      );
-
-      $form['submit'] = array
-      (
-        '#type' => 'submit',
-        '#value' => t('Update Tags'),
-        '#attributes' => array('class' => array('btn-primary'))
-      );
-      $form['row2end'] = array(
-        '#markup' => '</div></div></div>'
-      );
-
-
-      return $form;
-
-    }
-
-    function gpii_saa_custom_taxonomy_edit_submit($form, &$form_state) {
-      // Get the node object
-      $node = $form_state['node'];
-      // print '<pre>';
-      // print_r($node);
-      // print '</pre>';
-      // drupal_exit();
-
-      // If a moderated revision exists, we need to get the latest revision and save it too
-      $revision_id = revisioning_get_latest_revision_id($node->nid);
-      
-      // check for a pending revision before we run node_save and set a variable to determine whether we udpate both 
-      // the current and the latest revision
-
-      if ($revision_id > $node->vid ) {
-        $pending_revision = TRUE;
-      }
-      else {
-        $pending_revision = FALSE;
-      }
-
-      // for term reference tree fields, we need to walk the array from the form 
-      // state to find matching keys and values, then write the values in the format that node_save expects
-
-      // product categories
-      $cateogry_terms_selected = array();
-      array_walk_recursive($form_state['values']['field_product_categories1'], function($value, $key) use(&$cateogry_terms_selected) {
-        if ($value == $key) {
-          // echo $key . '--';
-          // echo $value . '<br />';
-          $cateogry_terms_selected['und'][]['tid'] .= $key;
+        if (isset($links[0]['SourceUrl'])) {
+          $SourceUrl =  filter_var($links[0]['SourceUrl'], FILTER_VALIDATE_URL);
         }
-      });
 
-      $node->field_product_categories1 = $cateogry_terms_selected;
-
-      // operating system
-      $operating_system_selected = array();
-      array_walk_recursive($form_state['values']['field_operating_system'], function($value, $key) use(&$operating_system_selected) {
-        if ($value == $key) {
-          $operating_system_selected['und'][]['tid'] .= $key;
-        }
-      });
-
-      $node->field_operating_system = $operating_system_selected;
-
-      // languages supported
-      $languages_selected = array();
-      array_walk_recursive($form_state['values']['field_languages_supported'], function($value, $key) use(&$languages_selected) {
-        if ($value == $key) {
-          $languages_selected['und'][]['tid'] .= $key;
-        }
-      });
-
-      $node->field_languages_supported = $languages_selected;
-
-      // license_type
-
-      $license_type = array();
-      array_walk_recursive($form_state['values']['field_license'], function($value, $key) use(&$license_selected) {
-        if ($value == $key) {
-          $license_selected['und'][]['tid'] .= $key;
-        }
-      });
-
-      $node->field_license = $license_selected;
-
-      // primary features
-      $primary_terms_selected = array();
-      array_walk_recursive($form_state['values']['field_features_primary'], function($value, $key) use(&$primary_terms_selected) {
-        if ($value == $key) {
-
-          $primary_terms_selected['und'][]['tid'] .= $key;
-        }
-      });
-
-      // secondary features
-      $secondary_terms_selected = array();
-      array_walk_recursive($form_state['values']['field_features'], function($value, $key) use(&$secondary_terms_selected) {
-        if ($value == $key) {
-
-          $secondary_terms_selected['und'][]['tid'] .= $key;
-        }
-      });
-
-      $node->field_features = $secondary_terms_selected;
-      $node->field_features_primary = gpii_saa_custom_super_unique($primary_terms_selected);
-
-      // Save the node
-      $node->revision = TRUE;
-      $node->revision_moderation = FALSE;
-      $node-> log = 'Taxonomy Edits';
-      $node->category = 'tax_only';
-
-      // dpm($form_state['values']['field_features_primary']);
-      // dpm($primary_terms);
-      // print '<pre>';
-      // print_r($node->field_features_primary);
-      // print_r($primary_terms_selected);
-      // print '</pre>';
-      // drupal_exit();
-      node_save($node);
-
-      
-
-      if ($pending_revision == TRUE) {
-        $latest = node_load($node->nid, $revision_id, reset);
-
-        // Save the node
-        $latest->revision = TRUE;
-        $latest->revision_moderation = TRUE;
-        $latest-> log = 'Taxonomy Edits';
-        $latest->category = 'tax_only';
-
-        $latest->field_product_categories1 = $cateogry_terms_selected;
-        $latest->field_operating_system = $operating_system_selected;
-        $latest->field_languages_supported = $languages_selected;
-        $latest->field_license = $license_selected;
-        $latest->field_features = $secondary_terms_selected;
-        $latest->field_features_primary = gpii_saa_custom_super_unique($primary_terms_selected);
-        node_save($latest);
-      }
-    }
-
-    /** 
-     * Custom function to walk a multidimensional array and return only unique values
-     * based on https://www.php.net/manual/en/function.array-unique.php
-     */
-
-    function gpii_saa_custom_super_unique($array) {
-      $result = array_map("unserialize", array_unique(array_map("serialize", $array)));
-
-      foreach ($result as $key => $value)
-      {
-        if ( is_array($value) )
-        {
-          $result[$key] = gpii_saa_custom_super_unique($value);
-        }
-      }
-
-      return $result;
-    }
-
-    /**
-     * Builds a form that users can use to create new orders.
-     */
-    function gpii_saa_custom_order_form($form, &$form_state, $nid) {
-      // Use the values from $form_state['storage'] to determine what to do with regard to rendering the form
-      if (isset($form_state['storage']['complete'])) {
-        return gpii_saa_custom_order_form_page_complete($_SESSION['gpii_saa_custom_order_form']);
-      }
-
-      if (!is_numeric($nid)) {
-        drupal_set_message(t('Your request was not valid. Please return to the previous page and try again.'), 'status', FALSE);
-
-        return;
-      }
-
-      $product = node_load($nid);
-
-      //dpm($product);
-
-      drupal_set_title('Order: ' . $product->title, CHECK_PLAIN);
-
-      $form['customerinfo'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Customer Information'),
-        '#collapsible' => FALSE,
-        '#collapsed' => FALSE,
-      );
-
-      $form['customerinfo']['first_name']= array(
-        '#type' => 'textfield',
-        '#title' => t('First Name'),
-        '#required' => TRUE,
-        '#default_value' => $_SESSION['gpii_saa_custom_package_form'][0],
-        '#description' => t('Please enter your first name.'),
-      );
-
-      $form['customerinfo']['last_name']= array(
-        '#type' => 'textfield',
-        '#title' => t('Last Name'),
-        '#required' => TRUE,
-        '#default_value' => $_SESSION['gpii_saa_custom_package_form'][1],
-        '#description' => t('Please enter your last name.'),
-      );
-
-      $form['customerinfo']['email']= array(
-        '#type' => 'textfield',
-        '#title' => t('Email'),
-        '#required' => TRUE,
-        '#default_value' => $_SESSION['gpii_saa_custom_package_form'][2],
-        '#description' => t('Please enter your email address.'),
-      );
-
-
-      $form['order'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Order Information'),
-        '#collapsible' => FALSE,
-        '#collapsed' => FALSE,
-      );
-
-      // @@ need to create field for product types
-      $form['order']['type'] = array(
-        '#type' => 'item',
-        '#title' => t('Product Type'),
-        '#markup' => t('<p>Software</p>'),
-      );
-
-
-      $form['order']['description'] = array(
-        '#type' => 'item',
-        '#title' => t('Description'),
-        '#default_value' => '1',
-        '#markup' => t('<p>Refer to <a href="/node/' . $product->nid . '">' . $product->title .  '</a> for additional information.</p>'),
-      );
-
-      $form['order']['cost'] = array(
-        '#type' => 'item',
-        '#title' => t('Price'),
-        '#default_value' => '1',
-        '#markup' => t('<p>$' . $product->field_product_price['und'][0]['value'] .  ''),
-      );
-
-      $form['order']['quantity'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Quantity'),
-        '#required' => TRUE,
-        '#default_value' =>  $_SESSION['gpii_saa_custom_package_form'][3],
-        '#description' => t('Please enter the number of items you would like to order.'),
-      );
-
-      $form['order']['notes'] = array(
-        '#type' => 'textarea',
-        '#title' => t('Notes'),
-        '#required' => FALSE,
-        '#default_value' =>  $_SESSION['gpii_saa_custom_package_form'][4],
-        '#description' => t('Please include any additional notes or questions related to your order here.'),
-      );
-
-      $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => t('Next'),
-        '#submit' => array('gpii_saa_custom_order_form_submit'),
-      );
-
-      return $form;
-
-    }
-
-    /**
-     * Validates the form.
-     */
-    function gpii_saa_custom_order_form_validate($form, &$form_state) {
-      if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬]/', $form_state['values']['first_name'])) {
-        // one or more of the 'special characters' found in the Job number
-        form_set_error('first_name', t('Names can not include special charaters.'));
-      }
-
-      if (!valid_email_address($form_state['values']['email'])) {
-        form_set_error('email', t('Please enter a valid email address.'));
-      }
-    }
-
-    function gpii_saa_custom_order_form_submit($form, &$form_state) {
-
-    drupal_set_message('Please review your order and complete your purchase by clicking on the "Check out with PayPal" button below.');
-    //dpm($form_state);
-    // foreach ($form_state['values'] as $key => $value) {
-    //   dsm($key . ': ' . $value);
-    // }
-
-    // Set the form values in the session so that they're remembered next time around
-
-        $_SESSION['gpii_saa_custom_package_form'] = array(
-          $form_state['values']['first_name'],
-          $form_state['values']['last_name'],
-          $form_state['values']['email'],
-          $form_state['values']['quantity'],
-          $form_state['values']['notes'],
-        );
-
-        //kpr($form_state);
-        $form_state["rebuild"] = TRUE;
-
-        //dpm($form_state['values']);
-
-        $order_values = array(
-          'first_name' => $form_state['values']['first_name'],
-          'last_name' => $form_state['values']['last_name'],
-          'email' => $form_state['values']['email'],
-          'quantity' => $form_state['values']['quantity'],
-          'product' => check_plain(arg(2)),
-          'notes' => $form_state['values']['notes'],
-        );
-
-        module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.open_marketplace');
-        $order = _gpii_saa_custom_create_order($order_values);
-
-        return;
-
-
-    }
-
-
-    /**
-     * Builds a form that subscribers can use to update new packages.
-     */
-    function gpii_saa_custom_order_update($form, &$form_state, $nid) {
-      // Use the values from $form_state['storage'] to determine what to do with regard to rendering the form
-      if (isset($form_state['storage']['complete'])) {
-        return gpii_saa_custom_order_update_page_complete($_SESSION['gpii_saa_custom_order_form']);
-      }
-
-      if (!is_numeric($nid)) {
-        drupal_set_message(t('Your request was not valid. Please return to the previous page and try again.'), 'status', FALSE);
-
-        return;
-      }
-
-      $product = node_load($nid);
-
-      //dpm($product);
-
-      drupal_set_title('Update ' . $product->title, CHECK_PLAIN);
-
-      $form['customerinfo'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Customer Information'),
-        '#collapsible' => FALSE,
-        '#collapsed' => FALSE,
-      );
-
-      $form['customerinfo']['first_name']= array(
-        '#type' => 'textfield',
-        '#title' => t('First Name'),
-        '#required' => TRUE,
-        '#default_value' => $product->field_first_name['und'][0]['safe_value'],
-        '#description' => t('Please enter your first name.'),
-      );
-
-      $form['customerinfo']['last_name']= array(
-        '#type' => 'textfield',
-        '#title' => t('Last Name'),
-        '#required' => TRUE,
-        '#default_value' => $product->field_last_name['und'][0]['safe_value'],
-        '#description' => t('Please enter your last name.'),
-      );
-
-      $form['customerinfo']['email']= array(
-        '#type' => 'textfield',
-        '#title' => t('Email'),
-        '#required' => TRUE,
-        '#default_value' => $product->field_email['und'][0]['email'],
-        '#description' => t('Please enter your email address.'),
-      );
-
-
-      $form['order'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Order Information'),
-        '#collapsible' => FALSE,
-        '#collapsed' => FALSE,
-      );
-
-      // @@ need to create field for product types
-      $form['order']['type'] = array(
-        '#type' => 'item',
-        '#title' => t('Product Type'),
-        '#markup' => t('<p>Software</p>'),
-      );
-
-      $om_product = node_load($product->field_product_reference['und'][0]['target_id']);
-
-      $form['order']['description'] = array(
-        '#type' => 'item',
-        '#title' => t('Description'),
-        '#default_value' => '1',
-        '#markup' => t('<p>Refer to <a href="/node/' . $om_product->nid . '">' . $om_product->title .  '</a> for additional information.</p>'),
-      );
-
-      $form['order']['cost'] = array(
-        '#type' => 'item',
-        '#title' => t('Price'),
-        '#default_value' => '1',
-        '#markup' => t('<p>$' . $om_product->field_product_price['und'][0]['value'] .  ''),
-      );
-
-      $form['order']['quantity'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Quantity'),
-        '#required' => TRUE,
-        '#default_value' =>  $product->field_payment['und'][0]['quantity'],
-        '#description' => t('Please enter the number of items you would like to order.'),
-      );
-
-      $form['order']['notes'] = array(
-        '#type' => 'textarea',
-        '#title' => t('Notes'),
-        '#required' => FALSE,
-        '#default_value' =>  $product->field_order_notes['und'][0]['value'],
-        '#description' => t('Please include any additional notes or questions related to your order here.'),
-      );
-
-      $form['productref'] = array(
-        '#type' => 'hidden',
-        '#value' => $product->field_product_reference['und'][0]['target_id']
-      );
-
-      $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => t('Next'),
-        '#submit' => array('gpii_saa_custom_order_update_submit'),
-      );
-
-      return $form;
-
-    }
-
-    /**
-     * Validates the form.
-     */
-    function gpii_saa_custom_order_update_validate($form, &$form_state) {
-      if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬]/', $form_state['values']['first_name'])) {
-        // one or more of the 'special characters' found in the Job number
-        form_set_error('first_name', t('Names can not include special charaters.'));
-      }
-
-      if (!valid_email_address($form_state['values']['email'])) {
-        form_set_error('email', t('Please enter a valid email address.'));
-      }
-    }
-
-    function gpii_saa_custom_order_update_submit($form, &$form_state) {
-
-    drupal_set_message('Please review your order and complete your purchase by selecting the "Buy Now" button below.');
-    //dpm($form_state);
-    // foreach ($form_state['values'] as $key => $value) {
-    //   dsm($key . ': ' . $value);
-    // }
-
-    // Set the form values in the session so that they're remembered next time around
-
-        $_SESSION['gpii_saa_custom_package_form'] = array(
-          $form_state['values']['first_name'],
-          $form_state['values']['last_name'],
-          $form_state['values']['email'],
-          $form_state['values']['quantity'],
-          $form_state['values']['notes'],
-          $form_state['values']['productref'],
-
-        );
-
-        //kpr($form_state);
-        $form_state["rebuild"] = TRUE;
-
-        //dpm($form_state['values']);
-
-        $order_values = array(
-          'first_name' => $form_state['values']['first_name'],
-          'last_name' => $form_state['values']['last_name'],
-          'email' => $form_state['values']['email'],
-          'quantity' => $form_state['values']['quantity'],
-          'product' => $form_state['values']['productref'],
-          'notes' => $form_state['values']['notes'],
-        );
-
-        module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.open_marketplace');
-        $order = _gpii_saa_custom_update_order($order_values, arg(2));
-
-        return;
-
-
-    }
-
-    /**
-     * This callback is used to view a list of database source records that are related
-     * to a particular UID. It calls the api.ul.gpii.net API to retrieve a list of
-     * database sources for a given record and returns a list of results. If there is only
-     * one source and URL assoicated with the record, users are redirected automatically.
-     */
-
-    function gpii_saa_custom_list_sources($uid) {
-
-      $query = new EntityFieldQuery();
-
-      $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'product')
-      ->fieldCondition('field_uid', 'value', $uid, '=')
-      ->addMetaData('account', user_load(1)); // Run the query as user 1.
-
-      $result = $query->execute();
-
-      //dsm('NID: ' . key($result['node']));
-
-      $product = node_load(key($result['node']), NULL, true);
-      //dsm($product);
-
-      $source = filter_xss(arg(2));
-
-      // BBC: This needs some work. Basically, it adds a timestamp to the UL_API_LOGGEDIN variable and checks to see if it's less than three hours old so that we can avoid repeat logins.
-
-      if (variable_get('UL_API_LOGGEDIN') < (time() + 10800)) {
-        //dpm('LOGGED IN ALREADY ' . variable_get('UL_API_LOGGEDIN'));
-      }
-
-      else {
-        // log into the API
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://api.ul.gpii.net/api/user/login",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => "username=" . variable_get('UL_API_USERNAME') . "&password=" . variable_get('UL_API_PASSWORD'),
-          CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
-          CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
-          CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
-
-          CURLOPT_HTTPHEADER => array(
-            "accept: application/json",
-            "content-type: application/x-www-form-urlencoded"
-          ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-          //dpm("cURL Error #:" . $err);
+        if (isset($OriginalUrl)) {
+          drupal_goto($OriginalUrl, array('external' => TRUE), 303);
+        } elseif (isset($EnglishUrl)) {
+          drupal_goto($EnglishUrl, array('external' => TRUE), 303);
+        } elseif (isset($SourceUrl)) {
+          drupal_goto($SourceUrl, array('external' => TRUE), 303);
         } else {
-          //dpm($response);
-          variable_set('UL_API_LOGGEDIN', time());
+          drupal_set_message(t('Error: Invalid Link. Please return to the previous page.'), 'error', FALSE);
+          return '<p>No valid links to source databases for this record were found. Return to <a href="/node/' . $product->nid . '">' . $product->title . '</a>.';
         }
       }
 
+      // Print the list of Source Records from the same database when we have more than one.
+      // We don't actually get here if there's only one and the redirect above kicks in.
 
-      if ($source) {
-        //$markup =  '<p>We have a source specified.</p>';
-      }
-      else {
-        $markup = '<p>';
+      foreach ($links as $key => $value) {
+        $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a>';
 
-          if (arg(0) == 'node') {
-            $markup .= 'This product ';
-          }
-
-          else {
-            $markup .= '<a href="/node/' . $product->nid . '">' . $product->title . '</a>';
-          }
-
-          $markup .= ' is also listed in these partner sites:</p>';
-      }
-
-
-      $markup .= '<ul>';
-      if (variable_get('UL_API_LOGGEDIN') < (time())) {
-
-
-          // Get the UID from the UL source record
-
-          $curl = curl_init();
-
-          curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.ul.gpii.net/api/product/unified/" . $uid . "?includeSources=true",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 4,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
-            CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
-            CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
-
-            CURLOPT_HTTPHEADER => array(
-              "accept: application/json"
-            ),
-          ));
-
-          $response = curl_exec($curl);
-          $err = curl_error($curl);
-
-          curl_close($curl);
-
-          if ($err) {
-            //dpm("cURL Error #:" . $err);
-          } else {
-            //dpm($response);
-          }
-
-        $response = json_decode($response);
-        //dpm($response->sources);
-
-        $sources = $response->sources;
-
-        // remove any deleted sources from the array so that we don't send people to dead links
-        foreach ($sources as $key => $value) {
-          if ($value->status == "deleted") {
-            unset($sources[$key]);
-          }
+        if (isset($value->language)) {
+          $markup .= ' (' . strtoupper(substr($value->language, 0, 2)) . ')';
         }
 
-        // if a source is specified
-        if ($source) {
-          $markup =  '<p><a href="/node/' . $product->nid . '">' . $product->title . '</a> is a consolidation of the following <strong>' . check_url($source) . '</strong> source records:</p>';
-          $links = array();
-          foreach ($sources as $key => $value) {
-            // need to add code that counts records and redirects automatically here
 
-            if ($value->source == $source) {
-              //dpm($value);
-              $links[] = array(
-                'lang' => $value->language,
-                'OriginalUrl' => $value->sourceData->OriginalUrl,
-                'EnglishUrl' => $value->sourceData->EnglishUrl,
-                'SourceUrl' => $value->sourceData->{'Link-to-Product-Page'},
-                'name' => $value->name
-                );
-            }
-          }
-
-          //dpm($links);
-
-          // if we only have one source link, take the user right to it
-
-          if (count($links) == 1) {
-
-            //validate the URLs
-            if (isset($links[0]['OriginalUrl'])) {
-              $OriginalUrl = filter_var($links[0]['OriginalUrl'], FILTER_VALIDATE_URL);
-            }
-            if (isset($links[0]['EnglishUrl'])) {
-              $EnglishUrl =  filter_var($links[0]['EnglishUrl'], FILTER_VALIDATE_URL);
-            }
-
-            if (isset($links[0]['SourceUrl'])) {
-              $SourceUrl =  filter_var($links[0]['SourceUrl'], FILTER_VALIDATE_URL);
-            }
-
-            if (isset($OriginalUrl)) {
-              drupal_goto($OriginalUrl, array('external' => TRUE), 303);
-            }
-
-            elseif (isset($EnglishUrl)) {
-               drupal_goto($EnglishUrl, array('external' => TRUE), 303);
-            }
-
-            elseif (isset($SourceUrl)) {
-              drupal_goto($SourceUrl, array('external' => TRUE), 303);
-           }
-
-            else {
-              drupal_set_message(t('Error: Invalid Link. Please return to the previous page.'), 'error', FALSE);
-              return '<p>No valid links to source databases for this record were found. Return to <a href="/node/' . $product->nid . '">' . $product->title . '</a>.';
-            }
-
-          }
-
-          // Print the list of Source Records from the same database when we have more than one.
-          // We don't actually get here if there's only one and the redirect above kicks in.
-
-          foreach ($links as $key => $value) {
-            $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a>';
-
-            if (isset($value->language)) {
-              $markup .= ' (' . strtoupper(substr($value->language, 0, 2)) . ')';
-            }
-
-
-            $markup .= '</li>';
-          }
-        }
-
-        // end source specified
-
-        // if we're listing all sources
-        else {
-          // set an array that tracks whether we've already written a source link for this record
-          $sourceDBs = array();
-          foreach ($sources as $key => $value) {
-
-            if (($value->source != 'sai') && (in_array($value->source, $sourceDBs) != 1)) {
-              $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a>';
-
-                if (isset($value->source)) {
-                  //dpm($value->source);
-
-                  $db = $value->source;
-                  switch ($db) {
-                    case 'ATAust': 
-                      $country = 'Australia';
-                      break;
-                    case 'AbleData': 
-                      $country = 'United States';
-                      break;
-                    case 'Handicat': 
-                      $country = 'France';
-                      break;
-                    case 'Hjælpemiddelbasen': 
-                      $country = 'Denmark';
-                      break;
-                    case 'Rehadat': 
-                      $country = 'Germany';
-                      break;
-                    case 'Siva': 
-                      $country = 'Italy';
-                      break;
-                    case 'Vlibank': 
-                      $country = 'Belgium';
-                      break;
-                    case 'GARI': 
-                      $country = 'International';
-                      break;
-                    case 'EASTIN Admin': 
-                      $country = 'European Union';
-                      break;
-                  }
-                  if (isset($country)) {
-                    $markup .= ' (' . $country . ')';
-                  }
-                  
-                }
-
-
-                $markup .= '</li>';
-                unset($country);
-            }
-
-            // add the source to the $sourceDBs array
-            $sourceDBs[] = $value->source;
-          }
-        }
+        $markup .= '</li>';
       }
-
-
-      else {
-        watchdog('gpii_saa_custom', 'Unable to reach UL API.', array(), WATCHDOG_NOTICE, current_path());
-        $markup .= '<li>None found</li>';
-      }
-      $markup .= '</ul>';
-
-      return $markup;
     }
 
-    /**
-    * This callback is used to view a list of product records where a given taxonomy
-     * term has children, but the products do not have any of those children selected.
-     *
-     * Note: the taxonomy_review_depth_experiment_ view can't use "Term Reference Tree"
-     * or else this page returns no results. (known bug)
-    */
+    // end source specified
 
-    function gpii_saa_custom_term_terminal($tid) {
-      $children = taxonomy_get_children($tid);
+    // if we're listing all sources
+    else {
+      // set an array that tracks whether we've already written a source link for this record
+      $sourceDBs = array();
+      foreach ($sources as $key => $value) {
 
-      $name = 'taxonomy_review_depth_experiment_';
-      $display_id = 'page';
+        if (($value->source != 'sai') && (in_array($value->source, $sourceDBs) != 1)) {
+          $markup .= '<li lang="' . substr($value->language, 0, 2) . '" class="skiptranslate"><a href="/sources/' . $uid . '/' . check_url($value->source) . '">' . $value->source . '</a>';
 
-      $result = views_get_view_result($name, $display_id, $tid);
+          if (isset($value->source)) {
+            //dpm($value->source);
 
-      //kpr($result);
-      //kpr(array_keys($children));
-      $children = array_keys($children);
-
-      foreach ($result as $key => $value) {
-        # get the terms on the node and unset the row if we find a match
-        //kpr($value->_field_data['nid']['entity']);
-        $terms = gpii_saa_custom_get_term_ids($value->_field_data['nid']['entity']);
-        $match = array_intersect($children, $terms);
-        if (count($match) > 0) {
-          unset($result[$key]);
-        }
-      }
-
-
-      $headers = array(
-          'nid' => array('data' => t('NID'), 'field' => 'nid'),
-          'title' => array('data' => t('Title'), 'field' => 'title'),
-          'prod_categories' => array('data' => t('Product Categories'), 'field' => 'prod_categories'),
-          'prod_features' => array('data' => t('Needs and Wants'), 'field' => 'prod_features'),
-          'published' => array('data' => t('Published'), 'field' => 'published'),
-          'ops' => array('data' => t('Operations'))
-      );
-
-      $rows = array();
-      foreach ($result as $terminal_nodes) {
-        if (isset($terminal_nodes->field_field_features[0]['rendered']['#markup'])) {
-          $features = $terminal_nodes->field_field_features[0]['rendered']['#markup'];
-        }
-        else {
-          $features = '';
-        }
-
-        if ($terminal_nodes->_field_data['nid']['entity']->status == '1') {
-          $published = 'Yes';
-        }
-        else {
-          $published = 'No';
-        }
-
-      $rows[$terminal_nodes->nid] = array(
-       'nid' => $terminal_nodes->_field_data['nid']['entity']->nid,
-       'title' => l($terminal_nodes->_field_data['nid']['entity']->title, 'node/' . $terminal_nodes->_field_data['nid']['entity']->nid),
-       'prod_categories' => $terminal_nodes->field_field_product_categories1[0]['rendered']['#markup'],
-       'prod_features' => $features,
-       // 'terms' => implode(", ", gpii_saa_custom_get_terms($terminal_nodes->_field_data['nid']['entity'])), // allows for all terms defined below
-       'published' => $published,
-       'ops' => l(t('edit'), '/node/' . $terminal_nodes->_field_data['nid']['entity']->nid . '/edit', array('query' => array('destination' => current_path()),'attributes' => array('class' => array('btn', 'btn-success'))))
-      );
-      }
-
-      $per_page = 25;
-      // Initialize the pager
-      $current_page = pager_default_initialize(count($rows), $per_page);
-      // Split your list into page sized chunks
-      $chunks = array_chunk($rows, $per_page, TRUE);
-
-      $form['terminal_nodes'] = array(
-        '#markup' => theme('table', array(
-        'header' => $headers,
-        'rows' => $chunks[$current_page],
-        'attributes' => array('class' => array('terminal_nodes')),
-        '#empty' =>t('No results.'),
-        ))
-      );
-
-
-      $term = taxonomy_term_load($tid);
-      $destination = drupal_get_destination();
-      return '<p>The following table includes product records where <strong>' . $term->name  . ' (tid: ' . $tid . ')</strong> is the terminal item in this branch of the tree.</p><p><strong>Result Count: </strong>' . count($rows) . '</p> ' . render($form['terminal_nodes']) . theme('pager', array('quantity',count($rows))) . '<a href="/node/3244" class="btn btn-primary btn-lg"><i class="fa fa-chevron-left" style="margin-right: 0.rem;"></i> Return to Product Categories Outline</a>';
-    }
-
-
-    function gpii_saa_custom_get_term_ids($node) {
-      $terms = array();
-
-      // Duplicate foreach loop below - based on https://www.drupal.org/node/909968#comment-11979178
-      // which was throwing a bunch of php warnings for no good reason and slowed everything way down
-        if (field_get_items('node', $node, 'field_product_categories1') != '') {
-          foreach (field_get_items('node', $node, 'field_product_categories1') as $item) {
-            if (is_array($item) && !empty($item['tid'])) {
-              $terms[] = $item['tid'];
-            }
-          }
-        }
-        if (field_get_items('node', $node, 'field_features') != '') {
-          foreach (field_get_items('node', $node, 'field_features') as $item) {
-            if (is_array($item) && !empty($item['tid'])) {
-              $terms[] = $item['tid'];
-            }
-          }
-        }
-
-      return $terms;
-    }
-    function gpii_saa_custom_get_terms($node) {
-      $terms = array();
-
-      // Duplicate foreach loop below - based on https://www.drupal.org/node/909968#comment-11979178
-      // which was throwing a bunch of php warnings for no good reason and slowed everything way down
-        if (field_get_items('node', $node, 'field_product_categories1') != '') {
-          foreach (field_get_items('node', $node, 'field_product_categories1') as $item) {
-            if (is_array($item) && !empty($item['tid'])) {
-              $terms[] = $item['tid'];
-            }
-          }
-        }
-        if (field_get_items('node', $node, 'field_features') != '') {
-          foreach (field_get_items('node', $node, 'field_features') as $item) {
-            if (is_array($item) && !empty($item['tid'])) {
-              $terms[] = $item['tid'];
-            }
-          }
-        }
-
-        foreach ($terms as $key => $value) {
-           $term = taxonomy_term_load($value);
-           $terms[$key] = $term->name;
-        }
-      return $terms;
-    }
-
-    /**
-    * Custom callback function used for experimenting with objects and proof of concept
-    */
-    function gpii_saa_custom_products_json() {
-      $result = db_query('SELECT * FROM ProductsUnifiedListing LIMIT 10');
-        $record = $result->fetchAll();
-
-        // initialize a new variable for use in the output
-        $output = array();
-        // iterate through the records and remove null values
-        foreach ($record as $key => $value) {
-          $output[] = (object) array_filter((array) $value);
-        }
-
-        // trim the body field by calling text_summary and clean up the markup
-        foreach ($output as $key => $value) {
-          if (isset($value->body)) {
-
-            $alter = array(
-              'max_length' => 400, //Integer
-              'ellipsis' => TRUE, //Boolean
-              'word_boundary' => TRUE, //Boolean
-              'html' => TRUE, //Boolean
-              );
-
-            $body = $value->body;
-            $summary = views_trim_text($alter, $body);
-
-            $value->body = $summary;
-          }
-
-          // make needs into an object that matches the original format
-          if (isset($value->needs)) {
-            $tids = explode(',', $value->needs);
-
-            foreach ($tids as $num => $id) {
-              $tid[] = (object) array('tid' => $id);
-            }
-            $value->needs = $tid;
-            // clear this after each loop
-            unset($tid);
-          }
-        }
-        //using kpr due to issue with dpm in latest bootstrap
-        //kpr($output);
-        return '';
-    }
-
-    /**
-    * This callback is used by the advanced search nodejs application
-    */
-    function gpii_saa_custom_products_advsearch() {
-      $result = db_query('SELECT * FROM ProductsAdvSearch');
-        $record = $result->fetchAll();
-
-        // initialize a new variable for use in the output
-        $output = array();
-
-        // iterate through the records and remove null values
-        foreach ($record as $key => $value) {
-          $output[] = (object) array_filter((array) $value);
-        }
-        
-
-        // trim the body field by calling text_summary and clean up the markup
-        foreach ($output as $key => $value) {
-          
-          // add the discontinued message - ideally these would pull from the select list labels, but that seems to slow things down
-          $discontinued_message = '';
-          if (isset($value->discontinued_message)) {
-
-            switch ($value->discontinued_message) {
-              case 'disc_not_supported':
-                $discmessage = 'This product has been discontinued and is no longer supported and serviced by the manufacturer.';
+            $db = $value->source;
+            switch ($db) {
+              case 'ATAust':
+                $country = 'Australia';
                 break;
-              case 'disc_simple':
-                $discmessage = 'This product has been discontinued.';
+              case 'AbleData':
+                $country = 'United States';
+                break;
+              case 'Handicat':
+                $country = 'France';
+                break;
+              case 'Hjælpemiddelbasen':
+                $country = 'Denmark';
+                break;
+              case 'Rehadat':
+                $country = 'Germany';
+                break;
+              case 'Siva':
+                $country = 'Italy';
+                break;
+              case 'Vlibank':
+                $country = 'Belgium';
+                break;
+              case 'GARI':
+                $country = 'International';
+                break;
+              case 'EASTIN Admin':
+                $country = 'European Union';
                 break;
             }
-
-            if ($discmessage != '') {
-              $discontinued_message = '<div class="discontinued">' . $discmessage . "</div>";
+            if (isset($country)) {
+              $markup .= ' (' . $country . ')';
             }
-            
           }
 
-          if (isset($value->body_summary)) {
-            $value->body = $discontinued_message . $value->body_summary;
-          }
 
-          elseif (isset($value->body)) {
-            $alter = array(
-              'max_length' => 400, //Integer
-              'ellipsis' => TRUE, //Boolean
-              'word_boundary' => TRUE, //Boolean
-              'html' => TRUE, //Boolean
-              );
-
-            $body = $discontinued_message . $value->body;
-            $summary = views_trim_text($alter, $body);
-            $value->body = $summary;
-          }
-          
-          if (isset($value->status)) {
-            if ($value->status == 2) {
-              $value->discontinued = 1;
-            }
-            else {
-              $value->discontinued = 0;
-            }
-            unset($value->status);
-          }
+          $markup .= '</li>';
+          unset($country);
         }
 
-        // convert the object to JSON
-        return drupal_json_output($output);
+        // add the source to the $sourceDBs array
+        $sourceDBs[] = $value->source;
+      }
+    }
+  } else {
+    watchdog('gpii_saa_custom', 'Unable to reach UL API.', array(), WATCHDOG_NOTICE, current_path());
+    $markup .= '<li>None found</li>';
+  }
+  $markup .= '</ul>';
+
+  return $markup;
+}
+
+/**
+ * This callback is used to view a list of product records where a given taxonomy
+ * term has children, but the products do not have any of those children selected.
+ *
+ * Note: the taxonomy_review_depth_experiment_ view can't use "Term Reference Tree"
+ * or else this page returns no results. (known bug)
+ */
+
+function gpii_saa_custom_term_terminal($tid)
+{
+  $children = taxonomy_get_children($tid);
+
+  $name = 'taxonomy_review_depth_experiment_';
+  $display_id = 'page';
+
+  $result = views_get_view_result($name, $display_id, $tid);
+
+  //kpr($result);
+  //kpr(array_keys($children));
+  $children = array_keys($children);
+
+  foreach ($result as $key => $value) {
+    # get the terms on the node and unset the row if we find a match
+    //kpr($value->_field_data['nid']['entity']);
+    $terms = gpii_saa_custom_get_term_ids($value->_field_data['nid']['entity']);
+    $match = array_intersect($children, $terms);
+    if (count($match) > 0) {
+      unset($result[$key]);
+    }
+  }
+
+
+  $headers = array(
+    'nid' => array('data' => t('NID'), 'field' => 'nid'),
+    'title' => array('data' => t('Title'), 'field' => 'title'),
+    'prod_categories' => array('data' => t('Product Categories'), 'field' => 'prod_categories'),
+    'prod_features' => array('data' => t('Needs and Wants'), 'field' => 'prod_features'),
+    'published' => array('data' => t('Published'), 'field' => 'published'),
+    'ops' => array('data' => t('Operations'))
+  );
+
+  $rows = array();
+  foreach ($result as $terminal_nodes) {
+    if (isset($terminal_nodes->field_field_features[0]['rendered']['#markup'])) {
+      $features = $terminal_nodes->field_field_features[0]['rendered']['#markup'];
+    } else {
+      $features = '';
     }
 
-
-     /**
-    * This callback is used by the UL API to gather intel about deleted products
-    */
-    function gpii_saa_custom_deleted_ulisting() {
-      $result = db_query('SELECT * FROM DeletedProducts');
-        $record = $result->fetchAll();
-
-        // initialize a new variable for use in the output
-        $output = array();
-
-        // iterate through the records and remove null values
-        foreach ($record as $key => $value) {
-          $value->status = 'deleted';
-          $output[] = (object) array_filter((array) $value);
-        }
-
-        // convert the object to JSON
-        return drupal_json_output($output);
+    if ($terminal_nodes->_field_data['nid']['entity']->status == '1') {
+      $published = 'Yes';
+    } else {
+      $published = 'No';
     }
 
-     /**
-    * This callback is used by the UL API to gather intel about deleted products
-    */
-    function gpii_saa_custom_abledata_report() {
-      $result = db_query('SELECT * FROM ABLEDATAExport');
-        $record = $result->fetchAll();
+    $rows[$terminal_nodes->nid] = array(
+      'nid' => $terminal_nodes->_field_data['nid']['entity']->nid,
+      'title' => l($terminal_nodes->_field_data['nid']['entity']->title, 'node/' . $terminal_nodes->_field_data['nid']['entity']->nid),
+      'prod_categories' => $terminal_nodes->field_field_product_categories1[0]['rendered']['#markup'],
+      'prod_features' => $features,
+      // 'terms' => implode(", ", gpii_saa_custom_get_terms($terminal_nodes->_field_data['nid']['entity'])), // allows for all terms defined below
+      'published' => $published,
+      'ops' => l(t('edit'), '/node/' . $terminal_nodes->_field_data['nid']['entity']->nid . '/edit', array('query' => array('destination' => current_path()), 'attributes' => array('class' => array('btn', 'btn-success'))))
+    );
+  }
 
-        // initialize a new variable for use in the output
-        $output = array();
+  $per_page = 25;
+  // Initialize the pager
+  $current_page = pager_default_initialize(count($rows), $per_page);
+  // Split your list into page sized chunks
+  $chunks = array_chunk($rows, $per_page, TRUE);
 
-        // iterate through the records and remove null values
-        foreach ($record as $key => $value) {
-          //$value->status = 'deleted';
-          $latest = node_load($value->nid, $value->latest_vid, reset);
-          $value->title = $latest->title;
-          $value->UL_uid = $latest->field_uid['und'][0]['value'];
-          $value->mfr_nid = $latest->field_manufacturer_reference['und'][0]['target_id'];
-          $mf4r = field_view_field('node', $latest, 'field_manufacturer_reference');
-          $value->mfr_name = $mf4r[0]['#label'];
+  $form['terminal_nodes'] = array(
+    '#markup' => theme('table', array(
+      'header' => $headers,
+      'rows' => $chunks[$current_page],
+      'attributes' => array('class' => array('terminal_nodes')),
+      '#empty' => t('No results.'),
+    ))
+  );
 
-          $output[] = (object) array_filter((array) $value);
-        }
 
-        // convert the object to JSON
-        return drupal_json_output($output);
+  $term = taxonomy_term_load($tid);
+  $destination = drupal_get_destination();
+  return '<p>The following table includes product records where <strong>' . $term->name  . ' (tid: ' . $tid . ')</strong> is the terminal item in this branch of the tree.</p><p><strong>Result Count: </strong>' . count($rows) . '</p> ' . render($form['terminal_nodes']) . theme('pager', array('quantity', count($rows))) . '<a href="/node/3244" class="btn btn-primary btn-lg"><i class="fa fa-chevron-left" style="margin-right: 0.rem;"></i> Return to Product Categories Outline</a>';
+}
+
+
+function gpii_saa_custom_get_term_ids($node)
+{
+  $terms = array();
+
+  // Duplicate foreach loop below - based on https://www.drupal.org/node/909968#comment-11979178
+  // which was throwing a bunch of php warnings for no good reason and slowed everything way down
+  if (field_get_items('node', $node, 'field_product_categories1') != '') {
+    foreach (field_get_items('node', $node, 'field_product_categories1') as $item) {
+      if (is_array($item) && !empty($item['tid'])) {
+        $terms[] = $item['tid'];
+      }
+    }
+  }
+  if (field_get_items('node', $node, 'field_features') != '') {
+    foreach (field_get_items('node', $node, 'field_features') as $item) {
+      if (is_array($item) && !empty($item['tid'])) {
+        $terms[] = $item['tid'];
+      }
+    }
+  }
+
+  return $terms;
+}
+function gpii_saa_custom_get_terms($node)
+{
+  $terms = array();
+
+  // Duplicate foreach loop below - based on https://www.drupal.org/node/909968#comment-11979178
+  // which was throwing a bunch of php warnings for no good reason and slowed everything way down
+  if (field_get_items('node', $node, 'field_product_categories1') != '') {
+    foreach (field_get_items('node', $node, 'field_product_categories1') as $item) {
+      if (is_array($item) && !empty($item['tid'])) {
+        $terms[] = $item['tid'];
+      }
+    }
+  }
+  if (field_get_items('node', $node, 'field_features') != '') {
+    foreach (field_get_items('node', $node, 'field_features') as $item) {
+      if (is_array($item) && !empty($item['tid'])) {
+        $terms[] = $item['tid'];
+      }
+    }
+  }
+
+  foreach ($terms as $key => $value) {
+    $term = taxonomy_term_load($value);
+    $terms[$key] = $term->name;
+  }
+  return $terms;
+}
+
+/**
+ * Custom callback function used for experimenting with objects and proof of concept
+ */
+function gpii_saa_custom_products_json()
+{
+  $result = db_query('SELECT * FROM ProductsUnifiedListing LIMIT 10');
+  $record = $result->fetchAll();
+
+  // initialize a new variable for use in the output
+  $output = array();
+  // iterate through the records and remove null values
+  foreach ($record as $key => $value) {
+    $output[] = (object) array_filter((array) $value);
+  }
+
+  // trim the body field by calling text_summary and clean up the markup
+  foreach ($output as $key => $value) {
+    if (isset($value->body)) {
+
+      $alter = array(
+        'max_length' => 400, //Integer
+        'ellipsis' => TRUE, //Boolean
+        'word_boundary' => TRUE, //Boolean
+        'html' => TRUE, //Boolean
+      );
+
+      $body = $value->body;
+      $summary = views_trim_text($alter, $body);
+
+      $value->body = $summary;
     }
 
+    // make needs into an object that matches the original format
+    if (isset($value->needs)) {
+      $tids = explode(',', $value->needs);
 
-    /**
-    * This callback is used by the Unified Listing application to retrieve a list
-     * of SAI records for comparison and synchronization.
-    */
-    function gpii_saa_custom_products_ulisting() {
-      $result = db_query('SELECT * FROM ProductsUnifiedListing');
-        $record = $result->fetchAll();
-
-        // initialize a new variable for use in the output
-        $output = array();
-
-        // iterate through the records and remove null values
-        foreach ($record as $key => $value) {
-          $output[] = (object) array_filter((array) $value);
-        }
-        
-        // combine the various description fields back into a single body field so that they can be digested by the UL API and external systems
-        foreach ($output as $key => $value) {
-          
-          if (isset($value->body)) {
-
-            $value->body = '<h2>Product Description:</h2>' . $value->body;
-
-            if (isset($value->field_desc_main_features_value)) {
-              $value->body .= '<h2>Main Features:</h2>' . $value->field_desc_main_features_value;
-            }
-
-            if (isset($value->field_desc_primary_specs_value)) {
-              $value->body .= '<h2>Primary Specifications:</h2>' . $value->field_desc_primary_specs_value;
-            }
-
-            if (isset($value->field_desc_options_value)) {
-              $value->body .= '<h2>Options &amp; Accessories:</h2>' . $value->field_desc_options_value;
-            }
-
-            if (isset($value->field_desc_more_info_value)) {
-              $value->body .= '<h2>More Information:</h2>' . $value->field_desc_more_info_value;
-            }
-
-            unset($value->field_desc_main_features_value);
-            unset($value->field_desc_primary_specs_value);
-            unset($value->field_desc_options_value);
-            unset($value->field_desc_more_info_value);
-          }
-          
-          // use the body_summary field if available, else trim the body field by calling text_summary and clean up the markup
-
-          if (isset($value->body_summary)) {
-
-            $value->summary = $value->body_summary;
-
-          }
-
-          else {
-
-            $alter = array(
-              'max_length' => 400, //Integer
-              'ellipsis' => TRUE, //Boolean
-              'word_boundary' => TRUE, //Boolean
-              'html' => TRUE, //Boolean
-              );
-
-            $body = $value->body;
-            $summary = views_trim_text($alter, $body);
-
-            $value->summary = $summary;
-
-          }
-
-          // unset body_summary as it's no longer needed in the output
-          unset($value->body_summary);
-
-          // make needs into an object that matches the original format
-          if (isset($value->needs)) {
-            $tids = explode(',', $value->needs);
-
-            foreach ($tids as $num => $id) {
-              $tid[] = (object) array('tid' => $id);
-            }
-            $value->needs = $tid;
-            // clear this after each loop
-            unset($tid);
-          }
-
-          // make product_categories into an object that matches the original format
-          if (isset($value->product_category)) {
-            $tids = explode(',', $value->product_category);
-
-            foreach ($tids as $num => $id) {
-              $tid[] = (object) array('tid' => $id);
-            }
-            $value->product_category = $tid;
-            // clear this after each loop
-            unset($tid);
-          }
-
-          // make trouble taxonomy into an object that matches the original format
-          if (isset($value->trouble)) {
-            $tids = explode(',', $value->trouble);
-
-            foreach ($tids as $num => $id) {
-              $tid[] = (object) array('tid' => $id);
-            }
-            $value->trouble = $tid;
-            // clear this after each loop
-            unset($tid);
-          }
-
-          // make needs into an object that matches the original format
-          if (isset($value->product_image)) {
-            //@@ this needs to be rewritten to handle additional image fields (hidden, permission, source)
-            //as well as to handle multiple values
-
-
-            // alt may be empty, so set it to null if it's not available in this context
-            if (!isset($value->alt)) {
-              $value->alt = '';
-            }
-            // pull a few values out of the top level and insert them as
-            // objects under product_image
-
-            $value->product_image = (object) array(
-              'fid' => $value->fid,
-              'filename' => $value->filename,
-              'uri' => $value->product_image,
-              'alt' => $value->alt,
-              'filemime' => $value->filemime,
-              'filesize' => $value->filesize,
-              'status' => $value->status,
-              'timestamp' => $value->timestamp,
-              'origname' => $value->origname
-              );
-
-
-          }
-
-          // Set the status based on numerical values that the query returns
-          if (isset($value->ul_status)) {
-            $statuses = array(
-              '0' => 'new',
-              '1' => 'active',
-              '2' => 'discontinued',
-              '3' => 'deleted'
-            );
-            $value->ul_status = $statuses[$value->ul_status];
-          }
-          else {
-            $value->ul_status = "new";
-          }
-
-          // unset variables used above
-          unset($value->fid);
-          unset($value->filename);
-          unset($value->alt);
-          unset($value->filemime);
-          unset($value->filesize);
-          unset($value->status);
-          unset($value->timestamp);
-          unset($value->origname);
-
-        }
-
-        // convert the object to JSON
-        return drupal_json_output($output);
+      foreach ($tids as $num => $id) {
+        $tid[] = (object) array('tid' => $id);
+      }
+      $value->needs = $tid;
+      // clear this after each loop
+      unset($tid);
     }
+  }
+  //using kpr due to issue with dpm in latest bootstrap
+  //kpr($output);
+  return '';
+}
+
+/**
+ * This callback is used by the advanced search nodejs application
+ */
+function gpii_saa_custom_products_advsearch()
+{
+  $result = db_query('SELECT * FROM ProductsAdvSearch');
+  $record = $result->fetchAll();
+
+  // initialize a new variable for use in the output
+  $output = array();
+
+  // iterate through the records and remove null values
+  foreach ($record as $key => $value) {
+    $output[] = (object) array_filter((array) $value);
+  }
+
+
+  // trim the body field by calling text_summary and clean up the markup
+  foreach ($output as $key => $value) {
+
+    // add the discontinued message - ideally these would pull from the select list labels, but that seems to slow things down
+    $discontinued_message = '';
+    if (isset($value->discontinued_message)) {
+
+      switch ($value->discontinued_message) {
+        case 'disc_not_supported':
+          $discmessage = 'This product has been discontinued and is no longer supported and serviced by the manufacturer.';
+          break;
+        case 'disc_simple':
+          $discmessage = 'This product has been discontinued.';
+          break;
+      }
+
+      if ($discmessage != '') {
+        $discontinued_message = '<div class="discontinued">' . $discmessage . "</div>";
+      }
+    }
+
+    if (isset($value->body_summary)) {
+      $value->body = $discontinued_message . $value->body_summary;
+    } elseif (isset($value->body)) {
+      $alter = array(
+        'max_length' => 400, //Integer
+        'ellipsis' => TRUE, //Boolean
+        'word_boundary' => TRUE, //Boolean
+        'html' => TRUE, //Boolean
+      );
+
+      $body = $discontinued_message . $value->body;
+      $summary = views_trim_text($alter, $body);
+      $value->body = $summary;
+    }
+
+    if (isset($value->status)) {
+      if ($value->status == 2) {
+        $value->discontinued = 1;
+      } else {
+        $value->discontinued = 0;
+      }
+      unset($value->status);
+    }
+  }
+
+  // convert the object to JSON
+  return drupal_json_output($output);
+}
+
+
+/**
+ * This callback is used by the UL API to gather intel about deleted products
+ */
+function gpii_saa_custom_deleted_ulisting()
+{
+  $result = db_query('SELECT * FROM DeletedProducts');
+  $record = $result->fetchAll();
+
+  // initialize a new variable for use in the output
+  $output = array();
+
+  // iterate through the records and remove null values
+  foreach ($record as $key => $value) {
+    $value->status = 'deleted';
+    $output[] = (object) array_filter((array) $value);
+  }
+
+  // convert the object to JSON
+  return drupal_json_output($output);
+}
+
+/**
+ * This callback is used by the UL API to gather intel about deleted products
+ */
+function gpii_saa_custom_abledata_report()
+{
+  $result = db_query('SELECT * FROM ABLEDATAExport');
+  $record = $result->fetchAll();
+
+  // initialize a new variable for use in the output
+  $output = array();
+
+  // iterate through the records and remove null values
+  foreach ($record as $key => $value) {
+    //$value->status = 'deleted';
+    $latest = node_load($value->nid, $value->latest_vid, reset);
+    $value->title = $latest->title;
+    $value->UL_uid = $latest->field_uid['und'][0]['value'];
+    $value->mfr_nid = $latest->field_manufacturer_reference['und'][0]['target_id'];
+    $mf4r = field_view_field('node', $latest, 'field_manufacturer_reference');
+    $value->mfr_name = $mf4r[0]['#label'];
+
+    $output[] = (object) array_filter((array) $value);
+  }
+
+  // convert the object to JSON
+  return drupal_json_output($output);
+}
+
+
+/**
+ * This callback is used by the Unified Listing application to retrieve a list
+ * of SAI records for comparison and synchronization.
+ */
+function gpii_saa_custom_products_ulisting()
+{
+  $result = db_query('SELECT * FROM ProductsUnifiedListing');
+  $record = $result->fetchAll();
+
+  // initialize a new variable for use in the output
+  $output = array();
+
+  // iterate through the records and remove null values
+  foreach ($record as $key => $value) {
+    $output[] = (object) array_filter((array) $value);
+  }
+
+  // combine the various description fields back into a single body field so that they can be digested by the UL API and external systems
+  foreach ($output as $key => $value) {
+
+    if (isset($value->body)) {
+
+      $value->body = '<h2>Product Description:</h2>' . $value->body;
+
+      if (isset($value->field_desc_main_features_value)) {
+        $value->body .= '<h2>Main Features:</h2>' . $value->field_desc_main_features_value;
+      }
+
+      if (isset($value->field_desc_primary_specs_value)) {
+        $value->body .= '<h2>Primary Specifications:</h2>' . $value->field_desc_primary_specs_value;
+      }
+
+      if (isset($value->field_desc_options_value)) {
+        $value->body .= '<h2>Options &amp; Accessories:</h2>' . $value->field_desc_options_value;
+      }
+
+      if (isset($value->field_desc_more_info_value)) {
+        $value->body .= '<h2>More Information:</h2>' . $value->field_desc_more_info_value;
+      }
+
+      unset($value->field_desc_main_features_value);
+      unset($value->field_desc_primary_specs_value);
+      unset($value->field_desc_options_value);
+      unset($value->field_desc_more_info_value);
+    }
+
+    // use the body_summary field if available, else trim the body field by calling text_summary and clean up the markup
+
+    if (isset($value->body_summary)) {
+
+      $value->summary = $value->body_summary;
+    } else {
+
+      $alter = array(
+        'max_length' => 400, //Integer
+        'ellipsis' => TRUE, //Boolean
+        'word_boundary' => TRUE, //Boolean
+        'html' => TRUE, //Boolean
+      );
+
+      $body = $value->body;
+      $summary = views_trim_text($alter, $body);
+
+      $value->summary = $summary;
+    }
+
+    // unset body_summary as it's no longer needed in the output
+    unset($value->body_summary);
+
+    // make needs into an object that matches the original format
+    if (isset($value->needs)) {
+      $tids = explode(',', $value->needs);
+
+      foreach ($tids as $num => $id) {
+        $tid[] = (object) array('tid' => $id);
+      }
+      $value->needs = $tid;
+      // clear this after each loop
+      unset($tid);
+    }
+
+    // make product_categories into an object that matches the original format
+    if (isset($value->product_category)) {
+      $tids = explode(',', $value->product_category);
+
+      foreach ($tids as $num => $id) {
+        $tid[] = (object) array('tid' => $id);
+      }
+      $value->product_category = $tid;
+      // clear this after each loop
+      unset($tid);
+    }
+
+    // make trouble taxonomy into an object that matches the original format
+    if (isset($value->trouble)) {
+      $tids = explode(',', $value->trouble);
+
+      foreach ($tids as $num => $id) {
+        $tid[] = (object) array('tid' => $id);
+      }
+      $value->trouble = $tid;
+      // clear this after each loop
+      unset($tid);
+    }
+
+    // make needs into an object that matches the original format
+    if (isset($value->product_image)) {
+      //@@ this needs to be rewritten to handle additional image fields (hidden, permission, source)
+      //as well as to handle multiple values
+
+
+      // alt may be empty, so set it to null if it's not available in this context
+      if (!isset($value->alt)) {
+        $value->alt = '';
+      }
+      // pull a few values out of the top level and insert them as
+      // objects under product_image
+
+      $value->product_image = (object) array(
+        'fid' => $value->fid,
+        'filename' => $value->filename,
+        'uri' => $value->product_image,
+        'alt' => $value->alt,
+        'filemime' => $value->filemime,
+        'filesize' => $value->filesize,
+        'status' => $value->status,
+        'timestamp' => $value->timestamp,
+        'origname' => $value->origname
+      );
+    }
+
+    // Set the status based on numerical values that the query returns
+    if (isset($value->ul_status)) {
+      $statuses = array(
+        '0' => 'new',
+        '1' => 'active',
+        '2' => 'discontinued',
+        '3' => 'deleted'
+      );
+      $value->ul_status = $statuses[$value->ul_status];
+    } else {
+      $value->ul_status = "new";
+    }
+
+    // unset variables used above
+    unset($value->fid);
+    unset($value->filename);
+    unset($value->alt);
+    unset($value->filemime);
+    unset($value->filesize);
+    unset($value->status);
+    unset($value->timestamp);
+    unset($value->origname);
+  }
+
+  // convert the object to JSON
+  return drupal_json_output($output);
+}
 
 
 
@@ -2227,21 +2209,22 @@ function gpii_saa_custom_form_facetapi_multiselect_form_alter(&$form, &$form_sta
  * @@ need to add same logic for the needs and wants view
  */
 
-function gpii_saa_custom_services_request_postprocess_alter($controller, $args, &$result) {
+function gpii_saa_custom_services_request_postprocess_alter($controller, $args, &$result)
+{
 
   //Debugging
-   // print($controller['view info']['view_name']);
-   // print_r($controller);
-   // print_r($result);
-   // exit;
+  // print($controller['view info']['view_name']);
+  // print_r($controller);
+  // print_r($result);
+  // exit;
 
-   // Identify JSON returned by the documents available view and make a few adjustments to the output.
-   if (isset($controller['view info'])) {
+  // Identify JSON returned by the documents available view and make a few adjustments to the output.
+  if (isset($controller['view info'])) {
     if ($controller['view info']['view_name'] == 'product_categories') {
 
       // get the currently active language
-      global $language ;
-      $lang = $language->language ;
+      global $language;
+      $lang = $language->language;
 
 
       foreach ($result as $key => $value) {
@@ -2255,8 +2238,8 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
     if ($controller['view info']['view_name'] == 'difficulties_categories') {
 
       // get the currently active language
-      global $language ;
-      $lang = $language->language ;
+      global $language;
+      $lang = $language->language;
 
 
       foreach ($result as $key => $value) {
@@ -2270,8 +2253,8 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
     if ($controller['view info']['view_name'] == 'trouble_categories') {
 
       // get the currently active language
-      global $language ;
-      $lang = $language->language ;
+      global $language;
+      $lang = $language->language;
 
 
       foreach ($result as $key => $value) {
@@ -2289,7 +2272,8 @@ function gpii_saa_custom_services_request_postprocess_alter($controller, $args, 
 /**
  * Implements hook_action_info() to add some custom VBO actions
  */
-function gpii_saa_custom_action_info() {
+function gpii_saa_custom_action_info()
+{
   return array(
     'gpii_saa_custom_import_ul_images' => array(
       'type' => 'entity',
@@ -2356,17 +2340,19 @@ function gpii_saa_custom_action_info() {
  */
 
 
-function gpii_saa_custom_os_migrate(&$entity) {
+function gpii_saa_custom_os_migrate(&$entity)
+{
   // call the gpii_saa_custom_mark_latest_new_vbo function
   return gpii_saa_custom_os_migrate_vbo($entity);
 }
 
-function gpii_saa_custom_os_migrate_vbo(&$entity) {
+function gpii_saa_custom_os_migrate_vbo(&$entity)
+{
 
   // get the latest revision and save it
   $revision_id = revisioning_get_latest_revision_id($entity->nid);
   $latest = node_load($value->nid, $revision_id, reset);
-  
+
   // OS Compatibility Terms from Features taxonomy terms that we are interested in:
   //  -- None/NA (works everywhere) - 4453
   //  -- Windows - 258
@@ -2417,13 +2403,13 @@ function gpii_saa_custom_os_migrate_vbo(&$entity) {
       $latest->field_operating_system['und'][] = array('tid' => $value);
     }
   }
-   
+
 
   watchdog('gpii_saa_custom', 'A new revision of node ' . $entity->nid . ' has been created. The latest revision is ' . $revision_id . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
-  
+
   $latest->revision = TRUE;
   $latest->revision_moderation = TRUE;
-  $latest-> log = 'Operating System Compatibility Batch Update.';
+  $latest->log = 'Operating System Compatibility Batch Update.';
   node_save($latest);
 
   //also update the value for the current revision and pass it back to VBO
@@ -2433,30 +2419,33 @@ function gpii_saa_custom_os_migrate_vbo(&$entity) {
 }
 
 
-function gpii_saa_custom_mark_latest_new(&$entity) {
+function gpii_saa_custom_mark_latest_new(&$entity)
+{
   // call the gpii_saa_custom_mark_latest_new_vbo function
   return gpii_saa_custom_update_status_vbo($entity, 'NEW');
 }
 
-function gpii_saa_custom_mark_latest_active(&$entity) {
+function gpii_saa_custom_mark_latest_active(&$entity)
+{
   // call the gpii_saa_custom_mark_latest_new_vbo function
   return gpii_saa_custom_update_status_vbo($entity, 'ACTIVE');
 }
 
-function gpii_saa_custom_update_status_vbo(&$entity, $status) {
+function gpii_saa_custom_update_status_vbo(&$entity, $status)
+{
 
   switch ($status) {
     case 'NEW':
       $status_value = 0;
-        break;
+      break;
     case 'ACTIVE':
-        $status_value = 1;
-        break;
-}
+      $status_value = 1;
+      break;
+  }
   // get the latest revision and save it
   $revision_id = revisioning_get_latest_revision_id($entity->nid);
 
-  if($entity->vid != $revision_id) {
+  if ($entity->vid != $revision_id) {
     $latest = node_load($value->nid, $revision_id, reset);
     //watchdog('gpii_saa_custom', 'A new revision of node ' . $entity->nid . ' has been created. The latest revision is ' . $revision_id . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
     $latest->field_status['und'][0]['value'] = $status_value;
@@ -2480,14 +2469,16 @@ function gpii_saa_custom_update_status_vbo(&$entity, $status) {
 
 
 
-function gpii_saa_custom_import_ul_images(&$entity) {
+function gpii_saa_custom_import_ul_images(&$entity)
+{
 
   // call the gpii_saa_custom_image_import_vbo function
   return gpii_saa_custom_image_import_vbo($entity);
 }
 
 
-function gpii_saa_custom_image_import_vbo(&$entity) {
+function gpii_saa_custom_image_import_vbo(&$entity)
+{
   //if the product record doesn't have a UID, there's no reason to try to continue.
   if (isset($entity->field_uid['und'][0])) {
 
@@ -2531,24 +2522,24 @@ function gpii_saa_custom_image_import_vbo(&$entity) {
 
       foreach ($result as $key => $value) {
 
-          $filename = $value['image_id'];
+        $filename = $value['image_id'];
 
-          $image = file_get_contents('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
-          //dpm('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
-          $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
-          $file->alt = $value['description'];
-          $file->title = $value['description'];
+        $image = file_get_contents('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+        //dpm('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+        $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
+        $file->alt = $value['description'];
+        $file->title = $value['description'];
 
-          //dpm($file);
-          $entity->field_product_image['und'][] = (array)$file;
-          //dpm($entity->field_product_image);
+        //dpm($file);
+        $entity->field_product_image['und'][] = (array) $file;
+        //dpm($entity->field_product_image);
 
-          // Remove the default image thumbnail if there were no images to begin with.
-          //dsm($entity->field_product_image['und'][0]['filename']);
+        // Remove the default image thumbnail if there were no images to begin with.
+        //dsm($entity->field_product_image['und'][0]['filename']);
 
-          if (isset($entity->field_product_image['und'][0]) && $entity->field_product_image['und'][0]['filename'] === 'product-default-thumb.png') {
-            unset($entity->field_product_image['und'][0]);
-          }
+        if (isset($entity->field_product_image['und'][0]) && $entity->field_product_image['und'][0]['filename'] === 'product-default-thumb.png') {
+          unset($entity->field_product_image['und'][0]);
+        }
       }
 
       // unset all related to photo and alt text status as they will have changed as a result of the import
@@ -2558,7 +2549,7 @@ function gpii_saa_custom_image_import_vbo(&$entity) {
         'photo_reviewed',
         'alt_title_complete',
         'alt_title_reviewed'
-        );
+      );
 
       foreach ($unflagids as $key => $value) {
         $flag = flag_get_flag($value);
@@ -2570,12 +2561,10 @@ function gpii_saa_custom_image_import_vbo(&$entity) {
 
       // return the modified entity to VBO for processing
       return $entity;
-
     }
   }
 
   return;
-
 }
 
 
@@ -2583,7 +2572,8 @@ function gpii_saa_custom_image_import_vbo(&$entity) {
  * This function is called from the action_info array above
  */
 
-function gpii_saa_custom_import_sai_uids(&$entity) {
+function gpii_saa_custom_import_sai_uids(&$entity)
+{
   // if there's no value for UID, then hit the API to find it
   if (!isset($entity->field_uid['und'][0]['value'])) {
 
@@ -2591,7 +2581,7 @@ function gpii_saa_custom_import_sai_uids(&$entity) {
 
     if (isset($uid)) {
       $entity->field_uid['und'][0]['value'] = $uid;
-      
+
       // if there's a pending revision for this node, add the UID value to the latest draft as well
       $revision_id = revisioning_get_latest_revision_id($entity->nid);
       $latest = node_load($value->nid, $revision_id, reset);
@@ -2599,15 +2589,13 @@ function gpii_saa_custom_import_sai_uids(&$entity) {
         $latest->field_uid['und'][0]['value'] = $uid;
         $latest->revision = TRUE;
         $latest->revision_moderation = TRUE;
-        $latest-> log = 'UID Import Batch Update.';
+        $latest->log = 'UID Import Batch Update.';
         node_save($latest);
       }
 
 
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been assigned UID ' . $uid  . '.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
-    }
-
-    else {
+    } else {
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' is not available in the UL API.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
     }
 
@@ -2622,7 +2610,8 @@ function gpii_saa_custom_import_sai_uids(&$entity) {
  * Test function for UID import returns a UID if one exists in the Unified listing data set
  */
 
-function gpii_saa_custom_uid_import($nid) {
+function gpii_saa_custom_uid_import($nid)
+{
   $product = node_load($nid, NULL, true);
   //kpr($product);
 
@@ -2706,15 +2695,16 @@ function gpii_saa_custom_uid_import($nid) {
  *
  */
 
-function gpii_saa_custom_image_import($uid) {
+function gpii_saa_custom_image_import($uid)
+{
   //dsm('UID: ' . $uid);
 
   $query = new EntityFieldQuery();
 
   $query->entityCondition('entity_type', 'node')
-  ->entityCondition('bundle', 'product')
-  ->fieldCondition('field_uid', 'value', $uid, '=')
-  ->addMetaData('account', user_load(1)); // Run the query as user 1.
+    ->entityCondition('bundle', 'product')
+    ->fieldCondition('field_uid', 'value', $uid, '=')
+    ->addMetaData('account', user_load(1)); // Run the query as user 1.
 
   $result = $query->execute();
 
@@ -2778,17 +2768,17 @@ function gpii_saa_custom_image_import($uid) {
         // }
 
         // else {
-          $image = file_get_contents('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
-          //dpm('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
-          $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
-          $file->alt = $value['description'];
-          $file->title = $value['description'];
-          //$file->copyright = 'TEST';
+        $image = file_get_contents('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+        //dpm('https://api.ul.gpii.net/api/images/file/' . $value['uid'] . '/' . $value['source'] . '/' . $value['image_id']);
+        $file = file_save_data($image, 'public://' . $filename, FILE_EXISTS_REPLACE);
+        $file->alt = $value['description'];
+        $file->title = $value['description'];
+        //$file->copyright = 'TEST';
 
-          //dsm($file);
-          $product->field_product_image['und'][] = (array)$file;
-          dpm($product->field_product_image);
-          $housekeeping[] = $filename;
+        //dsm($file);
+        $product->field_product_image['und'][] = (array) $file;
+        dpm($product->field_product_image);
+        $housekeeping[] = $filename;
         //}
 
       }
@@ -2802,13 +2792,9 @@ function gpii_saa_custom_image_import($uid) {
         file_unmanaged_delete('public://' . $value);
       }
     }
-
-
-
   }
   dsm($product->field_product_image['und']);
   return $markup;
-
 }
 
 /**
@@ -2820,14 +2806,15 @@ function gpii_saa_custom_image_import($uid) {
  * @return     <type>  ( description_of_the_return_value )
  */
 
-function recursive_array_search($needle,$haystack) {
-    foreach($haystack as $key=>$value) {
-        $current_key=$key;
-        if($needle===$value OR (is_array($value) && recursive_array_search($needle,$value) !== false)) {
-            return $current_key;
-        }
+function recursive_array_search($needle, $haystack)
+{
+  foreach ($haystack as $key => $value) {
+    $current_key = $key;
+    if ($needle === $value or (is_array($value) && recursive_array_search($needle, $value) !== false)) {
+      return $current_key;
     }
-    return false;
+  }
+  return false;
 }
 
 
@@ -2837,7 +2824,8 @@ function recursive_array_search($needle,$haystack) {
  * of deleted. If it does, the node is deleted.
  */
 
-function gpii_saa_custom_remove_deleted_records(&$entity) {
+function gpii_saa_custom_remove_deleted_records(&$entity)
+{
   $revision_id = revisioning_get_latest_revision_id($entity->nid);
   $latest = node_load($value->nid, $revision_id, reset);
   // be sure that we have a UID and that the current status for the node is 'deleted'
@@ -2850,10 +2838,10 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
     if ($apiStatus == 'deleted') {
       // log the deletion before we lose access to the variables we need to create the log entry.
       watchdog('gpii_saa_custom', 'Node ' . $latest->nid . ' (UID: ' . $latest->field_uid['und'][0]['value'] . ') has been deleted.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
-      
+
       if (isset($latest->field_duplicate_nid['und'][0]['value'])) {
         //dpm($latest->field_duplicate_nid['und'][0]['value']);
-        
+
         // If the record is a duplicate, go ahead and programmatically create the redirect
         // First, create an object with our redirect parameters
         $redirect = new stdClass();
@@ -2873,15 +2861,14 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
 
         $existing_redirect = redirect_load_by_source($redirect->source);
 
-        if($existing_redirect->status) {
+        if ($existing_redirect->status) {
           // do nothing
-         }
-         else {
+        } else {
           // save the redirect
           redirect_save($redirect);
-         }
+        }
 
-        
+
 
         // we also want to create a redirect for links coming in from the UL API (ex. https://ul.gpii.net/uid/1519224321322-58025810)
         $redirect = new stdClass();
@@ -2897,27 +2884,20 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
 
         $existing_redirect = redirect_load_by_source($redirect->source);
 
-        if($existing_redirect->status) {
+        if ($existing_redirect->status) {
           // do nothing
-         }
-         else {
+        } else {
           // save the redirect
           redirect_save($redirect);
-         }
-        
-
+        }
       }
-      
+
       // now we can go ahead and delete the node
       node_delete($entity->nid);
-    }
-
-    elseif ($apiStatus == false) {
+    } elseif ($apiStatus == false) {
       // log a failure to get a response from the API.
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' got no response from the UL API.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
-    }
-
-    else {
+    } else {
       watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' is not marked for deletion in the UL API.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
     }
 
@@ -2926,11 +2906,11 @@ function gpii_saa_custom_remove_deleted_records(&$entity) {
   }
 
   return;
-
 }
 
 
-function gpii_saa_custom_delete_records_vbo($uid) {
+function gpii_saa_custom_delete_records_vbo($uid)
+{
   //dsm("https://api.ul.gpii.net/api/product/unified/" . $uid);
 
   // Get the status for this record from the UL API
@@ -2960,7 +2940,7 @@ function gpii_saa_custom_delete_records_vbo($uid) {
   curl_close($curl);
 
   if ($err) {
-    watchdog('gpii_saa_custom', $err , array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
+    watchdog('gpii_saa_custom', $err, array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
     // dpm("cURL Error #:" . $err);
   } else {
     //dpm($response);
@@ -2972,9 +2952,7 @@ function gpii_saa_custom_delete_records_vbo($uid) {
 
   if (isset($response)) {
     return $response->status;
-  }
-
-  else {
+  } else {
     return false;
   }
 }
@@ -2985,7 +2963,8 @@ function gpii_saa_custom_delete_records_vbo($uid) {
  * sets values for the "things I have trouble with" taxonomy
  */
 
-function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
+function gpii_saa_custom_sync_needs_to_trouble(&$entity)
+{
   // be sure that the record has some terms from the needs and wants tree associated with it before proceeding
   //dpm('Needs Count: ' . count($entity->field_features['und']));
 
@@ -3014,18 +2993,18 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
         // Set lineage no longer works because virutal stores need to reference only some children
         // Therefore, check to see if the trouble term has parents and set those too. We only have to check once because this tree is only 2 levels deep.
         $parent = taxonomy_get_parents($value);
-        
+
         // add the parent key to an array by getting the key of the array of objects returned by taxonomy_get_parents
         $parents[] = key($parent);
       }
-      
+
       $parents = array_unique($parents);
       // join to create complete list
       $new_terms = array_merge($trouble_terms, $parents);
-      $diff_terms = array_merge(array_diff($original_terms,$new_terms),array_diff($new_terms,$original_terms));
+      $diff_terms = array_merge(array_diff($original_terms, $new_terms), array_diff($new_terms, $original_terms));
 
       watchdog('gpii_saa_custom', 'Diff Terms' . implode(', ', $diff_terms), array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
-      
+
       if (count($diff_terms) > 0) {
 
         // clear old terms
@@ -3042,11 +3021,10 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
 
 
         $revision_id = revisioning_get_latest_revision_id($entity->nid);
-        
-        if ($revision_id > $entity->vid ) {
+
+        if ($revision_id > $entity->vid) {
           $pending_revision = TRUE;
-        }
-        else {
+        } else {
           $pending_revision = FALSE;
         }
 
@@ -3063,22 +3041,20 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
         // Save draft if exists
         if ($pending_revision == TRUE) {
           $latest = node_load($entity->nid, $revision_id, true);
-  
+
           $latest->revision = TRUE;
           $latest->revision_operation = 2;
           $latest->revision_moderation = TRUE;
           $latest->log = 'Trouble Taxonomy Sync';
           $latest->category = 'tax_only';
-  
+
           $latest->field_trouble_with['und'] = $formated_terms;
           node_save($latest);
         }
 
         watchdog('gpii_saa_custom', 'Node ' . $entity->nid . ' has been updated.', array(), WATCHDOG_NOTICE, l('view', 'node/' . $entity->nid));
       }
-    }
-
-    else {
+    } else {
       // zero out the troubles taxonomy and resave the published version so that we don't have outliers from past sync algorithms and manual updates
       unset($entity->field_trouble_with['und']);
       // Save node current version
@@ -3098,7 +3074,8 @@ function gpii_saa_custom_sync_needs_to_trouble(&$entity) {
 }
 
 
-function gpii_saa_custom_sync_needs_to_trouble_vbo($features) {
+function gpii_saa_custom_sync_needs_to_trouble_vbo($features)
+{
 
   $trouble_terms = [];
 
@@ -3118,25 +3095,29 @@ function gpii_saa_custom_sync_needs_to_trouble_vbo($features) {
 
 
 
-function gpii_saa_custom_virtual_stores() {
+function gpii_saa_custom_virtual_stores()
+{
   // include browse virtual store functions
   module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.browse_virtual_stores');
   return virtual_stores();
 }
 
-function gpii_saa_custom_virtual_category($storeid) {
+function gpii_saa_custom_virtual_category($storeid)
+{
   // include browse virtual store functions
   module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.browse_virtual_stores');
   return virtual_category($storeid, arg(3));
 }
 
-function gpii_saa_custom_virtual_shelf($tid) {
+function gpii_saa_custom_virtual_shelf($tid)
+{
   // include browse virtual store functions
   module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.browse_virtual_stores');
   return virtual_shelf($tid);
 }
 
-function gpii_saa_custom_init() {
+function gpii_saa_custom_init()
+{
   global $user;
   $isTranslator = in_array('Translator', $user->roles);
   $path = drupal_get_path('module', 'gpii_saa_custom');
@@ -3145,7 +3126,8 @@ function gpii_saa_custom_init() {
 }
 
 
-function gpii_saa_custom_similar() {
+function gpii_saa_custom_similar()
+{
   // include browse virtual store functions
   module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.similar');
   return similar_search_form();
@@ -3153,7 +3135,8 @@ function gpii_saa_custom_similar() {
 
 // adds autocomplete functionality to the similar search form
 // Issue: Currently throws a 500 error if you put in a / character
-function _gpii_saa_custom_similar_search_autocomplete($string) {
+function _gpii_saa_custom_similar_search_autocomplete($string)
+{
 
   $matches = array();
 
@@ -3162,17 +3145,17 @@ function _gpii_saa_custom_similar_search_autocomplete($string) {
 
   // Select rows that match the string
   $return = $query
-  ->fields('n', array('title', 'nid'))
-  ->condition('n.title', '%' . db_like($string) . '%', 'LIKE')
-  ->condition('n.status', 1)
-  ->condition('n.type', 'product')
-  ->range(0, 15)
-  ->execute();
+    ->fields('n', array('title', 'nid'))
+    ->condition('n.title', '%' . db_like($string) . '%', 'LIKE')
+    ->condition('n.status', 1)
+    ->condition('n.type', 'product')
+    ->range(0, 15)
+    ->execute();
 
   // add matches to $matches  
   foreach ($return as $row) {
-      $match = check_plain($row->title . ' - [nid: ' . $row->nid . ']' ) ;
-      $matches[$match] = $match;
+    $match = check_plain($row->title . ' - [nid: ' . $row->nid . ']');
+    $matches[$match] = $match;
   }
 
   // return for JS
@@ -3190,20 +3173,19 @@ function _gpii_saa_custom_similar_search_autocomplete($string) {
  * @return     302 redirect to the product
  */
 
-function gpii_saa_custom_uid_redirect($uid) {
+function gpii_saa_custom_uid_redirect($uid)
+{
   // query a view to find products with the requested UID
   $results = views_get_view_result('find_product_by_uid', 'default', $uid);
 
   // @@ make this a function
   if (count($results) == 0) {
 
-  // if the view didn't return any results, let's hit the UL API to see if there's a better UID to use
+    // if the view didn't return any results, let's hit the UL API to see if there's a better UID to use
 
     if (variable_get('UL_API_LOGGEDIN') < (time() + 10800)) {
       //dpm('LOGGED IN ALREADY ' . variable_get('UL_API_LOGGEDIN'));
-    }
-
-    else {
+    } else {
       // log into the API
       $curl = curl_init();
 
@@ -3274,13 +3256,13 @@ function gpii_saa_custom_uid_redirect($uid) {
         //dpm($response);
       }
 
-    $response = json_decode($response);
+      $response = json_decode($response);
 
-    //dpm($response->uid);
+      //dpm($response->uid);
 
-    if ($uid != $response->uid) {
-      gpii_saa_custom_uid_redirect($response->uid);
-    }
+      if ($uid != $response->uid) {
+        gpii_saa_custom_uid_redirect($response->uid);
+      }
 
       //drupal_exit();
     }
@@ -3300,33 +3282,33 @@ function gpii_saa_custom_uid_redirect($uid) {
       $items[] = l(t($value->node_title), 'node/' . $value->nid);
     }
 
-    $markup .=  theme('item_list', array(
-      'items' => $items,
-      'type' => 'ul',
-      'attributes' => array('id' => 'duplicates', 'class' => array('')),
-        )
+    $markup .=  theme(
+      'item_list',
+      array(
+        'items' => $items,
+        'type' => 'ul',
+        'attributes' => array('id' => 'duplicates', 'class' => array('')),
+      )
     );
 
     return $markup;
-  }
-
-  else {
+  } else {
     drupal_set_message(t('<strong>Error:</strong> No results found. Please verify that you have a provided a valid UID and try again.'), 'error', FALSE);
     return '';
   }
-
 }
 
 /**
  * Add a custom update button to the order and determine whether the user can view the order
  */
 
-function gpii_saa_custom_node_view($node, $view_mode) {
-  if ($node->type=='order' && $view_mode == 'full'){
+function gpii_saa_custom_node_view($node, $view_mode)
+{
+  if ($node->type == 'order' && $view_mode == 'full') {
     $node->content['update_button'] = array(
-         "#markup"=> '<div class="orderupdate"><a class="btn btn-purchase" href="/orders/update/' . $node->nid . '">Update Order</a></div>',
-         "#weight"=> 5
-      );
+      "#markup" => '<div class="orderupdate"><a class="btn btn-purchase" href="/orders/update/' . $node->nid . '">Update Order</a></div>',
+      "#weight" => 5
+    );
   }
 }
 
@@ -3334,18 +3316,19 @@ function gpii_saa_custom_node_view($node, $view_mode) {
  * Hook node access and block anyone who doesn't have the order node in their $_SESSION from viewing the order.
  */
 
-function gpii_saa_custom_node_access($node, $view_mode) {
+function gpii_saa_custom_node_access($node, $view_mode)
+{
   if (isset($node)) {
-    if (isset($node->type) && $node->type=='order') {
+    if (isset($node->type) && $node->type == 'order') {
       global $user;
       //  print '<pre>';
       // print_r($user);
       // print 'Session: ' . print_r($_SESSION['gpii_saa_custom_package_orders']);
       //  print '</pre>';
-    if (in_array($node->nid, $_SESSION['gpii_saa_custom_package_orders'])) {
-       return NODE_ACCESS_ALLOW;
+      if (in_array($node->nid, $_SESSION['gpii_saa_custom_package_orders'])) {
+        return NODE_ACCESS_ALLOW;
+      }
     }
-  }
   }
 }
 
@@ -3353,28 +3336,29 @@ function gpii_saa_custom_node_access($node, $view_mode) {
  * Function takes the order nid and payment id and updates the order to reference the payment.
  */
 
-function gpii_saa_custom_openmarketplace_order_complete($nid, $payment) {
+function gpii_saa_custom_openmarketplace_order_complete($nid, $payment)
+{
 
-    $entity = node_load($nid);
-    //dpm($payment);
+  $entity = node_load($nid);
+  //dpm($payment);
 
-    // Now create an entity_metadata_wrapper around the node entity
-    // to make getting and setting values easier
-    $ewrapper = entity_metadata_wrapper('node', $entity);
+  // Now create an entity_metadata_wrapper around the node entity
+  // to make getting and setting values easier
+  $ewrapper = entity_metadata_wrapper('node', $entity);
 
-    // Note that the entity id must be passed as an integer not a string
-    $ewrapper->field_payment_reference->set(intval($payment->pid));
+  // Note that the entity id must be passed as an integer not a string
+  $ewrapper->field_payment_reference->set(intval($payment->pid));
 
-    // Now just save the wrapper and the entity
-    $ewrapper->save(true);
-    $entity->revision = TRUE;
-    entity_save('node', $entity);
-
+  // Now just save the wrapper and the entity
+  $ewrapper->save(true);
+  $entity->revision = TRUE;
+  entity_save('node', $entity);
 }
 
-function gpii_saa_custom_preprocess(&$variables, $hook) {
+function gpii_saa_custom_preprocess(&$variables, $hook)
+{
 
-// Hook the payment view to remove payment_status and other info.
+  // Hook the payment view to remove payment_status and other info.
 
   if ($hook == 'entity' && isset($variables['payment']) && $variables['elements']['#view_mode'] == 'full') {
     // dpm(array_pop($variables['elements']['#entity']->statuses));
@@ -3393,46 +3377,47 @@ function gpii_saa_custom_preprocess(&$variables, $hook) {
       '#weight' => 10,
     );
   }
-
 }
 
 /**
-* Implements template_preprocess_page().
-*/
-function gpii_saa_custom_preprocess_page(&$variables) {
-	
-	if (isset($variables['theme_hook_suggestions'][0]) && $variables['theme_hook_suggestions'][0] == 'page__guided_shopping_search') {
-		// $breadcrumb = $variables['page']['content']['system_main']['breadcrumb'];
+ * Implements template_preprocess_page().
+ */
+function gpii_saa_custom_preprocess_page(&$variables)
+{
+
+  if (isset($variables['theme_hook_suggestions'][0]) && $variables['theme_hook_suggestions'][0] == 'page__guided_shopping_search') {
+    // $breadcrumb = $variables['page']['content']['system_main']['breadcrumb'];
     // dsm($variables);
-    
+
     $term_id = $_GET[field_product_categories1][0];
 
     $breadcrumb = _build_breadcrumb($term_id);
     $variables['breadcrumb'] = theme('item_list', array('items' => $breadcrumb, 'type' => 'ol', 'attributes' => array('class' => 'breadcrumb')));
-    
+
     $term_name = taxonomy_term_load($term_id)->name;
     drupal_set_title('Products that match: ' . $term_name);
   }
-  
+
   if (isset($variables['theme_hook_suggestions'][1]) && $variables['theme_hook_suggestions'][1] == 'page__search__similar') {
     $path_args = explode('/', current_path());
     $nid = $path_args[count($path_args) - 1];
-    
+
     // This redirected users to another page if there were no filters set, but we decided to not do that anymore (July 3, 2019)
     // if (!isset($_GET['f'])) {
     //   gpii_saa_custom_search_similar_redirect($nid);
     // }
-    
+
     $node = node_load($nid);
     drupal_set_title('Products Similar to <em><a href="/node/' . $node->nid . '">' . $node->title . '</em>', PASS_THROUGH);
-	}
+  }
 }
 
 /**
  * Hook feeds so that we avoid the possibility of accidentally overwriting term names when imports are run. Note that in order for intial import to work correctly, both the term ID and the term name need to be an exact match.
  */
 
-function gpii_saa_custom_feeds_presave($source, $entity, $item, $entity_id) {
+function gpii_saa_custom_feeds_presave($source, $entity, $item, $entity_id)
+{
   if ($source->id == 'vocabulary_study_difficulties_category_import' || $source->id == 'vocabulary_study_import') {
     // if($entity->name_original != $entity->name) {
     //   $entity->name = $entity->name_original;
@@ -3446,7 +3431,8 @@ function gpii_saa_custom_feeds_presave($source, $entity, $item, $entity_id) {
 * Implements hook_views_data_alter() to provide access to the revision id for the latest draft
 */
 
-function gpii_saa_custom_views_data_alter(&$data) {
+function gpii_saa_custom_views_data_alter(&$data)
+{
   $data['node_revision']['latest_revision'] = array(
     'title' => t('Latest revision'),
     'help' => t('Get the latest vid.'),
@@ -3462,10 +3448,12 @@ function gpii_saa_custom_views_data_alter(&$data) {
 /**
  * Provide the latest revision number from the nid field.
  */
-class gpii_saa_custom_field_handler_latest_revision extends views_handler_field {
+class gpii_saa_custom_field_handler_latest_revision extends views_handler_field
+{
 
   // Return latest vid as the field value.
-  public function render($values) {
+  public function render($values)
+  {
     $value = $this->get_value($values);
     return revisioning_get_latest_revision_id($value);
   }
@@ -3476,15 +3464,15 @@ class gpii_saa_custom_field_handler_latest_revision extends views_handler_field 
  * to an array of hidden values that will be added to the form so these arguments
  * are not lost in form submission.
  */
-function _persist_url_params_param_from_array(&$form, $root_key, $key, $value, $array_key = '') {
+function _persist_url_params_param_from_array(&$form, $root_key, $key, $value, $array_key = '')
+{
   if (!is_array($value)) {
     $form[$key] = array(
       '#type' => 'hidden',
       '#value' => $value,
-      '#name' => "$root_key$array_key",
+      '#name' => "$root_key $array_key",
     );
-  }
-  else {
+  } else {
     $form[$key] = array();
     foreach ($value as $val_key => $val_value) {
       _persist_url_params_param_from_array($form[$key], $root_key, $val_key, $val_value, $array_key . "[$val_key]");
@@ -3492,7 +3480,8 @@ function _persist_url_params_param_from_array(&$form, $root_key, $key, $value, $
   }
 }
 
-function gpii_saa_custom_search_similar_redirect($nid) {
+function gpii_saa_custom_search_similar_redirect($nid)
+{
   $node = node_load($nid);
   $query = [];
   $product_categories = gpii_saa_custom_format_taxonomy_into_facet_query_array($node->field_product_categories1['und'], 'field_product_categories1');
@@ -3504,24 +3493,25 @@ function gpii_saa_custom_search_similar_redirect($nid) {
   drupal_goto('search/similar/' . $nid, $options);
 }
 
-function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, $options) {
+function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, $options)
+{
   // For each set item in the node's taxonomy create new array containing needed information
   $term_info = array();
-  foreach($taxonomy_field as $key => $value) {
+  foreach ($taxonomy_field as $key => $value) {
     $tid = $value['tid'];
     $term = taxonomy_term_load($tid);
 
     $leaf = array_search($tid, array_column($tree, 'tid'));
 
     $term_info[$tid] = array(
-        'name' => t($term->name),
-        'parents' => $tree[$leaf]->parents,
-        'depth' => $tree[$leaf]->depth
+      'name' => t($term->name),
+      'parents' => $tree[$leaf]->parents,
+      'depth' => $tree[$leaf]->depth
     );
   }
 
   // set custom facet info
-  foreach($term_info as $tid => $value) {
+  foreach ($term_info as $tid => $value) {
     $facet_info = gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field, $options['cascade'], $options['climb']);
     $term_info[$tid]['facet_link'] = $facet_info['facet_link'];
     $term_info[$tid]['facet_checked'] = $facet_info['facet_checked'];
@@ -3556,7 +3546,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
         }
         $custom_tree .= '</li>';
       }
-      
+
       // All children have been closed reset depth
       if ($term['depth'] == 0 || $term['depth'] < $previous_depth) {
         $previous_depth = $term['depth'];
@@ -3565,11 +3555,11 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
       if ($term['depth'] <= 0 || $previous_depth == $term['depth']) {
         $custom_tree .= '<li class="expanded">';
       }
-      
+
       if ($term['depth'] >= 1 && $previous_depth != $term['depth']) {
         $custom_tree .= '<ul><li class="expanded">';
       }
-      
+
       // Display contents of term
       $checked = ($term['facet_checked']) ? 'facetapi-active' : 'facetapi-inactive';
       $custom_tree .= '<a href="' . $term['facet_link'] . '" rel="nofollow" class="facetapi-checkbox facetapi-makeCheckboxes ' . $checked . '" id="facetapi-link--' . $tid . '">' . $term['name'] . '<span class="element-invisible"> Apply ' . $term['name'] . ' </span></a>';
@@ -3583,10 +3573,10 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
         }
         $custom_tree .= '</li>';
       }
-      
+
       $previous_term = $term;
     }
-    
+
     $custom_tree .= '</ul>';
   }
   return $custom_tree;
@@ -3599,41 +3589,47 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
  * If a term exists in the _GET query then it will remove the term otherwise it will add it.
  * This will create a toggle type experience.
  */
-function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field, $cascade = false, $climb = false) {
+function gpii_saa_custom_get_facept_link_info($tid, $term_info, $field_name, $taxonomy_field, $cascade = false, $climb = false)
+{
 
   $facet_info = [];
-  
+
   $url_base = $_GET['q'];
   $facet_array = $_GET['f'];
 
   $get_copy = $_GET;
   unset($get_copy['q']);
   //if (isset($facet_array)) {
-    $match_array = preg_grep('/' . $tid . '/', $facet_array);
+  $match_array = preg_grep('/' . $tid . '/', $facet_array);
 
-    if (count($match_array) > 0) {
-      unset($get_copy['f'][key($match_array)]);
-      $get_copy['f'] = array_values($get_copy['f']);
+  // If tid exists (ischecked) currently remove from facet array so it will become unchecked. else add it so it becomes checked.
+  if (count($match_array) > 0) {
+    unset($get_copy['f'][key($match_array)]);
+    $get_copy['f'] = array_values($get_copy['f']);
 
-      if ($cascade) {
-        $get_copy['f'] = gpii_saa_custom_cascade_facet_links($get_copy['f'], $tid, $term_info, $field_name, $taxonomy_field);
-      }
-
-      $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
-      $facet_info['facet_checked'] = true;
+    if ($cascade) {
+      $get_copy['f'] = gpii_saa_custom_cascade_facet_links($get_copy['f'], $tid, $term_info, $field_name, $taxonomy_field);
     }
-    else {
+
+    $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
+    $facet_info['facet_checked'] = true;
+  } else {
+    if ($climb) {
+      $get_copy['f'] = gpii_saa_custom_climb_facet_links($get_copy['f'], $tid, $field_name);
+    } else {
       $get_copy['f'][] = $field_name . ':' . $tid;
-
-      $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
-      $facet_info['facet_checked'] = false;
     }
+
+    $facet_info['facet_link'] = '/' . $url_base . '?' . http_build_query($get_copy);
+    $facet_info['facet_checked'] = false;
+  }
   //}
 
   return $facet_info;
 }
 
-function gpii_saa_custom_cascade_facet_links($facet_array, $tid, $term_info, $field_name, $taxonomy_field) {
+function gpii_saa_custom_cascade_facet_links($facet_array, $tid, $term_info, $field_name, $taxonomy_field)
+{
 
   // Collect children tids to search for to remove
   // will cause the illusion of live cascading
@@ -3646,8 +3642,7 @@ function gpii_saa_custom_cascade_facet_links($facet_array, $tid, $term_info, $fi
     if ($at_term && !$past_last_child) {
       if ($term_info[$current_tid]['depth'] > $term_info[$tid]['depth']) {
         $term_children_tids[] = $current_tid;
-      }
-      else if ($term_info[$tid]['depth'] == $term_info[$current_tid]['depth'] || $term_info[$current_tid]['depth'] < $term_info[$tid]['depth']) {
+      } else if ($term_info[$tid]['depth'] == $term_info[$current_tid]['depth'] || $term_info[$current_tid]['depth'] < $term_info[$tid]['depth']) {
         $past_last_child = true;
       }
     }
@@ -3666,13 +3661,29 @@ function gpii_saa_custom_cascade_facet_links($facet_array, $tid, $term_info, $fi
       $facet_array = array_values($facet_array);
     }
   }
-  
+
   return $facet_array;
 }
 
-function gpii_saa_custom_format_taxonomy_into_facet_query_array($taxonomy_field, $field_name) {
+function gpii_saa_custom_climb_facet_links($facet_array, $tid, $field_name)
+{
+  $term_parents = taxonomy_get_parents_all($tid);
+
+  foreach ($term_parents as $value) {
+    $match_array = preg_grep('/' . $value->tid . '/', $facet_array);
+
+    if (count($match_array) == 0) {
+      $facet_array[] = $field_name . ':' . $value->tid;
+    }
+  }
+
+  return $facet_array;
+}
+
+function gpii_saa_custom_format_taxonomy_into_facet_query_array($taxonomy_field, $field_name)
+{
   $facet_query = [];
-  foreach($taxonomy_field as $key => $value) {
+  foreach ($taxonomy_field as $key => $value) {
     $facet_query[] = $field_name . ':' . $value['tid'];
   }
   return $facet_query;

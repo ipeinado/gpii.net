@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Default theme implementation to display a block.
@@ -47,17 +48,18 @@
 
 ?>
 
-<section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+<section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix" <?php print $attributes; ?>>
 
   <?php print render($title_prefix); ?>
-  <?php if ($title): ?>
+  <?php if ($title) : ?>
     <h2<?php print $title_attributes; ?>><?php print $title; ?></h2>
-  <?php endif;?>
-  <?php print render($title_suffix); ?>
+    <?php endif; ?>
+    <?php print render($title_suffix); ?>
 
-  <?php // print $content ?>
-  <?php drupal_add_js(drupal_get_path('theme', 'gpii_sai') . '/js/custom_facet.js'); ?>
-  <?php
+    <?php // print $content 
+    ?>
+    <?php drupal_add_js(drupal_get_path('theme', 'gpii_sai') . '/js/custom_facet.js'); ?>
+    <?php
 
     $path_args = explode('/', current_path());
     $nid = $path_args[count($path_args) - 1];
@@ -66,16 +68,15 @@
     $vid = taxonomy_vocabulary_machine_name_load('features')->vid;
     $tree = taxonomy_get_tree($vid, 0, null, false);
 
-    $custom_tree = gpii_saa_custom_build_custom_tree($node->field_features_primary['und'], $tree, 'field_features_primary', array('cascade' => true));
+    $custom_tree = gpii_saa_custom_build_custom_tree($node->field_features_primary['und'], $tree, 'field_features_primary', array('cascade' => true, 'climb' => true));
 
     if ($custom_tree) {
       print $custom_tree;
-    }
-    else {
+    } else {
       print 'No primary features are currently associated with this product.';
     }
-    
-  ?>
+
+    ?>
 
 
 </section>
