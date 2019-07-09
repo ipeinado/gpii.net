@@ -406,12 +406,24 @@ body.page-search {
     border-right: 0;
     height: 3rem;
   }
+
+  .views-exposed-widget { 
+    float: none;
+    
+  }
+  .views-submit-button {
+    position: relative;
+    box-sizing: border-box; 
+  }
+
+
+
   .form-submit {
     height: 3rem;
-    position: absolute;
-    bottom: 1rem;
+    position: absolute;  
+    bottom: -2.5rem;
     right: 0;
-    z-index: 200;
+    z-index: 200; 
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-top-right-radius: 4px;
@@ -419,11 +431,18 @@ body.page-search {
     border-color: $color-gpii-sai-primary;
     border-left: 0;
   }
+ 
+  .views-reset-button {
+    #edit-reset {
+      border: 1px solid $color-gpii-med-gray; 
+    } 
+  }
+  
   .input-group {
     display: inline;
   }
   .input-group-addon {
-    padding: 0 0;
+    padding: 0 0; 
   }
   .dropdown {
     clear: both;
@@ -456,47 +475,47 @@ body.page-search {
 }
 
 .page-search, .page-guided-shopping-search {
-  .fullpage-loading {
-    display: none;
-    height: 100%;
-    width: 100%;
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    background-color: rgb(0, 0, 0); /* Black fallback color */
-    background-color: rgba(0, 0, 0, 0.8); /* Black w/opacity */
-    overflow-x: hidden; /* Disable horizontal scroll */
+  // .fullpage-loading {
+  //   display: none;
+  //   height: 100%;
+  //   width: 100%;
+  //   position: fixed; /* Stay in place */
+  //   z-index: 1000; /* Sit on top */
+  //   left: 0;
+  //   top: 0;
+  //   // background-color: rgb(0, 0, 0); /* Black fallback color */
+  //   // background-color: rgba(0, 0, 0, 0.1); /* Black w/opacity */
+  //   overflow-x: hidden; /* Disable horizontal scroll */
 
-    .lds-dual-ring {
-      display: inline-block;
-      position: relative;
-      top: calc(50% - 46px);
-      left: calc(50% - 46px);
-      width: 64px;
-      height: 64px;
-    }
-    .lds-dual-ring:after {
-      content: ' ';
-      display: block;
-      width: 64px;
-      height: 64px;
-      margin: 1px;
-      border-radius: 50%;
-      border: 5px solid $color-gpii-med-gray;
-      border-color: $color-gpii-med-gray transparent $color-gpii-med-gray transparent;
-      animation: lds-dual-ring 1.2s linear infinite;
-    }
-  }
+  //   .lds-dual-ring {
+  //     display: inline-block;
+  //     position: absolute;
+  //     top: 14rem;
+  //     right: 8rem;
+  //     width: 32px;
+  //     height: 32px;
+  //   }
+  //   .lds-dual-ring:after {
+  //     content: ' ';
+  //     display: block;
+  //     width: 32px;
+  //     height: 32px;
+  //     margin: 1px;
+  //     border-radius: 50%;
+  //     border: 3px solid $color-gpii-med-gray;
+  //     border-color: $color-gpii-med-gray transparent $color-gpii-med-gray transparent;
+  //     animation: lds-dual-ring 1.2s linear infinite;
+  //   }
+  // }
 
-  @keyframes lds-dual-ring {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+  // @keyframes lds-dual-ring {
+  //   0% {
+  //     transform: rotate(0deg);
+  //   }
+  //   100% {
+  //     transform: rotate(360deg);
+  //   }
+  // }
 
   .view-search {
     .view-header {
@@ -659,6 +678,21 @@ body.page-search {
   }
 
   .page-search-similar {
+
+    h1.page-header {
+      color: $color-gpii-dark-gray;
+      a {
+        color: $color-gpii-dark-gray;
+      }
+    }
+    h2.resultcount {
+      color: $color-gpii-sai-primary;
+      margin: 0;
+      text-align: center;
+      border: 1px solid $color-gpii-med-gray;
+      padding: 0.5rem 1.5rem;
+
+    }
     .view-search {
       .st-search {
         grid-template-columns: 1fr 1fr 1fr;
@@ -666,7 +700,15 @@ body.page-search {
 
       .resultcount { 
         grid-row: 1 / span 1;
-        grid-column: 1 / span 3;
+        grid-column: 3 / span 1;
+        justify-self: right;
+        margin-top: -1.5rem;
+      }
+
+      .similar-instructions {
+        grid-row: 1 / span 2;
+        grid-column: 1 / span 2;
+        align-self: center;
       }
 
       .alert {
