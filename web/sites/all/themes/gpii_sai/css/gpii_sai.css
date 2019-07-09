@@ -52,7 +52,7 @@
   position: relative; }
   #block-bean-search-method-button-standard #block-views-exp-search-page .form-submit {
     position: absolute;
-    bottom: 0.5rem;
+    bottom: -3.5rem;
     right: 1.6rem;
     z-index: 200;
     border-top-right-radius: 4px;
