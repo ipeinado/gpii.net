@@ -20,7 +20,7 @@
     var url = window.location.search;
 
     if (url.length === 0 && !$('#edit-search-api-views-fulltext').val()) {
-      $('.view-search .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
+      $('.view-search #block-block-2 ~ .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
       $('.st-search h2.resultcount').text('0 Results');
       if ( $(body).hasClass('page-search-similar') ) {   
         $('#block-block-2').append(
