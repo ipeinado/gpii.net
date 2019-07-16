@@ -758,6 +758,19 @@ body.page-search {
       
     }
   }
+
+  .view-display-id-page_3 {
+    border: 1px solid $color-gpii-med-gray;
+    border-radius: 10px;
+    padding-bottom: 1rem;
+    background-color:$color-gpii-light-gray;
+    background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
+    background-image: linear-gradient(top,  #f6f8f9 0%,#e5ebee 31%,#d7dee3 99%,#f5f7f9 100%);
+
+    .view-footer {
+      margin: 0 2rem; 
+    }
+  }
 }
 
 #gpii-saa-custom-similar > div {
