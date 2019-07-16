@@ -760,6 +760,37 @@ body.page-search {
   }
 }
 
+#gpii-saa-custom-similar > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  .form-item-product {
+    flex: 0 0 80%; 
+  }
+  .form-submit {
+    flex: 0 0 18%; 
+
+  }
+  .select2-container .select2-selection--single, .form-submit {
+    height: 3rem;
+    margin-bottom: 1rem;
+  }  
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 42px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 42px;
+  }
+  
+}
+
+.page-similar .select2-container .select2-dropdown { 
+  margin-top: -7em;
+}
+
 /* Operating Systems facet filter styles */
 .facetapi-facet-field-operating-system {
   list-style: none;
@@ -2758,21 +2789,6 @@ div.discontinued {
 .form-control.form-file {
   height: auto;
 }
-.form-control.chosen-container {
-  height: auto;
-  padding: 0;
-  border: none;
-  a {
-    div {
-      top: 3px;
-    }
-    background: none;
-    padding: 1rem;
-    span {
-      margin-top: -0.8rem;
-    }
-  }
-}
 
 .callout {
   border-width: 1px 1px 1px 5px;
@@ -2802,6 +2818,19 @@ div.discontinued {
     font-weight: bold;
   }
 }
+
+/**
+ * Select 2 Module Overrides
+ * (adjusts for bootstrap fixed header)
+ */
+
+.select2-container {
+  .select2-dropdown { 
+    margin-top: -6em;
+  }
+}
+
+
 
 /**
  * Assigned Tasks View

@@ -638,8 +638,9 @@ class SearchApiSolrConnection implements SearchApiSolrConnectionInterface {
     if ($this->stream_context) {
       $options['context'] = $this->stream_context;
     }
-
+    //drupal_set_message(check_plain($url)); // <-- Add this line.
     $result = drupal_http_request($url, $options);
+    //drupal_set_message(check_plain($result->data)); // <-- Add this line.
 
     $result->status_message = isset($result->status_message) ? $result->status_message : '';
     if (!isset($result->code) || $result->code < 0) {
