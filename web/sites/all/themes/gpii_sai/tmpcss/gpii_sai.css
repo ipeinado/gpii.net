@@ -559,6 +559,9 @@ body.page-search .view-search {
     line-height: 42px; }
   #gpii-saa-custom-similar > div .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 42px; }
+  #gpii-saa-custom-similar > div .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #636161;
+    font-style: italic; }
 
 .page-similar .select2-container .select2-dropdown {
   margin-top: -7em; }

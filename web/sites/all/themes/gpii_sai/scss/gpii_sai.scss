@@ -797,6 +797,11 @@ body.page-search {
   .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 42px;
   }
+
+  .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: rgb(99, 97, 97);
+    font-style: italic;
+  }
   
 }
 
