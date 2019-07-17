@@ -575,7 +575,7 @@ body.page-search .view-search {
     padding-bottom: 1rem;
     background-color: #eceeec;
     background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(top), color-stop(0%, #f6f8f9), color-stop(31%, #e5ebee), color-stop(99%, #d7dee3), to(#f5f7f9));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f8f9), color-stop(31%, #e5ebee), color-stop(99%, #d7dee3), to(#f5f7f9));
     background-image: -webkit-linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%);
     background-image: -o-linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%);
     background-image: linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%); }
