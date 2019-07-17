@@ -21,18 +21,7 @@
 
     if (url.length === 0 && !$('#edit-search-api-views-fulltext').val()) {
       $('.view-search #block-block-2 ~ .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
-      $('.st-search h2.resultcount').text('0 Results');
-      if ( $(body).hasClass('page-search-similar') ) {   
-        $('#block-block-2').append(
-          '<p style="margin-top: 0.5rem">Please choose one or more product category or feature to view results.</p>'
-        );
-      }
-      else {
-        $('#block-block-2').append(
-          '<p style="margin-top: 0.5rem">Please enter one or more search terms to start your search.</p>'
-        );
-      }
-      
+      $('.st-search h2.resultcount').text('0 Results');      
     }
 
     // Event for Dropdowns
