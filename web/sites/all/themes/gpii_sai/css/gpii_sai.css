@@ -464,6 +464,19 @@ body.page-search .view-search {
         grid-row-start: col1;
         grid-column-end: col2; }
 
+.page-search-similar .view-display-id-page_3 {
+  border: 1px solid #b2b2b2;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #eceeec;
+  background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(top), color-stop(0%, #f6f8f9), color-stop(31%, #e5ebee), color-stop(99%, #d7dee3), to(#f5f7f9));
+  background-image: -webkit-linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%);
+  background-image: -o-linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%);
+  background-image: linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%); }
+  .page-search-similar .view-display-id-page_3 .view-footer {
+    margin: 0 2rem; }
+
 @media (min-width: 992px) {
   .page-search .view-search .st-search, .page-guided-shopping-search .view-search .st-search {
     display: grid;
@@ -518,6 +531,8 @@ body.page-search .view-search {
   .page-search .view-search #block-facetapi-kasogbyww1delj6z3ohdnmu2yg0nrm0m, .page-guided-shopping-search .view-search #block-facetapi-kasogbyww1delj6z3ohdnmu2yg0nrm0m {
     grid-row: 1 / span 6;
     grid-column: 4 / span 1; }
+  .page-search-similar .view-display-id-page_3 {
+    padding: 0 0 1rem 0; }
   .page-search-similar h1.page-header {
     color: #2c3849; }
     .page-search-similar h1.page-header a {
@@ -575,7 +590,7 @@ body.page-search .view-search {
     padding-bottom: 1rem;
     background-color: #eceeec;
     background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(top), color-stop(0%, #f6f8f9), color-stop(31%, #e5ebee), color-stop(99%, #d7dee3), to(#f5f7f9));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f8f9), color-stop(31%, #e5ebee), color-stop(99%, #d7dee3), to(#f5f7f9));
     background-image: -webkit-linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%);
     background-image: -o-linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%);
     background-image: linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%); }
