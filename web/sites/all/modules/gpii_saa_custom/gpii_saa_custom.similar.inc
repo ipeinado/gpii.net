@@ -25,7 +25,7 @@ function similar_search_form() {
   // Add matches to $matches.
   foreach ($return as $row) {
     $match = check_plain($row->title);
-    $matches[$row->nid] = $match;
+    $matches[$row->nid] = html_entity_decode($match, ENT_QUOTES);
   }
 
   // Return for JS.
@@ -37,7 +37,9 @@ function similar_search_form() {
     '#options' => $matches,
     '#empty_option' => t('Choose a product from our database'),
     '#multiple'     => 0,
-    '#select2' => array(),
+    '#select2' => array(
+      'allowClear' => TRUE,
+    ),
   );
   $form['submit'] = array(
     '#type' => 'submit',
