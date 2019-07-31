@@ -9,6 +9,10 @@ require __DIR__ . '/../../../vendor/autoload.php';
 
 use Google\Cloud\Translate\TranslateClient;
 
+// Include browse virtual store functions.
+module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.similar');
+
+
 /**
  *
  */
@@ -79,6 +83,9 @@ function gpii_saa_custom_block_info() {
   $blocks['test_tree'] = array(
     'info' => t('Test Tree'),
   );
+  $blocks['similar_products'] = array(
+    'info' => t('Find Similar Products'),
+  );
 
   return $blocks;
 }
@@ -108,6 +115,10 @@ function gpii_saa_custom_block_view($delta = '') {
 
     case 'test_tree':
       $block['content'] = test_tree_view();
+      break;
+
+    case 'similar_products':
+      $block['content'] = similar_products_view();
       break;
   }
 
@@ -389,6 +400,8 @@ function gpii_saa_custom_list_child_shopping_terms($vid, $tid, $vdisplay) {
   return $li;
 
 }
+
+
 
 /**
  *
@@ -3132,9 +3145,7 @@ function gpii_saa_custom_init() {
  *
  */
 function gpii_saa_custom_similar() {
-  // Include browse virtual store functions.
-  module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.similar');
-  return similar_search_form();
+    return similar_search_form();
 }
 
 /**
@@ -3695,3 +3706,6 @@ function gpii_saa_custom_format_taxonomy_into_facet_query_array($taxonomy_field,
   }
   return $facet_query;
 }
+
+
+
