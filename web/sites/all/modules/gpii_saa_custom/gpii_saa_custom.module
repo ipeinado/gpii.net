@@ -3528,7 +3528,19 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
   }
 
   $custom_tree = '';
+
   if (count($term_info) != 0) {
+
+    if ($options['selectAll']) {
+      $selectAll_link = gpii_saa_custom_select_all_facets_link($taxonomy_field, $field_name);
+
+      $custom_tree .= '<a href="' . $selectAll_link . '" class="btn-select-all">+ Select All</a> ';
+    }
+
+    if ($options['unselectAll']) {
+      $unselectAll_link = gpii_saa_custom_unselect_all_facets_link($field_name);
+      $custom_tree .= '<a href="' . $unselectAll_link . '" class="btn-unselect-all">- Unselect All</a>';
+    }
 
     $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';
 
@@ -3699,12 +3711,45 @@ function gpii_saa_custom_climb_facet_links($facet_array, $tid, $field_name) {
 /**
  *
  */
-function gpii_saa_custom_format_taxonomy_into_facet_query_array($taxonomy_field, $field_name) {
-  $facet_query = [];
+function gpii_saa_custom_select_all_facets_link($taxonomy_field, $field_name) {
+  $url_base = $_GET['q'];
+  $facet_array = $_GET['f'];
+
+  $get_copy = $_GET;
+  unset($get_copy['q']);
+
   foreach ($taxonomy_field as $key => $value) {
-    $facet_query[] = $field_name . ':' . $value['tid'];
+    $tid = $value['tid'];
+    $match_array = preg_grep('/' . $tid . '/', $facet_array);
+    if (count($match_array) == 0) {
+      $get_copy['f'][] = $field_name . ':' . $tid;
+    }
   }
-  return $facet_query;
+
+  $facet_link = '/' . $url_base . '?' . http_build_query($get_copy);
+
+  return $facet_link;
+}
+
+/**
+ *
+ */
+function gpii_saa_custom_unselect_all_facets_link($field_name) {
+  $url_base = $_GET['q'];
+
+  $get_copy = $_GET;
+  unset($get_copy['q']);
+
+  foreach ($get_copy['f'] as $key => $value) {
+    $is_match = preg_match('/' . $field_name . '/', $value);
+    if ($is_match) {
+      unset($get_copy['f'][$key]);
+    }
+  }
+
+  $facet_link = '/' . $url_base . '?' . http_build_query($get_copy);
+
+  return $facet_link;
 }
 
 
