@@ -3530,16 +3530,28 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
   $custom_tree = '';
 
   if (count($term_info) != 0) {
+    
+    if ($field_name == 'field_product_categories1') {
+      $select_supplementary = 'Product Categories';
+    }
+
+    elseif ($field_name == '') {
+      $select_supplementary = 'Primary Features';
+    }
+
+    else {
+      $select_supplementary = '';
+    }
 
     if ($options['selectAll']) {
       $selectAll_link = gpii_saa_custom_select_all_facets_link($taxonomy_field, $field_name);
 
-      $custom_tree .= '<a href="' . $selectAll_link . '" class="btn-select-all">+ Select All</a> ';
+      $custom_tree .= '<a href="' . $selectAll_link . '" class="btn btn-xs btn-default btn-select-all">Select All <span class="sr-only">' . $select_supplementary . '</span></a> ';
     }
 
     if ($options['unselectAll']) {
       $unselectAll_link = gpii_saa_custom_unselect_all_facets_link($field_name);
-      $custom_tree .= '<a href="' . $unselectAll_link . '" class="btn-unselect-all">- Unselect All</a>';
+      $custom_tree .= '<a href="' . $unselectAll_link . '" class="btn btn-xs btn-default btn-unselect-all">Unselect All <span class="sr-only">' . $select_supplementary . '</span></a>';
     }
 
     $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';

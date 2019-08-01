@@ -626,15 +626,23 @@ body.page-search {
   }
 }
 .page-search-similar {
+  .btn-select-all, .btn-unselect-all {
+    margin-bottom: 0.5rem;
+    margin-right: 0.25rem;
+  }
   .view-display-id-page_3 {
     margin-bottom: 2rem;
-    border: 1px solid $color-gpii-med-gray;
+    border: 1px solid $color-gpii-med-gray; 
     border-radius: 10px;
     padding: 1rem;
     background-color:$color-gpii-light-gray;
     background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
     background-image: linear-gradient(top,  #f6f8f9 0%,#e5ebee 31%,#d7dee3 99%,#f5f7f9 100%);
-
+    .view-results {
+      .view-mode-search_results {
+        margin-bottom: 0;
+      }
+    }
     .view-footer {
       margin: 0 2rem; 
     }
@@ -3071,9 +3079,9 @@ body.page-product-taxonomy-edit {
     border-left: 3px solid $color-gpii-light-gray;
   }
 
-  & > ul:first-of-type {
+  & > ul:first-of-type { 
     border-top: 1px solid $gray-lighter;
-    padding-top: 1rem;
+    padding-top: 1rem; 
   }
 
   .taxonomy-link {

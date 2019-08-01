@@ -450,6 +450,10 @@ body.page-search .view-search {
         grid-row-start: col1;
         grid-column-end: col2; }
 
+.page-search-similar .btn-select-all, .page-search-similar .btn-unselect-all {
+  margin-bottom: 0.5rem;
+  margin-right: 0.25rem; }
+
 .page-search-similar .view-display-id-page_3 {
   margin-bottom: 2rem;
   border: 1px solid #b2b2b2;
@@ -458,6 +462,8 @@ body.page-search .view-search {
   background-color: #eceeec;
   background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
   background-image: linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%); }
+  .page-search-similar .view-display-id-page_3 .view-results .view-mode-search_results {
+    margin-bottom: 0; }
   .page-search-similar .view-display-id-page_3 .view-footer {
     margin: 0 2rem; }
 
