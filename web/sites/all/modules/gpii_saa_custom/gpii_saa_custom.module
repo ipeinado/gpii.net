@@ -2356,6 +2356,14 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    'gpii_saa_custom_fix_broken_taxonomy_parents' => array(
+      'type' => 'entity',
+      'label' => t('Fix broken taxonomy parents'),
+      'behavior' => array('changes_property'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
   );
 }
 
@@ -2800,6 +2808,54 @@ function gpii_saa_custom_image_import($uid) {
   }
   dsm($product->field_product_image['und']);
   return $markup;
+}
+
+/**
+ *
+ */
+function gpii_saa_custom_fix_broken_taxonomy_parents(&$entity) {
+  $currentTids = $entity->field_features_primary['und'];
+  $newTids = [];
+
+  // get and add all parents of currently selected terms
+  // Note: child tid is also included in result of taxonomy_get_parents_all
+  foreach ($currentTids as $value) {
+    $tid = $value['tid'];
+    $parents = taxonomy_get_parents_all($tid);
+    foreach ($parents as $parent) {
+      $ptid = $parent->tid;
+      // don't add term if already exists in array
+      if (!array_search($ptid, array_column($newTids, 'tid'))) {
+        array_push($newTids, $ptid);
+      }
+    }
+  }
+
+  $vocabulary = taxonomy_vocabulary_machine_name_load('features');
+  $tree = taxonomy_get_tree($vocabulary->vid);
+  $order = array_column($tree, 'tid');
+
+  // order terms in accordance to taxonomy tree
+  usort($newTids, function($a, $b) use ($order) {
+    return ((array_search($a, $order) > array_search($b, $order)) ? 1 : -1);
+  });
+
+  $newFieldValue = [];
+  foreach($newTids as $tid) {
+    array_push($newFieldValue, ['tid' => $tid]);
+  }
+
+  $entity->field_features_primary['und'] = $newFieldValue;
+
+  // also set any revisons that may exists
+  $revision_id = revisioning_get_latest_revision_id($entity->nid);
+  $latest = node_load($value->nid, $revision_id, reset);
+  if (!$latest->is_current) {
+    $latest->field_features_primary['und'] = $newFieldValue;
+    node_save($latest);
+  }
+
+  return $entity;
 }
 
 /**
