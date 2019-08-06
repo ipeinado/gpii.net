@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Default theme implementation to display a block.
@@ -48,35 +47,43 @@
 
 ?>
 
-<section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix" <?php print $attributes; ?>>
+<?php
+/**
+ * BBC: Check to see if the block we're about to render has a translation that matches the currently set language preference
+ */
+
+  // get a list of active languages
+  $languages = array_keys(language_list());
+  // remove the leading slash from the request
+  $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
+  // reduce the string to the first three characters
+  $currlanguage = substr($currlanguage, 0, 3);
+  //kpr($currlanguage);
+
+  // initialize a variable in case we need to tell Google Translate to skip this block
+  $skiptranslate = '';
+  // if the first three characters include a slash or is only two characters long (es, de, el), then add skiptranslate
+  if(strstr($currlanguage, '/') || (strlen($currlanguage) == 2)) {
+    $currlanguage = substr($currlanguage, 0, 2);
+    // ensure that the block we're rendering has a translation for one of the languages we support
+    if (in_array($currlanguage,$languages) && $block->i18n_mode == 1) {
+      $classes .= ' skiptranslate';
+    }
+  }
+
+?>
+<section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
   <?php print render($title_prefix); ?>
-  <?php if ($title) : ?>
-    <h3<?php print $title_attributes; ?>><?php print $title; ?></h3>
-    <?php endif; ?>
-    <?php print render($title_suffix); ?>
+  <?php if ($title): ?>
+    <?php if ($block->delta == 'KASoGBYWw1dELj6z3OHdNmu2Yg0nRm0M' && arg(1) == 'similar'): ?>
+      <h3<?php print $title_attributes; ?>><?php print $title; ?></h3>
+    <?php else: ?>
+      <h2<?php print $title_attributes; ?>><?php print $title; ?></h2>
+    <?php endif;?>
+  <?php endif;?>
+  <?php print render($title_suffix); ?>
 
-    <?php // print $content
-    ?>
-    <?php drupal_add_js(drupal_get_path('theme', 'gpii_sai') . '/js/custom_facet.js'); ?>
-    <?php
-
-    $path_args = explode('/', current_path());
-    $nid = $path_args[count($path_args) - 1];
-
-    $node = node_load($nid);
-    $vid = taxonomy_vocabulary_machine_name_load('features')->vid;
-    $tree = taxonomy_get_tree($vid, 0, null, false);
-
-    $custom_tree = gpii_saa_custom_build_custom_tree($node->field_features_primary['und'], $tree, 'field_features_primary', array('cascade' => true, 'climb' => true, 'selectAll' => true, 'unselectAll' => true));
-
-    if ($custom_tree) {
-      print $custom_tree;
-    } else {
-      print 'No primary features are currently associated with this product.';
-    }
-
-    ?>
-
+  <?php print $content ?>
 
 </section>
