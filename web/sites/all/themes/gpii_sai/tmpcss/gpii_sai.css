@@ -454,18 +454,60 @@ body.page-search .view-search {
   margin-bottom: 0.5rem;
   margin-right: 0.25rem; }
 
-.page-search-similar .view-display-id-page_3 {
-  margin-bottom: 2rem;
+.page-search-similar .starting-point {
+  margin-top: 0;
+  margin-bottom: 3rem;
   border: 1px solid #b2b2b2;
   border-radius: 10px;
-  padding: 1rem;
+  padding-bottom: 1rem;
   background-color: #eceeec;
   background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
-  background-image: linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%); }
-  .page-search-similar .view-display-id-page_3 .view-results .view-mode-search_results {
-    margin-bottom: 0; }
-  .page-search-similar .view-display-id-page_3 .view-footer {
-    margin: 0 2rem; }
+  background-image: linear-gradient(to bottom, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%); }
+  .page-search-similar .starting-point .view-mode-search_results {
+    margin: 1.5rem 2rem 0; }
+  .page-search-similar .starting-point .starting-point-footer {
+    margin: 0 2rem;
+    text-align: center;
+    border-top: 1px solid #b2b2b2; }
+    .page-search-similar .starting-point .starting-point-footer p {
+      margin-bottom: 0;
+      margin-top: 0.5rem;
+      font-size: 95%;
+      font-style: oblique; }
+
+.page-search-similar h1.page-header {
+  margin-bottom: 0;
+  color: #2c3849; }
+  .page-search-similar h1.page-header a {
+    color: #2c3849; }
+
+.page-search-similar .resultcount {
+  color: #000;
+  width: 100%;
+  margin: 0 0 1rem;
+  text-align: left;
+  border-left: 4px solid #00A91C;
+  background-color: #ECF3EC;
+  padding: .1rem 1.5rem 0.1rem; }
+  .page-search-similar .resultcount h2 {
+    margin-top: 1rem;
+    font-size: 170%; }
+
+.page-search-similar .nextsteps {
+  background-color: #faf3d1;
+  border-left: 4px solid #ffbe2e; }
+
+.page-search-similar .characteristics {
+  border: 1px solid #e5e5e5;
+  padding: 0 1.5rem 1rem; }
+  .page-search-similar .characteristics h2 {
+    background-color: #eceeec;
+    background-color: #eceeec;
+    margin: 0;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding: 1rem 1.5rem 0.8rem;
+    font-size: 140%; }
 
 @media (min-width: 992px) {
   .page-search .view-search .st-search, .page-guided-shopping-search .view-search .st-search {
@@ -500,34 +542,8 @@ body.page-search .view-search {
   .page-search .view-search #block-facetapi-kasogbyww1delj6z3ohdnmu2yg0nrm0m, .page-guided-shopping-search .view-search #block-facetapi-kasogbyww1delj6z3ohdnmu2yg0nrm0m {
     grid-row: 1 / span 6;
     grid-column: 4 / span 1; }
-  .page-search-similar .view-display-id-page_3 {
-    padding: 0 0 1rem 0; }
-    .page-search-similar .view-display-id-page_3 .view-footer {
-      text-align: center;
-      border-top: 1px solid #b2b2b2; }
-      .page-search-similar .view-display-id-page_3 .view-footer p {
-        margin-bottom: 0;
-        margin-top: 0.5rem;
-        font-size: 95%;
-        font-style: oblique; }
   .page-search-similar h1.page-header {
-    color: #2c3849; }
-    .page-search-similar h1.page-header a {
-      color: #2c3849; }
-  .page-search-similar .resultcount {
-    color: #000;
-    width: 100%;
-    margin: 0 0 1rem;
-    text-align: left;
-    border-left: 4px solid #00A91C;
-    background-color: #ECF3EC;
-    padding: .1rem 1.5rem 0.1rem; }
-    .page-search-similar .resultcount h2 {
-      margin-top: 1rem;
-      font-size: 170%; }
-  .page-search-similar .nextsteps {
-    background-color: #faf3d1;
-    border-left: 4px solid #ffbe2e; }
+    margin-bottom: 1rem; }
   .page-search-similar .view-search .st-search {
     grid-template-columns: 1fr 1fr 1fr; }
   .page-search-similar .view-search .resultcount {
@@ -536,8 +552,6 @@ body.page-search .view-search {
     justify-self: left;
     margin-top: -1.5rem; }
   .page-search-similar .view-search .characteristics {
-    border: 1px solid #e5e5e5;
-    padding: 0 1.5rem 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-row: 2 / span 1;
@@ -546,13 +560,7 @@ body.page-search .view-search {
     column-gap: 3rem; }
     .page-search-similar .view-search .characteristics h2 {
       grid-row: 1 / span 1;
-      grid-column: 1 / span 3;
-      background-color: #eceeec;
-      margin: 0;
-      margin-left: -1.5rem;
-      margin-right: -1.5rem;
-      padding: 1rem 1.5rem 0.8rem;
-      font-size: 140%; }
+      grid-column: 1 / span 3; }
     .page-search-similar .view-search .characteristics #block-block-3 {
       grid-row: 2 / span 1;
       grid-column: 1 / span 1; }
@@ -583,19 +591,9 @@ body.page-search .view-search {
     margin-top: 2rem;
     grid-row: 7 / span 1;
     grid-column: 1 / span 3; }
-  .view-display-id-page_3 {
+  .starting-point {
     grid-row: 6 / span 1;
-    grid-column: 1 / span 3;
-    border: 1px solid #b2b2b2;
-    border-radius: 10px;
-    padding-bottom: 1rem;
-    background-color: #eceeec;
-    background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
-    background-image: linear-gradient(top, #f6f8f9 0%, #e5ebee 31%, #d7dee3 99%, #f5f7f9 100%); }
-    .view-display-id-page_3 .view-results {
-      margin: 1.5rem 2rem 0; }
-    .view-display-id-page_3 .view-footer {
-      margin: 0 2rem; } }
+    grid-column: 1 / span 3; } }
 
 #gpii-saa-custom-similar > div {
   display: flex;

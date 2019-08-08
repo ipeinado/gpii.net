@@ -630,27 +630,75 @@ body.page-search {
     margin-bottom: 0.5rem;
     margin-right: 0.25rem;
   }
-  .view-display-id-page_3 {
-    margin-bottom: 2rem;
-    border: 1px solid $color-gpii-med-gray; 
+
+  .starting-point {
+    margin-top: 0;
+    margin-bottom: 3rem;
+    border: 1px solid $color-gpii-med-gray;
     border-radius: 10px;
-    padding: 1rem;
+    padding-bottom: 1rem;
     background-color:$color-gpii-light-gray;
     background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
-    background-image: linear-gradient(top,  #f6f8f9 0%,#e5ebee 31%,#d7dee3 99%,#f5f7f9 100%);
-    .view-results {
-      .view-mode-search_results {
+    background-image: linear-gradient(to bottom,  #f6f8f9 0%,#e5ebee 31%,#d7dee3 99%,#f5f7f9 100%);
+    .view-mode-search_results {
+      margin: 1.5rem 2rem 0; 
+    }
+    .starting-point-footer {
+      margin: 0 2rem; 
+      text-align: center;
+      border-top: 1px solid $color-gpii-med-gray; 
+      p {
         margin-bottom: 0;
+        margin-top: 0.5rem;
+        font-size: 95%;
+        font-style: oblique;
       }
     }
-    .view-footer {
-      margin: 0 2rem; 
+  }
+
+  h1.page-header {
+    margin-bottom: 0;
+    color: $color-gpii-dark-gray;
+    a {
+      color: $color-gpii-dark-gray;
     }
+  }
+  .resultcount {
+    color: #000;
+    width: 100%;
+    margin: 0 0 1rem;
+    text-align: left;
+    border-left: 4px solid #00A91C;
+    background-color: #ECF3EC;
+    padding: .1rem 1.5rem 0.1rem;
+    h2 {
+      margin-top: 1rem;
+      font-size: 170%;
+    }
+  } 
+  .nextsteps {
+    background-color: #faf3d1;
+    border-left: 4px solid #ffbe2e;
+  }
+  .characteristics {
+    border: 1px solid $color-gpii-gray;
+    padding: 0 1.5rem 1rem;
+    h2 {
+      background-color: $color-gpii-light-gray;
+      background-color: $color-gpii-light-gray;
+      margin: 0;
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      padding: 1rem 1.5rem 0.8rem;
+      font-size: 140%;
+    }
+  
   }
 }
 
 
 @media (min-width: $screen-md) {
+  
   .page-search, .page-guided-shopping-search {
     .view-search {
       .st-search {
@@ -708,42 +756,8 @@ body.page-search {
   }
 
   .page-search-similar {
-    .view-display-id-page_3 {
-      padding: 0 0 1rem 0;
-      .view-footer {
-        text-align: center;
-        border-top: 1px solid $color-gpii-med-gray; 
-        p {
-          margin-bottom: 0;
-          margin-top: 0.5rem;
-          font-size: 95%;
-          font-style: oblique;
-        }
-      }
-    }
-
     h1.page-header {
-      color: $color-gpii-dark-gray;
-      a {
-        color: $color-gpii-dark-gray;
-      }
-    }
-    .resultcount {
-      color: #000;
-      width: 100%;
-      margin: 0 0 1rem;
-      text-align: left;
-      border-left: 4px solid #00A91C;
-      background-color: #ECF3EC;
-      padding: .1rem 1.5rem 0.1rem;
-      h2 {
-        margin-top: 1rem;
-        font-size: 170%;
-      }
-    } 
-    .nextsteps {
-      background-color: #faf3d1;
-      border-left: 4px solid #ffbe2e;
+      margin-bottom: 1rem;
     }
     .view-search {
       .st-search {
@@ -757,10 +771,7 @@ body.page-search {
          margin-top: -1.5rem;
       }
 
-
       .characteristics { 
-        border: 1px solid $color-gpii-gray;
-        padding: 0 1.5rem 1rem;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-row: 2 / span 1;
@@ -770,12 +781,6 @@ body.page-search {
         h2 {
           grid-row: 1 / span 1;
           grid-column: 1 / span 3;
-          background-color: $color-gpii-light-gray;
-          margin: 0;
-          margin-left: -1.5rem;
-          margin-right: -1.5rem;
-          padding: 1rem 1.5rem 0.8rem;
-          font-size: 140%;
         }
         #block-block-3 {
           grid-row: 2 / span 1;
@@ -832,21 +837,9 @@ body.page-search {
     }
   }
 
-  .view-display-id-page_3 {
+  .starting-point {  
     grid-row: 6 / span 1;
     grid-column: 1 / span 3;
-    border: 1px solid $color-gpii-med-gray;
-    border-radius: 10px;
-    padding-bottom: 1rem;
-    background-color:$color-gpii-light-gray;
-    background: filter-gradient(#f6f8f9, #f5f7f9, vertical);
-    background-image: linear-gradient(top,  #f6f8f9 0%,#e5ebee 31%,#d7dee3 99%,#f5f7f9 100%);
-    .view-results {
-      margin: 1.5rem 2rem 0; 
-    }
-    .view-footer {
-      margin: 0 2rem; 
-    }
   }
 }
 
