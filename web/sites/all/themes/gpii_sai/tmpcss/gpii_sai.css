@@ -2283,7 +2283,7 @@ body.page-product-taxonomy-edit #main-container {
   margin: 2em 0; }
   .similar-products-wrap svg {
     width: 100%;
-    max-width: 25em; }
+    max-width: 30em; }
     .similar-products-wrap svg:hover {
       filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6));
       cursor: pointer; }
