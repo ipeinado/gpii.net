@@ -1529,6 +1529,7 @@ function gpii_saa_custom_list_sources($uid) {
             CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
             CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
             CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+            CURLOPT_SSL_VERIFYPEER => FALSE,
 
             CURLOPT_HTTPHEADER => array(
               "accept: application/json",
@@ -1543,16 +1544,18 @@ function gpii_saa_custom_list_sources($uid) {
     curl_close($curl);
 
     if ($err) {
-      // dpm("cURL Error #:" . $err);.
+      //dpm("cURL Error \: " . $err);
+      
     }
     else {
-      // dpm($response);
+      //dpm($response);
       variable_set('UL_API_LOGGEDIN', time());
     }
   }
 
   if ($source) {
     // $markup =  '<p>We have a source specified.</p>';
+    $markup = '';
   }
   else {
     $markup = '<p>';
@@ -1586,6 +1589,7 @@ function gpii_saa_custom_list_sources($uid) {
             CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
             CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
             CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+            CURLOPT_SSL_VERIFYPEER => FALSE,
 
             CURLOPT_HTTPHEADER => array(
               "accept: application/json",
@@ -1599,10 +1603,10 @@ function gpii_saa_custom_list_sources($uid) {
     curl_close($curl);
 
     if ($err) {
-      // dpm("cURL Error #:" . $err);.
+      //dpm("cURL Error \: " . $err);
     }
     else {
-      // dpm($response);
+      //dpm($response);
     }
 
     $response = json_decode($response);
@@ -2656,6 +2660,7 @@ function gpii_saa_custom_uid_import($nid) {
           CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
           CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
           CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+          CURLOPT_SSL_VERIFYPEER => FALSE,
 
           CURLOPT_HTTPHEADER => array(
             "accept: application/json",
@@ -2691,6 +2696,7 @@ function gpii_saa_custom_uid_import($nid) {
           CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
           CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
           CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+          CURLOPT_SSL_VERIFYPEER => FALSE,
 
           CURLOPT_HTTPHEADER => array(
             "accept: application/json",
@@ -2995,6 +3001,7 @@ function gpii_saa_custom_delete_records_vbo($uid) {
           CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
           CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
           CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+          CURLOPT_SSL_VERIFYPEER => FALSE,
           CURLOPT_HTTPHEADER => array(
             "accept: application/json",
           ),
@@ -3272,6 +3279,7 @@ function gpii_saa_custom_uid_redirect($uid) {
               CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
               CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
               CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+              CURLOPT_SSL_VERIFYPEER => FALSE,
 
               CURLOPT_HTTPHEADER => array(
                 "accept: application/json",
@@ -3313,6 +3321,7 @@ function gpii_saa_custom_uid_redirect($uid) {
               CURLOPT_COOKIE => "connect.sid=s%253A0TlzsZZs_kSUqlJ-kNDv8w4mXG2pAkHn.fOJBQHuaanPi5hBgQUASol0%252FGtcg48MsOdRjAdLqch8",
               CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
               CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+              CURLOPT_SSL_VERIFYPEER => FALSE,
               CURLOPT_HTTPHEADER => array(
                 "accept: application/json",
               ),
