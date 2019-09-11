@@ -2478,8 +2478,8 @@ body.page-product-taxonomy-edit #main-container {
 .similar-products-wrap {
   margin: 2em 0; }
   .similar-products-wrap svg {
-    width: 20em;
-    max-width: 100%; }
+    width: 100%;
+    max-width: 25em; }
     .similar-products-wrap svg:hover {
       -webkit-filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6));
               filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.6));
