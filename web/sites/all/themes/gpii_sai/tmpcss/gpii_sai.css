@@ -623,6 +623,9 @@ body.page-search .view-search {
 .page-similar .select2-container .select2-dropdown {
   margin-top: -7em; }
 
+.not-logged-in.page-similar .select2-container .select2-dropdown {
+  margin-top: -8em; }
+
 /* Operating Systems facet filter styles */
 .facetapi-facet-field-operating-system {
   list-style: none;

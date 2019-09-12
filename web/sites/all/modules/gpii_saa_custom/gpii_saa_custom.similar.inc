@@ -39,6 +39,8 @@ function similar_search_form() {
     '#multiple'     => 0,
     '#select2' => array(
       'allowClear' => TRUE,
+      'closeOnSelect' => TRUE,
+      'minimumInputLength' => 1,
     ),
   );
   $form['submit'] = array(
