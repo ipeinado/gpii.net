@@ -874,8 +874,27 @@ body.page-search {
     color: rgb(99, 97, 97);
     font-style: italic;
   }
+
+  
+  
   
 }
+
+// .select2-container--default .select2-search--dropdown .select2-search__field:not(:placeholder-shown) {
+//   animation: blink-empty 1.5s infinite;
+//   background-image: linear-gradient($color-gpii-med-gray,$color-gpii-dark-gray);
+//   background-position: 4px  center;
+//   background-repeat: no-repeat;
+//   background-size:1px 1.4em;
+//   @keyframes blink-empty {
+//     30%, 75%{background-size:1px 1.4em;}
+//     50% {background-size: 0 1.4em;}
+//   }
+//   &:focus {
+//     background-image: none;
+//   }
+// }
+
 
 .page-similar .select2-container .select2-dropdown { 
   margin-top: -7em;
