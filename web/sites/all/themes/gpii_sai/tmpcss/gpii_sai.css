@@ -530,7 +530,7 @@ body.page-search .view-search {
   .page-guided-shopping-search .view-search #block-views-exp-search-page-1,
   .page-guided-shopping-search .view-search #block-views-exp-search-page-2 {
     order: 2; }
-  .page-search .view-search h2, .page-guided-shopping-search .view-search h2 {
+  .page-search .view-search h2, .page-search .view-search .resultcount, .page-guided-shopping-search .view-search h2, .page-guided-shopping-search .view-search .resultcount {
     order: 3; }
   .page-search .view-search #block-block-2, .page-guided-shopping-search .view-search #block-block-2 {
     order: 4; }

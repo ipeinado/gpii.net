@@ -554,7 +554,7 @@ body.page-search .view-search {
     -webkit-order: 2;
         -ms-flex-order: 2;
             order: 2; }
-  .page-search .view-search h2, .page-guided-shopping-search .view-search h2 {
+  .page-search .view-search h2, .page-search .view-search .resultcount, .page-guided-shopping-search .view-search h2, .page-guided-shopping-search .view-search .resultcount {
     -webkit-box-ordinal-group: 4;
     -webkit-order: 3;
         -ms-flex-order: 3;
