@@ -79,11 +79,11 @@
   <div class="container <?php print $skiptranslate; ?>">
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-24 search-method">
-  <a href="/search/"><img alt="Go to the Standard Search Page" src="/sites/saa.gpii.net/files/uploads/images/standardsearchcircle.png" /></a></div>
+  <a href="/search/"><img alt="Go to the Classic Search Page" src="/sites/saa.gpii.net/files/uploads/images/standardsearchcircle.png" /></a></div>
 
 <div class="col-lg-4 col-md-4 col-sm-24 search-method text-adjust">
   <h3>
-    <?php print t('Standard Search'); ?></h3>
+    <?php print t('Classic Search'); ?></h3>
   <p><?php print t('The world&#39;s most popular search method.'); ?></p></div>
 
 
