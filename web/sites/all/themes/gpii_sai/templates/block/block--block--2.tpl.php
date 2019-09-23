@@ -101,6 +101,7 @@
 
             $query = json_decode('{
               "qf": [
+                "tm_field_alternative_vocabulary_1^13",
                 "tm_field_alternative_vocabulary_2^2",
                 "tm_field_alternative_vocabulary_3^0.5",
                 "tm_field_alternative_vocabulary_4^0.2",
