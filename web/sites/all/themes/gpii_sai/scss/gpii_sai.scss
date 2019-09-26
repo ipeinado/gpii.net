@@ -1024,10 +1024,7 @@ body.page-search {
     padding: 0 0.85rem;
     height: 2.5rem;
   }
-  .btn-block {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
+  
   .btn.reset {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -1444,7 +1441,7 @@ body.node-type-product {
 }
 
 /**
- * Advanced Search Overrides
+ * Power Search Overrides
  */
 
 .tree-classic li {
@@ -1466,6 +1463,22 @@ body.node-type-product {
   }
 }
 
+#query-inner {
+  .clearall {
+    position: relative;
+    margin-bottom: 2rem;
+    a {
+      position: absolute;
+      right: 0;
+      max-width: 20rem;
+      width: 15%;
+    
+    }
+  }
+}
+
+
+
 .text-inverse {
   color: #fff;
 }
@@ -1475,13 +1488,11 @@ body.node-type-product {
 .label-default {
   background-color: #111;
 }
-.text-left .taxonomy-label {
+.label-product_category, .label-troubles {
   position: relative;
 }
-.text-right .taxonomy-label {
-  position: relative;
-}
-.text-right .taxonomy-label::before {
+
+.label-troubles::before {
   content: ' ';
   border-style: solid;
   border-width: 0.8rem 0 0.758rem 0.758rem;
@@ -1489,9 +1500,8 @@ body.node-type-product {
   border-color: transparent transparent transparent #000;
   position: absolute;
   right: -0.7rem;
-  top: 0.73rem;
 }
-.text-left .taxonomy-label::before {
+.label-product_category::before {
   content: ' ';
   border-style: solid;
   border-width: 0.8rem 0.758rem 0.758rem 0;
@@ -1499,7 +1509,7 @@ body.node-type-product {
   border-color: transparent #a72534 transparent transparent;
   position: absolute;
   left: -0.7rem;
-  top: 0.73rem;
+  //top: 0.73rem;
 }
 .label.taxonomy-label {
   margin: 0 1rem 0.25rem;
@@ -1541,6 +1551,7 @@ body.node-type-product {
 }
 .search-group {
   position: relative;
+  margin-bottom: 0.5rem;
 }
 .search-group > button {
   padding-right: 0.8rem;
