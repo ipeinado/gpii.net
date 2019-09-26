@@ -23,7 +23,7 @@
       $('.view-search #block-block-2 ~ .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
       $('.view-search:not(.view-display-id-page_2) .st-search h2.resultcount').text('0 Results');  
       $('.view-search.view-display-id-page_2 .st-search .resultcount').addClass('nextsteps');
-      $('.view-search.view-display-id-page_2 .st-search .resultcount h2').text('Select the characteristics (below) that you are most interested in'); //.after('<p>Next steps: Select the characteristics (listed below) that you are most interested in.</p>');
+      $('.view-search.view-display-id-page_2 .st-search .resultcount').remove();
     }
 
     // Event for Dropdowns

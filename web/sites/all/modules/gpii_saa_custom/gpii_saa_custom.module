@@ -3484,7 +3484,7 @@ function gpii_saa_custom_preprocess_page(&$variables) {
     //  gpii_saa_custom_search_similar_redirect($nid);
     // }
     $node = node_load($nid);
-    drupal_set_title('Products Similar to <em>' . $node->title . '</em>', PASS_THROUGH);
+    drupal_set_title('Find Products Similar to <em>' . $node->title . '</em>', PASS_THROUGH);
   }
 }
 
