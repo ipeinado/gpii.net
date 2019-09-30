@@ -540,13 +540,13 @@ body.page-search .view-search {
   .page-guided-shopping-search .view-search #block-views-exp-search-page-1,
   .page-guided-shopping-search .view-search #block-views-exp-search-page-2 {
     order: 2; }
-  .page-search .view-search h2, .page-search .view-search .resultcount, .page-guided-shopping-search .view-search h2, .page-guided-shopping-search .view-search .resultcount {
-    order: 3; }
-  .page-search .view-search #block-block-2, .page-guided-shopping-search .view-search #block-block-2 {
-    order: 4; }
-  .page-search .view-search .related-search-terms, .page-search .view-search .view-display-id-page_3, .page-guided-shopping-search .view-search .related-search-terms, .page-guided-shopping-search .view-search .view-display-id-page_3 {
-    order: 5; }
   .page-search .view-search #block-current-search-standard, .page-guided-shopping-search .view-search #block-current-search-standard {
+    order: 3; }
+  .page-search .view-search h2, .page-search .view-search .resultcount, .page-guided-shopping-search .view-search h2, .page-guided-shopping-search .view-search .resultcount {
+    order: 4; }
+  .page-search .view-search #block-block-2, .page-guided-shopping-search .view-search #block-block-2 {
+    order: 5; }
+  .page-search .view-search .related-search-terms, .page-search .view-search .view-display-id-page_3, .page-guided-shopping-search .view-search .related-search-terms, .page-guided-shopping-search .view-search .view-display-id-page_3 {
     order: 6; }
   .page-search .view-search .view-results,
   .page-search .view-search .view-empty, .page-guided-shopping-search .view-search .view-results,
@@ -1048,6 +1048,18 @@ body.node-type-product .term-tree-list .selected {
     max-width: 20rem;
     width: 18%; }
 
+#query-inner .reset {
+  margin-left: 1rem;
+  white-space: nowrap; }
+
+#query-filters {
+  background-color: #e5e5e5;
+  padding: 0 1.25rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75); }
+  #query-filters h2 {
+    margin-top: 0.9rem; }
+
 .text-inverse {
   color: #fff; }
 
@@ -1077,7 +1089,7 @@ body.node-type-product .term-tree-list .selected {
   left: -0.7rem; }
 
 .label.taxonomy-label {
-  margin: 0 1rem 0.25rem;
+  margin: 0 0.6rem 0.25rem;
   display: inline-block;
   white-space: normal;
   text-align: left;
@@ -1085,8 +1097,8 @@ body.node-type-product .term-tree-list .selected {
   line-height: inherit; }
   .label.taxonomy-label .fa.fa-close {
     position: absolute;
-    top: 0.34rem;
-    right: 0.35rem; }
+    top: 0.3rem;
+    right: 0.3rem; }
 
 .taxonomy-label.label-default {
   background-color: #111;

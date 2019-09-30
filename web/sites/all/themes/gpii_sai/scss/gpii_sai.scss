@@ -750,21 +750,23 @@ body.page-search {
         order: 2;
       }
 
-      h2, .resultcount {
+      #block-current-search-standard {
         order: 3;
       }
 
-      #block-block-2 {
+      h2, .resultcount {
         order: 4;
       }
 
-      .related-search-terms, .view-display-id-page_3 {
+      #block-block-2 {
         order: 5;
       }
 
-      #block-current-search-standard {
+      .related-search-terms, .view-display-id-page_3 {
         order: 6;
       }
+
+      
 
       .view-results,
       .view-empty {
@@ -1475,8 +1477,21 @@ body.node-type-product {
     
     }
   }
+  .reset {
+    margin-left: 1rem;
+    white-space: nowrap;
+  }
 }
 
+#query-filters {
+  background-color: $color-gpii-gray;
+  padding:  0 1.25rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+  h2 {
+    margin-top: 0.9rem;
+  }
+}
 
 
 .text-inverse {
@@ -1512,7 +1527,7 @@ body.node-type-product {
   //top: 0.73rem;
 }
 .label.taxonomy-label {
-  margin: 0 1rem 0.25rem;
+  margin: 0 0.6rem 0.25rem;
   display: inline-block;
   white-space: normal; //This allows labels to wrap to a second line, but is very inconsistent between Chrome and FF
   text-align: left;
@@ -1521,8 +1536,8 @@ body.node-type-product {
 
   .fa.fa-close {
     position: absolute;
-    top: 0.34rem;
-    right: 0.35rem;
+    top: 0.3rem;
+    right: 0.3rem;
   }
 }
 
