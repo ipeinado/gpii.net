@@ -495,29 +495,30 @@ body.page-search .view-search {
 
 .page-search-similar .characteristics {
   border: 1px solid #e5e5e5;
-  padding: 0 1.5rem 1rem; }
+  padding: 0; }
   .page-search-similar .characteristics h2 {
     background-color: #eceeec;
     background-color: #eceeec;
     margin: 0;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
     padding: 1rem 1.5rem 0.8rem;
     font-size: 130%; }
   .page-search-similar .characteristics .nextsteps {
-    background-color: #faf3d1;
-    width: 100%;
-    margin-right: -1.5rem; }
+    background-color: #faf3d1; }
   .page-search-similar .characteristics .instructions {
     background-color: #faf3d1;
     border-left: 2px solid #ffbe2e;
     font-size: 125%;
-    margin: 0 -1.5rem;
     padding: 1rem 1.5rem 0.8rem;
     font-weight: 600; }
+  .page-search-similar .characteristics .similar-instructions {
+    background-color: #faf3d1;
+    border-left: 2px solid #ffbe2e;
+    padding: 0 1.5rem 0.3rem; }
   .page-search-similar .characteristics .resultcount h2 {
     border: 2px solid #00A91C;
     background-color: #ECF3EC; }
+  .page-search-similar .characteristics .block {
+    padding-left: 1.5em; }
 
 .page-search-similar h2.results-2 {
   margin: 2rem 0 0 0.5rem; }
@@ -569,23 +570,6 @@ body.page-search .view-search {
     .page-search-similar .view-search .characteristics h2:first-of-type {
       grid-row: 1 / span 1;
       grid-column: 1 / span 3; }
-    .page-search-similar .view-search .characteristics .nextsteps {
-      grid-row: 2 / span 1;
-      grid-column: 1 / span 3;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      justify-self: left;
-      justify-items: baseline;
-      column-gap: 3rem;
-      width: 100%;
-      margin-right: -1.5rem !important; }
-      .page-search-similar .view-search .characteristics .nextsteps .instructions {
-        grid-row: 1 / span 1;
-        grid-column: 1 / span 2; }
-      .page-search-similar .view-search .characteristics .nextsteps .resultcount {
-        grid-row: 1 / span 1;
-        grid-column: 3 / span 1;
-        justify-self: right; }
     .page-search-similar .view-search .characteristics #block-block-3 {
       grid-row: 3 / span 1;
       grid-column: 1 / span 1; }
@@ -622,6 +606,27 @@ body.page-search .view-search {
   .starting-point {
     grid-row: 6 / span 1;
     grid-column: 1 / span 3; } }
+
+.nextsteps {
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 3;
+  display: grid;
+  padding: 0;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 3rem; }
+  .nextsteps .instructions {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 2;
+    order: 1; }
+  .nextsteps .resultcount {
+    grid-row: 1 / span 1;
+    grid-column: 3 / span 1;
+    order: 2; }
+  .nextsteps .similar-instructions {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 3;
+    width: 100%;
+    order: 3; }
 
 #gpii-saa-custom-similar > div {
   display: flex;
@@ -663,7 +668,9 @@ body.page-search .view-search {
   padding-left: 1rem; }
 
 .page-search-similar .block-facetapi .facetapi-checkbox {
-  margin-right: 0.4rem; }
+  margin-right: 0.4rem;
+  text-decoration: none !important;
+  color: black; }
 
 .related-search-terms {
   margin-top: 1rem;

@@ -23,8 +23,8 @@
       $('.view-search #block-block-2 ~ .view-results, ul.pagination, #block-block-2 .remote-filters').remove();
       $('.view-search:not(.view-display-id-page_2) .st-search h2.resultcount').text('0 Results');
       $('.view-search:not(.view-display-id-page_2) .st-search .resultcount h2').text('0 Results');   
-      $('.view-search.view-display-id-page_2 .st-search .resultcount').addClass('nextsteps');
-      $('.view-search.view-display-id-page_2 .st-search .resultcount').remove();
+      //$('.view-search.view-display-id-page_2 .st-search .resultcount').addClass('nextsteps');
+      $('.view-search.view-display-id-page_2 .st-search .resultcount, .view-search.view-display-id-page_2 .st-search .results-2').remove();
     }
 
     // Event for Dropdowns
