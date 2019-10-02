@@ -1638,11 +1638,11 @@ function gpii_saa_custom_list_sources($uid) {
         }
       }
 
-      // dpm($links);
+      //dpm($links);
       // If we only have one source link, take the user right to it.
       if (count($links) == 1) {
 
-        // Validate the URLs.
+        // Validate the URLs. Be sure to also update the case for more than 1 link below if this is changed.
         if (isset($links[0]['OriginalUrl'])) {
           $OriginalUrl = filter_var($links[0]['OriginalUrl'], FILTER_VALIDATE_URL);
         }
@@ -1671,11 +1671,26 @@ function gpii_saa_custom_list_sources($uid) {
           return '<p>No valid links to source databases for this record were found. Return to <a href="/node/' . $product->nid . '">' . $product->title . '</a>.';
         }
       }
-
+      $markup .= '<ul>';
       // Print the list of Source Records from the same database when we have more than one.
       // We don't actually get here if there's only one and the redirect above kicks in.
       foreach ($links as $key => $value) {
-        $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a>';
+        if (isset($value['OriginalUrl'])) {
+          $url = $value['OriginalUrl'];
+        }
+        elseif (isset($value['EnglishUrl'])) {
+          $url = $value['EnglishUrl'];
+        }
+
+        elseif (isset($value['SourceUrl'])) {
+          $url = $value['SourceUrl'];
+        }
+
+        else {
+          //@@
+        }
+
+        $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $url . '">' . $value['name'] . '</a>';
 
         if (isset($value->language)) {
           $markup .= ' (' . strtoupper(substr($value->language, 0, 2)) . ')';
@@ -1683,6 +1698,7 @@ function gpii_saa_custom_list_sources($uid) {
 
         $markup .= '</li>';
       }
+      $markup .= '</ul>';
     }
 
     // End source specified
