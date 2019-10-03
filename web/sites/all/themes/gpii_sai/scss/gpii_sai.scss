@@ -654,7 +654,7 @@ body.page-search {
     .instructions {     
         background-color: #faf3d1;
         border-left: 2px solid #ffbe2e;
-        font-size: 125%;
+        font-size: 115%;
         padding: 1rem 1.5rem 0.8rem;
         font-weight: 600;
     }
@@ -853,7 +853,7 @@ body.page-search {
   }
 }
 
-#gpii-saa-custom-similar > div {
+#gpii-saa-custom-similar #query-filters {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -861,10 +861,10 @@ body.page-search {
   justify-content: space-between;
   align-items: flex-end;
   .form-item-product {
-    flex: 0 0 80%; 
+    flex: 0 0 82%; 
   }
   .form-submit {
-    flex: 0 0 18%; 
+    flex: 0 1 17%; 
 
   }
   .select2-container .select2-selection--single, .form-submit {
@@ -882,9 +882,14 @@ body.page-search {
     color: rgb(99, 97, 97);
     font-style: italic;
   }
+  
+  p { 
+    font-weight: bold;
+    margin-top: 1rem
+  }
+  
 
   label {
-    font-weight: normal;
     margin-bottom: 1rem;
   }
 

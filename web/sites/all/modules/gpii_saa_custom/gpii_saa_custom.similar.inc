@@ -36,7 +36,7 @@ function similar_search_form() {
   // dpm($matches);
   $form = array();
   $form['intro'] = array(
-    '#markup' => '<p>This search method allows you to find products that are similar to a product you are already familiar with, but perhaps don\'t know about yet.</p>'
+    '#markup' => '<div id="query-filters"><p>This search method allows you to find products that are similar to a product you are already familiar with, but perhaps don\'t know about yet.</p>'
   );
   $form['product'] = array(
     '#title' => t('To get started, enter a product you are familiar with into the search box below.'),
@@ -54,6 +54,9 @@ function similar_search_form() {
     '#type' => 'submit',
     '#value' => 'Submit',
     '#submit' => array('similar_search_submit'),
+  );
+  $form['footer'] = array(
+    '#markup' => '</div>'
   );
   return $form;
 }
