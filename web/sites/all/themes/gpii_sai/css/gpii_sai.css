@@ -736,17 +736,18 @@ body.page-search .view-search {
 .facetapi-facet-field-operating-system {
   list-style: none;
   padding: 0; }
-  .facetapi-facet-field-operating-system input[type='checkbox'] {
-    margin-right: 0.5em; }
 
 .facetapi-checkbox {
-  margin-right: 0.4rem;
+  margin: 0 0.5rem;
   text-decoration: none !important;
   color: black; }
 
 .page-search-similar .block-facetapi ul {
   list-style-type: none;
   padding-left: 1rem; }
+
+.page-search-similar .block-facetapi ul.facetapi-facetapi-checkbox-links {
+  padding-left: 0.5rem; }
 
 .related-search-terms {
   margin-top: 1rem;

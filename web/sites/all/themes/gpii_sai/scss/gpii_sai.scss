@@ -918,14 +918,10 @@ body.page-search {
 .facetapi-facet-field-operating-system {
   list-style: none;
   padding: 0;
-
-  input[type='checkbox'] {
-    margin-right: 0.5em;
-  }
 }
 
 .facetapi-checkbox {
-  margin-right: 0.4rem;
+  margin: 0 0.5rem;
   text-decoration: none !important;
   color: black;
 }
@@ -935,6 +931,9 @@ body.page-search {
     ul {
       list-style-type: none;
       padding-left: 1rem;
+    }
+    ul.facetapi-facetapi-checkbox-links {
+      padding-left: 0.5rem;
     }
     
   }
