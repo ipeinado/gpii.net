@@ -739,14 +739,14 @@ body.page-search .view-search {
   .facetapi-facet-field-operating-system input[type='checkbox'] {
     margin-right: 0.5em; }
 
-.page-search-similar .block-facetapi ul {
-  list-style-type: none;
-  padding-left: 1rem; }
-
-.page-search-similar .block-facetapi .facetapi-checkbox {
+.facetapi-checkbox {
   margin-right: 0.4rem;
   text-decoration: none !important;
   color: black; }
+
+.page-search-similar .block-facetapi ul {
+  list-style-type: none;
+  padding-left: 1rem; }
 
 .related-search-terms {
   margin-top: 1rem;

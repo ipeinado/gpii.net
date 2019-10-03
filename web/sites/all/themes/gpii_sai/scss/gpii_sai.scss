@@ -924,20 +924,19 @@ body.page-search {
   }
 }
 
+.facetapi-checkbox {
+  margin-right: 0.4rem;
+  text-decoration: none !important;
+  color: black;
+}
+
 .page-search-similar {
   .block-facetapi {
     ul {
       list-style-type: none;
       padding-left: 1rem;
-      a {
-        
-      }
     }
-    .facetapi-checkbox {
-      margin-right: 0.4rem;
-      text-decoration: none !important;
-      color: black;
-    }
+    
   }
 }
 
