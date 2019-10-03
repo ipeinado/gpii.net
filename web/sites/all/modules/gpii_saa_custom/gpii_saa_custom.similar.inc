@@ -42,7 +42,7 @@ function similar_search_form() {
     '#title' => t('To get started, enter a product you are familiar with into the search box below.'),
     '#type' => 'select',
     '#options' => $matches,
-    '#empty_option' => t('Type in a product name or choose from teh list of product names'),
+    '#empty_option' => t('Type in a product name or choose from the list of product names'),
     '#multiple'     => 0,
     '#select2' => array(
       'allowClear' => TRUE,
