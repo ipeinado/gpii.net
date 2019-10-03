@@ -1085,7 +1085,7 @@ body.node-type-product .term-tree-list .selected {
 .label-default {
   background-color: #111; }
 
-.label-product_category, .label-troubles {
+.label-product_category, .label-troubles, .label-os {
   position: relative; }
 
 .label.taxonomy-label {
@@ -1195,6 +1195,9 @@ a.tree-label {
 
 #saa-app h2 {
   padding-top: 0.6rem; }
+
+#saa-app .power-left h2, #saa-app .power-right h2 {
+  margin-top: 0; }
 
 #saa-app h2.results {
   padding-top: 0.4rem;

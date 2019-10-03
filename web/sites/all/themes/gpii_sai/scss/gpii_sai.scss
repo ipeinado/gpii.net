@@ -1484,7 +1484,7 @@ body.node-type-product {
 .label-default {
   background-color: #111;
 }
-.label-product_category, .label-troubles {
+.label-product_category, .label-troubles, .label-os {
   position: relative;
 }
 
@@ -1635,11 +1635,15 @@ a.tree-label {
       border-color: #000;
     }
   }
-
+  
   h2 {
     padding-top: 0.6rem;
   }
-
+  .power-left, .power-right {
+    h2 {
+      margin-top: 0;
+    }
+  }
   h2.results {
     padding-top: 0.4rem;
     font-size: 2rem;
