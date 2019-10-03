@@ -421,8 +421,6 @@ body.page-search {
     box-sizing: border-box; 
   }
 
-
-
   .form-submit {
     height: 3rem;
     position: absolute;  
@@ -450,7 +448,8 @@ body.page-search {
     padding: 0 0; 
   }
   .dropdown {
-    clear: both;
+    //clear: top;
+    top: 3rem;
   }
 }
 
@@ -480,58 +479,12 @@ body.page-search {
 }
 
 .page-search, .page-guided-shopping-search {
-  // .fullpage-loading {
-  //   display: none;
-  //   height: 100%;
-  //   width: 100%;
-  //   position: fixed; /* Stay in place */
-  //   z-index: 1000; /* Sit on top */
-  //   left: 0;
-  //   top: 0;
-  //   // background-color: rgb(0, 0, 0); /* Black fallback color */
-  //   // background-color: rgba(0, 0, 0, 0.1); /* Black w/opacity */
-  //   overflow-x: hidden; /* Disable horizontal scroll */
-
-  //   .lds-dual-ring {
-  //     display: inline-block;
-  //     position: absolute;
-  //     top: 14rem;
-  //     right: 8rem;
-  //     width: 32px;
-  //     height: 32px;
-  //   }
-  //   .lds-dual-ring:after {
-  //     content: ' ';
-  //     display: block;
-  //     width: 32px;
-  //     height: 32px;
-  //     margin: 1px;
-  //     border-radius: 50%;
-  //     border: 3px solid $color-gpii-med-gray;
-  //     border-color: $color-gpii-med-gray transparent $color-gpii-med-gray transparent;
-  //     animation: lds-dual-ring 1.2s linear infinite;
-  //   }
-  // }
-
-  // @keyframes lds-dual-ring {
-  //   0% {
-  //     transform: rotate(0deg);
-  //   }
-  //   100% {
-  //     transform: rotate(360deg);
-  //   }
-  // }
 
   .view-search {
     .view-header {
       border-bottom: 1px solid $color-gpii-gray;
     }
   }
-
-  /* Styles for active facet filters */
-  // #views-exposed-form-search-page {
-  //   padding: 0;
-  // }
 
   #block-current-search-standard h2.block-title {
     color: black;
@@ -545,6 +498,8 @@ body.page-search {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    margin-left: 0.25rem;
+    margin-bottom: 0;
   }
 
   .current-search-item-active-items li {
@@ -596,6 +551,7 @@ body.page-search {
       border-right: 1px solid #ccc;
       border-radius: 4px;
     }
+    
   }
 
   /* remote filters block styles */
@@ -781,6 +737,9 @@ body.page-search {
       #block-facetapi-kasogbyww1delj6z3ohdnmu2yg0nrm0m {
         grid-row: 1 / span 6;
         grid-column: 4 / span 1;
+        h2 {
+          margin-top: 0;
+        }
       }
     }
   }
@@ -1499,7 +1458,7 @@ body.node-type-product {
 
 #query-filters {
   background-color: $color-gpii-gray;
-  padding:  0 1.25rem 1rem;
+  padding:  0 1.25rem 0.4rem;
   border-radius: 10px;
   box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
   h2 {
