@@ -35,11 +35,14 @@ function similar_search_form() {
   // Return for JS.
   // dpm($matches);
   $form = array();
+  $form['intro'] = array(
+    '#markup' => '<p>This search method allows you to find products that are similar to a product you are already familiar with, but perhaps don\'t know about yet.</p>'
+  );
   $form['product'] = array(
-    '#title' => t('Find products similar to what?'),
+    '#title' => t('To get started, enter a product you are familiar with into the search box below.'),
     '#type' => 'select',
     '#options' => $matches,
-    '#empty_option' => t('Start typing a product name and choose from the list'),
+    '#empty_option' => t('Type in a product name or choose from teh list of product names'),
     '#multiple'     => 0,
     '#select2' => array(
       'allowClear' => TRUE,

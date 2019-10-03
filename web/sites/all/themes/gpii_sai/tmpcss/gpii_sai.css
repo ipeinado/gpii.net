@@ -652,6 +652,9 @@ body.page-search .view-search {
   #gpii-saa-custom-similar > div .select2-container--default .select2-selection--single .select2-selection__placeholder {
     color: #636161;
     font-style: italic; }
+  #gpii-saa-custom-similar > div label {
+    font-weight: normal;
+    margin-bottom: 1rem; }
 
 .page-similar .select2-container .select2-dropdown {
   margin-top: -7em; }
