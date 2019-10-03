@@ -749,6 +749,12 @@ body.page-search .view-search {
     padding: 2rem 0.5rem 0 1rem;
     max-height: 15em; }
 
+.page-search-power #saa-app #query-inner .pull-right button {
+  padding: 0; }
+
+.page-search-power #saa-app #query-inner .pull-right .notifylink {
+  display: none; }
+
 .page-search-power .alt-terms .panel-heading {
   float: none; }
 
@@ -794,6 +800,10 @@ body.page-search .view-search {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   height: 2.5rem; }
+
+.logged-in.page-search-power #saa-app #query-inner .pull-right .notifylink {
+  display: inline-block;
+  color: #A72534; }
 
 /**
  * Home Page Specific Styles

@@ -1043,6 +1043,19 @@ body.page-search {
     }
   }
 
+  #saa-app {
+    #query-inner {
+      .pull-right {
+        button {
+          padding: 0;
+        }
+        .notifylink {
+          display: none;
+        }
+      }
+    }
+  }
+
   .alt-terms {
     .panel-heading {
       float: none;
@@ -1101,6 +1114,20 @@ body.page-search {
       height: 2.5rem;
     }
   }
+}
+
+.logged-in.page-search-power {
+  #saa-app {
+    #query-inner {
+      .pull-right {
+        .notifylink {
+          display: inline-block;
+          color: $color-gpii-sai-primary;
+        }
+      }
+    }
+  }
+
 }
 
 // End Power Search
