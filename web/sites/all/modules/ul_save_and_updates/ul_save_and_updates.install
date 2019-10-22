@@ -1,0 +1,32 @@
+<?php
+
+function ul_save_and_updates_schema() {
+  $schema['saved_searches'] = array(
+    'description' => 'Stores saved user searches',
+    'fields' => array(
+      'id'                      => array('type' => 'serial', 'not null' => TRUE),
+      'uid'                     => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+      'search_type'             => array('type' => 'text', 'size' => 'small'),
+      'notification_type'       => array('type' => 'text', 'size' => 'small'),
+      'last_notification_sent'  => array('type' => 'int', 'unsigned' => TRUE),
+      'date_created'            => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+      'search_url'              => array('type' => 'text', 'size' => 'small'),
+      'search_name'             => array('type' => 'text', 'size' => 'small'),
+      'products_found'          => array('type' => 'text', 'size' => 'normal'),
+    ),
+    'primary key' => array('id')
+  );
+
+   $schema['change_log'] = array(
+    'description' => 'Logs changes to products.',
+    'fields' => array(
+      'id'            => array('type' => 'serial', 'not null' => TRUE),
+      'date_updated'  => array('type' => 'int', 'unsigned' => TRUE),
+      'nid'           => array('type' => 'int', 'unsigned' => TRUE),
+      'description'   => array('type' => 'text', 'size' => 'normal')
+    ),
+    'primary key' => array('id')
+  );
+
+  return $schema;
+}

@@ -1,0 +1,4 @@
+name = UL Save and Updates
+description = "Manage and save searches and subscribe to notifications."
+core = 7.x
+package = Custom
