@@ -1,0 +1,400 @@
+<?php
+
+function ul_save_and_updates_init() {
+  drupal_add_js(drupal_get_path('module', 'ul_save_and_updates') . '/js/saved_search_ajax.js');
+  drupal_add_js(array(
+    'ul_save_and_updates' => array(
+      'uid' => $GLOBALS['user']->uid,
+      'nid' => arg(1),
+    )
+  ), 'setting');
+}
+
+function ul_save_and_updates_menu() {
+  $items = array();
+
+  // pages
+  $items['user/%user/email-notifications'] = array(
+    'title' => 'Email Notifications',
+    'page callback' => '_saved_search_page',
+    'page arguments' => array(1),
+    'access callback' => user_access,
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  // api endpoints
+  $items['saved-search/exists/%/%'] = array(
+    'page callback' => '_saved_search_exists',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page arguments' => array(2, 3),
+  );
+  $items['saved-search/read/%'] = array(
+    'page callback' => '_saved_search_readAll',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'page arguments' => array(2),
+  );
+  $items['saved-search/edit'] = array(
+    'page callback' => '_saved_search_edit',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['saved-search/save'] = array(
+    'page callback' => '_saved_search_save',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['saved-search/delete'] = array(
+    'page callback' => '_saved_search_delete',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function _saved_search_page($user) {
+  $products = db_select('saved_searches', 's')
+      ->condition('uid', $user->uid)
+      ->condition('search_type', 'product')
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+  $productHeaders = array(
+    'Product Name',
+    'Last Update Sent',
+    ''
+  );
+
+  $productRows = array();
+
+  foreach ($products as $product) {
+    $row = array();
+    array_push($row, "<a href=\"$product->search_url\">$product->search_name</a>");
+    array_push($row, $product->last_notification ? $product->last_notification : 'never');
+    array_push($row, _saved_search_createRemoveButton($product->id));
+    $productRows[$product->id] = $row;
+  }
+
+  $companies = db_select('saved_searches', 's')
+      ->condition('uid', $user->uid)
+      ->condition('search_type', 'company')
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+  $companyHeaders = array(
+    'Manufacturer Name',
+    'NEW product notification',
+    'UPDATED product notification',
+    'Last update sent',
+    ''
+  );
+
+  $companyRows = array();
+
+  foreach ($companies as $company) {
+    $row = array();
+    array_push($row, "<a href=\"$company->search_url\">$company->search_name</a>");
+    array_push(
+      $row,
+      _save_search_createUpdateCheckbox(
+        'notify-me-new-entries',
+        $company->id,
+        'new_entries',
+        in_array('new', explode(', ', $company->notification_type))
+      )
+    );
+    array_push(
+      $row,
+      _save_search_createUpdateCheckbox(
+        'notify-me-major-changes',
+        $company->id,
+        'major_changes',
+        in_array('changed', explode(', ', $company->notification_type))
+      )
+    );
+    array_push($row, $company->last_notification ? $company->last_notification : 'never');
+    array_push($row, _saved_search_createRemoveButton($company->id));
+    $companyRows[$company->id] = $row;
+  }
+
+  // $categories = db_select('saved_searches', 's')
+  //     ->condition('uid', $user->uid)
+  //     ->condition('search_type', 'category')
+  //     ->fields('s')
+  //     ->execute()
+  //     ->fetchAll();
+
+  // $categoryHeaders = array(
+  //   'Unified Listing Category',
+  //   'Last update sent',
+  //   ''
+  // );
+
+  // $categoryRows = array();
+
+  // foreach ($categories as $category) {
+  //   $row = array();
+  //   array_push($row, "<a href=\"$category->search_url\">$category->search_name</a>");
+  //   array_push($row, $category->last_notification ? $category->last_notification : 'never');
+  //   array_push($row, '<a href="#' . $category->id . '">Remove</a>');
+  //   array_push($categoryRows, $row);
+  // }
+
+  $customSearches = db_select('saved_searches', 's')
+      ->condition('uid', $user->uid)
+      ->condition('search_type', 'category')
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+  $customSearchHeaders = array(
+    'Search',
+    'Last update sent',
+    ''
+  );
+
+  $customSearchRows = array();
+
+  foreach ($customSearches as $customSearch) {
+    $row = array();
+    array_push($row, "<a href=\"$customSearch->search_url\">$customSearch->search_name</a>");
+    array_push($row, $customSearch->last_notification ? $customSearch->last_notification : 'never');
+    array_push($row, _saved_search_createRemoveButton($customSearch->id));
+    $customSearchRows[$customSearch->id] = $row;
+  }
+
+  $output = '';
+  $output .= '<h2>Products</h2>';
+  $output .= _saved_search_createTableMarkup($productHeaders, $productRows, 'There are no saved Products');
+  $output .= '<h2>Companies</h2>';
+  $output .= _saved_search_createTableMarkup($companyHeaders, $companyRows, 'There are no saved Companies');
+  // $output .= '<h2>Unified Listing Categories</h2>';
+  // $output .= _saved_search_createTableMarkup($categoryHeaders, $categoryRows, 'There are no saved Unified Listing Categories');
+  $output .= '<h2>Custom Searches</h2>';
+  $output .= _saved_search_createTableMarkup($customSearchHeaders, $customSearchRows, 'There are no saved Custom Searches');
+
+  // create remove confirm modal
+  $output .= '<div id="notify-me-modal-confirm" class="modal fade" tabindex="-1" role="dialog">'
+    .'<div class="modal-dialog" role="document">'
+      .'<div class="modal-content">'
+        .'<div class="modal-header">'
+          .'<button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+            .'<span aria-hidden="true">&times;</span>'
+          .'</button>'
+          .'<h3 class="modal-title">Are you sure?</h3>'
+        .'</div>'
+        .'<div class="modal-body notify-me-success">'
+          .'<p>success!</p>'
+        .'</div>'
+        .'<div class="modal-body notify-me-form">'
+          .'<form id="notify-me-form-delete">'
+            .'<input type="hidden" name="id" value="" />'
+
+            .'<div class="alert alert-danger alert-dismissible notify-me-error" role="alert">'
+              .'Something went wrong. Please try again later.'
+              .'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+                .'<span aria-hidden="true">&times;</span>'
+              .'</button>'
+            .'</div>'
+            .'<p>Are you sure you want to remove this saved search</p>'
+            .'<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'
+            .'<button type="submit" class="btn btn-primary">Remove</button>'
+          .'</form>'
+        .'</div>'
+      .'</div>'
+    .'</div>'
+  .'</div>';
+
+  return $output;
+}
+
+function _saved_search_exists($uid, $nid) { // GET
+  $results = db_select('saved_searches', 's')
+      ->condition('uid', $uid)
+      ->condition('nid', $nid)
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+  $count = count($results);
+
+  $data = array('success' => $count > 0);
+  return drupal_json_output($data);
+}
+
+function _saved_search_readAll($uid) { // GET
+   $results = db_select('saved_searches', 's')
+      ->condition('uid', $uid)
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+  return drupal_json_output($results);
+}
+
+// update a users saved search
+function _saved_search_edit() { // POST
+  $savedSearch = db_select('saved_searches', 's')
+      ->condition('id', $_POST['id'])
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+  $fields = array(
+    'uid'               => $savedSearch[0]->uid,
+    'nid'               => $savedSearch[0]->nid,
+    'search_type'       => $savedSearch[0]->search_type,
+    'notification_type' => $savedSearch[0]->notification_type,
+    'last_notification' => $savedSearch[0]->last_notification,
+    'date_created'      => $savedSearch[0]->date_created,
+    'search_url'        => $savedSearch[0]->search_url,
+    'search_name'       => $savedSearch[0]->search_name,
+    'products_found'    => $savedSearch[0]->products_found,
+    'filters'           => $savedSearch[0]->filters,
+  );
+
+  foreach ($_POST as $key => $value) {
+    if (in_array($key, $fields)) {
+      $fields[$key] = $value;
+    }
+
+    if ($key == 'new_entries' || $key == 'major_changes') {
+      $fields['notification_type'] = _saved_search_updateNotificationType($fields['notification_type'], $key, $value);
+    }
+  }
+
+  $results = db_update('saved_searches')
+    ->fields($fields)
+    ->condition('id', $_POST['id'])
+    ->execute();
+
+  $data = array('success' => $results > 0, 'result' => $results);
+  return drupal_json_output($data);
+}
+
+function _saved_search_save() { // POST
+  $fields = array(
+    'uid'               => -1,
+    'nid'               => null,
+    'search_type'       => null,
+    'notification_type' => null,
+    'last_notification' => null,
+    'date_created'      => date('U'),
+    'search_url'        => null,
+    'search_name'       => null,
+    'products_found'    => null,
+    'filters'           => null,
+  );
+
+  foreach ($_POST as $key => $value) {
+    if (array_key_exists($key, $fields)) {
+      $fields[$key] = $value;
+    }
+
+    if ($key == 'new_entries' || $key == 'major_changes') {
+      $fields['notification_type'] = _saved_search_updateNotificationType($fields['notification_type'], $key, $value);
+    }
+
+    if ($key == 'nid') {
+      $node = node_load($value);
+      $fields['search_name'] = $node->title;
+      $fields['search_url'] = '/' . drupal_get_path_alias('node/' . $value);
+
+      $query = db_select('node', 'n');
+      $query->join('field_data_field_manufacturer_reference', 'm', 'n.nid = m.entity_id');
+      $nids = $query
+        ->fields('n', array('nid'))
+        ->condition('type', 'product')
+        ->condition('field_manufacturer_reference_target_id', $value)
+        ->execute()
+        ->fetchAll();
+
+      $fields['products_found'] = implode(', ', array_column($nids, 'nid'));
+    }
+  }
+
+  $results = db_insert('saved_searches')
+    ->fields($fields)
+    ->execute();
+
+  $data = array('success' => $results > 0, 'result' => $results);
+  return drupal_json_output($data);
+}
+
+function _saved_search_delete() { // POST
+  $results = db_delete('saved_searches')
+    ->condition('id', $_POST['id'])
+    ->execute();
+  $data = array('success' => $results > 0, 'results' => $results);
+  return drupal_json_output($data);
+}
+
+function _saved_search_updateNotificationType($string, $key, $value) {
+  if ($key == 'new_entries') {
+    $term = 'new';
+  }
+  else if ($key == 'major_changes') {
+    $term = 'changed';
+  }
+
+  if ($string == '') {
+    $nt = [];
+  }
+  else {
+    $nt = explode(', ', $string);
+  }
+
+  if ($value == 'on') {
+    if (!in_array($term, $nt)) array_push($nt, $term);
+  }
+  else if ($value == 'off') {
+    unset($nt[array_search($term, $nt)]);
+  }
+
+
+  return implode(', ', $nt) == '' ? null : implode(', ', $nt);
+}
+
+function _saved_search_createTableMarkup($headers, $rows, $noneMessage) {
+  $markup = '<table class="table table-bordered table-hover">';
+
+  $markup .= '<tr>';
+  foreach ($headers as $header) {
+    $markup .= "<th>$header</th>";
+  }
+  $markup .= '</tr>';
+
+  if ($rows != null || count($rows) > 0) {
+    foreach ($rows as $id => $row) {
+      $markup .= "<tr id=\"saved-search-$id\">";
+      foreach ($row as $column) {
+        $markup .= "<td>$column</td>";
+      }
+      $markup .= '</tr>';
+    }
+  }
+  else {
+    $markup .= "<tr><td colspan=\"" . count($headers) . "\">$noneMessage</td></tr>";
+  }
+
+  $markup .= '</table>';
+
+  return $markup;
+}
+
+function _saved_search_createRemoveButton($id) {
+  return '<a class="notify-me-button-remove" style="cursor: pointer;" data-id="' . $id . '" data-toggle="modal" data-target="#notify-me-modal-confirm">Remove</a>';
+}
+
+function _save_search_createUpdateCheckbox($class, $id, $name, $status) {
+  return '<form class="notify-me-form-edit">'
+          .'<input type="hidden" name="id" value="' . $id . '" />'
+          .'<input type="hidden" name="' . $name . '" value="off" />'
+          ."<div class=\"checkbox\"><label><input class=\"$class\" type=\"checkbox\" name=\"$name\" value=\"on\" " . ($status ? 'checked' : '') . "/></label></div>"
+        .'</form>';
+}
