@@ -75,7 +75,7 @@ function _saved_search_page($user) {
     $row = array();
     array_push($row, "<a href=\"$product->search_url\">$product->search_name</a>");
     array_push($row, $product->last_notification ? $product->last_notification : 'never');
-    array_push($row, _saved_search_removeButton($product->id));
+    array_push($row, _saved_search_createRemoveButton($product->id));
     $productRows[$product->id] = $row;
   }
 
@@ -99,10 +99,26 @@ function _saved_search_page($user) {
   foreach ($companies as $company) {
     $row = array();
     array_push($row, "<a href=\"$company->search_url\">$company->search_name</a>");
-    array_push($row, $company->notification_type);
-    array_push($row, $company->notification_type);
+    array_push(
+      $row,
+      _save_search_createUpdateCheckbox(
+        'notify-me-new-entries',
+        $company->id,
+        'new_entries',
+        in_array('new', explode(', ', $company->notification_type))
+      )
+    );
+    array_push(
+      $row,
+      _save_search_createUpdateCheckbox(
+        'notify-me-major-changes',
+        $company->id,
+        'major_changes',
+        in_array('changed', explode(', ', $company->notification_type))
+      )
+    );
     array_push($row, $company->last_notification ? $company->last_notification : 'never');
-    array_push($row, _saved_search_removeButton($company->id));
+    array_push($row, _saved_search_createRemoveButton($company->id));
     $companyRows[$company->id] = $row;
   }
 
@@ -148,7 +164,7 @@ function _saved_search_page($user) {
     $row = array();
     array_push($row, "<a href=\"$customSearch->search_url\">$customSearch->search_name</a>");
     array_push($row, $customSearch->last_notification ? $customSearch->last_notification : 'never');
-    array_push($row, _saved_search_removeButton($customSearch->id));
+    array_push($row, _saved_search_createRemoveButton($customSearch->id));
     $customSearchRows[$customSearch->id] = $row;
   }
 
@@ -223,22 +239,56 @@ function _saved_search_readAll($uid) { // GET
 
 // update a users saved search
 function _saved_search_edit() { // POST
-  $data = array('edit');
+  $savedSearch = db_select('saved_searches', 's')
+      ->condition('id', $_POST['id'])
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+  $fields = array(
+    'uid'               => $savedSearch[0]->uid,
+    'nid'               => $savedSearch[0]->nid,
+    'search_type'       => $savedSearch[0]->search_type,
+    'notification_type' => $savedSearch[0]->notification_type,
+    'last_notification' => $savedSearch[0]->last_notification,
+    'date_created'      => $savedSearch[0]->date_created,
+    'search_url'        => $savedSearch[0]->search_url,
+    'search_name'       => $savedSearch[0]->search_name,
+    'products_found'    => $savedSearch[0]->products_found,
+    'filters'           => $savedSearch[0]->filters,
+  );
+
+  foreach ($_POST as $key => $value) {
+    if (in_array($key, $fields)) {
+      $fields[$key] = $value;
+    }
+
+    if ($key == 'new_entries' || $key == 'major_changes') {
+      $fields['notification_type'] = _saved_search_updateNotificationType($fields['notification_type'], $key, $value);
+    }
+  }
+
+  $results = db_update('saved_searches')
+    ->fields($fields)
+    ->condition('id', $_POST['id'])
+    ->execute();
+
+  $data = array('success' => $results > 0, 'result' => $results);
   return drupal_json_output($data);
 }
 
 function _saved_search_save() { // POST
   $fields = array(
-      'uid'               => -1,
-      'nid'               => null,
-      'search_type'       => null,
-      'notification_type' => null,
-      'last_notification' => null,
-      'date_created'      => date('U'),
-      'search_url'        => null,
-      'search_name'       => null,
-      'products_found'    => null,
-      'filters'           => null,
+    'uid'               => -1,
+    'nid'               => null,
+    'search_type'       => null,
+    'notification_type' => null,
+    'last_notification' => null,
+    'date_created'      => date('U'),
+    'search_url'        => null,
+    'search_name'       => null,
+    'products_found'    => null,
+    'filters'           => null,
   );
 
   foreach ($_POST as $key => $value) {
@@ -276,7 +326,6 @@ function _saved_search_save() { // POST
   return drupal_json_output($data);
 }
 
-// delete a saved search
 function _saved_search_delete() { // POST
   $results = db_delete('saved_searches')
     ->condition('id', $_POST['id'])
@@ -289,22 +338,26 @@ function _saved_search_updateNotificationType($string, $key, $value) {
   if ($key == 'new_entries') {
     $term = 'new';
   }
-  else if ($key== 'major_changes') {
+  else if ($key == 'major_changes') {
     $term = 'changed';
   }
+
   if ($string == '') {
     $nt = [];
   }
   else {
     $nt = explode(', ', $string);
   }
+
   if ($value == 'on') {
     if (!in_array($term, $nt)) array_push($nt, $term);
   }
   else if ($value == 'off') {
-    unset($nt[$term]);
+    unset($nt[array_search($term, $nt)]);
   }
-  return implode(', ', $nt);
+
+
+  return implode(', ', $nt) == '' ? null : implode(', ', $nt);
 }
 
 function _saved_search_createTableMarkup($headers, $rows, $noneMessage) {
@@ -334,6 +387,14 @@ function _saved_search_createTableMarkup($headers, $rows, $noneMessage) {
   return $markup;
 }
 
-function _saved_search_removeButton($id) {
+function _saved_search_createRemoveButton($id) {
   return '<a class="notify-me-button-remove" style="cursor: pointer;" data-id="' . $id . '" data-toggle="modal" data-target="#notify-me-modal-confirm">Remove</a>';
+}
+
+function _save_search_createUpdateCheckbox($class, $id, $name, $status) {
+  return '<form class="notify-me-form-edit">'
+          .'<input type="hidden" name="id" value="' . $id . '" />'
+          .'<input type="hidden" name="' . $name . '" value="off" />'
+          ."<div class=\"checkbox\"><label><input class=\"$class\" type=\"checkbox\" name=\"$name\" value=\"on\" " . ($status ? 'checked' : '') . "/></label></div>"
+        .'</form>';
 }

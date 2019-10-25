@@ -41,14 +41,52 @@
       });
     });
 
+    $('.notify-me-new-entries, .notify-me-major-changes').change(function(event) {
+      $(this.form).trigger('submit');
+      $(this)
+        .parent()
+        .find('label')
+        .append('<span class="label-text">Saving...</span>');
+    });
+
+    var editForm = $('#notify-me-form-edit, .notify-me-form-edit');
+    editForm.submit(function(event) {
+      event.preventDefault();
+      var label = $(this).find('label');
+      var editing = $.post('/saved-search/edit', $(this).serialize());
+      editing.done(function(response) {
+        if (response.success) {
+          label.children('.label-text').remove();
+          label.append('<span class="label-text">Saved</span>');
+          setTimeout(
+            function(label) {
+              label.children('.label-text').remove();
+            },
+            5000,
+            label
+          );
+        } else {
+          label.children('.label-text').remove();
+          label.append('<span class="label-text">Error Saving</span>');
+          setTimeout(
+            function(label) {
+              label.children('.label-text').remove();
+            },
+            5000,
+            label
+          );
+        }
+      });
+    });
+
     $('.notify-me-button-remove').click(function(event) {
-      $('#notify-me-form-delete input[name="id"').attr('value', event.currentTarget.dataset.id);
+      $('#notify-me-form-delete input[name="id"]').attr('value', event.target.dataset.id);
     });
 
     var deleteForm = $('#notify-me-form-delete');
     deleteForm.submit(function(event) {
       event.preventDefault();
-      var deleting = $.post('/saved-search/delete', deleteForm.serialize());
+      var deleting = $.post('/saved-search/delete', $(this).serialize());
       deleting.done(function(response) {
         console.log(response);
         if (response.success) {
