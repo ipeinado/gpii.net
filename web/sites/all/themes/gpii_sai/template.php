@@ -14,3 +14,9 @@ function gpii_sai_preprocess_page(&$vars, $hook) {
     $vars['theme_hook_suggestions'][] = 'page__' . $vars['node']->type;
   }
 }
+
+function gpii_sai_entity_view_mode_alter(&$view_mode, &$context) {
+  if ($context['entity_type'] == 'node' && $view_mode == 'full' && $context['entity']->field_generic_product['und'][0]['value'] == 1) {
+    $view_mode = 'generic_product';
+  }
+}
