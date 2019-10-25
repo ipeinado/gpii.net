@@ -1529,6 +1529,7 @@ function gpii_saa_custom_list_sources($uid) {
             CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
             CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
             CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+            CURLOPT_SSL_VERIFYPEER => FALSE,
 
             CURLOPT_HTTPHEADER => array(
               "accept: application/json",
@@ -1543,16 +1544,18 @@ function gpii_saa_custom_list_sources($uid) {
     curl_close($curl);
 
     if ($err) {
-      // dpm("cURL Error #:" . $err);.
+      //dpm("cURL Error \: " . $err);
+      
     }
     else {
-      // dpm($response);
+      //dpm($response);
       variable_set('UL_API_LOGGEDIN', time());
     }
   }
 
   if ($source) {
     // $markup =  '<p>We have a source specified.</p>';
+    $markup = '';
   }
   else {
     $markup = '<p>';
@@ -1580,12 +1583,13 @@ function gpii_saa_custom_list_sources($uid) {
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 4,
+            CURLOPT_TIMEOUT => 6,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
             CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
             CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+            CURLOPT_SSL_VERIFYPEER => FALSE,
 
             CURLOPT_HTTPHEADER => array(
               "accept: application/json",
@@ -1599,10 +1603,10 @@ function gpii_saa_custom_list_sources($uid) {
     curl_close($curl);
 
     if ($err) {
-      // dpm("cURL Error #:" . $err);.
+      //dpm("cURL Error \: " . $err);
     }
     else {
-      // dpm($response);
+      //dpm($response);
     }
 
     $response = json_decode($response);
@@ -1634,11 +1638,11 @@ function gpii_saa_custom_list_sources($uid) {
         }
       }
 
-      // dpm($links);
+      //dpm($links);
       // If we only have one source link, take the user right to it.
       if (count($links) == 1) {
 
-        // Validate the URLs.
+        // Validate the URLs. Be sure to also update the case for more than 1 link below if this is changed.
         if (isset($links[0]['OriginalUrl'])) {
           $OriginalUrl = filter_var($links[0]['OriginalUrl'], FILTER_VALIDATE_URL);
         }
@@ -1667,11 +1671,26 @@ function gpii_saa_custom_list_sources($uid) {
           return '<p>No valid links to source databases for this record were found. Return to <a href="/node/' . $product->nid . '">' . $product->title . '</a>.';
         }
       }
-
+      $markup .= '<ul>';
       // Print the list of Source Records from the same database when we have more than one.
       // We don't actually get here if there's only one and the redirect above kicks in.
       foreach ($links as $key => $value) {
-        $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $value['OriginalUrl'] . '">' . $value['name'] . '</a>';
+        if (isset($value['OriginalUrl'])) {
+          $url = $value['OriginalUrl'];
+        }
+        elseif (isset($value['EnglishUrl'])) {
+          $url = $value['EnglishUrl'];
+        }
+
+        elseif (isset($value['SourceUrl'])) {
+          $url = $value['SourceUrl'];
+        }
+
+        else {
+          //@@
+        }
+
+        $markup .= '<li lang="' . substr($value['lang'], 0, 2) . '" class="skiptranslate"><a href="' . $url . '">' . $value['name'] . '</a>';
 
         if (isset($value->language)) {
           $markup .= ' (' . strtoupper(substr($value->language, 0, 2)) . ')';
@@ -1679,6 +1698,7 @@ function gpii_saa_custom_list_sources($uid) {
 
         $markup .= '</li>';
       }
+      $markup .= '</ul>';
     }
 
     // End source specified
@@ -2356,6 +2376,14 @@ function gpii_saa_custom_action_info() {
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
     ),
+    'gpii_saa_custom_fix_broken_taxonomy_parents' => array(
+      'type' => 'entity',
+      'label' => t('Fix broken taxonomy parents'),
+      'behavior' => array('changes_property'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
   );
 }
 
@@ -2648,6 +2676,7 @@ function gpii_saa_custom_uid_import($nid) {
           CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
           CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
           CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+          CURLOPT_SSL_VERIFYPEER => FALSE,
 
           CURLOPT_HTTPHEADER => array(
             "accept: application/json",
@@ -2683,6 +2712,7 @@ function gpii_saa_custom_uid_import($nid) {
           CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
           CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
           CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+          CURLOPT_SSL_VERIFYPEER => FALSE,
 
           CURLOPT_HTTPHEADER => array(
             "accept: application/json",
@@ -2800,6 +2830,54 @@ function gpii_saa_custom_image_import($uid) {
   }
   dsm($product->field_product_image['und']);
   return $markup;
+}
+
+/**
+ *
+ */
+function gpii_saa_custom_fix_broken_taxonomy_parents(&$entity) {
+  $currentTids = $entity->field_features_primary['und'];
+  $newTids = [];
+
+  // get and add all parents of currently selected terms
+  // Note: child tid is also included in result of taxonomy_get_parents_all
+  foreach ($currentTids as $value) {
+    $tid = $value['tid'];
+    $parents = taxonomy_get_parents_all($tid);
+    foreach ($parents as $parent) {
+      $ptid = $parent->tid;
+      // don't add term if already exists in array
+      if (!array_search($ptid, array_column($newTids, 'tid'))) {
+        array_push($newTids, $ptid);
+      }
+    }
+  }
+
+  $vocabulary = taxonomy_vocabulary_machine_name_load('features');
+  $tree = taxonomy_get_tree($vocabulary->vid);
+  $order = array_column($tree, 'tid');
+
+  // order terms in accordance to taxonomy tree
+  usort($newTids, function($a, $b) use ($order) {
+    return ((array_search($a, $order) > array_search($b, $order)) ? 1 : -1);
+  });
+
+  $newFieldValue = [];
+  foreach($newTids as $tid) {
+    array_push($newFieldValue, ['tid' => $tid]);
+  }
+
+  $entity->field_features_primary['und'] = $newFieldValue;
+
+  // also set any revisons that may exists
+  $revision_id = revisioning_get_latest_revision_id($entity->nid);
+  $latest = node_load($value->nid, $revision_id, reset);
+  if (!$latest->is_current) {
+    $latest->field_features_primary['und'] = $newFieldValue;
+    node_save($latest);
+  }
+
+  return $entity;
 }
 
 /**
@@ -2939,6 +3017,7 @@ function gpii_saa_custom_delete_records_vbo($uid) {
           CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
           CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
           CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+          CURLOPT_SSL_VERIFYPEER => FALSE,
           CURLOPT_HTTPHEADER => array(
             "accept: application/json",
           ),
@@ -3216,6 +3295,7 @@ function gpii_saa_custom_uid_redirect($uid) {
               CURLOPT_COOKIE => "connect.sid=s%253A7A_uuI_37dlMaF9KSsPKwUzUetB412E9.u%252Fs762fGxa4bts5XK84jDrv2pg2zfEyVPpcMBbJr5do",
               CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
               CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+              CURLOPT_SSL_VERIFYPEER => FALSE,
 
               CURLOPT_HTTPHEADER => array(
                 "accept: application/json",
@@ -3257,6 +3337,7 @@ function gpii_saa_custom_uid_redirect($uid) {
               CURLOPT_COOKIE => "connect.sid=s%253A0TlzsZZs_kSUqlJ-kNDv8w4mXG2pAkHn.fOJBQHuaanPi5hBgQUASol0%252FGtcg48MsOdRjAdLqch8",
               CURLOPT_COOKIEFILE => "/tmp/cookie.txt",
               CURLOPT_COOKIEJAR => "/tmp/cookie.txt",
+              CURLOPT_SSL_VERIFYPEER => FALSE,
               CURLOPT_HTTPHEADER => array(
                 "accept: application/json",
               ),
@@ -3419,7 +3500,7 @@ function gpii_saa_custom_preprocess_page(&$variables) {
     //  gpii_saa_custom_search_similar_redirect($nid);
     // }
     $node = node_load($nid);
-    drupal_set_title('Products Similar to <em>' . $node->title . '</em>', PASS_THROUGH);
+    drupal_set_title('Find Products Similar to <em>' . $node->title . '</em>', PASS_THROUGH);
   }
 }
 
@@ -3528,7 +3609,31 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
   }
 
   $custom_tree = '';
+
   if (count($term_info) != 0) {
+    
+    if ($field_name == 'field_product_categories1') {
+      $select_supplementary = 'Product Categories';
+    }
+
+    elseif ($field_name == '') {
+      $select_supplementary = 'Primary Features';
+    }
+
+    else {
+      $select_supplementary = '';
+    }
+
+    if ($options['selectAll']) {
+      $selectAll_link = gpii_saa_custom_select_all_facets_link($taxonomy_field, $field_name);
+
+      $custom_tree .= '<a href="' . $selectAll_link . '" class="btn btn-xs btn-default btn-select-all">Select All <span class="sr-only">' . $select_supplementary . '</span></a> ';
+    }
+
+    if ($options['unselectAll']) {
+      $unselectAll_link = gpii_saa_custom_unselect_all_facets_link($field_name);
+      $custom_tree .= '<a href="' . $unselectAll_link . '" class="btn btn-xs btn-default btn-unselect-all">Unselect All <span class="sr-only">' . $select_supplementary . '</span></a>';
+    }
 
     $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';
 
@@ -3699,12 +3804,45 @@ function gpii_saa_custom_climb_facet_links($facet_array, $tid, $field_name) {
 /**
  *
  */
-function gpii_saa_custom_format_taxonomy_into_facet_query_array($taxonomy_field, $field_name) {
-  $facet_query = [];
+function gpii_saa_custom_select_all_facets_link($taxonomy_field, $field_name) {
+  $url_base = $_GET['q'];
+  $facet_array = $_GET['f'];
+
+  $get_copy = $_GET;
+  unset($get_copy['q']);
+
   foreach ($taxonomy_field as $key => $value) {
-    $facet_query[] = $field_name . ':' . $value['tid'];
+    $tid = $value['tid'];
+    $match_array = preg_grep('/' . $tid . '/', $facet_array);
+    if (count($match_array) == 0) {
+      $get_copy['f'][] = $field_name . ':' . $tid;
+    }
   }
-  return $facet_query;
+
+  $facet_link = '/' . $url_base . '?' . http_build_query($get_copy);
+
+  return $facet_link;
+}
+
+/**
+ *
+ */
+function gpii_saa_custom_unselect_all_facets_link($field_name) {
+  $url_base = $_GET['q'];
+
+  $get_copy = $_GET;
+  unset($get_copy['q']);
+
+  foreach ($get_copy['f'] as $key => $value) {
+    $is_match = preg_match('/' . $field_name . '/', $value);
+    if ($is_match) {
+      unset($get_copy['f'][$key]);
+    }
+  }
+
+  $facet_link = '/' . $url_base . '?' . http_build_query($get_copy);
+
+  return $facet_link;
 }
 
 

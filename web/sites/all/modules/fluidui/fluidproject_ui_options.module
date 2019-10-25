@@ -10,6 +10,7 @@
  */
 function fluidproject_ui_options_libraries_info() {
   $libraries = array();
+
   $libraries['fluid'] = array(
     'name' => 'Infusion Fluid UIoptions',
     'vendor url' => 'http://fluidproject.org',
@@ -30,21 +31,74 @@ function fluidproject_ui_options_libraries_info() {
   return $libraries;
 }
 
+/**
+ * Implements hook_menu().
+ */
+function fluidproject_ui_options_menu(){
+  $items = array();
+
+  $items['admin/config/fluidui/adminsettings'] = array(
+    'title' => t('FluidUI Settings Form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('fluidproject_ui_options_fluid_config_form'),
+    'access arguments' => array('access administration pages'),
+  );
+
+  return $items;
+}
+
+function fluidproject_ui_options_fluid_config_form($form, &$form_state){
+  $form['admin_display'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Display preferences toolbox on admin pages'),
+    '#description' => t('Check this option if you want the toolbox to be displayed on admin pages (such as /admin/content, /admin/structure, etc.)'),
+    '#default_value' => variable_get('fluidproject_ui_options_admin_display', ''),
+  ];
+
+  $form['url_blacklist'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Hide the toolbox on these pages'),
+    '#description' => t('Enter the list of pages where the toolbox will not be displayed. Specify pages by using their paths. Enter one path per line.'),
+    '#default_value' => variable_get('fluidproject_ui_options_url_blacklist', ''),
+  );
+
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Save Settings'),
+    );
+
+  return $form;
+}
+
+function fluidproject_ui_options_fluid_config_form_submit($form, &$form_state){
+  variable_set("fluidproject_ui_options_admin_display", $form_state['values']['admin_display']);
+  variable_set("fluidproject_ui_options_url_blacklist", $form_state['values']['url_blacklist']);
+}
 
 /**
  * Implements hook_page_build().
  */
 function fluidproject_ui_options_page_build(&$page) {
+  $admin_display = variable_get('fluidproject_ui_options_admin_display', '');
+  $url_blacklist = explode("\r\n", variable_get('fluidproject_ui_options_url_blacklist', ''));
 
-  if (!path_is_admin(current_path())) {
+  $module_path = drupal_get_path('module', 'fluidproject_ui_options');
 
-    $module_path = drupal_get_path('module', 'fluidproject_ui_options');
+  $library_path = libraries_get_path('fluid', TRUE);
 
-    $library_path = libraries_get_path('fluid', TRUE);
+  drupal_add_js(array('modulePath' => $module_path), 'setting');
+  drupal_add_js(array('libraryPath' => $library_path), 'setting');
 
-    drupal_add_js(array('modulePath' => $module_path), 'setting');
-    drupal_add_js(array('libraryPath' => $library_path), 'setting');
+  $current_path = "/" . current_path();
+  $current_path_alias = "/" . drupal_lookup_path('alias', current_path());
 
+  //the url blacklist takes precedence
+  if (in_array($current_path, $url_blacklist) || in_array($current_path_alias, $url_blacklist)){
+    return;
+  }
+
+  if ($admin_display){
+    //display the widget on all pages.
     libraries_load('fluid');
 
     $page['page_top']['fluid'] = array(
@@ -61,6 +115,25 @@ function fluidproject_ui_options_page_build(&$page) {
       'data' => drupal_get_path('module', 'fluidproject_ui_options') . '/css/fluid.css',
       'group' => CSS_THEME,
     );
+  } else {
+    if (!path_is_admin(current_path())){
+      libraries_load('fluid');
+
+      $page['page_top']['fluid'] = array(
+        '#weight' => -1000,
+        '#markup' => theme('fluidproject'),
+      );
+
+      $page['page_top']['fluid']['#attached']['js'] = array(
+        'data' => drupal_get_path('module', 'fluidproject_ui_options') . '/js/load.js',
+        'group' => JS_THEME,
+      );
+
+      $page['page_top']['fluid']['#attached']['css'][] = array(
+        'data' => drupal_get_path('module', 'fluidproject_ui_options') . '/css/fluid.css',
+        'group' => CSS_THEME,
+      );
+    }
   }
 }
 

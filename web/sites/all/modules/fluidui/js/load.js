@@ -14,7 +14,7 @@
       var uio = fluid.uiOptions.prefsEditor(".flc-prefsEditor-separatedPanel", {
         terms: {
             "templatePrefix": origin + modulePath + "/html",
-            "messagePrefix": origin + modulePath + "/messages/",
+            "messagePrefix": libraryPath + "/framework/preferences/messages",
         },
         "tocTemplate": libraryPath + "/components/tableOfContents/html/TableOfContents.html",
         "ignoreForToC": {
@@ -31,7 +31,7 @@
           }
         } else if (status == "Hide Display Preferences") {
           if (window.innerWidth < 480){
-            $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
+            $(".flc-prefsEditor-separatedPanel").css("width", "87%");            
           } else {
             $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
           }
@@ -40,7 +40,7 @@
 
       $(window).resize(function() {
         if (window.innerWidth < 480){
-          $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
+          $(".flc-prefsEditor-separatedPanel").css("width", "87%");            
         } else {
           $(".flc-prefsEditor-separatedPanel").css("width", "100%");            
         }
