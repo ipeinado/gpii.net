@@ -101,7 +101,7 @@ function _saved_search_page($user) {
     array_push($row, "<a href=\"$company->search_url\">$company->search_name</a>");
     array_push(
       $row,
-      _save_search_createUpdateCheckbox(
+      _saved_search_createUpdateCheckbox(
         'notify-me-new-entries',
         $company->id,
         'new_entries',
@@ -110,7 +110,7 @@ function _saved_search_page($user) {
     );
     array_push(
       $row,
-      _save_search_createUpdateCheckbox(
+      _saved_search_createUpdateCheckbox(
         'notify-me-major-changes',
         $company->id,
         'major_changes',
@@ -147,13 +147,15 @@ function _saved_search_page($user) {
 
   $customSearches = db_select('saved_searches', 's')
       ->condition('uid', $user->uid)
-      ->condition('search_type', 'category')
+      ->condition('search_type', 'classic_search')
       ->fields('s')
       ->execute()
       ->fetchAll();
 
   $customSearchHeaders = array(
     'Search',
+    'NEW product notification',
+    'UPDATED product notification',
     'Last update sent',
     ''
   );
@@ -162,7 +164,30 @@ function _saved_search_page($user) {
 
   foreach ($customSearches as $customSearch) {
     $row = array();
-    array_push($row, "<a href=\"$customSearch->search_url\">$customSearch->search_name</a>");
+    $filters = json_decode($customSearch->filters);
+    array_push($row, "<b>Name:</b>&nbsp;" . _saved_search_createNameEdit($customSearch->id, $customSearch->search_name) . "</br>"
+      .'<b>Keywords:</b> ' . $filters->keywords . '</br>'
+      .'<b>Filters:</b> ' . _saved_search_getFilterTerms($filters->facets) . '</br>'
+      ."(<a href=\"$customSearch->search_url\">Run Search Now</a>)"
+    );
+    array_push(
+      $row,
+      _saved_search_createUpdateCheckbox(
+        'notify-me-new-entries',
+        $customSearch->id,
+        'new_entries',
+        in_array('new', explode(', ', $customSearch->notification_type))
+      )
+    );
+    array_push(
+      $row,
+      _saved_search_createUpdateCheckbox(
+        'notify-me-major-changes',
+        $customSearch->id,
+        'major_changes',
+        in_array('changed', explode(', ', $customSearch->notification_type))
+      )
+    );
     array_push($row, $customSearch->last_notification ? $customSearch->last_notification : 'never');
     array_push($row, _saved_search_createRemoveButton($customSearch->id));
     $customSearchRows[$customSearch->id] = $row;
@@ -237,10 +262,12 @@ function _saved_search_readAll($uid) { // GET
   return drupal_json_output($results);
 }
 
-// update a users saved search
 function _saved_search_edit() { // POST
+  $id = $_POST['id'];
+  unset($_POST['id']);
+
   $savedSearch = db_select('saved_searches', 's')
-      ->condition('id', $_POST['id'])
+      ->condition('id', $id)
       ->fields('s')
       ->execute()
       ->fetchAll();
@@ -259,7 +286,7 @@ function _saved_search_edit() { // POST
   );
 
   foreach ($_POST as $key => $value) {
-    if (in_array($key, $fields)) {
+    if (array_key_exists($key, $fields)) {
       $fields[$key] = $value;
     }
 
@@ -270,10 +297,10 @@ function _saved_search_edit() { // POST
 
   $results = db_update('saved_searches')
     ->fields($fields)
-    ->condition('id', $_POST['id'])
+    ->condition('id', $id)
     ->execute();
 
-  $data = array('success' => $results > 0, 'result' => $results);
+  $data = array('success' => $results > 0, 'result' => $results, $_POST, $fields);
   return drupal_json_output($data);
 }
 
@@ -300,27 +327,39 @@ function _saved_search_save() { // POST
       $fields['notification_type'] = _saved_search_updateNotificationType($fields['notification_type'], $key, $value);
     }
 
+    // only products and manufacturers should have nids
     if ($key == 'nid') {
       $node = node_load($value);
       $fields['search_name'] = $node->title;
       $fields['search_url'] = '/' . drupal_get_path_alias('node/' . $value);
 
-      $query = db_select('node', 'n');
-      $query->join('field_data_field_manufacturer_reference', 'm', 'n.nid = m.entity_id');
-      $nids = $query
-        ->fields('n', array('nid'))
-        ->condition('type', 'product')
-        ->condition('field_manufacturer_reference_target_id', $value)
-        ->execute()
-        ->fetchAll();
+      if ($node->type == 'manufacturer') {
+        $fields['products_found'] = implode(', ', _saved_search_getManufacturerProducts($value));
+      }
+    } else if (preg_match('/search/', $key)) {
+      $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
 
-      $fields['products_found'] = implode(', ', array_column($nids, 'nid'));
+      parse_str($urlQuery, $urlArray);
+      $filters = array(
+        'keywords' => $urlArray['search_api_views_fulltext'],
+        'facets' => array()
+      );
+      foreach ($urlArray['f'] as $value) {
+        $keyValue = explode(':', $value);
+        $filters['facets'][$keyValue[0]][] = $keyValue[1];
+      }
+      $fields['filters'] = json_encode($filters);
+
+      $searchResults = _saved_search_getSearchResults($urlQuery);
+      $fields['products_found'] = implode(', ', array_column($searchResults->response->docs, 'is_nid'));
     }
   }
 
   $results = db_insert('saved_searches')
     ->fields($fields)
     ->execute();
+
+  $searchResults = _saved_search_getSearchResults(parse_url($_POST['search_url'], PHP_URL_QUERY));
 
   $data = array('success' => $results > 0, 'result' => $results);
   return drupal_json_output($data);
@@ -391,10 +430,110 @@ function _saved_search_createRemoveButton($id) {
   return '<a class="notify-me-button-remove" style="cursor: pointer;" data-id="' . $id . '" data-toggle="modal" data-target="#notify-me-modal-confirm">Remove</a>';
 }
 
-function _save_search_createUpdateCheckbox($class, $id, $name, $status) {
-  return '<form class="notify-me-form-edit">'
+function _saved_search_createUpdateCheckbox($class, $id, $name, $status) {
+  return '<form class="notify-me-form-edit" data-callback="notifyMeCheckbox">'
           .'<input type="hidden" name="id" value="' . $id . '" />'
           .'<input type="hidden" name="' . $name . '" value="off" />'
           ."<div class=\"checkbox\"><label><input class=\"$class\" type=\"checkbox\" name=\"$name\" value=\"on\" " . ($status ? 'checked' : '') . "/></label></div>"
         .'</form>';
+}
+
+function _saved_search_createNameEdit($id, $name) {
+  return '<span class="notify-me-name-wrapper" style="white-space: nowrap;">'
+    ."<span class=\"notify-me-name\">$name</span>"
+    .' (<a class="notify-me-name-edit" data-id="' . $id . '" style="cursor: pointer;">rename</a>)</span>';
+}
+
+function _saved_search_getManufacturerProducts($manfId) {
+  $query = db_select('node', 'n');
+  $query->join('field_data_field_manufacturer_reference', 'm', 'n.nid = m.entity_id');
+  $nids = $query
+    ->fields('n', array('nid'))
+    ->condition('type', 'product')
+    ->condition('field_manufacturer_reference_target_id', $manfId)
+    ->execute()
+    ->fetchAll();
+
+  return array_column($nids, 'nid');
+}
+
+function _saved_search_buildSolrQueryFromGET($get) {
+  $query = array(
+    'fl' => 'is_nid',
+    'fq' => [],
+    'sort' => 'is_nid asc',
+    'start' => 0,
+    'rows' => 2147483647,
+    'wt' => 'json'
+  );
+
+  parse_str($get, $getQuery);
+
+  if ($getQuery['f']) {
+    foreach ($getQuery['f'] as $facet) {
+     $query['fq'][] = _saved_search_replaceFieldName($facet);
+    }
+  }
+
+  if ($getQuery['product_status']) {
+    $status = $getQuery['product_status'] == '1' ? '1' : '[1 TO 2]';
+    $query['fq'][] = _saved_search_replaceFieldName('product_status:'. $status);
+  }
+
+  if ($getQuery['search_api_views_fulltext']) {
+    $query['q'] = $getQuery['search_api_views_fulltext'];
+  }
+
+  $query_string = urldecode(http_build_query($query));
+  $query_string = preg_replace('/\[\d+\]/', '', $query_string);
+  $query_string = preg_replace('/\s/', '%20', $query_string);
+
+  return $query_string;
+}
+
+function _saved_search_replaceFieldName($filter) {
+  $filter = explode(':', $filter);
+  $field = $filter[0];
+  $filter[0] = preg_replace("/^$field$/", _saved_search_getSolrFieldEquivalent($field), $filter[0]);
+  return implode(':', $filter);
+}
+
+function _saved_search_getSolrFieldEquivalent($string) {
+  switch($string) {
+    case 'field_operating_system':
+      return 'im_field_operating_system';
+      break;
+
+    case 'product_status':
+      return 'ss_field_status';
+      break;
+
+    default:
+      return false;
+      break;
+  }
+}
+
+function _saved_search_getSearchResults($get) {
+  $query_string = _saved_search_buildSolrQueryFromGET($get);
+
+  // get the active search_api_solr information
+  $solr = search_api_server_load_multiple(FALSE, $conditions);
+  $solr_url = $solr['stg06']->options['scheme'] . '://' . $solr['stg06']->options['host'] . ':' . $solr['stg06']->options['port'] . $solr['stg06']->options['path'];
+
+  $search_url = $solr_url . "/select?" . $query_string;
+  return json_decode(file_get_contents($search_url));
+}
+
+function _saved_search_getFilterTerms($facets) {
+  $tids = array();
+  foreach ($facets as $field) {
+      $tids = array_merge($tids, $field);
+  }
+  $terms = taxonomy_term_load_multiple($tids);
+  $termNames = array();
+  foreach ($terms as $term ) {
+    $termNames[] = $term->name;
+  }
+  return implode(', ', $termNames);
 }

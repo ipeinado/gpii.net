@@ -10,6 +10,10 @@
  */
 function similar_search_form() {
 
+  // call in some custom Javascript so we can customize SelectWoo
+  $path = drupal_get_path('module', 'gpii_saa_custom');
+  drupal_add_js($path . '/js/similarsearch.js');
+
   // Some fantasy DB table which holds cities.
   $query = db_select('node', 'n');
 
@@ -31,20 +35,28 @@ function similar_search_form() {
   // Return for JS.
   // dpm($matches);
   $form = array();
+  $form['intro'] = array(
+    '#markup' => '<div id="query-filters"><p>This search method allows you to find products that are similar to a product you are already familiar with, but perhaps don\'t know about yet.</p>'
+  );
   $form['product'] = array(
-    '#title' => t('Find products similar to what?'),
+    '#title' => t('To get started, enter a product you are familiar with into the search box below.'),
     '#type' => 'select',
     '#options' => $matches,
-    '#empty_option' => t('Choose a product from our database'),
+    '#empty_option' => t('Type in a product name or choose from the list of product names'),
     '#multiple'     => 0,
     '#select2' => array(
       'allowClear' => TRUE,
+      'closeOnSelect' => TRUE,
+      //'minimumInputLength' => 1,
     ),
   );
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
     '#submit' => array('similar_search_submit'),
+  );
+  $form['footer'] = array(
+    '#markup' => '</div>'
   );
   return $form;
 }
