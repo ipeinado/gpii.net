@@ -6,7 +6,7 @@
       "host": "qual-msn-stg07.qualtim.local",
       "ref": "origin/staging",
       "repo": "git@git.qualtim.com:GPII/gpii.net.git",
-      "path": "/var/www/clients/client3/web3/private",
+      "path": "/var/www/clients/client2/web3/private",
       "ssh_options": ["StrictHostKeyChecking=no", "PasswordAuthentication=no"],
       "post-deploy": "git submodule update; drush gpii.net cc all; drush ul.gpii.net cc all; drush developerspace.gpii.net cc all"
     },
