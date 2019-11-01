@@ -15,10 +15,10 @@ before_script:
 deploy:
   stage: deploy
   script:
-    - npm run deploy
+      - npm install -g pm2
+      - pm2 deploy staging
   environment:
-    name: stg07
-    url: http://staging.developerspace.gpii.net
-
+      name: stg07
+      url: http://staging.ul.gpii.net
   only:
-    - master 
+      - staging
