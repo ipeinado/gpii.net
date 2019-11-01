@@ -8,7 +8,7 @@
       "repo": "git@git.qualtim.com:GPII/gpii.net.git",
       "path": "/var/www/clients/client2/web3/private",
       "ssh_options": ["StrictHostKeyChecking=no", "PasswordAuthentication=no"],
-      "post-deploy": "git submodule update; drush @gpiistaging cc all; drush @saastaging cc all; drush @devspacestaging cc all"
+      "post-deploy": "git submodule update; drush --uri=gpii.net cc all; drush --uri=ul.gpii.net cc all; drush --uri=developerspace.gpii.net cc all"
     },
     "production": {
       "user": "gpiiweb",
