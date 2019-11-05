@@ -28,7 +28,7 @@
     }
 
     $('.notify-me-button').click(function(event) {
-      var button = $(event.target);
+      var button = $(this);
       var modalOption = button.data('modalOption');
       if (modalOption == 'share') {
         $('.modal-body.notify-me-share').show();
