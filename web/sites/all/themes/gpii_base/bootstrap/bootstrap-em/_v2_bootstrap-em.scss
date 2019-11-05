@@ -1,4 +1,5 @@
-@function strip-units($number) {// From : http://stackoverflow.com/a/12335841/1339426
+@function strip-units($number) {
+  // From : http://stackoverflow.com/a/12335841/1339426
   @return $number / ($number * 0 + 1);
 }
 
@@ -9,7 +10,6 @@
 */
 $font-size-root: $font-size-base;
 $font-unit: 1rem; // Pick em or rem here
-
 
 // Convert all variables to em
 
@@ -55,56 +55,58 @@ $input-height-large: (($font-size-large * $line-height-large) + ($padding-large-
 //** Small `.form-control` height
 $input-height-small: (($font-size-small * $line-height-small) + ($padding-small-vertical * 2));
 
-
 // Set root font size
 
 html {
-font-size: $font-size-root;
+  font-size: $font-size-root;
 }
-
 
 // Change styling for elements that mix pixels and ems
 
 pre {
-font-size: ( $font-size-base - ($font-unit / strip-units($font-size-root)));
+  font-size: ($font-size-base - ($font-unit / strip-units($font-size-root)));
 }
 
 .form-control-feedback {
-width: calc($input-height-base + 2px);
-height: calc($input-height-base + 2px);
+  width: calc(#{$input-height-base} + 2px);
+  height: calc(#{$input-height-base} + 2px);
 }
 .input-lg + .form-control-feedback {
-width: calc($input-height-large + 2px);
-height: calc($input-height-large + 2px);
+  width: calc(#{$input-height-large} + 2px);
+  height: calc(#{$input-height-large} + 2px);
 }
 .input-sm + .form-control-feedback {
-width: calc($input-height-small + 2px);
-height: calc($input-height-small + 2px);
+  width: calc(#{$input-height-small} + 2px);
+  height: calc(#{$input-height-small} + 2px);
 }
 
 .form-control {
-height: calc($input-height-base + 2px);
+  height: calc(#{$input-height-base} + 2px);
 }
 
 .form-horizontal {
-.radio, .checkbox, .radio-inline, .checkbox-inline {
-padding: $padding-base-vertical;
-border: 1px solid transparent;
-}
-.radio, .checkbox {
-min-height: calc(($line-height-computed + $padding-base-vertical) + 1px);
-}
-.form-control-static {
-padding-top: $padding-base-vertical;
-border-top: 1px solid transparent;
-padding-bottom: $padding-base-vertical;
-border-bottom: 1px solid transparent;
-}
+  .radio,
+  .checkbox,
+  .radio-inline,
+  .checkbox-inline {
+    padding: $padding-base-vertical;
+    border: 1px solid transparent;
+  }
+  .radio,
+  .checkbox {
+    min-height: calc((#{$line-height-computed} + #{$padding-base-vertical}) + 1px);
+  }
+  .form-control-static {
+    padding-top: $padding-base-vertical;
+    border-top: 1px solid transparent;
+    padding-bottom: $padding-base-vertical;
+    border-bottom: 1px solid transparent;
+  }
 
-@media (min-width: #{$screen-sm-min}) {
-.control-label {
-padding-top: $padding-base-vertical;
-border-top: 1px solid transparent;
-}
-}
+  @media (min-width: #{$screen-sm-min}) {
+    .control-label {
+      padding-top: $padding-base-vertical;
+      border-top: 1px solid transparent;
+    }
+  }
 }
