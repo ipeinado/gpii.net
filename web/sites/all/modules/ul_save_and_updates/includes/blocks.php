@@ -24,21 +24,21 @@ function ul_save_and_updates_block_view($delta = '') {
   switch ($delta) {
     case 'notify_me_product':
       ob_start();
-      include 'includes/notify-me-block-product.php';
+      include 'notify-me-block-product.php';
       $string = ob_get_clean();
       $block['content'] = $string;
       return $block;
 
     case 'notify_me_company':
       ob_start();
-      include 'includes/notify-me-block-company.php';
+      include 'notify-me-block-company.php';
       $string = ob_get_clean();
       $block['content'] = $string;
       return $block;
 
     case 'notify_me_search':
       ob_start();
-      include 'includes/notify-me-block-search.php';
+      include 'notify-me-block-search.php';
       $string = ob_get_clean();
       $block['content'] = $string;
       return $block;
