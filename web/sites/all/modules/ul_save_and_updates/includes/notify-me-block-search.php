@@ -33,6 +33,7 @@
         </h3>
       </div>
       <div class="modal-body notify-me-share">
+        <h4>Share this search</h4>
         <p>
           Click on the icon below to copy the sharable link to your clipboard. Visiting this link will run a search with
           the currently selected keywords and filters applied.
@@ -52,7 +53,7 @@
         </form>
       </div>
       <div class="modal-body notify-me-anon">
-        <h4>Share search_type</h4>
+        <h4>Save this search</h4>
         <p>
           If you want to save searches, so you can run them again easily, or get email about new products you will need
           to sign up for an account with the Unified Listing.
@@ -67,6 +68,7 @@
         <p>success!</p>
       </div>
       <div class="modal-body notify-me-form">
+        <h4>Save this search</h4>
         <form id="notify-me-form-save">
           <input type="hidden" name="uid" value="<?= $GLOBALS['user']->uid ?>" />
           <input type="hidden" name="search_type" value="classic_search" />
