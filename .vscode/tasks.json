@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Watch gpii_base sass",
+      "type": "shell",
+      "command": "./../../../../../node_modules/.bin/gulp",
+      "options": {
+        "cwd": "${workspaceRoot}/web/sites/all/themes/gpii_base"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch gpii_main sass",
+      "type": "shell",
+      "command": "./../../../../../node_modules/.bin/gulp",
+      "options": {
+        "cwd": "${workspaceRoot}/web/sites/all/themes/gpii_main"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch gpii_devspace sass",
+      "type": "shell",
+      "command": "./../../../../../node_modules/.bin/gulp",
+      "options": {
+        "cwd": "${workspaceRoot}/web/sites/all/themes/gpii_devspace"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch gpii_sai sass",
+      "type": "shell",
+      "command": "./../../../../../node_modules/.bin/gulp",
+      "options": {
+        "cwd": "${workspaceRoot}/web/sites/all/themes/gpii_sai"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
