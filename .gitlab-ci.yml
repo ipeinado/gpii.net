@@ -14,6 +14,17 @@ deploy:
       - pm2 deploy staging
   environment:
       name: stg07
-      url: http://staging.ul.gpii.net
+      url: http://staging.gpii.net
   only:
       - staging
+
+deploy_production:
+  stage: deploy
+  script:
+      - npm install -g pm2
+      - pm2 deploy production
+  environment:
+      name: web07
+      url: http://gpii.net
+  only:
+      - production
