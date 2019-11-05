@@ -3,92 +3,24 @@
 // #############################################################################
 // Blocks
 // #############################################################################
-#block-bean-search-method-button-standard {
-  .container {
-    border: 1px solid #cccccc;
-    box-shadow: 3px 3px 10px #cccccc;
-  }
-  h3 {
-    @media (min-width: $screen-lg-min) {
-      margin-top: 2.6rem;
-    }
-    font-family: 'Roboto Slab', 'Open Sans', sans-serif;
-    font-weight: 600;
-    a {
-      color: #000;
-    }
-  }
-  .search-method {
-    text-align: center;
-    img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-  img {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .search-method-input {
-    text-align: center;
-    padding: 0px 10px 18px 20px;
-    @media (min-width: $screen-md-min) {
-      margin-top: 10px;
-      border-left: solid 2px #cccccc;
-      padding: 16px 0 30px 30px;
-    }
-
-    .form-control {
-      height: 4rem;
-      display: inline-block !important;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-      border: 1px solid #cccccc;
-      border-right: 0;
-    }
-    .btn {
-      height: 4rem;
-      vertical-align: top;
-      line-height: normal;
-      background-color: $color-gpii-sai-primary;
-      color: #fff;
-    }
-  }
-
-  #block-views-exp-search-page {
-    position: relative;
-    .form-submit {
-      position: absolute;
-      bottom: -3.5rem;
-      right: 1.6rem;
-      z-index: 200;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-      border: 1px solid $color-gpii-sai-primary;
-    }
-    #edit-search-api-views-fulltext-wrapper {
-      width: calc(100% - 2rem);
-    }
-  }
-  #block-views-exp-search-page {
-    width: 100%;
-  }
-}
 
 #block-views-exp-search-page {
   position: relative;
 }
-#block-bean-why-love-saa,
+
 #block-bean-saa-testimonials {
-  text-align: center;
-  margin-top: 50px;
+  margin: 50px 0;
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 1rem;
+  }
+  h2, .intro {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 #block-bean-saa-social-media {
-  border: 1px solid #cccccc;
-  background-color: #eeeeee;
-  margin-top: 40px;
-  padding: 10px 30px;
   a {
     margin-right: 15px;
     background-color: #fff;
@@ -101,30 +33,6 @@
 #block-block-6 {
   margin-top: 40px;
   padding-right: 50px;
-}
-
-.searchtype {
-  border-bottom: 4px solid #cccccc;
-  margin-bottom: 1.5em;
-  padding-top: 1.5em;
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: lighten($gray-lighter, 2%);
-  }
-  p {
-    text-align: center;
-  }
-  h3 {
-    text-align: center;
-    font-family: 'Roboto Slab';
-    font-weight: 600;
-  }
-  img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 
 .shop-options {
@@ -173,19 +81,66 @@
 // #############################################################################
 
 .region-hero {
-  background-color: $color-gpii-sai-primary;
-  background-image: url('../images/ulheroimage.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 40%;
+  background-color: transparent;
+  //background-image: url('../images/ulheroimage.png');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: 50% 40%;
   text-align: center;
-  padding: 50px 0px;
+  padding: 50px 0px 60px;
+  color: #000;
+  a {
+    color: #000;
+    text-decoration: underline;
+    &:hover, &:focus, &:active {
+      color: $color-gpii-sai-primary;
+    }
+  }
   h3.highlight {
     font-size: 1.5rem;
   }
   .highlight,
   h1 {
-    text-shadow: 1px 1px 1px #333;
+    .lead-in {
+      display: block;
+    }
+    line-height: 2.4rem;
+    //text-shadow: 1px 1px 1px rgb(156, 156, 156);
+    margin-top: 0;
+    @media (min-width: $screen-sm) {
+      margin-top: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    font-size: 3rem;
+    
+  }
+  .tagline {
+    p {
+      font-size: 120%;
+    }
+  }
+  .hwrap {
+    width: auto;
+    @media (min-width: $screen-sm) {
+      display: grid;
+      grid-template-columns: 175px 28rem 175px;
+    }
+    
+    justify-content: center;
+    .icon {
+      height: 98px;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    .left {
+      background-image: url('../images/hicons-left.png');
+      background-position: center top;
+    }
+    .right {
+      background-image: url('../images/hicons-right.png');
+      background-position: center top;
+      
+    }
   }
 }
 
@@ -1150,27 +1105,30 @@ body.page-node-1903 {
     a {
       color: #000;
     }
-    #block-bean-shopping-options {
-      h3 {
-        text-align: center;
+    .panel {
+      box-shadow: none;
+      margin-bottom: 0;
+      border-radius: 0;
+      @media (min-width: $screen-md) {
+        &.border-bottom {
+          border-bottom: 1px solid $color-gpii-med-gray;
+        }
+        &.border-left {
+          border-left: 1px solid $color-gpii-med-gray;
+        }
       }
-
-      margin-bottom: 1em;
     }
     .searchtype {
-      border-bottom: 4px solid #cccccc;
-      margin-bottom: 1.5em;
+      padding-bottom: 1.5em;
       padding-top: 1.5em;
       &:hover,
       &:focus,
       &:active {
-        background-color: darken($gray-lighter, 2%);
-      }
-      p {
-        text-align: center;
+        a {
+          text-decoration: underline;
+        }
       }
       h3 {
-        text-align: center;
         font-family: 'Roboto Slab';
         font-weight: 600;
       }
@@ -1187,7 +1145,9 @@ body.page-node-1903 {
         & > div {
           display: flex;
           flex-direction: column;
-          & .panel {
+          padding-left: 0;
+          padding-right: 0;
+          &.panel {
             cursor: pointer;
             flex-grow: 1;
             a {
@@ -1198,9 +1158,6 @@ body.page-node-1903 {
       }
     }
   }
-  /**
-   * Equal Height for search blocks in the home jumbotron
-   */
 
   /*
  * Row with equal height columns
@@ -1208,6 +1165,15 @@ body.page-node-1903 {
  */
   h1.page-header {
     display: none;
+  }
+
+  .fullwidth {
+    margin: 2rem 0;
+    
+    .banded {
+      background-color: #eeeeee;
+      padding: 3rem 0;
+    }
   }
 }
 
