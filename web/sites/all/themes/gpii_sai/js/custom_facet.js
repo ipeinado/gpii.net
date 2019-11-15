@@ -1,28 +1,23 @@
-(function($) {
-  'use strict';
+(function($, Drupal) {
+  "use strict";
 
   // functions below have been pulled from the facetapi.js and modified for wanted behavior.
-  var Redirect = function(href) {
-    this.href = href;
-  };
-
-  Redirect.prototype.gotoHref = function() {
-    window.location.href = this.href;
-  };
-
   function makeCheckboxes(facet_id) {
-    var $facet = $('#' + facet_id),
-      $links = $('a.facetapi-checkbox', $facet);
+    var $facet = $("#" + facet_id),
+      $links = $("a.facetapi-checkbox", $facet);
 
     // Find all checkbox facet links and give them a checkbox.
-    $links.once('facetapi-makeCheckbox').each(makeCheckbox);
+    $links.once("facetapi-makeCheckbox").each(makeCheckbox);
+    $links.once("facetapi-disableClick").click(function(e) {
+      Drupal.facetapi.disableFacet($facet);
+    });
   }
 
   function makeCheckbox() {
     var $link = $(this),
-      active = $link.hasClass('facetapi-active');
+      active = $link.hasClass("facetapi-active");
 
-    if (!active && !$link.hasClass('facetapi-inactive')) {
+    if (!active && !$link.hasClass("facetapi-inactive")) {
       // Not a facet link.
       return;
     }
@@ -30,20 +25,28 @@
     // Derive an ID and label for the checkbox based on the associated link.
     // The label is required for accessibility, but it duplicates information
     // in the link itself, so it should only be shown to screen reader users.
-    var id = this.id + '--checkbox',
-      description = $link.find('.element-invisible').html(),
-      label = $('<label class="element-invisible" for="' + id + '">' + description + '</label>'),
-      checkbox = $('<input type="checkbox" class="facetapi-checkbox" id="' + id + '" />'),
+    var id = this.id + "--checkbox",
+      description = $link.find(".element-invisible").html(),
+      label = $(
+        '<label class="element-invisible" for="' +
+          id +
+          '">' +
+          description +
+          "</label>"
+      ),
+      checkbox = $(
+        '<input type="checkbox" class="facetapi-checkbox" id="' + id + '" />'
+      ),
       // Get the href of the link that is this DOM object.
-      href = $link.attr('href'),
-      redirect = new Redirect(href);
+      href = $link.attr("href"),
+      redirect = new Drupal.facetapi.Redirect(href);
 
     checkbox.click(function(e) {
       redirect.gotoHref();
     });
 
     if (active) {
-      checkbox.attr('checked', true);
+      checkbox.attr("checked", true);
       // Add the checkbox and label.
       $link.before(label).before(checkbox);
     } else {
@@ -52,8 +55,8 @@
   }
 
   $(document).ready(function() {
-    makeCheckboxes('block-block-3');
-    makeCheckboxes('block-block-4');
-    $('#edit-submit-search').addClass('element-invisible');
+    makeCheckboxes("facetapi-facet-field-product-categories1");
+    makeCheckboxes("facetapi-facet-field-features-primary");
+    $("#edit-submit-search").addClass("element-invisible");
   });
-})(jQuery);
+})(jQuery, Drupal);

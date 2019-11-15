@@ -26,7 +26,7 @@ var query = decodeURIComponent(url[1]);
     var helpText =
       '<p>Show <strong>only</strong> products that are compatible with the following operating systems.</p>';
     var clearButton =
-      '<p><button class="btn btn-default btn-sm clear-button">Clear Selected Operating Systems</button></p>';
+      '<p><button class="btn btn-default btn-xs clear-button">Clear Selected Operating Systems</button></p>';
 
     $('.facetapi-facet-field-operating-system').before(helpText, clearButton);
 

@@ -1545,7 +1545,7 @@ function gpii_saa_custom_list_sources($uid) {
 
     if ($err) {
       //dpm("cURL Error \: " . $err);
-      
+
     }
     else {
       //dpm($response);
@@ -3611,7 +3611,7 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
   $custom_tree = '';
 
   if (count($term_info) != 0) {
-    
+
     if ($field_name == 'field_product_categories1') {
       $select_supplementary = 'Product Categories';
     }
@@ -3635,7 +3635,8 @@ function gpii_saa_custom_build_custom_tree($taxonomy_field, $tree, $field_name, 
       $custom_tree .= '<a href="' . $unselectAll_link . '" class="btn btn-xs btn-default btn-unselect-all">Unselect All <span class="sr-only">' . $select_supplementary . '</span></a>';
     }
 
-    $custom_tree .= '<ul class="facetapi-facetapi-checkbox-links">';
+    $facet_unique = 'facetapi-facet-' . preg_replace("/_/", "-", $field_name);
+    $custom_tree .= "<ul class=\"facetapi-facetapi-checkbox-links $facet_unique\" id=\"$facet_unique\">";
 
     $previous_term = [];
     $i = 0;
