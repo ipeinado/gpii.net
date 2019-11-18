@@ -28,6 +28,7 @@ prepros-*.config
 /web/sites/all/themes/gpii_sai/prepros-6.config
 
 backups
+tmp
 vendor
 web/sites/vendor/*
 composer.lock
