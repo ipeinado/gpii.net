@@ -23,7 +23,7 @@ echo "syncing database from @saaprod"
 lando drush @saaprod sql-dump --result-file=/var/www/clients/client4/web5/tmp/saaprod-db.sql
 
 #rsync the file created above so that it is available locally
-rsync -e 'ssh ' -akz --remove-source-files gpiiweb@192.168.123.79:/var/www/clients/client4/web5/tmp/saaprod-db.sql /home/ben/code/gpii.net/backups/saaprod-db.sql
+rsync -e 'ssh ' -akz --remove-source-files gpiiweb@192.168.123.79:/var/www/clients/client4/web5/tmp/saaprod-db.sql ~/code/gpii.net/backups/saaprod-db.sql
 
 # # drop the current DB and import the new
 lando db-import ../../../backups/saaprod-db.sql --host database2
