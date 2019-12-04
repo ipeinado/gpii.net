@@ -638,9 +638,8 @@ class SearchApiSolrConnection implements SearchApiSolrConnectionInterface {
     if ($this->stream_context) {
       $options['context'] = $this->stream_context;
     }
-    //drupal_set_message(check_plain($url)); // <-- Add this line.
+
     $result = drupal_http_request($url, $options);
-    //drupal_set_message(check_plain($result->data)); // <-- Add this line.
 
     $result->status_message = isset($result->status_message) ? $result->status_message : '';
     if (!isset($result->code) || $result->code < 0) {
@@ -982,7 +981,10 @@ class SearchApiSolrConnection implements SearchApiSolrConnectionInterface {
    *   The response received from Solr.
    */
   protected function logResponse($response) {
-    $data = $response->code . ' ' . $response->status_message . "\n" . print_r($response->response, TRUE);
+    $data = $response->code . ' ' . $response->status_message;
+    if (!empty($response->response)) {
+      $data .= "\n" . print_r($response->response, TRUE);
+    }
     watchdog('search_api_solr', 'Response: <div style="white-space: pre-wrap;">@response</div>', array('@response' => $data), WATCHDOG_DEBUG);
 
     if (!empty($response->facet_counts)) {
