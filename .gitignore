@@ -40,3 +40,5 @@ web/sites/vendor/composer/installed.json
 .vscode/last.sql
 web/sites/ngrok.io
 web/sites/all/translations/devel-7.x-1.6.de.po
+web/sites/vendor/composer/ClassLoader.php
+web/sites/vendor/composer/LICENSE
