@@ -41,7 +41,7 @@ lando drush --yes dis googleanalytics
 lando drush --yes en reroute_email search_api_override patchinfo stage_file_proxy devel admin_devel ds_devel
 
 // Set the origin, or where the files live, the production site
-lando drush variable-set stage_file_proxy_origin "https://www.ul.gpii.net"
+lando drush variable-set stage_file_proxy_origin "https://ul.gpii.net"
 
 echo "updating database"
 # update databse
