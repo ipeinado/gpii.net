@@ -8,7 +8,7 @@
       "repo": "git@git.qualtim.com:GPII/gpii.net.git",
       "path": "/var/www/clients/client2/web3/private",
       "ssh_options": ["StrictHostKeyChecking=no", "PasswordAuthentication=no"],
-      "post-deploy": "git submodule update; drush --uri=gpii.net updb -y; drush --uri=ul.gpii.net updb -y; drush --uri=developerspace.gpii.net updb -y"
+      "post-deploy": "git submodule update; cd web; drush --uri=gpii.net updb -y; drush --uri=ul.gpii.net updb -y; drush --uri=developerspace.gpii.net updb -y"
     },
     "production": {
       "user": "gpiiweb",
@@ -17,7 +17,7 @@
       "repo": "git@git.qualtim.com:GPII/gpii.net.git",
       "path": "/var/www/clients/client4/web5/private",
       "ssh_options": ["StrictHostKeyChecking=no", "PasswordAuthentication=no"],
-      "post-deploy": "git submodule update; drush --uri=gpii.net cc all; drush --uri=ul.gpii.net cc all; drush --uri=developerspace.gpii.net cc all"
+      "post-deploy": "git submodule update; cd web; drush --uri=gpii.net cc all; drush --uri=ul.gpii.net cc all; drush --uri=developerspace.gpii.net cc all"
     }
   }
 }
