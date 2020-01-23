@@ -9,7 +9,7 @@ require __DIR__ . '/../../../vendor/autoload.php';
 
 use Google\Cloud\Translate\TranslateClient;
 
-// Include browse virtual store functions.
+// Include similar search functions.
 module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.similar');
 
 
