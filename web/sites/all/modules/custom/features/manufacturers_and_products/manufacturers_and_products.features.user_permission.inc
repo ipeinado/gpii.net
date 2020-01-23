@@ -92,6 +92,16 @@ function manufacturers_and_products_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'create field_trouble_with'.
+  $permissions['create field_trouble_with'] = array(
+    'name' => 'create field_trouble_with',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit field_duplicate_nid'.
   $permissions['edit field_duplicate_nid'] = array(
     'name' => 'edit field_duplicate_nid',
@@ -162,6 +172,16 @@ function manufacturers_and_products_user_default_permissions() {
   $permissions['edit field_source'] = array(
     'name' => 'edit field_source',
     'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit field_trouble_with'.
+  $permissions['edit field_trouble_with'] = array(
+    'name' => 'edit field_trouble_with',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
@@ -239,6 +259,16 @@ function manufacturers_and_products_user_default_permissions() {
     'roles' => array(
       'Content Admin' => 'Content Admin',
       'Curated Content Editor' => 'Curated Content Editor',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_trouble_with'.
+  $permissions['edit own field_trouble_with'] = array(
+    'name' => 'edit own field_trouble_with',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
@@ -331,6 +361,16 @@ function manufacturers_and_products_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'view field_trouble_with'.
+  $permissions['view field_trouble_with'] = array(
+    'name' => 'view field_trouble_with',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'view own field_duplicate_nid'.
   $permissions['view own field_duplicate_nid'] = array(
     'name' => 'view own field_duplicate_nid',
@@ -398,6 +438,16 @@ function manufacturers_and_products_user_default_permissions() {
   // Exported permission: 'view own field_source'.
   $permissions['view own field_source'] = array(
     'name' => 'view own field_source',
+    'roles' => array(
+      'Content Admin' => 'Content Admin',
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_trouble_with'.
+  $permissions['view own field_trouble_with'] = array(
+    'name' => 'view own field_trouble_with',
     'roles' => array(
       'Content Admin' => 'Content Admin',
       'administrator' => 'administrator',
