@@ -1,26 +1,3 @@
-<div id="save-and-notify" style="display: flex; justify-content: flex-end; margin-top: 10px;">
-  <button
-    id="notify-me-button-share"
-    style="margin-right: 10px;"
-    type="button"
-    class="btn btn-primary notify-me-button"
-    data-toggle="modal"
-    data-target="#notify-me-modal"
-    data-modal-option="share"
-  >
-    <span class="fa fa-link"></span>
-  </button>
-  <button
-    id="notify-me-button"
-    type="button"
-    class="btn btn-primary notify-me-button"
-    data-toggle="modal"
-    data-target="#notify-me-modal"
-  >
-    <span class="fa fa-envelope"></span>
-  </button>
-</div>
-
 <div id="notify-me-modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -71,7 +48,7 @@
         <h4>Save this search</h4>
         <form id="notify-me-form-save">
           <input type="hidden" name="uid" value="<?= $GLOBALS['user']->uid ?>" />
-          <input type="hidden" name="search_type" value="classic_search" />
+          <input type="hidden" name="search_type" value="power_search" />
           <input type="hidden" name="search_url" />
 
           <div class="alert alert-danger alert-dismissible notify-me-error" role="alert">
