@@ -54,7 +54,7 @@ function _saved_search_createTableMarkup($headers, $rows, $noneMessage) {
 }
 
 function _saved_search_createRemoveButton($id) {
-  return '<a class="notify-me-button-remove" style="cursor: pointer;" data-id="' . $id . '" data-toggle="modal" data-target="#notify-me-modal-confirm">Remove</a>';
+  return '<button class="notify-me-button-remove btn btn-xs" style="cursor: pointer;" data-id="' . $id . '" data-toggle="modal" data-target="#notify-me-modal-confirm">Remove</button>';
 }
 
 function _saved_search_createUpdateCheckbox($class, $id, $name, $status) {
@@ -68,7 +68,7 @@ function _saved_search_createUpdateCheckbox($class, $id, $name, $status) {
 function _saved_search_createNameEdit($id, $name) {
   return '<span class="notify-me-name-wrapper" style="white-space: nowrap;">'
     ."<span class=\"notify-me-name\">$name</span>"
-    .' (<a class="notify-me-name-edit" data-id="' . $id . '" style="cursor: pointer;">rename</a>)</span>';
+    .' <button class="notify-me-name-edit btn btn-xs" data-id="' . $id . '" style="cursor: pointer;">edit</button></span>';
 }
 
 function _saved_search_getManufacturerProducts($manfId) {
