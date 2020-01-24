@@ -23,38 +23,30 @@ echo "syncing database from @saaprod"
 lando drush @saaprod sql-dump --result-file=/var/www/clients/client4/web5/tmp/saaprod-db.sql
 
 #rsync the file created above so that it is available locally
-rsync -e 'ssh ' -akz --remove-source-files gpiiweb@192.168.123.79:/var/www/clients/client4/web5/tmp/saaprod-db.sql /home/ben/code/gpii.net/backups/saaprod-db.sql
+rsync -e 'ssh ' -akz --remove-source-files gpiiweb@192.168.123.79:/var/www/clients/client4/web5/tmp/saaprod-db.sql ~/code/gpii.net/backups/saaprod-db.sql
 
 # # drop the current DB and import the new
 lando db-import ../../../backups/saaprod-db.sql --host database2
 
 echo "Database successfully imported!"
 
-# # disable CSS/JS aggregation
-lando drush -y vset system.performance css.preprocess 0
+## disable CSS/JS aggregation
+lando drush -y vset preprocess_css 0
 
-# # Turning on maint. mode.
-# lando drush --yes vset maintenance_mode 1
 
-# # disable modules
+## disable modules
 lando drush --yes dis googleanalytics
 
-# # enable modules
+## enable modules
 lando drush --yes en reroute_email search_api_override patchinfo stage_file_proxy devel admin_devel ds_devel
 
-# # adjust variables
-# lando drush vset --yes file_private_path '' # set to null to avoid errors in local environments (ex. /var/www/clients/client3/web18/private)
+// Set the origin, or where the files live, the production site
+lando drush variable-set stage_file_proxy_origin "https://ul.gpii.net"
 
-# # sync files
-# echo "syncing files"
-#$DRUSH_PATH --yes sync-files @saaprod @self
+echo "updating database"
+# update databse
+lando drush --yes updb
 
-# echo "updating database"
-# # update databse
-# lando drush --yes updb
-
-# echo "clearing cache"
-# lando drush --yes cc all
 
 echo "done!"
 

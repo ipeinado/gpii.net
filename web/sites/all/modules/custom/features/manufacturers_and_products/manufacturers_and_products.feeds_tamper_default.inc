@@ -48,6 +48,28 @@ function manufacturers_and_products_feeds_tamper_default() {
   $feeds_tamper = new stdClass();
   $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
   $feeds_tamper->api_version = 2;
+  $feeds_tamper->id = 'unified_listing_products-description-keyword_filter';
+  $feeds_tamper->importer = 'unified_listing_products';
+  $feeds_tamper->source = 'description';
+  $feeds_tamper->plugin_id = 'keyword_filter';
+  $feeds_tamper->settings = array(
+    'words' => 'Product Description',
+    'word_boundaries' => 1,
+    'exact' => 0,
+    'case_sensitive' => 1,
+    'invert' => 1,
+    'word_list' => array(
+      0 => '/\\bProduct Description\\b/u',
+    ),
+    'regex' => TRUE,
+  );
+  $feeds_tamper->weight = 0;
+  $feeds_tamper->description = 'Keyword: Skip if it originated in the UL';
+  $export['unified_listing_products-description-keyword_filter'] = $feeds_tamper;
+
+  $feeds_tamper = new stdClass();
+  $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
+  $feeds_tamper->api_version = 2;
   $feeds_tamper->id = 'unified_listing_products-status-find_replace';
   $feeds_tamper->importer = 'unified_listing_products';
   $feeds_tamper->source = 'status';

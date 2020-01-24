@@ -80,11 +80,11 @@
           </a>
         <?php endif; ?>
         <?php if (!empty($site_slogan)): ?>
-          <p class="lead skiptranslate"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
+          <p class="lead"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
         <?php endif; ?>
 
         <?php if (!empty($site_name)): ?>
-          <a class="name navbar-brand skiptranslate" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
+          <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
         <?php endif; ?>
 
         <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation']) || $region_info['menu']['has_columns']): ?>
@@ -139,25 +139,7 @@
 
         <?php print render($title_prefix); ?>
         <?php if (!empty($title)): ?>
-          <?php
-            /**
-             * BBC: Check to see if what we're about to render has a translation that matches the currently set language pref
-             */
-
-            // get the currently active language
-            global $language ;
-            $lang = $language->language ;
-
-            // If the current language matches the language preference that is set, then add a skiptranslate class to the title.
-            // This keeps Google translate from re-translating the content when invoked.
-            $skiptranslate_class = '';
-            if (isset($node)) {
-              if ($node && $lang === $node->language) {
-                $skiptranslate_class = 'skiptranslate';
-              }
-            }
-          ?>
-          <h1 class="page-header <?php print $skiptranslate_class; ?>"><?php print  $title; ?></h1>
+          <h1 class="page-header"><?php print  $title; ?></h1>
         <?php endif; ?>
         <?php print render($title_suffix); ?>
         <?php print $messages; ?>

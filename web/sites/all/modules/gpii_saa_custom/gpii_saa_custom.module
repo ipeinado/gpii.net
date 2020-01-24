@@ -9,7 +9,7 @@ require __DIR__ . '/../../../vendor/autoload.php';
 
 use Google\Cloud\Translate\TranslateClient;
 
-// Include browse virtual store functions.
+// Include similar search functions.
 module_load_include('inc', 'gpii_saa_custom', 'gpii_saa_custom.similar');
 
 
@@ -47,9 +47,6 @@ function gpii_saa_custom_permission() {
     ),
     'access terminal taxonomy report' => array(
       'title' => t('Access terminal taxonomy term reports.'),
-    ),
-    'access browse virtual stores' => array(
-      'title' => t('Access browse virtual stores pages.'),
     ),
     'access similar search' => array(
       'title' => t('Access similar search pages.'),
@@ -534,23 +531,6 @@ function gpii_saa_custom_menu() {
     'title' => 'Deleted Products Endpoint',
     'page callback' => 'gpii_saa_custom_abledata_report',
     'access arguments' => array('access advanced search data'),
-  );
-  $items['browse'] = array(
-    'title' => 'Browse Virtual Stores',
-    'page callback' => 'gpii_saa_custom_virtual_stores',
-    'access arguments' => array('access browse virtual stores'),
-  );
-  $items['browse/category/%'] = array(
-    'title' => 'Virtual Store Category',
-    'page callback' => 'gpii_saa_custom_virtual_category',
-    'page arguments' => array(2),
-    'access arguments' => array('access browse virtual stores'),
-  );
-  $items['browse/shelf/%'] = array(
-    'title' => 'Virtual Store Shelf',
-    'page callback' => 'gpii_saa_custom_virtual_shelf',
-    'page arguments' => array(2),
-    'access arguments' => array('access browse virtual stores'),
   );
   $items['reports/taxonomy/terminal/%'] = array(
     'title' => 'Terminal Taxonomy Report',
@@ -2259,59 +2239,59 @@ function gpii_saa_custom_products_ulisting() {
  *
  * @@ need to add same logic for the needs and wants view
  */
-function gpii_saa_custom_services_request_postprocess_alter($controller, $args, &$result) {
+// function gpii_saa_custom_services_request_postprocess_alter($controller, $args, &$result) {
 
-  // Debugging
-  // print($controller['view info']['view_name']);
-  // print_r($controller);
-  // print_r($result);
-  // exit;
-  // Identify JSON returned by the documents available view and make a few adjustments to the output.
-  if (isset($controller['view info'])) {
-    if ($controller['view info']['view_name'] == 'product_categories') {
+//   // Debugging
+//   // print($controller['view info']['view_name']);
+//   // print_r($controller);
+//   // print_r($result);
+//   // exit;
+//   // Identify JSON returned by the documents available view and make a few adjustments to the output.
+//   if (isset($controller['view info'])) {
+//     if ($controller['view info']['view_name'] == 'product_categories') {
 
-      // Get the currently active language.
-      global $language;
-      $lang = $language->language;
+//       // Get the currently active language.
+//       global $language;
+//       $lang = $language->language;
 
-      foreach ($result as $key => $value) {
-        // Call the fuction with term id and language.
-        $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
-        if ($translation_status > 0) {
-          $result[$key]->lang = $lang;
-        }
-      }
-    }
-    if ($controller['view info']['view_name'] == 'difficulties_categories') {
+//       foreach ($result as $key => $value) {
+//         // Call the fuction with term id and language.
+//         $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
+//         if ($translation_status > 0) {
+//           $result[$key]->lang = $lang;
+//         }
+//       }
+//     }
+//     if ($controller['view info']['view_name'] == 'difficulties_categories') {
 
-      // Get the currently active language.
-      global $language;
-      $lang = $language->language;
+//       // Get the currently active language.
+//       global $language;
+//       $lang = $language->language;
 
-      foreach ($result as $key => $value) {
-        // Call the fuction with term id and language.
-        $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
-        if ($translation_status > 0) {
-          $result[$key]->lang = $lang;
-        }
-      }
-    }
-    if ($controller['view info']['view_name'] == 'trouble_categories') {
+//       foreach ($result as $key => $value) {
+//         // Call the fuction with term id and language.
+//         $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
+//         if ($translation_status > 0) {
+//           $result[$key]->lang = $lang;
+//         }
+//       }
+//     }
+//     if ($controller['view info']['view_name'] == 'trouble_categories') {
 
-      // Get the currently active language.
-      global $language;
-      $lang = $language->language;
+//       // Get the currently active language.
+//       global $language;
+//       $lang = $language->language;
 
-      foreach ($result as $key => $value) {
-        // Call the fuction with term id and language.
-        $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
-        if ($translation_status > 0) {
-          $result[$key]->lang = $lang;
-        }
-      }
-    }
-  }
-}
+//       foreach ($result as $key => $value) {
+//         // Call the fuction with term id and language.
+//         $translation_status = gpii_custom_get_translation_status($result[$key]->term_id, $lang);
+//         if ($translation_status > 0) {
+//           $result[$key]->lang = $lang;
+//         }
+//       }
+//     }
+//   }
+// }
 
 /**
  * Implements hook_action_info() to add some custom VBO actions.
@@ -3217,7 +3197,6 @@ function gpii_saa_custom_init() {
   $isTranslator = in_array('Translator', $user->roles);
   $path = drupal_get_path('module', 'gpii_saa_custom');
   drupal_add_js(array('isTranslator' => $isTranslator), 'setting');
-  drupal_add_js($path . '/js/bundle.js');
 }
 
 /**
@@ -3483,7 +3462,7 @@ function gpii_saa_custom_preprocess_page(&$variables) {
   if (isset($variables['theme_hook_suggestions'][0]) && $variables['theme_hook_suggestions'][0] == 'page__guided_shopping_search') {
     // $breadcrumb = $variables['page']['content']['system_main']['breadcrumb'];
     // dsm($variables);
-    $term_id = $_GET[field_product_categories1][0];
+    $term_id = $_GET['field_product_categories1'][0];
 
     $breadcrumb = _build_breadcrumb($term_id);
     $variables['breadcrumb'] = theme('item_list', array('items' => $breadcrumb, 'type' => 'ol', 'attributes' => array('class' => 'breadcrumb')));

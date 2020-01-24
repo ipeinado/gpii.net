@@ -138,26 +138,7 @@
         <a id="main-content"></a>
         <?php print render($title_prefix); ?>
         <?php if (!empty($title)): ?>
-          <?php
-            /**
-             * BBC: Check to see if what we're about to render has a translation that matches the currently set language pref
-             */
-
-            // get the currently active language
-            global $language ;
-            $lang = $language->language ;
-
-            // If the current language matches the language preference that is set, then add a skiptranslate class to the title.
-            // This keeps Google translate from re-translating the content when invoked.
-
-            if ($lang === $node->language) {
-              $skiptranslate_class = 'skiptranslate';
-            }
-            else {
-              $skiptranslate_class = '';
-            }
-          ?>
-          <h1 class="page-header <?php print $skiptranslate_class; ?>"><?php print  $title; ?></h1>
+          <h1 class="page-header"><?php print  $title; ?></h1>
         <?php endif; ?>
         <?php print render($title_suffix); ?>
         <?php print $messages; ?>
@@ -175,43 +156,14 @@
           <?php print render($page['content_preface']); ?>
         <?php endif; ?>
 
-        <div class="highlighted jumbotron"><div class="container"><?php print render($page['highlighted']); ?>
-            <div class="row row-flex row-flex-wrap">
-              <div class="col-sm-24 col-md-8">
-                <div class="panel searchtype">
+        <div class="highlighted jumbotron">
+          <div class="container">
+            <?php print render($page['highlighted']); ?>
+            <div class="row row-flex row-flex-wrap row-no-gutters">
+              <div class="col-xs-24 col-sm-12 col-md-10 col-md-offset-2">
+                <div class="panel searchtype border-bottom">
                   <?php
-                    // if the user has the tester role, render the block that references the demo content
-                    if (user_has_role(15)) {
-                      $blockObject = block_load('bean', 'search-method-button-virtual-s-0');
-                    }
-                    else {
-                      $blockObject = block_load('bean', 'search-method-button-virtual-sto');
-                    }
-                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-                    $output = drupal_render($block);
-                    print $output;
-                  ?>
-                 </div>
-              </div>
-            <div class="col-sm-24 col-md-8">
-                <div class="panel searchtype">
-                  <?php
-                    // if the user has the tester role, render the block that references the demo content
-                    if (user_has_role(15)) {
-                      $blockObject = block_load('bean', 'search-method-button-qanda-test');
-                    }
-                    else {
-                      $blockObject = block_load('bean', 'search-method-button-qanda');
-                    }
-                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
-                    $output = drupal_render($block);
-                    print $output;
-                  ?>
-                </div>
-              </div>
-              <div class="col-sm-24 col-md-8">
-                <div class="panel searchtype">
-                  <?php
+                    // Power Search
                     $blockObject = block_load('bean', 'search-method-button-advanced');
                     $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
                     $output = drupal_render($block);
@@ -219,7 +171,41 @@
                   ?>
                 </div>
               </div>
-
+              <div class="col-xs-24 col-sm-12 col-md-10">
+                <div class="panel searchtype border-left border-bottom">
+                  <?php
+                    // Classic Search
+                    $blockObject = block_load('bean', 'search-method-button-standard');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+            </div><!--/row-->
+            <div class="row row-flex row-flex-wrap row-no-gutters">
+              <div class="col-xs-24 col-sm-12 col-md-10 col-md-offset-2">
+                <div class="panel searchtype">
+                  <?php
+                    // Guided Shopping
+                    $blockObject = block_load('bean', 'search-method-button-qanda');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                </div>
+              </div>
+              <div class="col-sm-xs col-sm-12 col-md-10">
+                <div class="panel searchtype border-left">
+                  <?php
+                    // Find Similar
+                    $blockObject = block_load('bean', 'search-method-button-virtual-s-0');
+                    $block = _block_get_renderable_array(_block_render_blocks(array($blockObject)));
+                    $output = drupal_render($block);
+                    print $output;
+                  ?>
+                 </div>
+              </div>
             </div><!--/row-->
           </div>
         </div>

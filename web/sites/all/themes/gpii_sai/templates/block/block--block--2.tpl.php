@@ -47,31 +47,6 @@
 
 ?>
 
-<?php
-/**
- * BBC: Check to see if the block we're about to render has a translation that matches the currently set language preference
- */
-
-  // get a list of active languages
-  $languages = array_keys(language_list());
-  // remove the leading slash from the request
-  $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
-  // reduce the string to the first three characters
-  $currlanguage = substr($currlanguage, 0, 3);
-  //kpr($currlanguage);
-
-  // initialize a variable in case we need to tell Google Translate to skip this block
-  $skiptranslate = '';
-  // if the first three characters include a slash or is only two characters long (es, de, el), then add skiptranslate
-  if(strstr($currlanguage, '/') || (strlen($currlanguage) == 2)) {
-    $currlanguage = substr($currlanguage, 0, 2);
-    // ensure that the block we're rendering has a translation for one of the languages we support
-    if (in_array($currlanguage,$languages) && $block->i18n_mode == 1) {
-      $classes .= ' skiptranslate';
-    }
-  }
-
-?>
 <section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
   <?php print render($title_prefix); ?>
@@ -142,7 +117,7 @@
                 $related_terms = [];
 
                 foreach ($items as $item) {
-                  if ($item->score > .02) { // @@ Solr 6.6 changes relevance scores significantly, so this will need to be bumped up when we switch over
+                  if ($item->score > 2) { // @@ Solr 6.6 changes relevance scores significantly, so this will need to be bumped up when we switch over
                     $term_id = $item->item_id;
                     $term = taxonomy_term_load($term_id);
                     

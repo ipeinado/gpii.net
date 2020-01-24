@@ -45,27 +45,8 @@
  * @ingroup templates
  */
 
-// get a list of active languages
-  $languages = array_keys(language_list());
-  // remove the leading slash from the request
-  $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
-  // reduce the string to the first three characters
-  $currlanguage = substr($currlanguage, 0, 3);
-  //kpr($currlanguage);
-
-  // initialize a variable in case we need to tell Google Translate to skip this block
-  $skiptranslate = '';
-  // if the first three characters include a slash or is only two characters long (es, de, el), then add skiptranslate
-  if(strstr($currlanguage, '/') || (strlen($currlanguage) == 2)) {
-    $currlanguage = substr($currlanguage, 0, 2);
-    // ensure that the block we're rendering has a translation for one of the languages we support
-    if (in_array($currlanguage,$languages)) {
-      $skiptranslate = ' skiptranslate';
-      $classes .= ' skiptranslate';
-    }
-  }
 ?>
-<p><a aria-controls="feedback-collapsible" aria-expanded="false" class="btn btn-default collapsed<?php print $skiptranslate; ?>" data-target="#feedback-collapsible" data-toggle="collapse" type="button" href="#feedback-collapsible"><?php print t('If you see an error or omission or if you have any other comments, please let us know'); ?></a></p>
+<p><a aria-controls="feedback-collapsible" aria-expanded="false" class="btn btn-default collapsed" data-target="#feedback-collapsible" data-toggle="collapse" type="button" href="#feedback-collapsible"><?php print t('If you see an error or omission or if you have any other comments, please let us know'); ?></a></p>
 <section id="<?php print $block_html_id; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 <div class="container">
   <div class="row">

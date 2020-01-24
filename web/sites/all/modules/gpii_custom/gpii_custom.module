@@ -67,12 +67,12 @@ function gpii_custom_ds_layout_info_alter(&$layouts) {
  *
  */
 
-function gpii_custom_get_translation_status($item, $lang) {
-    $result = db_query('SELECT * FROM TranslationLookup WHERE objectid = :itemid and language = :lang', array(
-        ':itemid' => $item,
-        'lang' => $lang
-        ));
+// function gpii_custom_get_translation_status($item, $lang) {
+//     $result = db_query('SELECT * FROM TranslationLookup WHERE objectid = :itemid and language = :lang', array(
+//         ':itemid' => $item,
+//         'lang' => $lang
+//         ));
 
-    $record = $result->fetchAll();
-    return count($record);
-}
+//     $record = $result->fetchAll();
+//     return count($record);
+// }

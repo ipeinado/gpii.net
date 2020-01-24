@@ -1,6 +1,7 @@
 name: gpii-sites
 recipe: drupal7
 config:
+  php: '7.3'
   webroot: web
   xdebug: true
   conf: 
