@@ -31,6 +31,7 @@
       var button = $(this);
       var modalOption = button.data("modalOption");
       if (modalOption == "share") {
+        $("#sharelink").val(document.location);
         $(".modal-body.notify-me-share").show();
       } else {
         $(".modal-body.notify-me-share").hide();
@@ -191,7 +192,6 @@
     }
 
     $(".notify-me-button-remove").click(function(event) {
-      event.preventDefault();
       $('#notify-me-form-delete input[name="id"]').attr(
         "value",
         event.target.dataset.id
@@ -213,6 +213,32 @@
           modal.find(".notify-me-error").show();
         }
       });
+    });
+
+    // share link clipboard functionality
+    $(".share-link-copy").click(function(event) {
+      event.preventDefault();
+      $("#sharelink").select();
+      try {
+        document.execCommand("copy");
+        if ($(".copy-status").length < 1) {
+          $(this)
+            .parent()
+            .append($('<span class="copy-status">Copied</span>'));
+        }
+        $(".copy-status").text("Copied");
+      } catch (e) {
+        if (!$(".copy-status")) {
+          $(this)
+            .parent()
+            .append($('<span class="copy-status">Copied</span>'));
+        }
+        $(".copy-status").text("Copied");
+      }
+
+      setTimeout(function() {
+        $(".copy-status").remove();
+      }, 5000);
     });
   });
 })(jQuery, Drupal);

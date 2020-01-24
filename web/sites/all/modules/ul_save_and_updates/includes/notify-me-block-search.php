@@ -38,19 +38,19 @@
           Click on the icon below to copy the sharable link to your clipboard. Visiting this link will run a search with
           the currently selected keywords and filters applied.
         </p>
-        <form class="form-inline">
+        <div class="form-inline">
           <div class="form-group">
             <input
               id="sharelink"
-              class="input-stretch form-control ng-pristine ng-valid ng-not-empty ng-touched"
+              class="form-control"
               aria-invalid="false"
             />
           </div>
-          <button class="btn btn-default">
+          <button class="share-link-copy btn btn-default">
             <span class="sr-only">Copy link to clipboard</span>
             <span class="fa fa-clipboard"></span>
           </button>
-        </form>
+        </div>
       </div>
       <div class="modal-body notify-me-anon">
         <h4>Save this search</h4>
