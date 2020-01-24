@@ -80,7 +80,7 @@
           </a>
         <?php endif; ?>
         <?php if (!empty($site_slogan)): ?>
-          <p class="lead skiptranslate"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
+          <p class="lead"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
         <?php endif; ?>
 
         <?php if (!empty($site_name)): ?>
@@ -194,26 +194,7 @@
         <a id="main-content"></a>
         <?php print render($title_prefix); ?>
         <?php if (!empty($title)): ?>
-          <?php
-            /**
-             * BBC: Check to see if what we're about to render has a translation that matches the currently set language pref
-             */
-
-            // get the currently active language
-            global $language ;
-            $lang = $language->language ;
-
-            // If the current language matches the language preference that is set, then add a skiptranslate class to the title.
-            // This keeps Google translate from re-translating the content when invoked.
-
-            if ($lang === $node->language) {
-              $skiptranslate_class = 'skiptranslate';
-            }
-            else {
-              $skiptranslate_class = '';
-            }
-          ?>
-          <h1 class="page-header <?php print $skiptranslate_class; ?>"><?php print  $title; ?></h1>
+          <h1 class="page-header"><?php print  $title; ?></h1>
         <?php endif; ?>
         <?php print render($title_suffix); ?>
         <?php print $messages; ?>

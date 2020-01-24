@@ -80,11 +80,11 @@
           </a>
         <?php endif; ?>
         <?php if (!empty($site_slogan)): ?>
-          <p class="lead skiptranslate"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
+          <p class="lead"><a href="<?php print $front_page; ?>" title="<?php print t($site_slogan . ' Home'); ?>"><?php print $site_slogan; ?></a></p>
         <?php endif; ?>
 
         <?php if (!empty($site_name)): ?>
-          <a class="name navbar-brand skiptranslate" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
+          <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
         <?php endif; ?>
 
         <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation']) || $region_info['menu']['has_columns']): ?>
@@ -138,30 +138,7 @@
         <a id="main-content"></a>
         <?php print render($title_prefix); ?>
         <?php if (!empty($title)): ?>
-          <?php
-            /**
-             * BBC: Check to see if what we're about to render has a translation that matches the currently set language pref
-             */
-
-            // get a list of active languages
-            $languages = array_keys(language_list());
-            // remove the leading slash from the request
-            $currlanguage = substr($_SERVER['REQUEST_URI'], 1);
-            // reduce the string to the first three characters
-            $currlanguage = substr($currlanguage, 0, 3);
-            //kpr($currlanguage);
-            if(strstr($currlanguage, '/') || (strlen($currlanguage) == 2)) {
-              $currlanguage = substr($currlanguage, 0, 2);
-              // ensure that the module page we're rendering has a translation for one of the languages we support
-              if (in_array($currlanguage,$languages)) {
-                $skiptranslate_class = ' skiptranslate';
-              }
-              else {
-                $skiptranslate_class = '';
-              }
-            }
-          ?>
-          <h1 class="page-header<?php print $skiptranslate_class; ?>"><?php print $title; ?></h1>
+          <h1 class="page-header"><?php print $title; ?></h1>
         <?php endif; ?>
         <?php print render($title_suffix); ?>
         <?php print $messages; ?>
