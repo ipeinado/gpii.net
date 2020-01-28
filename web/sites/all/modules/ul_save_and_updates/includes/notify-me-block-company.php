@@ -1,11 +1,12 @@
 <button
   id="notify-me-button"
   type="button"
-  class="btn btn-primary btn-lg"
+  class="btn btn-primary"
   data-toggle="modal"
   data-target="#notify-me-modal"
+  data-toggle="tooltip" data-placement="right" title="Get notified when product entries from this company are added or changed."
 >
-  Notify Me
+  <span class="fa fa-envelope"></span> Notify me of updates
 </button>
 
 <div id="notify-me-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -38,7 +39,7 @@
         </p>
       </div>
       <div class="modal-body notify-me-success">
-        <p>success!</p>
+      <p>Success! You will recieve a confirmation with instructions for managing your subscriptions via email shortly.</p>
       </div>
       <div class="modal-body notify-me-form">
         <form id="notify-me-form-save">
@@ -55,13 +56,11 @@
           <p>Notify me with the following types of product entry changes (select one or more):</p>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="new_entries" value="off" />
               <input id="notify-me-new-entries" type="checkbox" name="new_entries" /> New entries from this company
             </label>
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="major_changes" value="off" />
               <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
               existing entries from this company
             </label>
@@ -69,7 +68,7 @@
           <p>Notifications will be sent out about once per week if there are any changes.</p>
           <p>To stop any notification you can click on the link at the bottom of the notification email.</p>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Send Notifications</button>
+          <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
         </form>
       </div>
     </div>

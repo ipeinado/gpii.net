@@ -74,14 +74,16 @@ function _saved_search_createNameEdit($id, $name) {
 function _saved_search_getManufacturerProducts($manfId) {
   $query = db_select('node', 'n');
   $query->join('field_data_field_manufacturer_reference', 'm', 'n.nid = m.entity_id');
-  $nids = $query
-    ->fields('n', array('nid'))
-    ->condition('type', 'product')
-    ->condition('field_manufacturer_reference_target_id', $manfId)
-    ->execute()
-    ->fetchAll();
-
-  return array_column($nids, 'nid');
+  $query->fields('n', array('nid'))
+        ->condition('type', 'product')
+        ->condition('field_manufacturer_reference_target_id', $manfId);
+        
+  $result = $query->execute()->fetchAll();
+  $nids = array();
+  foreach ($result as $nid) {
+    $nids[] = $nid->nid;
+  }
+  return $nids;
 }
 
 function _saved_search_buildSolrQueryFromGET($get) {

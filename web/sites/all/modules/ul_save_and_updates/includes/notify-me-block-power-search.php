@@ -65,13 +65,11 @@
           <p>Notify me with the following types of search result changes:</p>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="new_entries" value="off" />
               <input id="notify-me-new-entries" type="checkbox" name="new_entries" /> New entries to this search
             </label>
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="major_changes" value="off" />
               <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
               existing entries of this search
             </label>
@@ -79,7 +77,7 @@
           <p>Notifications will be sent out about once per week if there are any changes.</p>
           <p>To stop any notification you can click on the link at the bottom of the notification email.</p>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Send Notifications</button>
+          <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
         </form>
       </div>
     </div>

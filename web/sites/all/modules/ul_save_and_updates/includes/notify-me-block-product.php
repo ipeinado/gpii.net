@@ -1,11 +1,12 @@
 <button
   id="notify-me-button"
   type="button"
-  class="btn btn-primary btn-lg"
+  class="btn btn-primary"
   data-toggle="modal"
   data-target="#notify-me-modal"
+  data-toggle="tooltip" data-placement="right" title="Get notified when this product's page in the Unified Listing changes."
 >
-  Notify Me
+  <span class="fa fa-envelope"></span> Notify me of updates
 </button>
 
 <div id="notify-me-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -58,7 +59,7 @@
           <p>Notifications will be sent about once per week if there are any changes.</p>
           <p>To stop any notification, you can click on the link at the bottom of the notification email.</p>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Send Notifications</button>
+          <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
         </form>
       </div>
     </div>
