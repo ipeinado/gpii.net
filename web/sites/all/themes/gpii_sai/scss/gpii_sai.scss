@@ -3195,12 +3195,14 @@ body.page-product-taxonomy-edit {
   }
 }
 
-#notify-me-button {
-  margin-top: 1.5rem;
-  font-weight: bold;
-  font-size: 120%;
-  span {
-    margin-right: 3px;
+body.node-type-manufacturer, body.node-type-product {
+  #notify-me-button {
+    margin: 1.2rem auto;
+    font-weight: bold;
+    font-size: 120%;
+    span {
+      margin-right: 3px;
+    }
   }
 }
 
