@@ -7,6 +7,7 @@
     data-toggle="modal"
     data-target="#notify-me-modal"
     data-modal-option="share"
+    aria-label="Share this Search"
   >
     <span class="fa fa-link"></span>
   </button>
