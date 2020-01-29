@@ -39,6 +39,9 @@
         if (uid == 0) {
           $(".modal-body.notify-me-anon").show();
         }
+        else {
+          $(".modal-body.notify-me-form").show();
+        }
       }
 
       $('input[name="search_name"]').attr(
