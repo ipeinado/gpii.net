@@ -17,6 +17,7 @@
     class="btn btn-primary notify-me-button"
     data-toggle="modal"
     data-target="#notify-me-modal"
+    data-modal-option="save"
     aria-label="Save this Search"
   >
     <span class="fa fa-envelope"></span>
@@ -73,19 +74,25 @@
           <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
         </p>
       </div>
+      
       <div class="modal-body notify-me-form">
         <h4>Save this search</h4>
+        <div class="alert alert-danger notify-me-save-error" role="alert">
+          Your search must include at least one search term or category filter.
+        </div>
         <form id="notify-me-form-save">
           <input type="hidden" name="uid" value="<?= $GLOBALS['user']->uid ?>" />
           <input type="hidden" name="search_type" value="classic_search" />
           <input type="hidden" name="search_url" />
-
+          
           <div class="alert alert-danger alert-dismissible notify-me-error" role="alert">
             Something went wrong. Please try again later.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          
+          
           <div class="form-group">
             <label for="searchName">Give this search a name (optional)</label>
             <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19 - button" />

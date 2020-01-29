@@ -7,7 +7,7 @@
 
     if ($("#notify-me-modal").length) {
       var modal = $("#notify-me-modal");
-      modal.find(".modal-body, .notify-me-error").hide();
+      modal.find(".modal-body, .notify-me-error, .notify-me-save-error").hide();
 
       if (uid == 0) {
         modal.find(".modal-body.notify-me-anon").show();
@@ -23,7 +23,7 @@
       }
     } else if ($("#notify-me-modal-confirm").length) {
       var modal = $("#notify-me-modal-confirm");
-      modal.find(".modal-body, .notify-me-error").hide();
+      modal.find(".modal-body, .notify-me-error, .notify-me-save-error").hide();
       modal.find(".modal-body.notify-me-form").show();
     }
 
@@ -41,6 +41,23 @@
         }
         else {
           $(".modal-body.notify-me-form").show();
+        }
+      }
+
+      // check for search values to avoid saving notifications on every product in the database
+      
+      if (modalOption == "save") {
+        
+        var query = {};
+location.search.substr(1).split("&").forEach(function(item) {query[item.split("=")[0]] = item.split("=")[1]})
+        console.log(query);
+        if(query.hasOwnProperty('f%5B0%5D') || query.hasOwnProperty('search_api_views_fulltext')) {
+          $(".notify-me-save-error").hide();
+          
+        }
+        else {
+          $(".notify-me-save-error").show();
+          $(".modal-body #notify-me-form-save, .modal-body h4").hide();
         }
       }
 
