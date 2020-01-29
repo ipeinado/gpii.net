@@ -33,8 +33,10 @@
       if (modalOption == "share") {
         $("#sharelink").val(document.location);
         $(".modal-body.notify-me-share").show();
+        $(".modal-body.notify-me-form").hide();
       } else {
         $(".modal-body.notify-me-share").hide();
+        $(".modal-body.notify-me-form").show();
       }
 
       $('input[name="search_name"]').attr(
@@ -224,14 +226,14 @@
         if ($(".copy-status").length < 1) {
           $(this)
             .parent()
-            .append($('<span class="copy-status">Copied</span>'));
+            .append($('<span class="copy-status badge badge-success">Copied!</span>'));
         }
         $(".copy-status").text("Copied");
       } catch (e) {
         if (!$(".copy-status")) {
           $(this)
             .parent()
-            .append($('<span class="copy-status">Copied</span>'));
+            .append($('<span class="copy-status badge badge-success">Copied!</span>'));
         }
         $(".copy-status").text("Copied");
       }

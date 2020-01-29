@@ -16,6 +16,7 @@
     class="btn btn-primary notify-me-button"
     data-toggle="modal"
     data-target="#notify-me-modal"
+    aria-label="Save this Search"
   >
     <span class="fa fa-envelope"></span>
   </button>
@@ -29,7 +30,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h3 class="modal-title">
-          Classic Search Actions
+          Search Actions
         </h3>
       </div>
       <div class="modal-body notify-me-share">
@@ -39,7 +40,7 @@
           the currently selected keywords and filters applied.
         </p>
         <div class="form-inline">
-          <div class="form-group">
+          <div class="form-group" id="sharelink-group">
             <input
               id="sharelink"
               class="form-control"
@@ -65,7 +66,11 @@
         <p><a href="/user/login">Log in now</a> or <a href="/user/register">create an account</a>.</p>
       </div>
       <div class="modal-body notify-me-success">
-        <p>success!</p>
+      <p>
+          You have successfully subscribed to email notifications for this search. To manage your subscriptions, visit
+          the
+          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
+        </p>
       </div>
       <div class="modal-body notify-me-form">
         <h4>Save this search</h4>
@@ -88,7 +93,7 @@
           <p>Notify me with the following types of search result changes:</p>
           <div class="checkbox">
             <label>
-              <input id="notify-me-new-entries" type="checkbox" name="new_entries" /> New entries to this search
+              <input id="notify-me-new-entries" type="checkbox" name="new_entries" checked /> New entries to this search
             </label>
           </div>
           <div class="checkbox">
@@ -98,7 +103,7 @@
             </label>
           </div>
           <p>Notifications will be sent out about once per week if there are any changes.</p>
-          <p>To stop any notification you can click on the link at the bottom of the notification email.</p>
+          <p>To stop any notification, you can click on the link at the bottom of the notification email or modify it from your <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> dashboard.</p>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
         </form>

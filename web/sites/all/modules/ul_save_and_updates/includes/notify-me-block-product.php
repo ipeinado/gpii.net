@@ -33,13 +33,17 @@
       </div>
       <div class="modal-body notify-me-exists">
         <p>
-          You already are subscribed to email notifications for this product. To manage your email notifications visit
+          You already are subscribed to email notifications for this product. To manage your subscriptions, visit
           the
-          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> page on your profile.
+          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
         </p>
       </div>
       <div class="modal-body notify-me-success">
-        <p>success!</p>
+      <p>
+          You have successfully subscribed to email notifications for this product. To manage your subscriptions, visit
+          the
+          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
+        </p>
       </div>
       <div class="modal-body notify-me-form">
         <form id="notify-me-form-save">
@@ -57,7 +61,7 @@
             You will be notified by email when there are major changes to this product's entry in the Unified Listing.
           </p>
           <p>Notifications will be sent about once per week if there are any changes.</p>
-          <p>To stop any notification, you can click on the link at the bottom of the notification email.</p>
+          <p>To stop any notification, you can click on the link at the bottom of the notification email or modify it from your <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> dashboard.</p>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
         </form>
