@@ -230,14 +230,14 @@
             .parent()
             .append($('<span class="copy-status badge badge-success">Copied!</span>'));
         }
-        $(".copy-status").text("Copied");
+        $(".copy-status").text("Copied!");
       } catch (e) {
         if (!$(".copy-status")) {
           $(this)
             .parent()
             .append($('<span class="copy-status badge badge-success">Copied!</span>'));
         }
-        $(".copy-status").text("Copied");
+        $(".copy-status").text("Copied!");
       }
 
       setTimeout(function() {
