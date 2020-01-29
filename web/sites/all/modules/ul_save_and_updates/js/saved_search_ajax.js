@@ -33,10 +33,12 @@
       if (modalOption == "share") {
         $("#sharelink").val(document.location);
         $(".modal-body.notify-me-share").show();
-        $(".modal-body.notify-me-form").hide();
+        $(".modal-body.notify-me-form, .modal-body.notify-me-anon").hide();
       } else {
         $(".modal-body.notify-me-share").hide();
-        $(".modal-body.notify-me-form").show();
+        if (uid == 0) {
+          $(".modal-body.notify-me-anon").show();
+        }
       }
 
       $('input[name="search_name"]').attr(

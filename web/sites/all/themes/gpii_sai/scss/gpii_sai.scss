@@ -3206,6 +3206,15 @@ body.node-type-manufacturer, body.node-type-product {
   }
 }
 
+.modal {
+  z-index: 10500000;
+}
+
+.modal-backdrop {
+  z-index: 10499990;
+}
+
+
 #notify-me-modal {
   .modal-dialog {
     margin: 8rem auto;
