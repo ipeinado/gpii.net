@@ -8,13 +8,13 @@ require_once('includes/views.php');
  * Implements hook_init().
  */
 function ul_save_and_updates_init() {
-  drupal_add_js(drupal_get_path('module', 'ul_save_and_updates') . '/js/saved_search_ajax.js');
   drupal_add_js(array(
     'ul_save_and_updates' => array(
       'uid' => $GLOBALS['user']->uid,
       'nid' => arg(1),
     )
   ), 'setting');
+  drupal_add_js(drupal_get_path('module', 'ul_save_and_updates') . '/js/saved_search_ajax.js');
 }
 
 /**
@@ -309,7 +309,7 @@ function ul_save_and_updates_change_log_form_submit($form, &$form_state) {
   if ($results > 0) {
     $message = 'Saved successfully!';
 
-    // Send an email via mailgun to confirm their subscription. 
+    // Send an email via mailgun to confirm their subscription.
     $to = $form_state['values']['to'];
     $body = 'Your subscription has been saved. To modify your subscription preferences at any time in the future...@@ ';
 
@@ -433,7 +433,7 @@ function _saved_search_save() { // POST
         $products = implode(',', _saved_search_getManufacturerProducts($node->nid));
         $fields['products_found'] = $products;
       }
-    // only saved searches  
+    // only saved searches
     } else if (preg_match('/_search/', $value) === 1) {
       $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
 

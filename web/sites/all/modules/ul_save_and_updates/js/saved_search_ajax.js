@@ -2,9 +2,9 @@
   "use strict";
 
   Drupal.behaviors.ul_save_and_updates = {
-    init: function() {
-      var uid = Drupal.settings.ul_save_and_updates.uid;
-      var nid = Drupal.settings.ul_save_and_updates.nid;
+    attach: function(context, settings) {
+      var uid = settings.ul_save_and_updates.uid;
+      var nid = settings.ul_save_and_updates.nid;
 
       if ($("#notify-me-modal").length) {
         var modal = $("#notify-me-modal");
@@ -286,5 +286,5 @@
     }
   };
 
-  $(document).ready(Drupal.behaviors.ul_save_and_updates.init());
+  // $(document).ready(Drupal.behaviors.ul_save_and_updates);
 })(jQuery, Drupal);
