@@ -1,7 +1,7 @@
-<div id="notify-me-modal" tabindex="-1" role="dialog">
+<div id="notify-me-modal" tabindex="-1" role="dialog" ng-init="Drupal.behaviors.ul_save_and_updates.init()">
   <div role="document">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="lc.close()" >
         <span aria-hidden="true">&times;</span>
       </button>
       <h3 class="modal-title">
@@ -66,7 +66,7 @@
         <div class="checkbox">
           <label>
             <input type="checkbox" name="new_entries" value="off" />
-            <input id="notify-me-new-entries" type="checkbox" name="new_entries" /> New entries to this search
+            <input id="notify-me-new-entries" type="checkbox" name="new_entries" checked /> New entries to this search
           </label>
         </div>
         <div class="checkbox">
@@ -77,9 +77,9 @@
           </label>
         </div>
         <p>Notifications will be sent out about once per week if there are any changes.</p>
-        <p>To stop any notification you can click on the link at the bottom of the notification email.</p>
+        <p>To stop any notification, you can click on the link at the bottom of the notification email or modify it from your <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> dashboard.</p>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary">Send Notifications</button>
+        <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
       </form>
     </div>
   </div>

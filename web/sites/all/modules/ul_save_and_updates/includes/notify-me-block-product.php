@@ -1,11 +1,12 @@
 <button
   id="notify-me-button"
   type="button"
-  class="btn btn-primary btn-lg"
+  class="btn btn-primary"
   data-toggle="modal"
   data-target="#notify-me-modal"
+  data-toggle="tooltip" data-placement="right" title="Get notified when this product's page in the Unified Listing changes."
 >
-  Notify Me
+  <span class="fa fa-envelope"></span> Notify me of updates
 </button>
 
 <div id="notify-me-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -32,13 +33,17 @@
       </div>
       <div class="modal-body notify-me-exists">
         <p>
-          You already are subscribed to email notifications for this product. To manage your email notifications visit
+          You already are subscribed to email notifications for this product. To manage your subscriptions, visit
           the
-          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> page on your profile.
+          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
         </p>
       </div>
       <div class="modal-body notify-me-success">
-        <p>success!</p>
+      <p>
+          You have successfully subscribed to email notifications for this product. To manage your subscriptions, visit
+          the
+          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
+        </p>
       </div>
       <div class="modal-body notify-me-form">
         <form id="notify-me-form-save">
@@ -56,9 +61,9 @@
             You will be notified by email when there are major changes to this product's entry in the Unified Listing.
           </p>
           <p>Notifications will be sent about once per week if there are any changes.</p>
-          <p>To stop any notification, you can click on the link at the bottom of the notification email.</p>
+          <p>To stop any notification, you can click on the link at the bottom of the notification email or modify it from your <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> dashboard.</p>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Send Notifications</button>
+          <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
         </form>
       </div>
     </div>

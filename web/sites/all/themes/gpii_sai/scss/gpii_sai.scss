@@ -3194,3 +3194,70 @@ body.page-product-taxonomy-edit {
     }
   }
 }
+
+body.node-type-manufacturer, body.node-type-product {
+  #notify-me-button {
+    margin: 1.2rem auto;
+    font-weight: bold;
+    font-size: 120%;
+    span {
+      margin-right: 3px;
+    }
+  }
+}
+
+.modal {
+  z-index: 10500000;
+}
+
+.modal-backdrop {
+  z-index: 10499990;
+}
+
+
+#notify-me-modal {
+  .modal-dialog {
+    margin: 8rem auto;
+  }
+  .modal-header {
+    padding: 15px 12px 10px 12px;
+    h3 {
+      font-weight: 600;
+      margin-right: 1rem;
+    }
+    button.close {
+      span {
+        font-size: 1.6rem;
+        border: 2px solid $color-gpii-dark-gray;
+        padding: 0 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+  .modal-title {
+    line-height: 1.25em;
+  }
+
+  .modal-body {
+    p:last-of-type {
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      font-weight: bold;
+    }
+
+    h4 {
+      margin-top: 0;
+      font-weight: bold;
+    }
+    margin-bottom: 0.5rem;
+  }
+
+  #sharelink-group {
+    width: 92%;
+  }
+  #sharelink {
+    width: 100%;
+  }
+}
