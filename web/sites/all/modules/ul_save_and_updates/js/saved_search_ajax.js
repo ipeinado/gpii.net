@@ -161,7 +161,7 @@ location.search.substr(1).split("&").forEach(function(item) {query[item.split("=
           "</span>" +
           ' <button class="notify-me-name-edit btn btn-xs" data-id="' +
           id +
-          '" style="cursor: pointer;">edit</button>)' +
+          '" style="cursor: pointer;">edit</button>' +
           message +
           "</span>"
       );
