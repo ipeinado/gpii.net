@@ -286,5 +286,5 @@
     }
   };
 
-  $(document).ready(Drupal.behaviors.ul_save_and_updates);
+  $(document).ready(Drupal.behaviors.ul_save_and_updates.init());
 })(jQuery, Drupal);
