@@ -100,12 +100,12 @@
 
           <p>Notify me with the following types of search result changes:</p>
           <div class="checkbox">
-            <label>
+            <label for="notify-me-new-entries">
               <input id="notify-me-new-entries" type="checkbox" name="new_entries" checked /> New entries to this search
             </label>
           </div>
           <div class="checkbox">
-            <label>
+            <label for="notify-me-new-entries">
               <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
               existing entries of this search
             </label>

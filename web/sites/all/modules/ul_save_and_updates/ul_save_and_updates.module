@@ -135,7 +135,8 @@ function _saved_search_pageEmailNotifications($user) {
         'notify-me-new-entries',
         $company->id,
         'new_entries',
-        in_array('new', explode(', ', $company->notification_type))
+        in_array('new', explode(', ', $company->notification_type)),
+        'New product notification'
       )
     );
     array_push(
@@ -144,7 +145,8 @@ function _saved_search_pageEmailNotifications($user) {
         'notify-me-major-changes',
         $company->id,
         'major_changes',
-        in_array('changed', explode(', ', $company->notification_type))
+        in_array('changed', explode(', ', $company->notification_type)),
+        'Updated product notification'
       )
     );
     array_push($row, $company->last_notification ? $company->last_notification : 'never');
@@ -206,7 +208,8 @@ function _saved_search_pageEmailNotifications($user) {
         'notify-me-new-entries',
         $customSearch->id,
         'new_entries',
-        in_array('new', explode(', ', $customSearch->notification_type))
+        in_array('new', explode(', ', $customSearch->notification_type)),
+        'New product notifications'
       )
     );
     array_push(
@@ -215,7 +218,8 @@ function _saved_search_pageEmailNotifications($user) {
         'notify-me-major-changes',
         $customSearch->id,
         'major_changes',
-        in_array('changed', explode(', ', $customSearch->notification_type))
+        in_array('changed', explode(', ', $customSearch->notification_type)),
+        'Updated product notifications'
       )
     );
     array_push($row, $customSearch->last_notification ? $customSearch->last_notification : 'never');

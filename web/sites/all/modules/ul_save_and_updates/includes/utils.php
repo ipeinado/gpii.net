@@ -31,7 +31,7 @@ function _saved_search_createTableMarkup($headers, $rows, $noneMessage) {
 
   $markup .= '<tr>';
   foreach ($headers as $header) {
-    $markup .= "<th>$header</th>";
+    $markup .= '<th scope="col">' . $header . '</th>';
   }
   $markup .= '</tr>';
 
@@ -54,21 +54,21 @@ function _saved_search_createTableMarkup($headers, $rows, $noneMessage) {
 }
 
 function _saved_search_createRemoveButton($id) {
-  return '<button class="notify-me-button-remove btn btn-xs" style="cursor: pointer;" data-id="' . $id . '" data-toggle="modal" data-target="#notify-me-modal-confirm">Remove</button>';
+  return '<button class="notify-me-button-remove btn btn-danger btn-xs" style="cursor: pointer;" data-id="' . $id . '" data-toggle="modal" data-target="#notify-me-modal-confirm">Remove</button>';
 }
 
-function _saved_search_createUpdateCheckbox($class, $id, $name, $status) {
+function _saved_search_createUpdateCheckbox($class, $id, $name, $status, $label) {
   return '<form class="notify-me-form-edit" data-callback="notifyMeCheckbox">'
           .'<input type="hidden" name="id" value="' . $id . '" />'
           .'<input type="hidden" name="' . $name . '" value="off" />'
-          ."<div class=\"checkbox\"><label><input class=\"$class\" type=\"checkbox\" name=\"$name\" value=\"on\" " . ($status ? 'checked' : '') . "/></label></div>"
+          ."<div class=\"checkbox\"><label for=\"$class-$id\"><input id=\"$class-$id\" class=\"$class\" type=\"checkbox\" name=\"$name\" value=\"on\" " . ($status ? 'checked' : '') . "/><span class=\"sr-only\">$label</span> </label></div>"
         .'</form>';
 }
 
 function _saved_search_createNameEdit($id, $name) {
   return '<span class="notify-me-name-wrapper" style="white-space: nowrap;">'
     ."<span class=\"notify-me-name\">$name</span>"
-    .' <button class="notify-me-name-edit btn btn-xs" data-id="' . $id . '" style="cursor: pointer;">edit</button></span>';
+    .' <button class="notify-me-name-edit btn-default btn btn-xs" data-id="' . $id . '" style="cursor: pointer;">edit</button></span>';
 }
 
 function _saved_search_getManufacturerProducts($manfId) {

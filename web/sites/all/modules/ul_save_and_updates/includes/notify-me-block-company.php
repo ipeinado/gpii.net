@@ -58,12 +58,12 @@
           </div>
           <p>Notify me with the following types of product entry changes (select one or more):</p>
           <div class="checkbox">
-            <label>
+            <label for="notify-me-new-entries">
               <input id="notify-me-new-entries" type="checkbox" name="new_entries" checked/> New entries from this company
             </label>
           </div>
           <div class="checkbox">
-            <label>
+            <label for="notify-me-major-changes">
               <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
               existing entries from this company
             </label>
