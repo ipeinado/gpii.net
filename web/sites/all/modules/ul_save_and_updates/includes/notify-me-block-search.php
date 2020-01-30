@@ -7,6 +7,7 @@
     data-toggle="modal"
     data-target="#notify-me-modal"
     data-modal-option="share"
+    aria-label="Share this Search"
   >
     <span class="fa fa-link"></span>
   </button>
@@ -16,6 +17,8 @@
     class="btn btn-primary notify-me-button"
     data-toggle="modal"
     data-target="#notify-me-modal"
+    data-modal-option="save"
+    aria-label="Save this Search"
   >
     <span class="fa fa-envelope"></span>
   </button>
@@ -29,7 +32,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h3 class="modal-title">
-          Classic Search Actions
+          Search Actions
         </h3>
       </div>
       <div class="modal-body notify-me-share">
@@ -39,7 +42,7 @@
           the currently selected keywords and filters applied.
         </p>
         <div class="form-inline">
-          <div class="form-group">
+          <div class="form-group" id="sharelink-group">
             <input
               id="sharelink"
               class="form-control"
@@ -65,21 +68,31 @@
         <p><a href="/user/login">Log in now</a> or <a href="/user/register">create an account</a>.</p>
       </div>
       <div class="modal-body notify-me-success">
-        <p>success!</p>
+      <p>
+          You have successfully subscribed to email notifications for this search. To manage your subscriptions, visit
+          the
+          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
+        </p>
       </div>
+      
       <div class="modal-body notify-me-form">
         <h4>Save this search</h4>
+        <div class="alert alert-danger notify-me-save-error" role="alert">
+          Your search must include at least one search term or category filter.
+        </div>
         <form id="notify-me-form-save">
           <input type="hidden" name="uid" value="<?= $GLOBALS['user']->uid ?>" />
           <input type="hidden" name="search_type" value="classic_search" />
           <input type="hidden" name="search_url" />
-
+          
           <div class="alert alert-danger alert-dismissible notify-me-error" role="alert">
             Something went wrong. Please try again later.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          
+          
           <div class="form-group">
             <label for="searchName">Give this search a name (optional)</label>
             <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19 - button" />
@@ -88,21 +101,19 @@
           <p>Notify me with the following types of search result changes:</p>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="new_entries" value="off" />
-              <input id="notify-me-new-entries" type="checkbox" name="new_entries" /> New entries to this search
+              <input id="notify-me-new-entries" type="checkbox" name="new_entries" checked /> New entries to this search
             </label>
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="major_changes" value="off" />
               <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
               existing entries of this search
             </label>
           </div>
           <p>Notifications will be sent out about once per week if there are any changes.</p>
-          <p>To stop any notification you can click on the link at the bottom of the notification email.</p>
+          <p>To stop any notification, you can click on the link at the bottom of the notification email or modify it from your <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> dashboard.</p>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Send Notifications</button>
+          <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
         </form>
       </div>
     </div>
