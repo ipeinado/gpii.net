@@ -1,7 +1,7 @@
-<div id="notify-me-modal" tabindex="-1" role="dialog">
+<div id="notify-me-modal" tabindex="-1" role="dialog" ng-init="Drupal.behaviors.ul_save_and_updates.init()">
   <div role="document">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="lc.close()" >
         <span aria-hidden="true">&times;</span>
       </button>
       <h3 class="modal-title">
