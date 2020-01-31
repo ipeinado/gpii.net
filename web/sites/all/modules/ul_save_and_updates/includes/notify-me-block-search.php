@@ -74,7 +74,6 @@
           <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
         </p>
       </div>
-      
       <div class="modal-body notify-me-form">
         <h4>Save this search</h4>
         <div class="alert alert-danger notify-me-save-error" role="alert">
@@ -91,8 +90,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          
-          
+
+
           <div class="form-group">
             <label for="searchName">Give this search a name (optional)</label>
             <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19 - button" />
@@ -100,12 +99,12 @@
 
           <p>Notify me with the following types of search result changes:</p>
           <div class="checkbox">
-            <label>
+            <label for="notify-me-new-entries">
               <input id="notify-me-new-entries" type="checkbox" name="new_entries" checked /> New entries to this search
             </label>
           </div>
           <div class="checkbox">
-            <label>
+            <label for="notify-me-new-entries">
               <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
               existing entries of this search
             </label>
