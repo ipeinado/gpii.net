@@ -152,7 +152,7 @@
           id = $(event.target)
             .find('input[name="id"]')
             .attr("value");
-          message = '<span class="name-saved-message"> Saved</span>';
+          message = ' <span class="name-saved-message" aria-live="polite">Saved</span>';
         } else {
           name = $(event.target)
             .find('input[name="search_name"]')
@@ -160,7 +160,7 @@
           id = $(event.target)
             .find('input[name="id"]')
             .attr("value");
-          message = '<span class="name-saved-message"> Error</span>';
+          message = ' <span class="name-saved-message" aria-live="polite">Error</span>';
         }
 
         var wrapper = $(event.target).parents(".notify-me-name-wrapper");
@@ -170,7 +170,7 @@
             "</span>" +
             ' <button class="notify-me-name-edit btn btn-xs" data-id="' +
             id +
-            '" style="cursor: pointer;">edit</button>)' +
+            '" style="cursor: pointer;">edit</button>' +
             message +
             "</span>"
         );
@@ -261,27 +261,27 @@
               .parent()
               .append(
                 $(
-                  '<span class="copy-status badge badge-success">Copied!</span>'
+                  '<span class="copy-status badge badge-success" aria-live="polite">Copied!</span>'
                 )
               );
           }
-          $(".copy-status").text("Copied");
+          $(".copy-status").text("Copied!");
         } catch (e) {
           if (!$(".copy-status")) {
             $(this)
               .parent()
               .append(
                 $(
-                  '<span class="copy-status badge badge-success">Copied!</span>'
+                  '<span class="copy-status badge badge-success" aria-live="polite">Copied!</span>'
                 )
               );
           }
-          $(".copy-status").text("Copied");
+          $(".copy-status").text("Copied!");
         }
 
         setTimeout(function() {
           $(".copy-status").remove();
-        }, 5000);
+        }, 6000);
       });
     }
   };
