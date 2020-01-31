@@ -177,9 +177,13 @@ function _saved_search_pageEmailNotifications($user) {
   //   array_push($categoryRows, $row);
   // }
 
+  $or = db_or();
+  $or->condition('search_type', 'classic_search');
+  $or->condition('search_type', 'power_search');
+
   $customSearches = db_select('saved_searches', 's')
       ->condition('uid', $user->uid)
-      ->condition('search_type', 'classic_search')
+      ->condition($or)
       ->fields('s')
       ->execute()
       ->fetchAll();
