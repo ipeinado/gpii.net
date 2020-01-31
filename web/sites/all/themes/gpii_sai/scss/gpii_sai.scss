@@ -3263,7 +3263,11 @@ body.node-type-manufacturer, body.node-type-product {
 }
 
 body.page-user-email-notifications {
-  button {
-    
-  }
+
+}
+
+// Overide button danger (default has poor contrast)
+
+.btn-danger {
+  background-color: #c04b48;
 }

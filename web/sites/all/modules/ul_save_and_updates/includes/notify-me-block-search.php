@@ -20,7 +20,7 @@
     data-modal-option="save"
     aria-label="Save this Search"
   >
-    <span class="fa fa-envelope"></span>
+    <span aria-hidden="true" class="fa fa-envelope"></span>
   </button>
 </div>
 
@@ -49,9 +49,8 @@
               aria-invalid="false"
             />
           </div>
-          <button class="share-link-copy btn btn-default">
-            <span class="sr-only">Copy link to clipboard</span>
-            <span class="fa fa-clipboard"></span>
+          <button class="share-link-copy btn btn-default" aria-label="Copy link to clipboard">
+            <span class="fa fa-clipboard" aria-hidden="true"></span>
           </button>
         </div>
       </div>
@@ -94,7 +93,7 @@
 
           <div class="form-group">
             <label for="searchName">Give this search a name (optional)</label>
-            <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19 - button" />
+            <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19" />
           </div>
 
           <p>Notify me with the following types of search result changes:</p>
