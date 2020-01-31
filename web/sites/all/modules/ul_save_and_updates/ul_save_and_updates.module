@@ -258,7 +258,7 @@ function _saved_search_pageEmailNotifications($user) {
           .'<form id="notify-me-form-delete">'
             .'<input type="hidden" name="id" value="" />'
 
-            .'<div class="alert alert-danger alert-dismissible notify-me-error" role="alert">'
+            .'<div id="notify-me-submit-failed" class="alert alert-danger alert-dismissible notify-me-error" role="alert">'
               .'Something went wrong. Please try again later.'
               .'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
                 .'<span aria-hidden="true">&times;</span>'
@@ -447,7 +447,7 @@ function _saved_search_save() { // POST
 
       parse_str($urlQuery, $urlArray);
       $filters = array(
-        'keywords' => $urlArray['search_api_views_fulltext'],
+        'keywords' => $urlArray['search_api_views_fulltext'] ?? $urlArray['query'],
         'facets' => array()
       );
       foreach ($urlArray['f'] as $value) {

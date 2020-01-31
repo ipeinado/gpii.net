@@ -3,49 +3,29 @@
 
   Drupal.behaviors.ul_save_and_updates = {
     viewHandler: function() {
-      console.log("called viewhandler");
       if ($("#notify-me-modal").length) {
         // initialize the modal by hiding everything.
-        var modal = $("#notify-me-modal");
-        modal
-          .find(".modal-body, .notify-me-error, .notify-me-save-error")
+        $("#notify-me-modal")
+          .find(".modal-body, #notify-me-submit-failed")
           .hide();
 
         if (Drupal.behaviors.ul_save_and_updates.modalOption == "share") {
-          console.log("ShareView");
           Drupal.behaviors.ul_save_and_updates.setShareView();
         } else if (Drupal.behaviors.ul_save_and_updates.modalOption == "save") {
-          console.log("SaveView");
           Drupal.behaviors.ul_save_and_updates.setFormView();
-
-          // check for search values to avoid saving notifications on every product in the database
-          // var query = {};
-          // location.search
-          //   .substr(1)
-          //   .split("&")
-          //   .forEach(function(item) {
-          //     query[item.split("=")[0]] = item.split("=")[1];
-          //   });
-          // if (
-          //   query.hasOwnProperty("f%5B0%5D") ||
-          //   query.hasOwnProperty("search_api_views_fulltext")
-          // ) {
-          //   $(".notify-me-save-error").hide();
-          // } else {
-          //   $(".notify-me-save-error").show();
-          //   $(".modal-body #notify-me-form-save, .modal-body h4").hide();
-          // }
         }
       } else if ($("#notify-me-modal-confirm").length) {
-        Drupal.behaviors.ul_save_and_updates.setFormView();
+        var modal = $("#notify-me-modal-confirm");
+        modal.find(".modal-body, #notify-me-submit-failed").hide();
+        modal.find(".modal-body.notify-me-form").show();
       }
-      // $(".modal-body").hide();
     },
 
     setShareView: function() {
       // start fresh
       $(".modal-body").hide();
 
+      // if angular has not set the share link value then set it
       if (!$("#sharelink").val()) {
         $("#sharelink").val(document.location);
       }
@@ -57,7 +37,7 @@
       var nid = Drupal.settings.ul_save_and_updates.nid;
 
       // start fresh
-      $(".modal-body").hide();
+      $(".modal-body, #notify-me-submit-failed").hide();
 
       if (uid == 0) {
         $(".modal-body.notify-me-anon").show();
@@ -67,20 +47,40 @@
           if (response.success) {
             modal.find(".modal-body.notify-me-exists").show();
           } else {
-            $('input[name="search_name"]').attr(
-              "value",
-              new Date().toLocaleString().split(",")[0] +
-                " - " +
-                $("#edit-search-api-views-fulltext").attr("value")
-            );
-
-            if (
-              $('input[name="search_url"]').length &&
-              !$('input[name="search_url"]').val()
-            ) {
-              $('input[name="search_url"]').val(window.location);
+            // set search_url if angular hasn't already
+            if (!$("#search-url").val()) {
+              $("#search-url").val(window.location);
             }
-            $(".modal-body.notify-me-form").show();
+
+            // check for search values to avoid saving notifications on every product in the database
+            var query = {};
+            $("#search-url")
+              .val()
+              .split("?")[1]
+              .split("&")
+              .forEach(function(item) {
+                query[item.split("=")[0]] = item.split("=")[1];
+              });
+            if (
+              query.hasOwnProperty("query") ||
+              query.hasOwnProperty("troubles") ||
+              query.hasOwnProperty("os") ||
+              query.hasOwnProperty("product_cateogry") ||
+              query.hasOwnProperty("f%5B0%5D") ||
+              query.hasOwnProperty("f[0]") ||
+              query.hasOwnProperty("search_api_views_fulltext")
+            ) {
+              // autofill search name to default
+              var searchTerm =
+                query["query"] || query["search_api_views_fulltext"];
+              var autofill = new Date().toLocaleString().split(",")[0];
+              autofill += searchTerm ? " - " + searchTerm : "";
+              $("#search-name").val(autofill);
+
+              $(".modal-body.notify-me-form").show();
+            } else {
+              $(".modal-body.notify-me-no-filters").show();
+            }
           }
         });
       }
@@ -90,18 +90,11 @@
       if ($("#notify-me-modal").length) {
         // initialize the modal by hiding everything.
         var modal = $("#notify-me-modal");
-        modal
-          .find(".modal-body, .notify-me-error, .notify-me-save-error")
-          .hide();
       }
-      console.log("called");
 
       // This call of the viewHandler() is for Angular search pages as the attach function
       // is manually called when Angular adds the modal to the page.
-      console.log(Drupal.behaviors.ul_save_and_updates.modalOption);
-      if (!(Drupal.behaviors.ul_save_and_updates.modalOption == undefined)) {
-        Drupal.behaviors.ul_save_and_updates.viewHandler();
-      }
+      Drupal.behaviors.ul_save_and_updates.viewHandler();
 
       var saveForm = $("#notify-me-form-save");
       saveForm.submit(function(event) {
@@ -112,7 +105,7 @@
             modal.find(".modal-body.notify-me-form").hide();
             modal.find(".modal-body.notify-me-success").show();
           } else {
-            modal.find(".notify-me-error").show();
+            modal.find("#notify-me-submit-failed").show();
           }
         });
       });
@@ -192,7 +185,7 @@
           '<span class="notify-me-name">' +
             name +
             "</span>" +
-            ' <button class="notify-me-name-edit btn btn-xs" data-id="' +
+            ' <button class="notify-me-name-edit btn-default btn btn-xs" data-id="' +
             id +
             '" style="cursor: pointer;">edit</button>' +
             message +
@@ -272,7 +265,7 @@
                 deleteForm.find('input[name="id"]').attr("value")
             ).remove();
           } else {
-            modal.find(".notify-me-error").show();
+            modal.find("#notify-me-submit-failed").show();
           }
         });
       });
@@ -315,7 +308,6 @@
 
   $(document).ready(function() {
     $(".notify-me-button").click(function(event) {
-      console.log("button");
       Drupal.behaviors.ul_save_and_updates.modalOption = $(this).data(
         "modalOption"
       );

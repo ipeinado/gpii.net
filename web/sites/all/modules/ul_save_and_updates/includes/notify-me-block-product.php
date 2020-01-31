@@ -51,7 +51,7 @@
           <input type="hidden" name="nid" value="<?= arg(1) ?>" />
           <input type="hidden" name="search_type" value="product" />
 
-          <div class="alert alert-danger alert-dismissible notify-me-error" role="alert">
+          <div id="notify-me-submit-failed" class="alert alert-danger alert-dismissible notify-me-error" role="alert">
             Something went wrong. Please try again later.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
