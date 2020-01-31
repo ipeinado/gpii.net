@@ -1695,20 +1695,40 @@ function gpii_saa_custom_list_sources($uid) {
             // dpm($value->source);.
             $db = $value->source;
             switch ($db) {
-              case 'ATAust':
-                $country = 'Australia';
-                break;
-
               case 'AbleData':
                 $country = 'United States';
                 break;
 
-              case 'Handicat':
+              case 'ATAust':
+                $country = 'Australia';
+                break;
+
+              case 'EASTIN':
+                $country = 'Europe+';
+                break;
+
+              case 'EASTIN Admin':
+                $country = 'European Union';
+                break;
+
+              case 'GARI':
+                $country = 'International';
+                break;
+              
+                case 'Handicat':
                 $country = 'France';
                 break;
 
               case 'Hjælpemiddelbasen':
                 $country = 'Denmark';
+                break;
+
+              case 'Hulpmiddelenwijzer':
+                $country = 'Holland';
+                break;
+
+              case 'OAEG':
+                $country = 'European Union';
                 break;
 
               case 'Rehadat':
@@ -1722,14 +1742,7 @@ function gpii_saa_custom_list_sources($uid) {
               case 'Vlibank':
                 $country = 'Belgium';
                 break;
-
-              case 'GARI':
-                $country = 'International';
-                break;
-
-              case 'EASTIN Admin':
-                $country = 'European Union';
-                break;
+              
             }
             if (isset($country)) {
               $markup .= ' (' . $country . ')';
