@@ -1,4 +1,4 @@
-<div id="notify-me-modal" tabindex="-1" role="dialog" ng-init="Drupal.behaviors.ul_save_and_updates.init()">
+<div id="notify-me-modal" tabindex="-1" role="dialog">
   <div role="document">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="lc.close()" >
@@ -15,7 +15,7 @@
         the currently selected keywords and filters applied.
       </p>
       <div class="form-inline">
-        <div class="form-group">
+        <div class="form-group" id="sharelink-group">
           <input
             id="sharelink"
             class="form-control"
@@ -23,9 +23,8 @@
             ng-value="::lc.shareableLink"
           />
         </div>
-        <button class="share-link-copy btn btn-default">
-          <span class="sr-only">Copy link to clipboard</span>
-          <span class="fa fa-clipboard"></span>
+        <button class="share-link-copy btn btn-default" aria-label="Copy link to clipboard">
+          <span class="fa fa-clipboard" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -42,10 +41,17 @@
       <p><a href="/user/login">Log in now</a> or <a href="/user/register">create an account</a>.</p>
     </div>
     <div class="modal-body notify-me-success">
-      <p>success!</p>
+      <p>
+          You have successfully subscribed to email notifications for this search. To manage your subscriptions, visit
+          the
+          <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
+        </p>
     </div>
-    <div class="modal-body notify-me-form">
+        <div class="modal-body notify-me-form">
       <h4>Save this search</h4>
+      <div class="alert alert-danger notify-me-save-error" role="alert">
+          Your search must include at least one search term or category filter.
+        </div>
       <form id="notify-me-form-save">
         <input type="hidden" name="uid" value="<?= $GLOBALS['user']->uid ?>" />
         <input type="hidden" name="search_type" value="power_search" />
@@ -59,26 +65,24 @@
         </div>
         <div class="form-group">
           <label for="searchName">Give this search a name (optional)</label>
-          <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19 - button" />
+          <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19" />
         </div>
 
         <p>Notify me with the following types of search result changes:</p>
         <div class="checkbox">
-          <label>
-            <input type="checkbox" name="new_entries" value="off" />
+          <label for="notify-me-new-entries">
             <input id="notify-me-new-entries" type="checkbox" name="new_entries" checked /> New entries to this search
           </label>
         </div>
         <div class="checkbox">
-          <label>
-            <input type="checkbox" name="major_changes" value="off" />
+          <label for="notify-me-new-entries">
             <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
             existing entries of this search
           </label>
         </div>
         <p>Notifications will be sent out about once per week if there are any changes.</p>
         <p>To stop any notification, you can click on the link at the bottom of the notification email or modify it from your <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> dashboard.</p>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="lc.close()">Cancel</button>
         <button type="submit" class="btn btn-primary pull-right">Send Notifications</button>
       </form>
     </div>

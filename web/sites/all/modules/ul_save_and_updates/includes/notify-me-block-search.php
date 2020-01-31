@@ -73,7 +73,6 @@
           <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
         </p>
       </div>
-
       <div class="modal-body notify-me-form">
         <h4>Save this search</h4>
         <div class="alert alert-danger notify-me-save-error" role="alert">
@@ -90,8 +89,6 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-
-
           <div class="form-group">
             <label for="searchName">Give this search a name (optional)</label>
             <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19" />
