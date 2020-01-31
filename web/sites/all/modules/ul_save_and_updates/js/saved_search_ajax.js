@@ -156,7 +156,7 @@
           id = $(event.target)
             .find('input[name="id"]')
             .attr("value");
-          message = ' <span class="name-saved-message" aria-live="polite">Saved</span>';
+          message = ' <span class="name-saved-message badge badge-success" aria-live="polite">Saved</span>';
         } else {
           name = $(event.target)
             .find('input[name="search_name"]')
@@ -164,7 +164,7 @@
           id = $(event.target)
             .find('input[name="id"]')
             .attr("value");
-          message = ' <span class="name-saved-message" aria-live="polite">Error</span>';
+          message = ' <span class="name-saved-message badge badge-success" aria-live="polite">Error</span>';
         }
 
         var wrapper = $(event.target).parents(".notify-me-name-wrapper");
@@ -203,9 +203,9 @@
         var label = $(event.target).find("label");
         label.children(".label-text").remove();
         if (success) {
-          label.append('<span class="label-text">Saved</span>');
+          label.append('<span class="label-text badge badge-success" aria-live="polite">Saved</span>');
         } else {
-          label.append('<span class="label-text">Error Saving</span>');
+          label.append('<span class="label-text badge badge-danger" aria-live="polite">Error Saving</span>');
         }
         setTimeout(
           function(label) {
