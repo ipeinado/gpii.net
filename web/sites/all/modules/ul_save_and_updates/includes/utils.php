@@ -27,7 +27,7 @@ function _saved_search_updateNotificationType($string, $key, $value) {
 }
 
 function _saved_search_createTableMarkup($headers, $rows, $noneMessage) {
-  $markup = '<table class="table table-bordered table-hover">';
+  $markup = '<table class="table table-bordered table-hover" summary="This table lists saved notifications. You can edit saved searches, modify notification preferences or delete the notifications using the form controls in each row. Changes to notification settings are saved automatically.">';
 
   $markup .= '<tr>';
   foreach ($headers as $header) {

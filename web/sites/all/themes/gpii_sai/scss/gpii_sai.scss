@@ -3268,6 +3268,6 @@ body.page-user-email-notifications {
 
 // Overide button danger (default has poor contrast)
 
-.btn-danger {
+.btn-danger, .badge-danger {
   background-color: #c04b48;
 }
