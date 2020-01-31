@@ -116,8 +116,11 @@
         idInput.attr("name", "id");
         idInput.attr("value", id);
 
+        var nameLabel = $("<label for=\"newName\"><span class=\"sr-only\">Search Name</span></label>");
+
         var nameInput = $("<input>");
         nameInput.attr("type", "text");
+        nameInput.attr("id", "newName");
         nameInput.attr("name", "search_name");
         nameInput.attr("value", nameTEXT);
 
@@ -136,6 +139,7 @@
 
         form
           .append(idInput)
+          .append(nameLabel)
           .append(nameInput)
           .append(cancel)
           .append(submit);
