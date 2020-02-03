@@ -53,6 +53,7 @@
                 $("#search-url").val(window.location);
               }
               if (checkQueryForFilters($("#search-url").val())) {
+                var query = getQueryArray($("#search-url").val());
                 // autofill search name to default
                 var searchTerm =
                   query["query"] || query["search_api_views_fulltext"];
@@ -73,13 +74,8 @@
 
       // check for search values to avoid saving notifications on every product in the database
       function checkQueryForFilters(url) {
-        var query = {};
-        url
-          .split("?")[1]
-          .split("&")
-          .forEach(function(item) {
-            query[item.split("=")[0]] = item.split("=")[1];
-          });
+        var query = getQueryArray(url);
+
         if (
           query.hasOwnProperty("query") ||
           query.hasOwnProperty("troubles") ||
@@ -93,6 +89,17 @@
         } else {
           return false;
         }
+      }
+
+      function getQueryArray(url) {
+        var query = {};
+        url
+          .split("?")[1]
+          .split("&")
+          .forEach(function(item) {
+            query[item.split("=")[0]] = item.split("=")[1];
+          });
+        return query;
       }
     },
 
