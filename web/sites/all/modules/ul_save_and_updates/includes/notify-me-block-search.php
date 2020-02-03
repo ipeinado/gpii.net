@@ -17,7 +17,7 @@
     class="btn btn-primary notify-me-button"
     data-toggle="modal"
     data-target="#notify-me-modal"
-    data-modal-option="save"
+    data-modal-option="search"
     aria-label="Save this Search"
   >
     <span aria-hidden="true" class="fa fa-envelope"></span>
