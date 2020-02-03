@@ -3,7 +3,6 @@
 
   Drupal.behaviors.ul_save_and_updates = {
     viewHandler: function() {
-      console.log("viewHandler");
       if ($("#notify-me-modal").length) {
         // initialize the modal by hiding everything.
         $("#notify-me-modal")
@@ -11,10 +10,8 @@
           .hide();
 
         if (Drupal.behaviors.ul_save_and_updates.modalOption == "share") {
-          console.log("shareView");
           Drupal.behaviors.ul_save_and_updates.setShareView();
         } else {
-          console.log("formView");
           Drupal.behaviors.ul_save_and_updates.setFormView();
         }
       } else if ($("#notify-me-modal-confirm").length) {
@@ -44,7 +41,6 @@
 
       if (uid == 0) {
         $(".modal-body.notify-me-anon").show();
-        console.log("anon");
       } else {
         var statusCheck = $.get(`/saved-search/exists/${uid}/${nid}`);
         statusCheck.done(function(response) {
