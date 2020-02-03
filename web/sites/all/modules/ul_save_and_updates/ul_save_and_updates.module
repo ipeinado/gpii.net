@@ -429,14 +429,14 @@ function _saved_search_save() { // POST
       }
     // only saved searches
     } else if (preg_match('/_search/', $value) === 1) {
-      $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
+      $queryString = explode('?', $_POST['search_url'])[1];
 
-      parse_str($urlQuery, $urlArray);
+      parse_str($queryString, $queryArray);
       $filters = array(
-        'keywords' => $urlArray['search_api_views_fulltext'] ?? $urlArray['query'],
+        'keywords' => $queryArray['search_api_views_fulltext'] ?? $queryArray['query'],
         'facets' => array()
       );
-      foreach ($urlArray['f'] as $value) {
+      foreach ($queryArray['f'] as $value) {
         $keyValue = explode(':', $value);
         $filters['facets'][$keyValue[0]][] = $keyValue[1];
       }
@@ -451,7 +451,7 @@ function _saved_search_save() { // POST
     ->fields($fields)
     ->execute();
 
-  $searchResults = _saved_search_getSearchResults(parse_url($_POST['search_url'], PHP_URL_QUERY));
+  $searchResults = _saved_search_getSearchResults(explode('?', $_POST['search_url'])[1]);
 
   $data = array('success' => $results > 0, 'result' => $results);
 

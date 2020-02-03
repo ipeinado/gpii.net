@@ -11,7 +11,7 @@
 
         if (Drupal.behaviors.ul_save_and_updates.modalOption == "share") {
           Drupal.behaviors.ul_save_and_updates.setShareView();
-        } else if (Drupal.behaviors.ul_save_and_updates.modalOption == "save") {
+        } else {
           Drupal.behaviors.ul_save_and_updates.setFormView();
         }
       } else if ($("#notify-me-modal-confirm").length) {
@@ -47,42 +47,53 @@
           if (response.success) {
             modal.find(".modal-body.notify-me-exists").show();
           } else {
-            // set search_url if angular hasn't already
-            if (!$("#search-url").val()) {
-              $("#search-url").val(window.location);
-            }
+            // if modal option is search conditionally show form by checking for query filters
+            if (Drupal.behaviors.ul_save_and_updates.modalOption == "search") {
+              // set search_url if angular hasn't already
+              if (!$("#search-url").val()) {
+                $("#search-url").val(window.location);
+              }
+              if (checkQueryForFilters($("#search-url").val())) {
+                // autofill search name to default
+                var searchTerm =
+                  query["query"] || query["search_api_views_fulltext"];
+                var autofill = new Date().toLocaleString().split(",")[0];
+                autofill += searchTerm ? " - " + searchTerm : "";
+                $("#search-name").val(autofill);
 
-            // check for search values to avoid saving notifications on every product in the database
-            var query = {};
-            $("#search-url")
-              .val()
-              .split("?")[1]
-              .split("&")
-              .forEach(function(item) {
-                query[item.split("=")[0]] = item.split("=")[1];
-              });
-            if (
-              query.hasOwnProperty("query") ||
-              query.hasOwnProperty("troubles") ||
-              query.hasOwnProperty("os") ||
-              query.hasOwnProperty("product_cateogry") ||
-              query.hasOwnProperty("f%5B0%5D") ||
-              query.hasOwnProperty("f[0]") ||
-              query.hasOwnProperty("search_api_views_fulltext")
-            ) {
-              // autofill search name to default
-              var searchTerm =
-                query["query"] || query["search_api_views_fulltext"];
-              var autofill = new Date().toLocaleString().split(",")[0];
-              autofill += searchTerm ? " - " + searchTerm : "";
-              $("#search-name").val(autofill);
-
-              $(".modal-body.notify-me-form").show();
+                $(".modal-body.notify-me-form").show();
+              } else {
+                $(".modal-body.notify-me-no-filters").show();
+              }
             } else {
-              $(".modal-body.notify-me-no-filters").show();
+              $(".modal-body.notify-me-form").show();
             }
           }
         });
+      }
+
+      // check for search values to avoid saving notifications on every product in the database
+      function checkQueryForFilters(url) {
+        var query = {};
+        url
+          .split("?")[1]
+          .split("&")
+          .forEach(function(item) {
+            query[item.split("=")[0]] = item.split("=")[1];
+          });
+        if (
+          query.hasOwnProperty("query") ||
+          query.hasOwnProperty("troubles") ||
+          query.hasOwnProperty("os") ||
+          query.hasOwnProperty("product_cateogry") ||
+          query.hasOwnProperty("f%5B0%5D") ||
+          query.hasOwnProperty("f[0]") ||
+          query.hasOwnProperty("search_api_views_fulltext")
+        ) {
+          return true;
+        } else {
+          return false;
+        }
       }
     },
 

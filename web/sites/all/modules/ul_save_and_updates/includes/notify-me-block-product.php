@@ -1,7 +1,7 @@
 <button
   id="notify-me-button"
   type="button"
-  class="btn btn-primary"
+  class="btn btn-primary notify-me-button"
   data-toggle="modal"
   data-target="#notify-me-modal"
   data-toggle="tooltip" data-placement="right" title="Get notified when this product's page in the Unified Listing changes."
