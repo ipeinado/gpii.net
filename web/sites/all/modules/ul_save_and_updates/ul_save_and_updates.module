@@ -317,20 +317,6 @@ function ul_save_and_updates_change_log_form_submit($form, &$form_state) {
   if ($results > 0) {
     $message = 'Saved successfully!';
 
-    // Send an email via mailgun to confirm their subscription.
-    $to = $form_state['values']['to'];
-    $body = 'Your subscription has been saved. To modify your subscription preferences at any time in the future...@@ ';
-
-    $params = array(
-      'subject' => 'Subscription Added',
-      'message' => $body,
-      'attachment' => $form_state['values']['attachment'],
-    );
-    $site_name = variable_get('site_name', '');
-    $default_from = variable_get('site_mail', ini_get('sendmail_from'));
-    $from = (!empty($site_name)) ? $site_name . ' <' . $default_from . '>' : $default_from;
-    $result = drupal_mail('mailgun', 'subscribe', $to, $GLOBALS['language'], $params, $from);
-
   }
   else {
     $message = 'Could not be saved. Please try again later.';
@@ -468,6 +454,22 @@ function _saved_search_save() { // POST
   $searchResults = _saved_search_getSearchResults(explode('?', $_POST['search_url'])[1]);
 
   $data = array('success' => $results > 0, 'result' => $results);
+
+  // Send an email via mailgun to confirm their subscription.
+  $to = 'bbc.underthebridge@gmail.com';
+  $body = 'Your subscription has been saved. To modify your subscription preferences at any time in the future...@@ ';
+
+  $params = array(
+    'subject' => 'Subscription Added',
+    'message' => $body
+  );
+  $site_name = variable_get('site_name', '');
+  $default_from = variable_get('site_mail', ini_get('sendmail_from'));
+  $from = (!empty($site_name)) ? $site_name . ' <' . $default_from . '>' : $default_from;
+  drupal_mail('mailgun', 'subscribe', $to, $GLOBALS['language'], $params, $from);
+
+  dpm('It worked!');
+
   return drupal_json_output($data);
 }
 
