@@ -4,15 +4,14 @@
   Drupal.behaviors.ul_save_and_updates = {
     viewHandler: function() {
       if ($("#notify-me-modal").length) {
+        var modal = $("#notify-me-modal");
         // initialize the modal by hiding everything.
-        $("#notify-me-modal")
-          .find(".modal-body, #notify-me-submit-failed")
-          .hide();
+        modal.find(".modal-body, #notify-me-submit-failed").hide();
 
         if (Drupal.behaviors.ul_save_and_updates.modalOption == "share") {
-          Drupal.behaviors.ul_save_and_updates.setShareView();
+          Drupal.behaviors.ul_save_and_updates.setShareView(modal);
         } else {
-          Drupal.behaviors.ul_save_and_updates.setFormView();
+          Drupal.behaviors.ul_save_and_updates.setFormView(modal);
         }
       } else if ($("#notify-me-modal-confirm").length) {
         var modal = $("#notify-me-modal-confirm");
@@ -21,26 +20,26 @@
       }
     },
 
-    setShareView: function() {
+    setShareView: function(modal) {
       // start fresh
-      $(".modal-body").hide();
+      modal.find(".modal-body").hide();
 
       // if angular has not set the share link value then set it
       if (!$("#sharelink").val()) {
         $("#sharelink").val(document.location);
       }
-      $(".modal-body.notify-me-share").show();
+      modal.find(".modal-body.notify-me-share").show();
     },
 
-    setFormView: function() {
+    setFormView: function(modal) {
       var uid = Drupal.settings.ul_save_and_updates.uid;
       var nid = Drupal.settings.ul_save_and_updates.nid;
 
       // start fresh
-      $(".modal-body, #notify-me-submit-failed").hide();
+      modal.find(".modal-body, #notify-me-submit-failed").hide();
 
       if (uid == 0) {
-        $(".modal-body.notify-me-anon").show();
+        modal.find(".modal-body.notify-me-anon").show();
       } else {
         var statusCheck = $.get(`/saved-search/exists/${uid}/${nid}`);
         statusCheck.done(function(response) {
@@ -61,12 +60,12 @@
                 autofill += searchTerm ? " - " + searchTerm : "";
                 $("#search-name").val(autofill);
 
-                $(".modal-body.notify-me-form").show();
+                modal.find(".modal-body.notify-me-form").show();
               } else {
-                $(".modal-body.notify-me-no-filters").show();
+                modal.find(".modal-body.notify-me-no-filters").show();
               }
             } else {
-              $(".modal-body.notify-me-form").show();
+              modal.find(".modal-body.notify-me-form").show();
             }
           }
         });
