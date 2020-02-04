@@ -81,8 +81,39 @@ function ul_save_and_updates_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
+  $items['user/%user/email-test'] = array(
+    'title' => 'Mailgun Test',
+    'page callback' => '_saved_search_pageEmailTest',
+    'page arguments' => array(1),
+    'access callback' => 'user_access',
+    'access arguments' => array('manage_saved_search'),
+    'type' => MENU_LOCAL_TASK,
+  );
 
   return $items;
+}
+
+function _saved_search_pageEmailTest($user) {
+
+  global $base_url;
+  global $base_path;
+
+  // Send an email via mailgun to confirm their subscription.
+  $to = 'bbc.underthebridge@gmail.com';
+  $site_name = variable_get('site_name', '');
+  $default_from = variable_get('site_mail', ini_get('sendmail_from'));
+  $from = (!empty($site_name)) ? $site_name . ' <' . $default_from . '>' : $default_from;
+  $link = $base_url . $base_path . 'user/' . $user->uid . '/email-notifications';
+  $body = explode('\n', 'Your subscription has been saved. You can manage your saved searches and notification preferences from your ' . l('Email Notifications', $link) . ' page at any time.');
+
+  $params = array(
+    'message' => $body,
+    'subject' => 'Subscription Saved'
+  );
+  //drupal_mail('mailgun', 'test', $to, $GLOBALS['language'], $params, $from);
+  
+  return "<p>Testing various functions.</p>";
+
 }
 
 function _saved_search_pageEmailNotifications($user) {
@@ -405,6 +436,7 @@ function _saved_search_save() { // POST
     'search_name'       => null,
     'products_found'    => null,
     'filters'           => null,
+    'uuid'              => _saved_search_uniqidReal()
   );
 
 
@@ -429,14 +461,14 @@ function _saved_search_save() { // POST
       }
     // only saved searches
     } else if (preg_match('/_search/', $value) === 1) {
-      $queryString = explode('?', $_POST['search_url'])[1];
+      $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
 
-      parse_str($queryString, $queryArray);
+      parse_str($urlQuery, $urlArray);
       $filters = array(
-        'keywords' => $queryArray['search_api_views_fulltext'] ?? $queryArray['query'],
+        'keywords' => $urlArray['search_api_views_fulltext'] ?? $urlArray['query'],
         'facets' => array()
       );
-      foreach ($queryArray['f'] as $value) {
+      foreach ($urlArray['f'] as $value) {
         $keyValue = explode(':', $value);
         $filters['facets'][$keyValue[0]][] = $keyValue[1];
       }
@@ -451,32 +483,13 @@ function _saved_search_save() { // POST
     ->fields($fields)
     ->execute();
 
-  $searchResults = _saved_search_getSearchResults(explode('?', $_POST['search_url'])[1]);
+  $searchResults = _saved_search_getSearchResults(parse_url($_POST['search_url'], PHP_URL_QUERY));
 
   $data = array('success' => $results > 0, 'result' => $results);
 
-  // Send an email via mailgun to confirm their subscription.
-  $to = 'bbc.underthebridge@gmail.com';
-  $body = 'Your subscription has been saved. To modify your subscription preferences at any time in the future...@@ ';
-
-  $params = array(
-    'subject' => 'Subscription Added',
-    'message' => $body
-  );
-  $site_name = variable_get('site_name', '');
-  $default_from = variable_get('site_mail', ini_get('sendmail_from'));
-  $from = (!empty($site_name)) ? $site_name . ' <' . $default_from . '>' : $default_from;
-  drupal_mail('mailgun', 'subscribe', $to, $GLOBALS['language'], $params, $from);
-
-  dpm('It worked!');
 
   return drupal_json_output($data);
 }
 
-function _saved_search_delete() { // POST
-  $results = db_delete('saved_searches')
-    ->condition('id', $_POST['id'])
-    ->execute();
-  $data = array('success' => $results > 0, 'results' => $results);
-  return drupal_json_output($data);
-}
+
+?>

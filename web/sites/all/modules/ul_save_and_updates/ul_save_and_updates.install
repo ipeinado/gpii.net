@@ -14,7 +14,7 @@ function ul_save_and_updates_schema() {
       'search_url'        => array('type' => 'text', 'size' => 'small'),
       'search_name'       => array('type' => 'text', 'size' => 'small'),
       'products_found'    => array('type' => 'text', 'size' => 'normal'),
-      'filters'           => array('type' => 'text', 'size' => 'normal'),
+      'filters'           => array('type' => 'text', 'size' => 'normal')
     ),
     'primary key' => array('id'),
   );
@@ -31,4 +31,38 @@ function ul_save_and_updates_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Add UUID field to saved_searches table.
+ */
+function ul_save_and_updates_update_7100() {
+  $spec = array(
+    'type' => 'varchar',
+    'description' => "UUID",
+    'length' => 225,
+    'not null' => FALSE,
+  ); 
+  db_add_field('saved_searches', 'uuid', $spec);
+}
+
+/**
+ * Generate Unique IDs for existing saved searches.
+ */
+function ul_save_and_updates_update_7200() {
+  $searches = db_select('saved_searches', 's')
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+
+  foreach ($searches as $search) {
+    $fields = array(
+      'uuid' => _saved_search_uniqidReal()
+    );
+    $results = db_update('saved_searches')
+    ->fields($fields)
+    ->condition('id', $search->id)
+    ->execute();
+  }
 }

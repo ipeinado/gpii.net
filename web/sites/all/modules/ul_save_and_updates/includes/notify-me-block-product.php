@@ -33,7 +33,7 @@
       </div>
       <div class="modal-body notify-me-exists">
         <p>
-          You already are subscribed to email notifications for this product. To manage your subscriptions, visit
+          You are already subscribed to email notifications for this product. To manage your subscriptions, visit
           the
           <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
         </p>

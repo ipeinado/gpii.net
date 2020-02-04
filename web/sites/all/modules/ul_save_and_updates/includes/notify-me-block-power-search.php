@@ -77,7 +77,7 @@
           </label>
         </div>
         <div class="checkbox">
-          <label for="notify-me-new-entries">
+          <label for="notify-me-major-changes">
             <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
             existing entries of this search
           </label>
