@@ -1,0 +1,40 @@
+diff --git a/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.info b/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.info
+index dea1c58c..53b90b56 100644
+--- a/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.info
++++ b/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.info
+@@ -14,3 +14,5 @@ version = "7.x-1.6"
+ core = "7.x"
+ project = "search_api_autocomplete"
+ datestamp = "1537171388"
++
++patch[] = BBC: Customized search_api_autocomplete.pages.inc so that suggestions that include unnecessary punctuation are skipped
+\ No newline at end of file
+diff --git a/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.pages.inc b/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.pages.inc
+index ef551195..8bf98c22 100644
+--- a/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.pages.inc
++++ b/web/sites/all/modules/search_api_autocomplete/search_api_autocomplete.pages.inc
+@@ -81,7 +81,13 @@ function search_api_autocomplete_autocomplete(SearchApiAutocompleteSearch $searc
+               // Also set the "keys" key so it will always be available in alter
+               // hooks and the theme function.
+               if (!isset($suggestion['keys'])) {
+-                $suggestion['keys'] = $suggestion['suggestion_prefix'] . $suggestion['user_input'] . $suggestion['suggestion_suffix'];
++                // BBC: Test the key to find out if it includes unhelpful punctuation and drop the suggestion if found
++                $suggestion['keys'] = $suggestion['suggestion_prefix'] . $suggestion['user_input'] . preg_replace('/[^\w]+/', ' ', $suggestion['suggestion_suffix']);
++
++                if (preg_match('/[.,!?;:_()\']/', $suggestion['keys']) == 1) { 
++                  unset($suggestion['keys']);
++                  
++                }
+               }
+               $key = trim($suggestion['keys']);
+             }
+@@ -172,7 +178,8 @@ function theme_search_api_autocomplete_suggestion(array $variables) {
+     $output .= "<span class=\"autocomplete-user-input\">$user_input</span>";
+   }
+   if ($suggestion_suffix) {
+-    $output .= "<span class=\"autocomplete-suggestion-suffix\">$suggestion_suffix</span>";
++    // BBC: Strip punctuation from the end of suggestion suffix
++    $output .= "<span class=\"autocomplete-suggestion-suffix\">" . preg_replace('/[^\w]+/', ' ', $suggestion_suffix) . "</span>";
+   }
+   if ($results) {
+     $output .= " <span class=\"autocomplete-suggestion-results\">$results</span>";
