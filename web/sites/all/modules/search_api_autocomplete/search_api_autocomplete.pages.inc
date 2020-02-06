@@ -83,10 +83,8 @@ function search_api_autocomplete_autocomplete(SearchApiAutocompleteSearch $searc
               if (!isset($suggestion['keys'])) {
                 // BBC: Test the key to find out if it includes unhelpful punctuation and drop the suggestion if found
                 $suggestion['keys'] = $suggestion['suggestion_prefix'] . $suggestion['user_input'] . preg_replace('/[^\w]+/', ' ', $suggestion['suggestion_suffix']);
-                //$punctuation = preg_match('/[.,!?;:_()\']/', $suggestion['keys']); // Remove unwanted chars if you don't need to include all 
-                //dpm($suggestion['keys']);
+
                 if (preg_match('/[.,!?;:_()\']/', $suggestion['keys']) == 1) { 
-                  //dpm('unset-' . $suggestion['keys']);
                   unset($suggestion['keys']);
                   
                 }
