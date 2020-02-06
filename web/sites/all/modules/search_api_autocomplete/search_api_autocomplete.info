@@ -14,3 +14,5 @@ version = "7.x-1.6"
 core = "7.x"
 project = "search_api_autocomplete"
 datestamp = "1537171388"
+
+patch[] = BBC: Customized search_api_autocomplete.pages.inc so that suggestions that include unnecessary punctuation are skipped

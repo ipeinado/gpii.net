@@ -81,7 +81,15 @@ function search_api_autocomplete_autocomplete(SearchApiAutocompleteSearch $searc
               // Also set the "keys" key so it will always be available in alter
               // hooks and the theme function.
               if (!isset($suggestion['keys'])) {
-                $suggestion['keys'] = $suggestion['suggestion_prefix'] . $suggestion['user_input'] . $suggestion['suggestion_suffix'];
+                // BBC: Test the key to find out if it includes unhelpful punctuation and drop the suggestion if found
+                $suggestion['keys'] = $suggestion['suggestion_prefix'] . $suggestion['user_input'] . preg_replace('/[^\w]+/', ' ', $suggestion['suggestion_suffix']);
+                //$punctuation = preg_match('/[.,!?;:_()\']/', $suggestion['keys']); // Remove unwanted chars if you don't need to include all 
+                //dpm($suggestion['keys']);
+                if (preg_match('/[.,!?;:_()\']/', $suggestion['keys']) == 1) { 
+                  //dpm('unset-' . $suggestion['keys']);
+                  unset($suggestion['keys']);
+                  
+                }
               }
               $key = trim($suggestion['keys']);
             }
@@ -172,7 +180,8 @@ function theme_search_api_autocomplete_suggestion(array $variables) {
     $output .= "<span class=\"autocomplete-user-input\">$user_input</span>";
   }
   if ($suggestion_suffix) {
-    $output .= "<span class=\"autocomplete-suggestion-suffix\">$suggestion_suffix</span>";
+    // BBC: Strip punctuation from the end of suggestion suffix
+    $output .= "<span class=\"autocomplete-suggestion-suffix\">" . preg_replace('/[^\w]+/', ' ', $suggestion_suffix) . "</span>";
   }
   if ($results) {
     $output .= " <span class=\"autocomplete-suggestion-results\">$results</span>";
