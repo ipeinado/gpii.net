@@ -86,7 +86,7 @@ function ul_save_and_updates_menu() {
     'page callback' => '_saved_search_pageEmailTest',
     'page arguments' => array(1),
     'access callback' => 'user_access',
-    'access arguments' => array('manage_saved_search'),
+    'access arguments' => array('access_administration_menu'),
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -111,6 +111,13 @@ function _saved_search_pageEmailTest($user) {
     'subject' => 'Subscription Saved'
   );
   //drupal_mail('mailgun', 'test', $to, $GLOBALS['language'], $params, $from);
+
+  // If the POST for search_url has the full address, we want to remove it, but need to find the right regex first
+  
+  $search_url = 'https://dev.ul.gpii.net/search/power/#!?query=cart%20United&page=1';
+  $replace = "'^https?:\/\/.*[\r\n]*net'";
+  $url = preg_replace($replace, ' ', $search_url);
+  dpm($url);
   
   return "<p>Testing various functions.</p>";
 
@@ -403,6 +410,7 @@ function _saved_search_edit() { // POST
     'search_name'       => $savedSearch[0]->search_name,
     'products_found'    => $savedSearch[0]->products_found,
     'filters'           => $savedSearch[0]->filters,
+    'uuid'              => $savedSearch[0]->uuid,
   );
 
   foreach ($_POST as $key => $value) {
@@ -441,7 +449,8 @@ function _saved_search_save() { // POST
 
 
   foreach ($_POST as $key => $value) {
-    if (array_key_exists($key, $fields)) {
+    // exclude search_url so that this value doesn't get overwritten
+    if (array_key_exists($key, $fields) && $key != 'search_url') {
       $fields[$key] = $value;
     }
 
@@ -459,24 +468,80 @@ function _saved_search_save() { // POST
         $products = implode(',', _saved_search_getManufacturerProducts($node->nid));
         $fields['products_found'] = $products;
       }
-    // only saved searches
-    } else if (preg_match('/_search/', $value) === 1) {
-      $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
 
-      parse_str($urlQuery, $urlArray);
-      $filters = array(
-        'keywords' => $urlArray['search_api_views_fulltext'] ?? $urlArray['query'],
-        'facets' => array()
-      );
-      foreach ($urlArray['f'] as $value) {
-        $keyValue = explode(':', $value);
-        $filters['facets'][$keyValue[0]][] = $keyValue[1];
+
+    // only saved searches 
+    } 
+    else {
+      if (preg_match('/_search/', $value) === 1) {
+        
+        // @@ power search is saving all nodes
+
+        $search_url = $_POST['search_url'];
+        $replace = "'^https?:\/\/.*[\r\n]*net'";
+        $fields['search_url'] = preg_replace($replace, '', $search_url);
+        
+        $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY); // only exists with classic search
+
+        $urlFragment = parse_url($_POST['search_url'], PHP_URL_FRAGMENT); // only exists with power search
+        $replace = "'^!\?'"; // remove extra characters from the fragment
+        $urlFragment = preg_replace($replace, '', $urlFragment);
+
+
+        // build the filters for classic search
+        if ($urlQuery != NULL) {
+          parse_str($urlQuery, $urlArray);
+          $filters = array(
+            'keywords' => $urlArray['search_api_views_fulltext'],
+            'facets' => array()
+          );
+
+
+          foreach ($urlArray['f'] as $value) {
+            $keyValue = explode(':', $value);
+            $filters['facets'][$keyValue[0]][] = $keyValue[1];
+          }
+
+          $prefsArray = array(
+            'sort_by',
+            'sort_order',
+            'items_per_page',
+            'product_status' // "2" indicates that discontinued items should be included
+          );
+    
+          foreach ($prefsArray as $value) {
+            if ($urlArray[$value]) {
+              $filters['facets'][$value][] = $urlArray[$value];
+            }
+          }
+
+        }
+
+        // build the filters for power search
+        if ($urlFragment != NULL) {
+          // create an array based that includes all filters
+          $urlArray = explode('&', $urlFragment);
+          $filters = array();
+          // set facets so that 
+          foreach ($urlArray as $value) {
+            $keyValue = explode('=', $value);
+              $filters['facets'][$keyValue[0]] = $keyValue[1];
+          }
+
+          // we don't need to store page number and the query value should be promoted
+          unset($filters['facets']['page']);
+          $filters['keywords'] = $filters['facets']['query'];
+          unset($filters['facets']['query']);
+          krsort($filters);
+        }
+  
+        $fields['filters'] = json_encode($filters);
+  
+        $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
+        $searchResults = _saved_search_getSearchResults($urlQuery);
+        $fields['products_found'] = implode(', ', array_column($searchResults->response->docs, 'is_nid'));
       }
-      $fields['filters'] = json_encode($filters);
-
-      $searchResults = _saved_search_getSearchResults($urlQuery);
-      $fields['products_found'] = implode(', ', array_column($searchResults->response->docs, 'is_nid'));
-    }
+    }  
   }
 
   $results = db_insert('saved_searches')
