@@ -127,6 +127,9 @@ function _saved_search_buildSolrQueryFromGET($get) {
     if ($keyValue[0] == 'os') {
       $query['fq'][] = 'im_field_operating_system:' . $keyValue[1];
     }
+    if ($keyValue[0] == 'troubles') {
+      $query['fq'][] = 'im_field_trouble_with:' . $keyValue[1];
+    }
     
   }
 
@@ -162,10 +165,17 @@ function _saved_search_getSolrFieldEquivalent($string) {
       return 'im_field_product_categories1';
       break;
 
-    case 'product_category':
+    case 'field_trouble_with':
+      return 'im_field_trouble_with';
+      break;
+    
+      case 'product_category':
       return 'im_field_product_categories1';
       break;
     
+    case 'troubles':
+      return 'im_field_trouble_with';
+      break;
 
     default:
       return false;

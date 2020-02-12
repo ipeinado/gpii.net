@@ -119,11 +119,21 @@ function _saved_search_pageEmailTest($user) {
   $url = preg_replace($replace, ' ', $search_url);
   //dpm($url);
 
-  $urlQuery = 'product_category=3637&product_category=4019&product_category=4411&product_category=4414&os=4458&query=accessible&page=1';
+  $classicurlQuery = 'search_api_views_fulltext=Document&product_status=2&sort_by=search_api_relevance&sort_order=DESC&items_per_page=25&f[0]=field_trouble_with%3A4270&f[1]=field_operating_system%3A4460&f[2]=field_operating_system%3A4461';
 
-  $searchResults = _saved_search_getSearchResults($urlQuery);
+  dpm($classicurlQuery);
 
-  
+  $classicsearchResults = _saved_search_getSearchResults($classicurlQuery);
+
+  dpm($classicsearchResults);
+
+  $powerurlQuery = 'troubles=4270&os=4460&os=4461&query=Document';
+
+  dpm($powerurlQuery);
+
+  $powersearchResults = _saved_search_getSearchResults($powerurlQuery);
+
+  dpm($powersearchResults);
   return "<p>Testing various functions.</p>";
 
 }
@@ -222,7 +232,7 @@ function _saved_search_pageEmailNotifications($user) {
     $row = array();
     $filters = json_decode($customSearch->filters);
     array_push($row, "<b>Name:</b>&nbsp;" . _saved_search_createNameEdit($customSearch->id, $customSearch->search_name) . "</br>"
-      .'<b>Keywords:</b> ' . $filters->keywords . '</br>'
+      .'<b>Keywords:</b> ' . implode(' ', $filters->keywords) . '</br>'
       .'<b>Filters:</b> ' . _saved_search_getFilterTerms($filters->facets) . '</br>'
       ."(<a href=\"$customSearch->search_url\">Run Search Now</a>)"
     );
@@ -510,8 +520,7 @@ function _saved_search_save() { // POST
             }
             $filters['facets'][$keyValue[0]][] = $keyValue[1];
           }
-          // should be able to consolidate facets into arrays of IDs here and normalize filter names
-          // @@ clean up this crazy and retest
+          
           unset($filters['filters']);
           krsort($filters);
           
