@@ -1,7 +1,7 @@
 <button
   id="notify-me-button"
   type="button"
-  class="btn btn-primary"
+  class="btn btn-primary notify-me-button"
   data-toggle="modal"
   data-target="#notify-me-modal"
   data-toggle="tooltip" data-placement="right" title="Get notified when product entries from this company are added or changed."
@@ -33,7 +33,7 @@
       </div>
       <div class="modal-body notify-me-exists">
         <p>
-          You already are subscribed to email notifications for this company. To manage your subscriptions, visit
+          You are already subscribed to email notifications for this company. To manage your subscriptions, visit
           the
           <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> page on your profile.
         </p>
@@ -50,7 +50,7 @@
           <input type="hidden" name="nid" value="<?= arg(1) ?>" />
           <input type="hidden" name="search_type" value="company" />
 
-          <div class="alert alert-danger alert-dismissible notify-me-error" role="alert">
+          <div id="notify-me-submit-failed" class="alert alert-danger alert-dismissible notify-me-error" role="alert">
             Something went wrong. Please try again later.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>

@@ -81,8 +81,61 @@ function ul_save_and_updates_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
+  $items['user/%user/email-test'] = array(
+    'title' => 'Mailgun Test',
+    'page callback' => '_saved_search_pageEmailTest',
+    'page arguments' => array(1),
+    'access callback' => 'user_access',
+    'access arguments' => array('access_administration_menu'),
+    'type' => MENU_LOCAL_TASK,
+  );
 
   return $items;
+}
+
+function _saved_search_pageEmailTest($user) {
+
+  global $base_url;
+  global $base_path;
+
+  // Send an email via mailgun to confirm their subscription.
+  $to = 'bbc.underthebridge@gmail.com';
+  $site_name = variable_get('site_name', '');
+  $default_from = variable_get('site_mail', ini_get('sendmail_from'));
+  $from = (!empty($site_name)) ? $site_name . ' <' . $default_from . '>' : $default_from;
+  $link = $base_url . $base_path . 'user/' . $user->uid . '/email-notifications';
+  $body = explode('\n', 'Your subscription has been saved. You can manage your saved searches and notification preferences from your ' . l('Email Notifications', $link) . ' page at any time.');
+
+  $params = array(
+    'message' => $body,
+    'subject' => 'Subscription Saved'
+  );
+  //drupal_mail('mailgun', 'test', $to, $GLOBALS['language'], $params, $from);
+
+  // If the POST for search_url has the full address, we want to remove it, but need to find the right regex first
+  
+  $search_url = 'https://dev.ul.gpii.net/search/power/#!?query=cart%20United&page=1';
+  $replace = "'^https?:\/\/.*[\r\n]*net'";
+  $url = preg_replace($replace, ' ', $search_url);
+  //dpm($url);
+
+  $classicurlQuery = 'search_api_views_fulltext=Document&product_status=2&sort_by=search_api_relevance&sort_order=DESC&items_per_page=25&f[0]=field_trouble_with%3A4270&f[1]=field_operating_system%3A4460&f[2]=field_operating_system%3A4461';
+
+  dpm($classicurlQuery);
+
+  $classicsearchResults = _saved_search_getSearchResults($classicurlQuery);
+
+  dpm($classicsearchResults);
+
+  $powerurlQuery = 'troubles=4270&os=4460&os=4461&query=Document';
+
+  dpm($powerurlQuery);
+
+  $powersearchResults = _saved_search_getSearchResults($powerurlQuery);
+
+  dpm($powersearchResults);
+  return "<p>Testing various functions.</p>";
+
 }
 
 function _saved_search_pageEmailNotifications($user) {
@@ -154,32 +207,13 @@ function _saved_search_pageEmailNotifications($user) {
     $companyRows[$company->id] = $row;
   }
 
-  // $categories = db_select('saved_searches', 's')
-  //     ->condition('uid', $user->uid)
-  //     ->condition('search_type', 'category')
-  //     ->fields('s')
-  //     ->execute()
-  //     ->fetchAll();
-
-  // $categoryHeaders = array(
-  //   'Unified Listing Category',
-  //   'Last update sent',
-  //   ''
-  // );
-
-  // $categoryRows = array();
-
-  // foreach ($categories as $category) {
-  //   $row = array();
-  //   array_push($row, "<a href=\"$category->search_url\">$category->search_name</a>");
-  //   array_push($row, $category->last_notification ? $category->last_notification : 'never');
-  //   array_push($row, '<a href="#' . $category->id . '">Remove</a>');
-  //   array_push($categoryRows, $row);
-  // }
+  $or = db_or();
+  $or->condition('search_type', 'classic_search');
+  $or->condition('search_type', 'power_search');
 
   $customSearches = db_select('saved_searches', 's')
       ->condition('uid', $user->uid)
-      ->condition('search_type', 'classic_search')
+      ->condition($or)
       ->fields('s')
       ->execute()
       ->fetchAll();
@@ -198,7 +232,7 @@ function _saved_search_pageEmailNotifications($user) {
     $row = array();
     $filters = json_decode($customSearch->filters);
     array_push($row, "<b>Name:</b>&nbsp;" . _saved_search_createNameEdit($customSearch->id, $customSearch->search_name) . "</br>"
-      .'<b>Keywords:</b> ' . $filters->keywords . '</br>'
+      .'<b>Keywords:</b> ' . implode(' ', $filters->keywords) . '</br>'
       .'<b>Filters:</b> ' . _saved_search_getFilterTerms($filters->facets) . '</br>'
       ."(<a href=\"$customSearch->search_url\">Run Search Now</a>)"
     );
@@ -254,7 +288,7 @@ function _saved_search_pageEmailNotifications($user) {
           .'<form id="notify-me-form-delete">'
             .'<input type="hidden" name="id" value="" />'
 
-            .'<div class="alert alert-danger alert-dismissible notify-me-error" role="alert">'
+            .'<div id="notify-me-submit-failed" class="alert alert-danger alert-dismissible notify-me-error" role="alert">'
               .'Something went wrong. Please try again later.'
               .'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
                 .'<span aria-hidden="true">&times;</span>'
@@ -313,20 +347,6 @@ function ul_save_and_updates_change_log_form_submit($form, &$form_state) {
   if ($results > 0) {
     $message = 'Saved successfully!';
 
-    // Send an email via mailgun to confirm their subscription.
-    $to = $form_state['values']['to'];
-    $body = 'Your subscription has been saved. To modify your subscription preferences at any time in the future...@@ ';
-
-    $params = array(
-      'subject' => 'Subscription Added',
-      'message' => $body,
-      'attachment' => $form_state['values']['attachment'],
-    );
-    $site_name = variable_get('site_name', '');
-    $default_from = variable_get('site_mail', ini_get('sendmail_from'));
-    $from = (!empty($site_name)) ? $site_name . ' <' . $default_from . '>' : $default_from;
-    $result = drupal_mail('mailgun', 'subscribe', $to, $GLOBALS['language'], $params, $from);
-
   }
   else {
     $message = 'Could not be saved. Please try again later.';
@@ -382,6 +402,7 @@ function _saved_search_edit() { // POST
     'search_name'       => $savedSearch[0]->search_name,
     'products_found'    => $savedSearch[0]->products_found,
     'filters'           => $savedSearch[0]->filters,
+    'uuid'              => $savedSearch[0]->uuid,
   );
 
   foreach ($_POST as $key => $value) {
@@ -415,11 +436,13 @@ function _saved_search_save() { // POST
     'search_name'       => null,
     'products_found'    => null,
     'filters'           => null,
+    'uuid'              => _saved_search_uniqidReal()
   );
 
 
   foreach ($_POST as $key => $value) {
-    if (array_key_exists($key, $fields)) {
+    // exclude search_url so that this value doesn't get overwritten
+    if (array_key_exists($key, $fields) && $key != 'search_url') {
       $fields[$key] = $value;
     }
 
@@ -437,24 +460,101 @@ function _saved_search_save() { // POST
         $products = implode(',', _saved_search_getManufacturerProducts($node->nid));
         $fields['products_found'] = $products;
       }
-    // only saved searches
-    } else if (preg_match('/_search/', $value) === 1) {
-      $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
 
-      parse_str($urlQuery, $urlArray);
-      $filters = array(
-        'keywords' => $urlArray['search_api_views_fulltext'],
-        'facets' => array()
-      );
-      foreach ($urlArray['f'] as $value) {
-        $keyValue = explode(':', $value);
-        $filters['facets'][$keyValue[0]][] = $keyValue[1];
+
+    // only saved searches 
+    } 
+    else {
+      if (preg_match('/_search/', $value) === 1) {
+        
+        // @@ power search is saving all nodes
+
+        $search_url = $_POST['search_url'];
+        $replace = "'^https?:\/\/.*[\r\n]*net'";
+        $fields['search_url'] = preg_replace($replace, '', $search_url);
+        
+        $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY); // only exists with classic search
+
+        $urlFragment = parse_url($_POST['search_url'], PHP_URL_FRAGMENT); // only exists with power search
+        $replace = "'^!\?'"; // remove extra characters from the fragment
+        $urlFragment = preg_replace($replace, '', $urlFragment);
+
+
+        // build the filters for classic search
+        if ($urlQuery != NULL) {
+          $urlArray = explode('&', $urlQuery);
+          $filters = array();
+          foreach ($urlArray as $value) {
+            $keyValue = explode('=', $value);
+              $filters['facets'][$keyValue[0]] = $keyValue[1];
+          }
+          
+          $filters['keywords'][] = $filters['facets']['search_api_views_fulltext'];
+          unset($filters['facets']['search_api_views_fulltext']);
+          $filters['prefs'] = array(
+            'product_status' => $filters['facets']['product_status'],
+            'sort_by' => $filters['facets']['sort_by'],
+            'sort_order' => $filters['facets']['sort_order'],
+            'items_per_page' => $filters['facets']['items_per_page'],
+          );
+
+          // remove the preferences from the facet section
+          unset($filters['facets']['product_status']);
+          unset($filters['facets']['sort_by']);
+          unset($filters['facets']['sort_order']);
+          unset($filters['facets']['items_per_page']);
+
+          // rename facets so we can rewrite a cleaned up version
+          $filters['filters'] = $filters['facets'];
+          unset($filters['facets']);
+          foreach ($filters['filters'] as $value) {
+            $keyValue = explode('%3A', $value);
+            if ($keyValue[0] == 'field_product_categories1') {
+              $keyValue[0] = 'product_category';
+            }
+            if ($keyValue[0] == 'field_operating_system') {
+              $keyValue[0] = 'os';
+            }
+            if ($keyValue[0] == 'field_trouble_with') {
+              $keyValue[0] = 'troubles';
+            }
+            $filters['facets'][$keyValue[0]][] = $keyValue[1];
+          }
+          
+          unset($filters['filters']);
+          krsort($filters);
+          
+        }
+
+        // build the filters for power search
+        if ($urlFragment != NULL) {
+          // create an array based that includes all filters
+          $urlArray = explode('&', $urlFragment);
+          $filters = array();
+          // set facets so that we can handle multiples 
+          foreach ($urlArray as $value) {
+            $keyValue = explode('=', $value);
+              $filters['facets'][$keyValue[0]][] = $keyValue[1];
+          }
+
+          // we don't need to store page number and the query value should be promoted
+          unset($filters['facets']['page']);
+          $filters['keywords'] = $filters['facets']['query'];
+          unset($filters['facets']['query']);
+          krsort($filters);
+
+          // switch the variable names back so that the power search passes the URL fragment to get search results below
+          $urlQuery = $urlFragment;
+          
+        }
+  
+        $fields['filters'] = json_encode($filters);
+  
+        
+        $searchResults = _saved_search_getSearchResults($urlQuery);
+        $fields['products_found'] = implode(', ', array_column($searchResults->response->docs, 'is_nid'));
       }
-      $fields['filters'] = json_encode($filters);
-
-      $searchResults = _saved_search_getSearchResults($urlQuery);
-      $fields['products_found'] = implode(', ', array_column($searchResults->response->docs, 'is_nid'));
-    }
+    }  
   }
 
   $results = db_insert('saved_searches')
@@ -464,13 +564,10 @@ function _saved_search_save() { // POST
   $searchResults = _saved_search_getSearchResults(parse_url($_POST['search_url'], PHP_URL_QUERY));
 
   $data = array('success' => $results > 0, 'result' => $results);
+
+
   return drupal_json_output($data);
 }
 
-function _saved_search_delete() { // POST
-  $results = db_delete('saved_searches')
-    ->condition('id', $_POST['id'])
-    ->execute();
-  $data = array('success' => $results > 0, 'results' => $results);
-  return drupal_json_output($data);
-}
+
+?>

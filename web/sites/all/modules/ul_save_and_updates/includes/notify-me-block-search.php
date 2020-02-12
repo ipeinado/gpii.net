@@ -17,7 +17,7 @@
     class="btn btn-primary notify-me-button"
     data-toggle="modal"
     data-target="#notify-me-modal"
-    data-modal-option="save"
+    data-modal-option="search"
     aria-label="Save this Search"
   >
     <span aria-hidden="true" class="fa fa-envelope"></span>
@@ -73,27 +73,27 @@
           <a href="/user/<?= $GLOBALS['user']->uid ?>/email-notifications">Email Notifications</a> tab on your user profile page.
         </p>
       </div>
-      <div class="modal-body notify-me-form">
-        <h4>Save this search</h4>
-        <div class="alert alert-danger notify-me-save-error" role="alert">
+      <div class="modal-body notify-me-no-filters">
+        <div id="notify-me-no-filters-error" class="alert alert-danger notify-me-error" role="alert">
           Your search must include at least one search term or category filter.
         </div>
+      </div>
+      <div class="modal-body notify-me-form">
+        <h4>Save this search</h4>
         <form id="notify-me-form-save">
           <input type="hidden" name="uid" value="<?= $GLOBALS['user']->uid ?>" />
           <input type="hidden" name="search_type" value="classic_search" />
-          <input type="hidden" name="search_url" />
-          
-          <div class="alert alert-danger alert-dismissible notify-me-error" role="alert">
+          <input id="search-url" type="hidden" name="search_url" />
+
+          <div id="notify-me-submit-failed" class="alert alert-danger alert-dismissible notify-me-error" role="alert">
             Something went wrong. Please try again later.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-
-
           <div class="form-group">
             <label for="searchName">Give this search a name (optional)</label>
-            <input type="text" class="form-control" id="searchName" name="search_name" value="10/25/19" />
+            <input type="text" class="form-control" id="search-name" name="search_name" />
           </div>
 
           <p>Notify me with the following types of search result changes:</p>
@@ -103,7 +103,7 @@
             </label>
           </div>
           <div class="checkbox">
-            <label for="notify-me-new-entries">
+            <label for="notify-me-major-changes">
               <input id="notify-me-major-changes" type="checkbox" name="major_changes" value="on" /> Major changes to
               existing entries of this search
             </label>

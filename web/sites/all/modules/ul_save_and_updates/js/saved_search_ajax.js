@@ -2,101 +2,127 @@
   "use strict";
 
   Drupal.behaviors.ul_save_and_updates = {
-    attach: function(context, settings) {
-      var uid = settings.ul_save_and_updates.uid;
-      var nid = settings.ul_save_and_updates.nid;
-
+    viewHandler: function() {
       if ($("#notify-me-modal").length) {
         var modal = $("#notify-me-modal");
-        modal
-          .find(".modal-body, .notify-me-error, .notify-me-save-error")
-          .hide();
+        // initialize the modal by hiding everything.
+        modal.find(".modal-body, #notify-me-submit-failed").hide();
 
-        if (uid == 0) {
-          modal.find(".modal-body.notify-me-anon").show();
+        if (Drupal.behaviors.ul_save_and_updates.modalOption == "share") {
+          Drupal.behaviors.ul_save_and_updates.setShareView(modal);
         } else {
-          var statusCheck = $.get(`/saved-search/exists/${uid}/${nid}`);
-          statusCheck.done(function(response) {
-            if (response.success) {
-              modal.find(".modal-body.notify-me-exists").show();
-            } else {
-              modal.find(".modal-body.notify-me-form").show();
-            }
-          });
+          Drupal.behaviors.ul_save_and_updates.setFormView(modal);
         }
       } else if ($("#notify-me-modal-confirm").length) {
         var modal = $("#notify-me-modal-confirm");
-        modal
-          .find(".modal-body, .notify-me-error, .notify-me-save-error")
-          .hide();
+        modal.find(".modal-body, #notify-me-submit-failed").hide();
         modal.find(".modal-body.notify-me-form").show();
       }
+    },
 
-      $(".notify-me-button").click(function(event) {
-        var button = $(this);
-        var modalOption = button.data("modalOption");
-        if (modalOption == "share") {
-          $("#sharelink").val(document.location);
-          $(".modal-body.notify-me-share").show();
-          $(".modal-body.notify-me-form, .modal-body.notify-me-anon").hide();
+    setShareView: function(modal) {
+      // start fresh
+      modal.find(".modal-body").hide();
+
+      // if angular has not set the share link value then set it
+      if (!$("#sharelink").val()) {
+        $("#sharelink").val(document.location);
+      }
+      modal.find(".modal-body.notify-me-share").show();
+    },
+
+    setFormView: function(modal) {
+      var uid = Drupal.settings.ul_save_and_updates.uid;
+      var nid = Drupal.settings.ul_save_and_updates.nid;
+
+      // start fresh
+      modal.find(".modal-body, #notify-me-submit-failed").hide();
+
+      if (uid == 0) {
+        modal.find(".modal-body.notify-me-anon").show();
+      } else {
+        var statusCheck = $.get(`/saved-search/exists/${uid}/${nid}`);
+        statusCheck.done(function(response) {
+          if (response.success) {
+            modal.find(".modal-body.notify-me-exists").show();
+          } else {
+            // if modal option is search conditionally show form by checking for query filters
+            if (Drupal.behaviors.ul_save_and_updates.modalOption == "search") {
+              // set search_url if angular hasn't already
+              if (!$("#search-url").val()) {
+                $("#search-url").val(window.location);
+              }
+              if (checkQueryForFilters($("#search-url").val())) {
+                var query = getQueryArray($("#search-url").val());
+                // autofill search name to default
+                var searchTerm =
+                  query["query"] || query["search_api_views_fulltext"];
+                var autofill = new Date().toLocaleString().split(",")[0];
+                autofill += searchTerm ? " - " + searchTerm : "";
+                $("#search-name").val(autofill);
+
+                modal.find(".modal-body.notify-me-form").show();
+              } else {
+                modal.find(".modal-body.notify-me-no-filters").show();
+              }
+            } else {
+              modal.find(".modal-body.notify-me-form").show();
+            }
+          }
+        });
+      }
+
+      // check for search values to avoid saving notifications on every product in the database
+      function checkQueryForFilters(url) {
+        var query = getQueryArray(url);
+
+        if (
+          query.hasOwnProperty("query") ||
+          query.hasOwnProperty("troubles") ||
+          query.hasOwnProperty("os") ||
+          query.hasOwnProperty("product_cateogry") ||
+          query.hasOwnProperty("f%5B0%5D") ||
+          query.hasOwnProperty("f[0]") ||
+          query.hasOwnProperty("search_api_views_fulltext")
+        ) {
+          return true;
         } else {
-          $(".modal-body.notify-me-share").hide();
-          if (uid == 0) {
-            $(".modal-body.notify-me-anon").show();
-          } else {
-            $(".modal-body.notify-me-form").show();
-          }
+          return false;
         }
+      }
 
-        // check for search values to avoid saving notifications on every product in the database
+      function getQueryArray(url) {
+        var query = {};
+        url
+          .split("?")[1]
+          .split("&")
+          .forEach(function(item) {
+            query[item.split("=")[0]] = item.split("=")[1];
+          });
+        return query;
+      }
+    },
 
-        if (modalOption == "save") {
-          var query = {};
-          location.search
-            .substr(1)
-            .split("&")
-            .forEach(function(item) {
-              query[item.split("=")[0]] = item.split("=")[1];
-            });
-          console.log(query);
-          if (
-            query.hasOwnProperty("f%5B0%5D") ||
-            query.hasOwnProperty("search_api_views_fulltext")
-          ) {
-            $(".notify-me-save-error").hide();
-          } else {
-            $(".notify-me-save-error").show();
-            $(".modal-body #notify-me-form-save, .modal-body h4").hide();
-          }
-        }
+    attach: function(context, settings) {
+      if ($("#notify-me-modal").length) {
+        // initialize the modal by hiding everything.
+        var modal = $("#notify-me-modal");
+      }
 
-        $('input[name="search_name"]').attr(
-          "value",
-          new Date().toLocaleString().split(",")[0] +
-            " - " +
-            $("#edit-search-api-views-fulltext").attr("value")
-        );
-      });
+      // This call of the viewHandler() is for Angular search pages as the attach function
+      // is manually called when Angular adds the modal to the page.
+      Drupal.behaviors.ul_save_and_updates.viewHandler();
 
       var saveForm = $("#notify-me-form-save");
       saveForm.submit(function(event) {
         event.preventDefault();
-
-        if ($('input[name="search_url"]').length) {
-          $('input[name="search_url"]').attr(
-            "value",
-            window.location.pathname + window.location.search
-          );
-        }
-
         var saving = $.post("/saved-search/save", saveForm.serialize());
         saving.done(function(response) {
-          console.log(response);
           if (response.success) {
             modal.find(".modal-body.notify-me-form").hide();
             modal.find(".modal-body.notify-me-success").show();
           } else {
-            modal.find(".notify-me-error").show();
+            modal.find("#notify-me-submit-failed").show();
           }
         });
       });
@@ -116,7 +142,9 @@
         idInput.attr("name", "id");
         idInput.attr("value", id);
 
-        var nameLabel = $("<label for=\"newName\"><span class=\"sr-only\">Search Name</span></label>");
+        var nameLabel = $(
+          '<label for="newName"><span class="sr-only">Search Name</span></label>'
+        );
 
         var nameInput = $("<input>");
         nameInput.attr("type", "text");
@@ -156,7 +184,8 @@
           id = $(event.target)
             .find('input[name="id"]')
             .attr("value");
-          message = ' <span class="name-saved-message" aria-live="polite">Saved</span>';
+          message =
+            ' <span class="name-saved-message badge badge-success" aria-live="polite">Saved</span>';
         } else {
           name = $(event.target)
             .find('input[name="search_name"]')
@@ -164,7 +193,8 @@
           id = $(event.target)
             .find('input[name="id"]')
             .attr("value");
-          message = ' <span class="name-saved-message" aria-live="polite">Error</span>';
+          message =
+            ' <span class="name-saved-message badge badge-success" aria-live="polite">Error</span>';
         }
 
         var wrapper = $(event.target).parents(".notify-me-name-wrapper");
@@ -172,7 +202,7 @@
           '<span class="notify-me-name">' +
             name +
             "</span>" +
-            ' <button class="notify-me-name-edit btn btn-xs" data-id="' +
+            ' <button class="notify-me-name-edit btn-default btn btn-xs" data-id="' +
             id +
             '" style="cursor: pointer;">edit</button>' +
             message +
@@ -203,9 +233,13 @@
         var label = $(event.target).find("label");
         label.children(".label-text").remove();
         if (success) {
-          label.append('<span class="label-text">Saved</span>');
+          label.append(
+            '<span class="label-text badge badge-success" aria-live="polite">Saved</span>'
+          );
         } else {
-          label.append('<span class="label-text">Error Saving</span>');
+          label.append(
+            '<span class="label-text badge badge-danger" aria-live="polite">Error Saving</span>'
+          );
         }
         setTimeout(
           function(label) {
@@ -241,7 +275,6 @@
         event.preventDefault();
         var deleting = $.post("/saved-search/delete", $(this).serialize());
         deleting.done(function(response) {
-          console.log(response);
           if (response.success) {
             $("#notify-me-modal-confirm").modal("hide");
             $(
@@ -249,7 +282,7 @@
                 deleteForm.find('input[name="id"]').attr("value")
             ).remove();
           } else {
-            modal.find(".notify-me-error").show();
+            modal.find("#notify-me-submit-failed").show();
           }
         });
       });
@@ -290,5 +323,14 @@
     }
   };
 
-  // $(document).ready(Drupal.behaviors.ul_save_and_updates);
+  $(document).ready(function() {
+    $(".notify-me-button").click(function(event) {
+      Drupal.behaviors.ul_save_and_updates.modalOption = $(this).data(
+        "modalOption"
+      );
+
+      // This call of the viewHandler() is for Non Angular search pages.
+      Drupal.behaviors.ul_save_and_updates.viewHandler();
+    });
+  });
 })(jQuery, Drupal);

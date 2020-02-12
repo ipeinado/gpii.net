@@ -991,9 +991,6 @@ body.page-search {
         button {
           padding: 0;
         }
-        .notifylink {
-          display: none;
-        }
       }
     }
   }
@@ -1004,7 +1001,7 @@ body.page-search {
     }
     .panel-body {
       ol {
-        columns: 2;
+        columns: 2; 
         column-gap: 3rem;
         column-fill: balance;
         margin-top: 1rem;
@@ -1582,12 +1579,14 @@ body.node-type-product {
   }
 }
 
-.btn-link.sharelink {
+.btn-link.sharelink, .btn-link,notifylink {
   color: #a72534;
 }
 
 .btn-link.sharelink:hover,
-.btn-link.sharelink:focus {
+.btn-link.sharelink:focus,
+.btn-link.notifylink:hover,
+.btn-link.notifylink:focus {
   color: #8e212e;
 }
 
@@ -3268,6 +3267,6 @@ body.node-type-manufacturer, body.node-type-product {
 
 // Overide button danger (default has poor contrast)
 
-.btn-danger {
+.btn-danger, .badge-danger {
   background-color: #c04b48;
 }
