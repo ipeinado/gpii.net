@@ -96,6 +96,7 @@ function _saved_search_buildSolrQueryFromGET($get) {
     'wt' => 'json'
   );
 
+  // Classic Search
   parse_str($get, $getQuery);
 
   if ($getQuery['f']) {
@@ -103,7 +104,7 @@ function _saved_search_buildSolrQueryFromGET($get) {
      $query['fq'][] = _saved_search_replaceFieldName($facet);
     }
   }
-
+  
   if ($getQuery['product_status']) {
     $status = $getQuery['product_status'] == '1' ? '1' : '[1 TO 2]';
     $query['fq'][] = _saved_search_replaceFieldName('product_status:'. $status);
@@ -113,12 +114,32 @@ function _saved_search_buildSolrQueryFromGET($get) {
     $query['q'] = $getQuery['search_api_views_fulltext'];
   }
 
+  // Power Search
+  if ($getQuery['query']) {
+    $query['q'] = $getQuery['query'];
+  }
+  $urlArray = explode('&', $get);
+  foreach ($urlArray as $value) {
+    $keyValue = explode('=', $value);
+    if ($keyValue[0] == 'product_category') {
+      $query['fq'][] = 'im_field_product_categories1:' . $keyValue[1];
+    }
+    if ($keyValue[0] == 'os') {
+      $query['fq'][] = 'im_field_operating_system:' . $keyValue[1];
+    }
+    
+  }
+
   $query_string = urldecode(http_build_query($query));
   $query_string = preg_replace('/\[\d+\]/', '', $query_string);
   $query_string = preg_replace('/\s/', '%20', $query_string);
 
   return $query_string;
 }
+
+/** 
+ * This is used by classic search to convert facet API query parameters to solr field names. 
+ */
 
 function _saved_search_replaceFieldName($filter) {
   $filter = explode(':', $filter);
@@ -137,6 +158,15 @@ function _saved_search_getSolrFieldEquivalent($string) {
       return 'ss_field_status';
       break;
 
+    case 'field_product_categories1':
+      return 'im_field_product_categories1';
+      break;
+
+    case 'product_category':
+      return 'im_field_product_categories1';
+      break;
+    
+
     default:
       return false;
       break;
@@ -145,7 +175,6 @@ function _saved_search_getSolrFieldEquivalent($string) {
 
 function _saved_search_getSearchResults($get) {
   $query_string = _saved_search_buildSolrQueryFromGET($get);
-
   // get the active search_api_solr information
   $solr = search_api_server_load_multiple(FALSE, $conditions);
   $solr_url = $solr['stg06']->options['scheme'] . '://' . $solr['stg06']->options['host'] . ':' . $solr['stg06']->options['port'] . $solr['stg06']->options['path'];

@@ -117,7 +117,12 @@ function _saved_search_pageEmailTest($user) {
   $search_url = 'https://dev.ul.gpii.net/search/power/#!?query=cart%20United&page=1';
   $replace = "'^https?:\/\/.*[\r\n]*net'";
   $url = preg_replace($replace, ' ', $search_url);
-  dpm($url);
+  //dpm($url);
+
+  $urlQuery = 'product_category=3637&product_category=4019&product_category=4411&product_category=4414&os=4458&query=accessible&page=1';
+
+  $searchResults = _saved_search_getSearchResults($urlQuery);
+
   
   return "<p>Testing various functions.</p>";
 
@@ -191,29 +196,6 @@ function _saved_search_pageEmailNotifications($user) {
     array_push($row, _saved_search_createRemoveButton($company->id));
     $companyRows[$company->id] = $row;
   }
-
-  // $categories = db_select('saved_searches', 's')
-  //     ->condition('uid', $user->uid)
-  //     ->condition('search_type', 'category')
-  //     ->fields('s')
-  //     ->execute()
-  //     ->fetchAll();
-
-  // $categoryHeaders = array(
-  //   'Unified Listing Category',
-  //   'Last update sent',
-  //   ''
-  // );
-
-  // $categoryRows = array();
-
-  // foreach ($categories as $category) {
-  //   $row = array();
-  //   array_push($row, "<a href=\"$category->search_url\">$category->search_name</a>");
-  //   array_push($row, $category->last_notification ? $category->last_notification : 'never');
-  //   array_push($row, '<a href="#' . $category->id . '">Remove</a>');
-  //   array_push($categoryRows, $row);
-  // }
 
   $or = db_or();
   $or->condition('search_type', 'classic_search');
@@ -490,31 +472,49 @@ function _saved_search_save() { // POST
 
         // build the filters for classic search
         if ($urlQuery != NULL) {
-          parse_str($urlQuery, $urlArray);
-          $filters = array(
-            'keywords' => $urlArray['search_api_views_fulltext'],
-            'facets' => array()
+          $urlArray = explode('&', $urlQuery);
+          $filters = array();
+          foreach ($urlArray as $value) {
+            $keyValue = explode('=', $value);
+              $filters['facets'][$keyValue[0]] = $keyValue[1];
+          }
+          
+          $filters['keywords'][] = $filters['facets']['search_api_views_fulltext'];
+          unset($filters['facets']['search_api_views_fulltext']);
+          $filters['prefs'] = array(
+            'product_status' => $filters['facets']['product_status'],
+            'sort_by' => $filters['facets']['sort_by'],
+            'sort_order' => $filters['facets']['sort_order'],
+            'items_per_page' => $filters['facets']['items_per_page'],
           );
 
+          // remove the preferences from the facet section
+          unset($filters['facets']['product_status']);
+          unset($filters['facets']['sort_by']);
+          unset($filters['facets']['sort_order']);
+          unset($filters['facets']['items_per_page']);
 
-          foreach ($urlArray['f'] as $value) {
-            $keyValue = explode(':', $value);
+          // rename facets so we can rewrite a cleaned up version
+          $filters['filters'] = $filters['facets'];
+          unset($filters['facets']);
+          foreach ($filters['filters'] as $value) {
+            $keyValue = explode('%3A', $value);
+            if ($keyValue[0] == 'field_product_categories1') {
+              $keyValue[0] = 'product_category';
+            }
+            if ($keyValue[0] == 'field_operating_system') {
+              $keyValue[0] = 'os';
+            }
+            if ($keyValue[0] == 'field_trouble_with') {
+              $keyValue[0] = 'troubles';
+            }
             $filters['facets'][$keyValue[0]][] = $keyValue[1];
           }
-
-          $prefsArray = array(
-            'sort_by',
-            'sort_order',
-            'items_per_page',
-            'product_status' // "2" indicates that discontinued items should be included
-          );
-    
-          foreach ($prefsArray as $value) {
-            if ($urlArray[$value]) {
-              $filters['facets'][$value][] = $urlArray[$value];
-            }
-          }
-
+          // should be able to consolidate facets into arrays of IDs here and normalize filter names
+          // @@ clean up this crazy and retest
+          unset($filters['filters']);
+          krsort($filters);
+          
         }
 
         // build the filters for power search
@@ -522,10 +522,10 @@ function _saved_search_save() { // POST
           // create an array based that includes all filters
           $urlArray = explode('&', $urlFragment);
           $filters = array();
-          // set facets so that 
+          // set facets so that we can handle multiples 
           foreach ($urlArray as $value) {
             $keyValue = explode('=', $value);
-              $filters['facets'][$keyValue[0]] = $keyValue[1];
+              $filters['facets'][$keyValue[0]][] = $keyValue[1];
           }
 
           // we don't need to store page number and the query value should be promoted
@@ -533,11 +533,15 @@ function _saved_search_save() { // POST
           $filters['keywords'] = $filters['facets']['query'];
           unset($filters['facets']['query']);
           krsort($filters);
+
+          // switch the variable names back so that the power search passes the URL fragment to get search results below
+          $urlQuery = $urlFragment;
+          
         }
   
         $fields['filters'] = json_encode($filters);
   
-        $urlQuery = parse_url($_POST['search_url'], PHP_URL_QUERY);
+        
         $searchResults = _saved_search_getSearchResults($urlQuery);
         $fields['products_found'] = implode(', ', array_column($searchResults->response->docs, 'is_nid'));
       }
