@@ -466,8 +466,6 @@ function _saved_search_save() { // POST
     } 
     else {
       if (preg_match('/_search/', $value) === 1) {
-        
-        // @@ power search is saving all nodes
 
         $search_url = $_POST['search_url'];
         $replace = "'^https?:\/\/.*[\r\n]*net'";
