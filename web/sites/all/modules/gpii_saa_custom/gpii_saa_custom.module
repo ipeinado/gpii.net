@@ -3840,4 +3840,19 @@ function gpii_saa_custom_unselect_all_facets_link($field_name) {
 }
 
 
-
+/**
+* Implements ds_field_theme_functions_info().
+*/
+function gpii_saa_custom_ds_field_theme_functions_info() {
+  return array('gpii_saa_custom_amazon_link' => t('Amazon Link'));
+}/**
+* Field theming function.
+*/
+function gpii_saa_custom_amazon_link($variables) {
+  $output = '';  // Render the items without wrappers and label.
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<p class="amazon-link"><a class="btn btn-primary" href="';
+    $output .= drupal_render($item);
+    $output .= '">Buy at Amazon</a></p> <p class="small">By using this link, a portion of your purchase will help to support the Unified Listing.</p>';
+  }  return $output;
+}
